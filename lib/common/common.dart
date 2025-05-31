@@ -1,9 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/common/widget/custom_snack_bar.dart';
-import 'package:jonggack_topik/repository/kangis_step_repository.dart';
 import 'package:device_info_plus/device_info_plus.dart';
-import '../model/kangi.dart';
 
 Future<bool> isIpad() async {
   final deviceInfoPlugin = DeviceInfoPlugin();
@@ -38,22 +36,6 @@ void getBacks(int count) {
   for (int i = 0; i < count; i++) {
     Get.back();
   }
-}
-
-List<int> getKangiIndex(
-  String japanese,
-  KangiStepRepositroy kangiStepRepositroy,
-) {
-  List<int> result = [];
-  for (int i = 0; i < japanese.length; i++) {
-    if (isKangi(japanese[i])) {
-      Kangi? kangi = kangiStepRepositroy.getKangi(japanese[i]);
-      if (kangi != null) {
-        result.add(i);
-      } else {}
-    }
-  }
-  return result;
 }
 
 void copyWord(String text) {

@@ -132,22 +132,6 @@ class SettingScreen extends StatelessWidget {
                     },
                     text: '일본어 단어 초기화',
                   ),
-                  SettingButton(
-                    onPressed: () async {
-                      if (await settingController.initkangi()) {
-                        settingController.successDeleteAndQuitApp();
-                      }
-                    },
-                    text: '한자 초기화',
-                  ),
-                  SettingButton(
-                    onPressed: () async {
-                      if (await settingController.initGrammar()) {
-                        settingController.successDeleteAndQuitApp();
-                      }
-                    },
-                    text: '문법 초기화',
-                  ),
                 ],
                 SettingButton(
                   text: '나만의 단어 초기화',

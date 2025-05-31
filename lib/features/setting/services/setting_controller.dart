@@ -7,9 +7,7 @@ import 'package:jonggack_topik/common/commonDialog.dart';
 import 'package:jonggack_topik/common/widget/custom_snack_bar.dart';
 import 'package:jonggack_topik/user/controller/user_controller.dart';
 
-import '../../../repository/grammar_step_repository.dart';
 import '../../../repository/jlpt_step_repository.dart';
-import '../../../repository/kangis_step_repository.dart';
 import '../../../repository/local_repository.dart';
 import '../../../repository/my_word_repository.dart';
 
@@ -55,28 +53,6 @@ class SettingController extends GetxController {
     return result;
   }
 
-  Future<bool> initGrammar() async {
-    bool result = await CommonDialog.askBeforeDeleteDatasDialog('JLPT 문법을');
-
-    if (result) {
-      isInitial = true;
-      userController.initializeProgress(TotalProgressType.GRAMMAR);
-      GrammarRepositroy.deleteAllGrammar();
-    }
-    return result;
-  }
-
-  Future<bool> initkangi() async {
-    bool result = await CommonDialog.askBeforeDeleteDatasDialog('JLPT 한자를');
-
-    if (result) {
-      isInitial = true;
-      userController.initializeProgress(TotalProgressType.KANGI);
-      KangiStepRepositroy.deleteAllKangiStep();
-    }
-    return result;
-  }
-
   Future<bool> initMyWords() async {
     bool result = await CommonDialog.askBeforeDeleteDatasDialog(
       '나만의 단어를',
@@ -95,10 +71,7 @@ class SettingController extends GetxController {
   void allDataDelete() {
     userController.initializeProgress(TotalProgressType.JLPT);
     JlptStepRepositroy.deleteAllWord();
-    userController.initializeProgress(TotalProgressType.KANGI);
-    KangiStepRepositroy.deleteAllKangiStep();
-    userController.initializeProgress(TotalProgressType.GRAMMAR);
-    GrammarRepositroy.deleteAllGrammar();
+
     successDeleteAndQuitApp();
   }
 }

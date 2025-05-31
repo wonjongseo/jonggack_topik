@@ -12,7 +12,6 @@ class StudyCategoryNavigator extends StatelessWidget {
   final int currentPageIndex;
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: List.generate(KindOfStudy.values.length, (index) {

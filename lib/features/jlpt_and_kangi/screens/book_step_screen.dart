@@ -3,14 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:jonggack_topik/common/commonDialog.dart';
 import 'package:jonggack_topik/config/theme.dart';
 import 'package:get/get.dart';
-import 'package:jonggack_topik/common/widget/dimentions.dart';
 import 'package:jonggack_topik/config/colors.dart';
 import 'package:jonggack_topik/features/calendar_step/japanese_calendar_step_screen.dart';
-import 'package:jonggack_topik/features/calendar_step/kangi_calendar_step_body.dart';
-import 'package:jonggack_topik/features/grammar_step/services/grammar_controller.dart';
 import 'package:jonggack_topik/features/jlpt_and_kangi/jlpt/controller/jlpt_step_controller.dart';
-import 'package:jonggack_topik/features/jlpt_and_kangi/kangi/controller/kangi_step_controller.dart';
-import 'package:jonggack_topik/features/calendar_step/grammar_calendar_step_screen.dart';
 import 'package:jonggack_topik/features/jlpt_home/screens/jlpt_home_screen.dart';
 import 'package:jonggack_topik/repository/local_repository.dart';
 import 'package:jonggack_topik/user/controller/user_controller.dart';
@@ -20,18 +15,12 @@ final String BOOK_STEP_PATH = '/book-step';
 // ignore: must_be_immutable
 class BookStepScreen extends StatefulWidget {
   late JlptStepController jlptWordController;
-  late KangiStepController kangiController;
-  late GrammarController grammarController;
   final String level;
   final CategoryEnum categoryEnum;
 
   BookStepScreen({super.key, required this.level, required this.categoryEnum}) {
     if (categoryEnum == CategoryEnum.Japaneses) {
       jlptWordController = Get.put(JlptStepController(level: level));
-    } else if (categoryEnum == CategoryEnum.Kangis) {
-      kangiController = Get.put(KangiStepController(level: level));
-    } else {
-      grammarController = Get.put(GrammarController(level: level));
     }
   }
 
@@ -46,14 +35,6 @@ class _BookStepScreenState extends State<BookStepScreen> {
   void goTo(int index, String chapter) {
     if (widget.categoryEnum == CategoryEnum.Japaneses) {
       Get.to(() => JapaneseCalendarStepScreen(chapter: chapter));
-    } else if (widget.categoryEnum == CategoryEnum.Kangis) {
-      Get.to(() => KangiCalendarStepBody(chapter: chapter));
-    } else {
-      widget.grammarController.setStep(index);
-      Get.toNamed(
-        JLPT_CALENDAR_STEP_PATH,
-        arguments: {'chapter': chapter, 'categoryEnum': widget.categoryEnum},
-      );
     }
   }
 
@@ -74,12 +55,6 @@ class _BookStepScreenState extends State<BookStepScreen> {
     switch (widget.categoryEnum) {
       case CategoryEnum.Japaneses:
         len = widget.jlptWordController.headTitleCount;
-        break;
-      case CategoryEnum.Kangis:
-        len = widget.kangiController.headTitleCount;
-        break;
-      case CategoryEnum.Grammars:
-        len = widget.grammarController.grammers.length;
         break;
     }
 

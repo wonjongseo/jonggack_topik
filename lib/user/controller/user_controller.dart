@@ -9,21 +9,17 @@ import 'package:jonggack_topik/data/word_datas.dart';
 import 'package:jonggack_topik/features/home/screens/home_screen.dart';
 import 'package:jonggack_topik/features/my_voca/screens/my_voca_sceen.dart';
 import 'package:jonggack_topik/features/my_voca/services/my_voca_controller.dart';
-import 'package:jonggack_topik/model/grammar.dart';
 import 'package:jonggack_topik/model/word.dart';
-import 'package:jonggack_topik/repository/grammar_step_repository.dart';
 import 'package:jonggack_topik/repository/jlpt_step_repository.dart';
-import 'package:jonggack_topik/repository/kangis_step_repository.dart';
+
 import 'package:jonggack_topik/repository/local_repository.dart';
 import 'package:jonggack_topik/model/user.dart';
 import 'package:jonggack_topik/user/repository/user_repository.dart';
 import 'package:jonggack_topik/user/screen/hiden_screen.dart';
 
-import 'package:jonggack_topik/model/kangi.dart';
-
 // ignore: constant_identifier_names
 
-enum TotalProgressType { JLPT, GRAMMAR, KANGI }
+enum TotalProgressType { JLPT }
 
 enum SOUND_OPTIONS { VOLUMN, PITCH, RATE }
 
@@ -31,18 +27,14 @@ class UserController extends GetxController {
   late TextEditingController textEditingController;
   String selectedDropDownItem = 'japanese';
   List<Word>? searchedWords;
-  List<Kangi>? searchedKangis;
-  List<Grammar>? searchedGrammar;
   bool isSearchReq = false;
   UserRepository userRepository = UserRepository();
   bool isPad = false;
   late User user;
 
   bool noSearchedQuery() {
-    if (searchedWords != null &&
-        searchedKangis != null &&
-        searchedGrammar != null) {
-      if (searchedWords!.isEmpty && searchedKangis!.isEmpty) {
+    if (searchedWords != null) {
+      if (searchedWords!.isEmpty) {
         return true;
       }
     }
@@ -51,8 +43,6 @@ class UserController extends GetxController {
 
   Future<void> clearQuery() async {
     searchedWords = null;
-    searchedKangis = null;
-    searchedGrammar = null;
     update();
   }
 
@@ -65,22 +55,15 @@ class UserController extends GetxController {
     }
 
     searchedWords = null;
-    searchedKangis = null;
-    searchedGrammar = null;
     isSearchReq = true;
     update();
     searchedWords = await JlptRepositry.searchWords(query);
-
-    searchedKangis = await KangiRepositroy.searchkangis(query);
-    searchedGrammar = await GrammarRepositroy.searchGrammars(query);
 
     if (query.length == 1) {
       String aa = '0123456789';
 
       if (aa.contains(query)) {
         searchedWords = [];
-        searchedKangis = [];
-        searchedGrammar = [];
       }
     }
 
@@ -194,78 +177,6 @@ class UserController extends GetxController {
           user.currentJlptWordScroes[i] = 0;
         }
         break;
-      case TotalProgressType.GRAMMAR:
-        for (int i = 0; i < user.currentGrammarScores.length; i++) {
-          switch (i) {
-            case 0:
-              user.grammarScores[i] = jsonN1Grammars.length;
-              break;
-            case 1:
-              user.grammarScores[i] = jsonN2Grammars.length;
-              break;
-            case 2:
-              user.grammarScores[i] = jsonN3Grammars.length;
-              break;
-            case 3:
-              user.grammarScores[i] = jsonN4Grammars.length;
-              break;
-            case 4:
-              user.grammarScores[i] = jsonN5Grammars.length;
-              break;
-          }
-
-          user.currentGrammarScores[i] = 0;
-        }
-        break;
-      case TotalProgressType.KANGI:
-        for (int i = 0; i < user.currentKangiScores.length; i++) {
-          switch (i) {
-            case 0:
-              int totalCount = 0;
-              for (int ii = 0; ii < jsonN1Kangis.length; ii++) {
-                totalCount += (jsonN1Kangis[ii] as List).length;
-              }
-              user.kangiScores[i] = totalCount;
-              break;
-            case 1:
-              int totalCount = 0;
-              for (int ii = 0; ii < jsonN2Kangis.length; ii++) {
-                totalCount += (jsonN2Kangis[ii] as List).length;
-              }
-              user.kangiScores[i] = totalCount;
-              break;
-            case 2:
-              int totalCount = 0;
-              for (int ii = 0; ii < jsonN3Kangis.length; ii++) {
-                totalCount += (jsonN3Kangis[ii] as List).length;
-              }
-              user.kangiScores[i] = totalCount;
-              break;
-            case 3:
-              int totalCount = 0;
-              for (int ii = 0; ii < jsonN4Kangis.length; ii++) {
-                totalCount += (jsonN4Kangis[ii] as List).length;
-              }
-              user.kangiScores[i] = totalCount;
-              break;
-            case 4:
-              int totalCount = 0;
-              for (int ii = 0; ii < jsonN5Kangis.length; ii++) {
-                totalCount += (jsonN5Kangis[ii] as List).length;
-              }
-              user.kangiScores[i] = totalCount;
-              break;
-            case 5:
-              int totalCount = 0;
-              for (int ii = 0; ii < jsonN6Kangis.length; ii++) {
-                totalCount += (jsonN6Kangis[ii] as List).length;
-              }
-              user.kangiScores[i] = totalCount;
-              break;
-          }
-          user.currentKangiScores[i] = 0;
-        }
-        break;
     }
     userRepository.updateUser(user);
   }
@@ -283,28 +194,6 @@ class UserController extends GetxController {
             user.currentJlptWordScroes[index] = user.jlptWordScroes[index];
           } else {
             user.currentJlptWordScroes[index] += addScore;
-          }
-        }
-
-        break;
-      case TotalProgressType.GRAMMAR:
-        if (user.currentGrammarScores[index] + addScore >= 0) {
-          if (user.currentGrammarScores[index] + addScore >
-              user.grammarScores[index]) {
-            user.currentGrammarScores[index] = user.grammarScores[index];
-          } else {
-            user.currentGrammarScores[index] += addScore;
-          }
-        }
-
-        break;
-      case TotalProgressType.KANGI:
-        if (user.currentKangiScores[index] + addScore >= 0) {
-          if (user.currentKangiScores[index] + addScore >
-              user.kangiScores[index]) {
-            user.currentKangiScores[index] = user.kangiScores[index];
-          } else {
-            user.currentKangiScores[index] += addScore;
           }
         }
 
@@ -370,16 +259,5 @@ class UserController extends GetxController {
         return;
       }
     }
-  }
-
-  void addN4N5GrammarScore() {
-    log('V2.3.0 addN4N5GrammarScore');
-
-    user.grammarScores.add(jsonN4Grammars.length);
-    user.grammarScores.add(jsonN5Grammars.length);
-
-    user.currentGrammarScores.addAll([0, 0]);
-
-    userRepository.updateUser(user);
   }
 }

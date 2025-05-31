@@ -1,30 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/features/home/widgets/home_screen_body.dart';
-import 'package:jonggack_topik/features/jlpt_and_kangi/screens/grammar_book_step_body.dart';
+
 import 'package:jonggack_topik/features/jlpt_and_kangi/screens/japanese_book_step_body.dart';
-import 'package:jonggack_topik/features/jlpt_and_kangi/screens/kangi_book_step_body.dart';
 import 'package:jonggack_topik/features/search/widgets/search_widget.dart';
 import 'package:jonggack_topik/common/controller/tts_controller.dart';
 import 'package:jonggack_topik/common/widget/dimentions.dart';
-import 'package:jonggack_topik/features/jlpt_and_kangi/screens/book_step_screen.dart';
 import 'package:jonggack_topik/features/home/services/home_controller.dart';
 import 'package:jonggack_topik/repository/local_repository.dart';
 
 import '../../../common/admob/banner_ad/global_banner_admob.dart';
 
 // ignore: constant_identifier_names
-enum CategoryEnum { Japaneses, Kangis, Grammars }
+enum CategoryEnum { Japaneses }
 
 extension CategoryEnumExtension on CategoryEnum {
   String get id {
     switch (this) {
       case CategoryEnum.Japaneses:
         return '일본어';
-      case CategoryEnum.Kangis:
-        return '한자';
-      case CategoryEnum.Grammars:
-        return '문법';
     }
   }
 }
@@ -73,10 +67,6 @@ class _JlptHomeScreenState extends State<JlptHomeScreen> {
     switch (categoryEnum) {
       case CategoryEnum.Japaneses:
         return JapaneseBookStepBody(level: level);
-      case CategoryEnum.Grammars:
-        return GrammarBookStepBody(level: level);
-      case CategoryEnum.Kangis:
-        return KangiBookStepBody(level: level);
     }
   }
 

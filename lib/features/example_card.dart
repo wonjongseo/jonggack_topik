@@ -8,25 +8,18 @@ import 'package:jonggack_topik/config/colors.dart';
 import 'package:jonggack_topik/common/widget/dimentions.dart';
 import 'package:jonggack_topik/model/example.dart';
 import 'package:jonggack_topik/common/controller/tts_controller.dart';
-import 'package:jonggack_topik/repository/kangis_step_repository.dart';
 
-import '../../../config/theme.dart';
+import '../config/theme.dart';
 
-class GrammarExampleCard extends StatefulWidget {
-  const GrammarExampleCard({
-    super.key,
-    required this.examples,
-    required this.index,
-  });
+class ExampleCard extends StatefulWidget {
+  const ExampleCard({super.key, required this.examples, required this.index});
   final List<Example> examples;
   final int index;
   @override
-  State<GrammarExampleCard> createState() => _GrammarExampleCardState();
+  State<ExampleCard> createState() => _ExampleCardState();
 }
 
-class _GrammarExampleCardState extends State<GrammarExampleCard> {
-  KangiStepRepositroy kangiStepRepositroy = KangiStepRepositroy();
-
+class _ExampleCardState extends State<ExampleCard> {
   @override
   Widget build(BuildContext context) {
     String grammarWrod = '';

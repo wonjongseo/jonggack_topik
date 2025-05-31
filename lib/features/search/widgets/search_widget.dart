@@ -6,7 +6,7 @@ import 'package:jonggack_topik/features/search/widgets/searched_word_card.dart';
 import 'package:jonggack_topik/user/controller/user_controller.dart';
 import 'package:jonggack_topik/config/colors.dart';
 
-List<String> list = ['일본어', '한자', '문법'];
+List<String> list = ['일본어'];
 
 class NewSearchWidget extends StatefulWidget {
   const NewSearchWidget({super.key});
@@ -101,12 +101,8 @@ class _NewSearchWidgetState extends State<NewSearchWidget> {
                   child: const CircularProgressIndicator.adaptive(),
                 ),
               )
-            else if (userController.searchedWords != null &&
-                userController.searchedKangis != null &&
-                userController.searchedGrammar != null) ...[
-              if (userController.searchedWords!.isEmpty &&
-                  userController.searchedKangis!.isEmpty &&
-                  userController.searchedGrammar!.isEmpty) ...[
+            else if (userController.searchedWords != null) ...[
+              if (userController.searchedWords!.isEmpty) ...[
                 SizedBox(height: Responsive.height10 / 2),
                 Align(
                   alignment: Alignment.centerLeft,
@@ -141,7 +137,7 @@ class _NewSearchWidgetState extends State<NewSearchWidget> {
                                 ),
                               ),
                               Text(
-                                '의 검색 결과: ${userController.searchedWords!.length + userController.searchedKangis!.length + userController.searchedGrammar!.length}',
+                                '의 검색 결과: ${userController.searchedWords!.length}',
                                 style: TextStyle(
                                   fontWeight: FontWeight.w600,
                                   fontSize: Responsive.height14,
@@ -168,21 +164,6 @@ class _NewSearchWidgetState extends State<NewSearchWidget> {
                               userController.searchedWords!.length,
                               (index) => SearchedWordCard(
                                 searchedWords: userController.searchedWords!,
-                                index: index,
-                              ),
-                            ),
-                            ...List.generate(
-                              userController.searchedKangis!.length,
-                              (index) => SearchedKangiCard(
-                                searchedKangis: userController.searchedKangis!,
-                                index: index,
-                              ),
-                            ),
-                            ...List.generate(
-                              userController.searchedGrammar!.length,
-                              (index) => SearchedGrammarCard(
-                                searchedGrammar:
-                                    userController.searchedGrammar!,
                                 index: index,
                               ),
                             ),

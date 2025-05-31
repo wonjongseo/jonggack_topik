@@ -30,7 +30,6 @@ class JlptTestScreen extends StatelessWidget {
 
   AppBar _appBar(BuildContext context, JlptTestController questionController) {
     return AppBar(
-      title: const ProgressBar(isKangi: false),
       actions: [
         GetBuilder<JlptTestController>(
           builder: (controller) {

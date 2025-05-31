@@ -5,14 +5,11 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:jonggack_topik/features/home/widgets/home_screen_body.dart';
 import 'package:jonggack_topik/model/Question.dart';
 import 'package:jonggack_topik/model/example.dart';
-import 'package:jonggack_topik/model/grammar.dart';
-import 'package:jonggack_topik/model/grammar_step.dart';
 import 'package:jonggack_topik/model/hive_type.dart';
 import 'package:jonggack_topik/model/my_word.dart';
 import 'package:jonggack_topik/model/jlpt_step.dart';
-import 'package:jonggack_topik/model/kangi.dart';
+import 'package:jonggack_topik/model/synonym.dart';
 import 'package:jonggack_topik/model/word.dart';
-import 'package:jonggack_topik/model/kangi_step.dart';
 
 import '../model/user.dart';
 
@@ -28,13 +25,6 @@ class LocalReposotiry {
       Hive.registerAdapter(UserAdapter());
     }
 
-    if (!Hive.isAdapterRegistered(KangiTypeId)) {
-      Hive.registerAdapter(KangiAdapter());
-    }
-    if (!Hive.isAdapterRegistered(KangiStepTypeId)) {
-      Hive.registerAdapter(KangiStepAdapter());
-    }
-
     if (!Hive.isAdapterRegistered(WordTypeId)) {
       Hive.registerAdapter(WordAdapter());
     }
@@ -47,16 +37,11 @@ class LocalReposotiry {
       Hive.registerAdapter(JlptStepAdapter());
     }
 
-    if (!Hive.isAdapterRegistered(GrammarTypeId)) {
-      Hive.registerAdapter(GrammarAdapter());
-    }
-
-    if (!Hive.isAdapterRegistered(GrammarStepTypeId)) {
-      Hive.registerAdapter(GrammarStepAdapter());
-    }
-
     if (!Hive.isAdapterRegistered(ExampleTypeId)) {
       Hive.registerAdapter(ExampleAdapter());
+    }
+    if (!Hive.isAdapterRegistered(SynonymsTypeId)) {
+      Hive.registerAdapter(SynonymAdapter());
     }
 
     if (!Hive.isAdapterRegistered(QuestionTypeId)) {
@@ -78,12 +63,6 @@ class LocalReposotiry {
     if (!Hive.isBoxOpen('myWordTutorialKey')) {
       await Hive.openBox('myWordTutorialKey');
     }
-
-    //TODO DELETE
-    // if (!Hive.isBoxOpen('autoSaveKey')) {
-
-    //   await Hive.openBox('autoSaveKey');
-    // }
 
     if (!Hive.isBoxOpen('currentProgressingKey')) {
       await Hive.openBox('currentProgressingKey');
@@ -121,31 +100,13 @@ class LocalReposotiry {
     if (!Hive.isBoxOpen('basicOrJlptOrMy')) {
       await Hive.openBox('basicOrJlptOrMy');
     }
-    if (!Hive.isBoxOpen('isNeedUpdatedAllData2.3.3')) {
-      await Hive.openBox('isNeedUpdatedAllData2.3.3');
-    }
 
     if (!Hive.isBoxOpen('jlptOrKangiOrGrarmmar')) {
       await Hive.openBox('jlptOrKangiOrGrarmmar');
     }
 
-    if (!Hive.isBoxOpen('allDataUpdate2.3.3')) {
-      await Hive.openBox('allDataUpdate2.3.3');
-    }
-
-    if (!Hive.isBoxOpen('isAskUpdatedAllData2.3.3')) {
-      await Hive.openBox('isAskUpdatedAllData2.3.3');
-    }
-
     if (!Hive.isBoxOpen(User.boxKey)) {
       await Hive.openBox(User.boxKey);
-    }
-
-    if (!Hive.isBoxOpen(Grammar.boxKey)) {
-      await Hive.openBox<Grammar>(Grammar.boxKey);
-    }
-    if (!Hive.isBoxOpen(Kangi.boxKey)) {
-      await Hive.openBox<Kangi>(Kangi.boxKey);
     }
 
     if (!Hive.isBoxOpen(JlptStep.boxKey)) {
@@ -154,18 +115,6 @@ class LocalReposotiry {
 
     if (!Hive.isBoxOpen(Example.boxKey)) {
       await Hive.openBox(Example.boxKey);
-    }
-
-    if (!Hive.isBoxOpen(Grammar.boxKey)) {
-      await Hive.openBox(Grammar.boxKey);
-    }
-
-    if (!Hive.isBoxOpen(GrammarStep.boxKey)) {
-      await Hive.openBox(GrammarStep.boxKey);
-    }
-
-    if (!Hive.isBoxOpen(KangiStep.boxKey)) {
-      await Hive.openBox(KangiStep.boxKey);
     }
 
     if (!Hive.isBoxOpen(Word.boxKey)) {
@@ -370,37 +319,6 @@ class LocalReposotiry {
       log(e.toString());
       return false;
     }
-  }
-
-  static void putAllDataUpdate(bool value) {
-    final list = Hive.box('allDataUpdate2.3.3');
-    list.put('allDataUpdate2.3.3Key', value);
-  }
-
-  //updatedAllData 2.3버전에서 데이터 변경/수정에 의해 초기화 할 것인지를 묻기 위해
-  static putIsNeedUpdateAllData(bool isNeed) {
-    final list = Hive.box('isNeedUpdatedAllData2.3.3');
-    list.put('isNeedUpdatedAllData2.3.3Key', isNeed);
-  }
-
-  static getIsNeedUpdateAllData() {
-    final list = Hive.box('isNeedUpdatedAllData2.3.3');
-    return list.get('isNeedUpdatedAllData2.3.3Key', defaultValue: null);
-  }
-
-  static void deleteIsUpdateAllData() {
-    final list = Hive.box('isNeedUpdatedAllData2.3.3');
-    list.deleteFromDisk();
-  }
-
-  static bool isAskUpdateAllDataFor2_3_3() {
-    final list = Hive.box('isAskUpdatedAllData2.3.3');
-    return list.get('isAskUpdatedAllData2.3.3', defaultValue: false);
-  }
-
-  static void askedUpdateAllDataFor2_3_3(bool isAsked) {
-    final list = Hive.box('isAskUpdatedAllData2.3.3');
-    list.put('isAskUpdatedAllData2.3.3', isAsked);
   }
 
   static int aaa() {

@@ -1,7 +1,5 @@
 import 'dart:async';
 import 'package:jonggack_topik/common/common.dart';
-import 'package:jonggack_topik/data/grammar_datas.dart';
-import 'package:jonggack_topik/data/kangi_datas.dart';
 import 'package:jonggack_topik/data/word_datas.dart';
 import 'package:jonggack_topik/features/home/screens/home_screen.dart';
 import 'package:jonggack_topik/routes.dart';
@@ -13,9 +11,8 @@ import 'package:get/get.dart';
 import 'package:jonggack_topik/common/admob/controller/ad_controller.dart';
 import 'package:jonggack_topik/config/theme.dart';
 import 'package:jonggack_topik/model/user.dart';
-import 'package:jonggack_topik/repository/grammar_step_repository.dart';
 import 'package:jonggack_topik/repository/jlpt_step_repository.dart';
-import 'package:jonggack_topik/repository/kangis_step_repository.dart';
+
 import 'package:jonggack_topik/repository/local_repository.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:jonggack_topik/user/controller/user_controller.dart';
@@ -104,68 +101,30 @@ class _AppState extends State<App> {
   Future<bool> forTest() async {
     List<int> jlptWordScroes = [];
     List<int> grammarScores = [];
-    List<int> kangiScores = [];
     try {
       await LocalReposotiry.init();
 
-      jlptWordScroes.add(await JlptStepRepositroy.init('1'));
-      jlptWordScroes.add(await JlptStepRepositroy.init('2'));
+      // jlptWordScroes.add(await JlptStepRepositroy.init('1'));
+      // jlptWordScroes.add(await JlptStepRepositroy.init('2'));
 
-      jlptWordScroes.add(await JlptStepRepositroy.init('3'));
+      // jlptWordScroes.add(await JlptStepRepositroy.init('3'));
 
-      jlptWordScroes.add(await JlptStepRepositroy.init('4'));
+      // jlptWordScroes.add(await JlptStepRepositroy.init('4'));
 
       jlptWordScroes.add(await JlptStepRepositroy.init('5'));
-
-      grammarScores.add(await GrammarRepositroy.init('1'));
-
-      grammarScores.add(await GrammarRepositroy.init('2'));
-
-      grammarScores.add(await GrammarRepositroy.init('3'));
-
-      grammarScores.add(await GrammarRepositroy.init('4'));
-      grammarScores.add(await GrammarRepositroy.init('5'));
-
-      kangiScores.add(await KangiStepRepositroy.init("1"));
-
-      kangiScores.add(await KangiStepRepositroy.init("2"));
-
-      kangiScores.add(await KangiStepRepositroy.init("3"));
-
-      kangiScores.add(await KangiStepRepositroy.init("4"));
-
-      kangiScores.add(await KangiStepRepositroy.init("5"));
-
-      kangiScores.add(await KangiStepRepositroy.init("6"));
 
       late User user;
       List<int> currentJlptWordScroes = List.generate(
         jlptWordScroes.length,
         (index) => 0,
       );
-      List<int> currentGrammarScores = List.generate(
-        grammarScores.length,
-        (index) => 0,
-      );
-      List<int> currentKangiScores = List.generate(
-        kangiScores.length,
-        (index) => 0,
-      );
 
       user = User(
         jlptWordScroes: jlptWordScroes,
-        grammarScores: grammarScores,
-        kangiScores: kangiScores,
         currentJlptWordScroes: currentJlptWordScroes,
-        currentGrammarScores: currentGrammarScores,
-        currentKangiScores: currentKangiScores,
       );
 
       user = await UserRepository.init(user);
-      if (!LocalReposotiry.isAskUpdateAllDataFor2_3_3()) {
-        LocalReposotiry.putIsNeedUpdateAllData(false);
-        LocalReposotiry.askedUpdateAllDataFor2_3_3(true);
-      }
 
       UserController userController = Get.put(UserController());
       userController.user.isPad = await isIpad();
@@ -236,94 +195,6 @@ class _AppState extends State<App> {
         jlptWordScroes.add(totalCount);
       }
 
-      if (await GrammarRepositroy.isExistData(1) == false) {
-        grammarScores.add(await GrammarRepositroy.init('1'));
-      } else {
-        grammarScores.add(jsonN1Grammars.length);
-      }
-
-      if (await GrammarRepositroy.isExistData(2) == false) {
-        grammarScores.add(await GrammarRepositroy.init('2'));
-      } else {
-        grammarScores.add(jsonN2Grammars.length);
-      }
-
-      if (await GrammarRepositroy.isExistData(3) == false) {
-        grammarScores.add(await GrammarRepositroy.init('3'));
-      } else {
-        grammarScores.add(jsonN3Grammars.length);
-      }
-      if (await GrammarRepositroy.isExistData(4) == false) {
-        grammarScores.add(await GrammarRepositroy.init('4'));
-      } else {
-        grammarScores.add(jsonN4Grammars.length);
-      }
-      if (await GrammarRepositroy.isExistData(5) == false) {
-        grammarScores.add(await GrammarRepositroy.init('5'));
-      } else {
-        grammarScores.add(jsonN5Grammars.length);
-      }
-
-      if (await KangiStepRepositroy.isExistData(1) == false) {
-        kangiScores.add(await KangiStepRepositroy.init("1"));
-      } else {
-        int totalCount = 0;
-        for (int ii = 0; ii < jsonN1Kangis.length; ii++) {
-          totalCount += (jsonN1Kangis[ii] as List).length;
-        }
-        kangiScores.add(totalCount);
-      }
-
-      if (await KangiStepRepositroy.isExistData(2) == false) {
-        kangiScores.add(await KangiStepRepositroy.init("2"));
-      } else {
-        int totalCount = 0;
-        for (int ii = 0; ii < jsonN2Kangis.length; ii++) {
-          totalCount += (jsonN2Kangis[ii] as List).length;
-        }
-        kangiScores.add(totalCount);
-      }
-
-      if (await KangiStepRepositroy.isExistData(3) == false) {
-        kangiScores.add(await KangiStepRepositroy.init("3"));
-      } else {
-        int totalCount = 0;
-        for (int ii = 0; ii < jsonN3Kangis.length; ii++) {
-          totalCount += (jsonN3Kangis[ii] as List).length;
-        }
-        kangiScores.add(totalCount);
-      }
-
-      if (await KangiStepRepositroy.isExistData(4) == false) {
-        kangiScores.add(await KangiStepRepositroy.init("4"));
-      } else {
-        int totalCount = 0;
-        for (int ii = 0; ii < jsonN4Kangis.length; ii++) {
-          totalCount += (jsonN4Kangis[ii] as List).length;
-        }
-        kangiScores.add(totalCount);
-      }
-
-      if (await KangiStepRepositroy.isExistData(5) == false) {
-        kangiScores.add(await KangiStepRepositroy.init("5"));
-      } else {
-        int totalCount = 0;
-        for (int ii = 0; ii < jsonN5Kangis.length; ii++) {
-          totalCount += (jsonN5Kangis[ii] as List).length;
-        }
-        kangiScores.add(totalCount);
-      }
-
-      if (await KangiStepRepositroy.isExistData(6) == false) {
-        kangiScores.add(await KangiStepRepositroy.init("6"));
-      } else {
-        int totalCount = 0;
-        for (int ii = 0; ii < jsonN6Kangis.length; ii++) {
-          totalCount += (jsonN6Kangis[ii] as List).length;
-        }
-        kangiScores.add(totalCount);
-      }
-
       late User user;
       if (await UserRepository.isExistData() == false) {
         List<int> currentJlptWordScroes = List.generate(
@@ -341,46 +212,20 @@ class _AppState extends State<App> {
 
         user = User(
           jlptWordScroes: jlptWordScroes,
-          grammarScores: grammarScores,
-          kangiScores: kangiScores,
           currentJlptWordScroes: currentJlptWordScroes,
-          currentGrammarScores: currentGrammarScores,
-          currentKangiScores: currentKangiScores,
         );
 
         user = await UserRepository.init(user);
-        if (!LocalReposotiry.isAskUpdateAllDataFor2_3_3()) {
-          LocalReposotiry.putIsNeedUpdateAllData(false);
-          LocalReposotiry.askedUpdateAllDataFor2_3_3(true);
-        }
-      } else {
-        if (!LocalReposotiry.isAskUpdateAllDataFor2_3_3()) {
-          LocalReposotiry.putIsNeedUpdateAllData(true);
-          LocalReposotiry.askedUpdateAllDataFor2_3_3(true);
-        }
       }
 
       UserController userController = Get.put(UserController());
       userController.user.isPad = await isIpad();
 
-      if (userController.user.grammarScores.length == 3) {
-        userController.addN4N5GrammarScore();
-      }
       bool ischeckAndExecuteFunction =
           await LocalReposotiry.checkAndExecuteFunction();
       if (ischeckAndExecuteFunction) {
         for (int i = 1; i < 6; i++) {
           jlptWordScroes[i - 1] = await JlptStepRepositroy.updateJlptStepData(
-            "$i",
-          );
-        }
-        for (int i = 1; i < 7; i++) {
-          kangiScores[i - 1] = await KangiStepRepositroy.updateKangiStepData(
-            "$i",
-          );
-        }
-        for (int i = 1; i < 6; i++) {
-          grammarScores[i - 1] = await GrammarRepositroy.updateGrammarStepData(
             "$i",
           );
         }

@@ -1,13 +1,11 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/config/colors.dart';
 import 'package:jonggack_topik/config/theme.dart';
 import 'package:jonggack_topik/features/jlpt_and_kangi/jlpt/controller/jlpt_step_controller.dart';
-import 'package:jonggack_topik/features/jlpt_and_kangi/kangi/controller/kangi_step_controller.dart';
 import 'package:jonggack_topik/features/jlpt_study/screens/jlpt_study_sceen.dart';
-import 'package:jonggack_topik/features/kangi_study/widgets/screens/kangi_study_sceen.dart';
-import 'package:jonggack_topik/model/kangi.dart';
 import 'package:jonggack_topik/model/word.dart';
 import 'package:jonggack_topik/user/controller/user_controller.dart';
 
@@ -57,13 +55,10 @@ class _JapaneseListTileState extends State<JapaneseListTile> {
               height: 30,
               child:
                   isWantToSeeYomikata || controller.isSeeYomikata
-                      ? Text(
+                      ? AutoSizeText(
                         widget.word.yomikata,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          fontFamily: AppFonts.descriptionFont,
-                        ),
+                        style: subTS(),
+                        maxLines: 1,
                       )
                       : InkWell(
                         onTap: () {
@@ -85,11 +80,8 @@ class _JapaneseListTileState extends State<JapaneseListTile> {
                 isWantToSeeMean || controller.isSeeMean
                     ? Text(
                       mean,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontFamily: AppFonts.descriptionFont,
-                        overflow: TextOverflow.ellipsis,
-                      ),
+                      style: primaryTS(),
+                      overflow: TextOverflow.ellipsis,
                     )
                     : InkWell(
                       onTap: () {
@@ -101,15 +93,7 @@ class _JapaneseListTileState extends State<JapaneseListTile> {
                       ),
                     ),
           ),
-          leading: Text(
-            changedWord,
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w700,
-              fontFamily: AppFonts.japaneseFont,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
+          leading: Text(changedWord, style: primaryTS()),
           trailing: IconButton(
             style: IconButton.styleFrom(
               padding: const EdgeInsets.all(2),

@@ -5,11 +5,11 @@ import 'package:jonggack_topik/common/controller/tts_controller.dart';
 import 'package:jonggack_topik/common/widget/dimentions.dart';
 import 'package:jonggack_topik/common/widget/kangi_text.dart';
 import 'package:jonggack_topik/config/theme.dart';
-import 'package:jonggack_topik/features/grammar_test/components/grammar_example_card.dart';
+import 'package:jonggack_topik/features/example_card.dart';
 import 'package:jonggack_topik/features/jlpt_and_kangi/jlpt/controller/jlpt_step_controller.dart';
 import 'package:jonggack_topik/features/jlpt_study/widgets/related_word.dart';
 import 'package:jonggack_topik/model/word.dart';
-import 'package:jonggack_topik/repository/kangis_step_repository.dart';
+
 import 'package:jonggack_topik/config/colors.dart';
 
 // ignore: must_be_immutable
@@ -20,19 +20,8 @@ class WordCard extends StatelessWidget {
   final Word word;
   @override
   Widget build(BuildContext context) {
-    List<String> temp = [];
     String japanese = word.word;
     String yomikata = word.yomikata;
-
-    if (yomikata.contains('@')) {
-      String undoc = yomikata.split('@')[0];
-      String hundoc = yomikata.split('@')[1];
-      yomikata = '[$undoc / $hundoc]';
-    } else {
-      yomikata = '[$yomikata]';
-    }
-
-    KangiStepRepositroy kangiStepRepositroy = KangiStepRepositroy();
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: Responsive.width10),
@@ -67,7 +56,7 @@ class WordCard extends StatelessWidget {
                                   ? FontAwesomeIcons.bookmark
                                   : FontAwesomeIcons.solidBookmark,
                               color: AppColors.mainBordColor,
-                              size: Responsive.height10 * 2.2,
+                              size: 22,
                             ),
                           ),
                       ],
@@ -123,11 +112,8 @@ class WordCard extends StatelessWidget {
               ),
               const Divider(),
               SizedBox(height: Responsive.height10 * 1.5),
-              RelatedWords(
-                japanese: japanese,
-                kangiStepRepositroy: kangiStepRepositroy,
-                temp: temp,
-              ),
+              if (word.synonyms != null)
+                RelatedWords(japanese: japanese, synonym: word.synonyms!),
               SizedBox(height: Responsive.height10 * 2),
               if (word.examples != null && word.examples!.isNotEmpty) ...[
                 Row(
@@ -141,23 +127,6 @@ class WordCard extends StatelessWidget {
                         color: AppColors.mainBordColor,
                       ),
                     ),
-                    // InkWell(
-                    //   onTap: () {
-                    //     Get.to(
-                    //       () => GrammarDetailScreen(
-                    //         examples: word.examples!,
-                    //       ),
-                    //     );
-                    //   },
-                    //   child: Text(
-                    //     '셈플 발음 테스트하기→',
-                    //     style: TextStyle(
-                    //       fontWeight: FontWeight.bold,
-                    //       fontSize: Responsive.height10 * 1.8,
-                    //       color: AppColors.mainBordColor,
-                    //     ),
-                    //   ),
-                    // ),
                   ],
                 ),
                 if (controller == null)
@@ -172,7 +141,7 @@ class WordCard extends StatelessWidget {
                           children: List.generate(word.examples!.length, (
                             index,
                           ) {
-                            return GrammarExampleCard(
+                            return ExampleCard(
                               examples: word.examples!,
                               index: index,
                             );
@@ -194,7 +163,7 @@ class WordCard extends StatelessWidget {
                             if (!controller!.isMoreExample) ...[
                               if (word.examples!.length > 2) ...[
                                 ...List.generate(2, (index) {
-                                  return GrammarExampleCard(
+                                  return ExampleCard(
                                     examples: word.examples!,
                                     index: index,
                                   );
@@ -213,7 +182,7 @@ class WordCard extends StatelessWidget {
                                 ...List.generate(word.examples!.length, (
                                   index,
                                 ) {
-                                  return GrammarExampleCard(
+                                  return ExampleCard(
                                     examples: word.examples!,
                                     index: index,
                                   );
@@ -221,7 +190,7 @@ class WordCard extends StatelessWidget {
                               ],
                             ] else ...[
                               ...List.generate(word.examples!.length, (index) {
-                                return GrammarExampleCard(
+                                return ExampleCard(
                                   examples: word.examples!,
                                   index: index,
                                 );

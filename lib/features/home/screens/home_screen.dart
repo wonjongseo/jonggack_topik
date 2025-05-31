@@ -87,27 +87,6 @@ class _HomeScreenState extends State<HomeScreen> {
         duration: const Duration(seconds: 4),
       );
     }
-    // TODO 살리기
-    bool isNeedUpdateAllData = LocalReposotiry.getIsNeedUpdateAllData();
-
-    // await CommonDialog.askToDeleteAllDataForUpdateDatas();
-    if (isNeedUpdateAllData) {
-      bool a = await CommonDialog.askToDeleteAllDataForUpdateDatas();
-      if (a) {
-        // LocalReposotiry.putAllDataUpdate(true);
-        settingController.allDataDelete();
-      } else {
-        bool secondQuestion = await CommonDialog.askToDeleteAllDataOneMore();
-
-        if (secondQuestion) {
-          settingController.allDataDelete();
-        } else {
-          // LocalReposotiry.putAllDataUpdate(false);
-        }
-      }
-
-      LocalReposotiry.putIsNeedUpdateAllData(false);
-    }
   }
 
   @override
@@ -115,7 +94,6 @@ class _HomeScreenState extends State<HomeScreen> {
     Get.put(TtsController());
     super.initState();
     FlutterLocalNotification.init();
-    // initNotification();
     setting();
     selectedCategoryIndex = LocalReposotiry.getBasicOrJlptOrMy();
     pageController = PageController(initialPage: selectedCategoryIndex);
@@ -324,13 +302,11 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _body(BuildContext context, HomeController homeController) {
     return SafeArea(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Align(
-            alignment: Alignment.centerRight,
-            child: IconButton(
-              onPressed: () => homeController.openDrawer(),
-              icon: Icon(Icons.settings, size: Responsive.height10 * 2.2),
-            ),
+          IconButton(
+            onPressed: () => homeController.openDrawer(),
+            icon: Icon(Icons.settings, size: Responsive.height10 * 2.2),
           ),
           Expanded(
             child: Padding(

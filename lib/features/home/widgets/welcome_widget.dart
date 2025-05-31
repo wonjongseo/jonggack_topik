@@ -9,18 +9,7 @@ class WelcomeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DateTime now = DateTime.now();
-
-    int curHour = now.hour;
-    String gretting = '';
-
-    if (curHour > 1 && curHour < 13) {
-      gretting = 'おはようございます';
-    } else if (curHour >= 13 && curHour < 19) {
-      gretting = 'こんにちは';
-    } else {
-      gretting = 'こんばんは';
-    }
+    String gretting = '안녕하세요';
 
     return GetBuilder<UserController>(
       builder: (userController) {
@@ -37,7 +26,7 @@ class WelcomeWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'JLPT종각',
+                  'TOPIK 종각',
                   style: TextStyle(
                     fontSize: Responsive.height25,
                     fontWeight: FontWeight.w900,
@@ -54,7 +43,7 @@ class WelcomeWidget extends StatelessWidget {
                     ),
                   ),
                 Text(
-                  'へようこそ',
+                  '에 어서오세요',
                   style: TextStyle(
                     fontSize: Responsive.height25,
                     fontWeight: FontWeight.w900,

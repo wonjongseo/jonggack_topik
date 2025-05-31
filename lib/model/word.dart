@@ -6,6 +6,7 @@ import 'package:jonggack_topik/common/network_manager.dart';
 import 'package:jonggack_topik/model/example.dart';
 import 'package:jonggack_topik/model/hive_type.dart';
 import 'package:jonggack_topik/model/my_word.dart';
+import 'package:jonggack_topik/model/synonym.dart';
 
 part 'word.g.dart';
 
@@ -13,6 +14,8 @@ part 'word.g.dart';
 class Word extends HiveObject {
   static final String boxKey = 'word';
 
+  @HiveField(0)
+  late String? id;
   @HiveField(1)
   late String headTitle;
   @HiveField(2)
@@ -23,14 +26,17 @@ class Word extends HiveObject {
   late String mean;
   @HiveField(5)
   List<Example>? examples;
+  @HiveField(6)
+  List<Synonym>? synonyms;
 
   Word({
-    // this.id,
+    this.id,
     required this.word,
     required this.mean,
     required this.yomikata,
     required this.headTitle,
     this.examples,
+    this.synonyms,
   });
 
   @override
@@ -39,6 +45,7 @@ class Word extends HiveObject {
   }
 
   Word.fromMap(Map<String, dynamic> map) {
+    id = map['id'] ?? '';
     word = map['word'] ?? '';
     yomikata = map['yomikata'] ?? '';
     mean = map['mean'] ?? '';
@@ -49,6 +56,13 @@ class Word extends HiveObject {
             : List.generate(
               map['examples'].length,
               (index) => Example.fromMap(map['examples'][index]),
+            );
+    synonyms =
+        map['synonyms'] == null
+            ? []
+            : List.generate(
+              map['synonyms'].length,
+              (index) => Synonym.fromMap(map['synonyms'][index]),
             );
     // examples = map[''] List.generate(map['examples'].legth, (index) => null)
   }
@@ -101,6 +115,9 @@ class Word extends HiveObject {
     result.addAll({'mean': mean});
     if (examples != null) {
       result.addAll({'examples': examples!.map((x) => x?.toMap()).toList()});
+    }
+    if (synonyms != null) {
+      result.addAll({'synonyms': synonyms!.map((x) => x?.toMap()).toList()});
     }
 
     return result;

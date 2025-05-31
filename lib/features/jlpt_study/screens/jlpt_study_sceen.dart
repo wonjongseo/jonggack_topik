@@ -9,7 +9,6 @@ import 'package:jonggack_topik/features/jlpt_and_kangi/jlpt/controller/jlpt_step
 
 import 'package:jonggack_topik/features/jlpt_study/widgets/word_card.dart';
 import 'package:jonggack_topik/features/setting/services/setting_controller.dart';
-import 'package:jonggack_topik/repository/kangis_step_repository.dart';
 
 final String JLPT_STUDY_PATH = '/jlpt_study';
 
@@ -26,7 +25,6 @@ class _JlptStudyScreenState extends State<JlptStudyScreen> {
   late int currentIndex;
   SettingController settingController = Get.find<SettingController>();
   TtsController ttsController = Get.find<TtsController>();
-  KangiStepRepositroy kangiStepRepositroy = KangiStepRepositroy();
 
   late PageController pageController;
   @override

@@ -4,7 +4,6 @@ import 'package:hive/hive.dart';
 import 'package:jonggack_topik/common/widget/custom_snack_bar.dart';
 import 'package:jonggack_topik/model/example.dart';
 import 'package:jonggack_topik/model/hive_type.dart';
-import 'package:jonggack_topik/model/kangi.dart';
 import 'package:jonggack_topik/model/word.dart';
 import 'package:jonggack_topik/repository/my_word_repository.dart';
 
@@ -63,17 +62,6 @@ class MyWord {
     yomikata = map['yomikata'] ?? '';
     isKnown = false;
     examples = [];
-  }
-  static MyWord kangiToMyWord(Kangi kangi) {
-    MyWord newMyWord = MyWord(
-      word: kangi.japan,
-      mean: kangi.korea,
-      yomikata: '${kangi.undoc} / ${kangi.hundoc}',
-    );
-
-    newMyWord.createdAt = DateTime.now();
-
-    return newMyWord;
   }
 
   static MyWord wordToMyWord(Word word) {

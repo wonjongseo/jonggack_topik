@@ -4,10 +4,8 @@ import 'package:jonggack_topik/common/commonDialog.dart';
 import 'package:jonggack_topik/config/theme.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/config/colors.dart';
-import 'package:jonggack_topik/features/calendar_step/grammar_calendar_step_screen.dart';
 import 'package:jonggack_topik/features/calendar_step/japanese_calendar_step_screen.dart';
 import 'package:jonggack_topik/features/jlpt_and_kangi/jlpt/controller/jlpt_step_controller.dart';
-import 'package:jonggack_topik/features/jlpt_and_kangi/kangi/controller/kangi_step_controller.dart';
 import 'package:jonggack_topik/features/jlpt_home/screens/jlpt_home_screen.dart';
 import 'package:jonggack_topik/repository/local_repository.dart';
 import 'package:jonggack_topik/user/controller/user_controller.dart';
@@ -31,7 +29,7 @@ class _JapaneseBookStepBodyState extends State<JapaneseBookStepBody> {
     jlptWordController = Get.put(JlptStepController(level: widget.level));
 
     progrssingIndex = LocalReposotiry.getCurrentProgressing(
-      '${CategoryEnum.Grammars.name}-${widget.level}',
+      '${CategoryEnum.Japaneses.name}-${widget.level}',
     );
 
     super.initState();
@@ -77,7 +75,7 @@ class _JapaneseBookStepBodyState extends State<JapaneseBookStepBody> {
                 }
                 if (progrssingIndex == index) {
                   LocalReposotiry.putCurrentProgressing(
-                    '${CategoryEnum.Grammars.name}-${widget.level}',
+                    '${CategoryEnum.Japaneses.name}-${widget.level}',
                     progrssingIndex,
                   );
                   goTo(index, '챕터${index + 1}');
@@ -101,7 +99,7 @@ class _JapaneseBookStepBodyState extends State<JapaneseBookStepBody> {
                         Center(
                           child: RichText(
                             text: TextSpan(
-                              text: '${CategoryEnum.Grammars.id}\n',
+                              text: '${CategoryEnum.Japaneses.id}\n',
                               children: [
                                 TextSpan(
                                   text: 'Chapter ${(index + 1)}',

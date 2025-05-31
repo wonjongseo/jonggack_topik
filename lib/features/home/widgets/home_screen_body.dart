@@ -67,8 +67,6 @@ class JLPTCards extends StatefulWidget {
 class _JLPTCardsState extends State<JLPTCards> {
   int _currentIndex = 0;
 
-  CarouselSliderController carouselController = CarouselSliderController();
-
   @override
   void initState() {
     super.initState();
@@ -81,12 +79,12 @@ class _JLPTCardsState extends State<JLPTCards> {
     super.dispose();
   }
 
+  List<String> subjects = ['韓国試験'];
   @override
   Widget build(BuildContext context) {
     return GetBuilder<UserController>(
       builder: (userController) {
         return CarouselSlider(
-          carouselController: carouselController,
           options: CarouselOptions(
             disableCenter: true,
             viewportFraction: userController.user.isPad ? 0.55 : 0.75,
@@ -98,10 +96,10 @@ class _JLPTCardsState extends State<JLPTCards> {
             },
             scrollDirection: Axis.horizontal,
           ),
-          items: List.generate(5, (index) {
+          items: List.generate(subjects.length, (index) {
             return LevelCategoryCard(
               titleSize: Responsive.width10 * 3,
-              title: 'N${index + 1}',
+              title: subjects[index],
               onTap: () {
                 Get.to(() => JlptHomeScreen(levelIndex: index));
                 return;
@@ -113,16 +111,6 @@ class _JLPTCardsState extends State<JLPTCards> {
                     caregory: '단어',
                     curCnt: userController.user.currentJlptWordScroes[index],
                     totalCnt: userController.user.jlptWordScroes[index],
-                  ),
-                  StudyCategoryAndProgress(
-                    caregory: '문법',
-                    curCnt: userController.user.currentGrammarScores[index],
-                    totalCnt: userController.user.grammarScores[index],
-                  ),
-                  StudyCategoryAndProgress(
-                    caregory: '한자',
-                    curCnt: userController.user.currentKangiScores[index],
-                    totalCnt: userController.user.kangiScores[index],
                   ),
                 ],
               ),

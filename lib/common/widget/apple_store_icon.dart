@@ -32,7 +32,7 @@ class AppleStoreIcon extends StatelessWidget {
                       top: 125,
                       // bottom: 210,
                       child: Text(
-                        'JLPT 종각',
+                        'TOPIK 종각',
                         style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.w800,

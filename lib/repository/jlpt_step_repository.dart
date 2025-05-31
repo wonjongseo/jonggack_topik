@@ -5,7 +5,7 @@ import 'package:jonggack_topik/common/common.dart';
 import 'package:jonggack_topik/features/jlpt_home/screens/jlpt_home_screen.dart';
 import 'package:jonggack_topik/model/jlpt_step.dart';
 import 'package:jonggack_topik/model/word.dart';
-import 'package:jonggack_topik/repository/kangis_step_repository.dart';
+
 import 'package:jonggack_topik/repository/local_repository.dart';
 
 import '../common/app_constant.dart';
@@ -110,8 +110,6 @@ class JlptStepRepositroy {
         }
 
         for (Word word in currentWords) {
-          KangiStepRepositroy kangiStepRepositroy = KangiStepRepositroy();
-          getKangiIndex(word.word, kangiStepRepositroy);
           await wordBox.put(word.word, word);
         }
         JlptStep tempJlptStep = JlptStep(
@@ -209,8 +207,6 @@ class JlptStepRepositroy {
         }
 
         for (Word word in currentWords) {
-          KangiStepRepositroy kangiStepRepositroy = KangiStepRepositroy();
-          getKangiIndex(word.word, kangiStepRepositroy);
           await wordBox.put(word.word, word);
         }
         String key = '$nLevel-$hiragana-$stepCount';

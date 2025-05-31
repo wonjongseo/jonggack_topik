@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:jonggack_topik/config/colors.dart';
 
 class AppFonts {
@@ -8,6 +9,29 @@ class AppFonts {
   static const descriptionFont = japaneseFont;
   // static const gMaretFont = 'GMarket';
   static const gMaretFont = 'GMarket';
+}
+
+TextStyle? primaryTS({Color? color}) {
+  print('color : ${color}');
+
+  TextStyle? textStyle = Theme.of(Get.context!).textTheme.labelLarge;
+
+  textStyle?.copyWith(color: color);
+  return textStyle;
+}
+
+TextStyle? subTS({Color? color}) {
+  TextStyle? textStyle = Theme.of(Get.context!).textTheme.labelMedium;
+
+  textStyle?.copyWith(color: color);
+  return textStyle;
+}
+
+TextStyle? thiTS({Color? color}) {
+  TextStyle? textStyle = Theme.of(Get.context!).textTheme.labelSmall;
+
+  textStyle?.copyWith(color: color);
+  return textStyle;
 }
 
 class AppThemings {
@@ -118,3 +142,9 @@ class AppThemings {
     ),
   );
 }
+
+
+
+
+
+// TextStyle aa (BuildConect)
