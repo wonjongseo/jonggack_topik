@@ -93,6 +93,7 @@ dependencies:
   flutter_email_sender: ^6.0.3
   toggle_switch: ^2.3.0
   intl: ^0.20.2
+  persistent_bottom_nav_bar: ^6.2.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -114,6 +115,7 @@ flutter:
 
   assets:
     - assets/svg/
+    - assets/data/
     - assets/images/
     - assets/sounds/speech_to_text_cancel.m4r
     - assets/sounds/speech_to_text_listening.m4r
@@ -197,3 +199,47 @@ flutter:
           weight: 500
         - asset: assets/fonts/GmarketSansTTFBold.ttf
           weight: 700
+
+    # aa
+
+    - family: ZenMaruGothic
+      fonts:
+        - asset: assets/fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Thin.ttf
+          weight: 100
+        - asset: assets/fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Light.ttf
+          weight: 200
+        - asset: assets/fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Medium.ttf
+          weight: 300
+        - asset: assets/fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Medium.ttf
+          weight: 400
+        - asset: assets/fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Medium.ttf
+          weight: 600
+        - asset: assets/fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Black.ttf
+          weight: 900
+
+    - family: CookieRunFont
+      fonts:
+        - asset: assets/fonts/CookieRunFont_TTF/CookieRun-Regular.ttf
+          weight: 100
+        - asset: assets/fonts/CookieRunFont_TTF/CookieRun-Regular.ttf
+          weight: 200
+        - asset: assets/fonts/CookieRunFont_TTF/CookieRun-Regular.ttf
+          weight: 300
+        - asset: assets/fonts/CookieRunFont_TTF/CookieRun-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/CookieRunFont_TTF/CookieRun-Bold.ttf
+          weight: 500
+        - asset: assets/fonts/CookieRunFont_TTF/CookieRun-Bold.ttf
+          weight: 600
+        - asset: assets/fonts/CookieRunFont_TTF/CookieRun-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/CookieRunFont_TTF/CookieRun-Black.ttf
+          weight: 800
+        - asset: assets/fonts/CookieRunFont_TTF/CookieRun-Black.ttf
+          weight: 900

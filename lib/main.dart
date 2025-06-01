@@ -100,7 +100,6 @@ class _AppState extends State<App> {
 
   Future<bool> forTest() async {
     List<int> jlptWordScroes = [];
-    List<int> grammarScores = [];
     try {
       await LocalReposotiry.init();
 
