@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/_part2/core/models/subject.dart';
 import 'package:jonggack_topik/_part2/core/models/word.dart';
-import 'package:jonggack_topik/_part2/features/auth/controllers/data_controller.dart';
+import 'package:jonggack_topik/_part2/features/category/controller/category_controller.dart';
 
 class StepScreen extends StatefulWidget {
   const StepScreen({super.key});
@@ -14,11 +14,11 @@ class StepScreen extends StatefulWidget {
 }
 
 class _StepScreenState extends State<StepScreen> {
-  late DataController controller;
+  late CategoryController controller;
   late StepModel step;
   @override
   void initState() {
-    controller = Get.find<DataController>();
+    controller = Get.find<CategoryController>();
     step = controller.step;
     super.initState();
   }

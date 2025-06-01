@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/_part2/core/admob/banner_ad/global_banner_admob.dart';
 import 'package:jonggack_topik/_part2/core/controllers/font_controller.dart';
-import 'package:jonggack_topik/_part2/features/auth/controllers/data_controller.dart';
 import 'package:jonggack_topik/_part2/features/category/controller/category_controller.dart';
 import 'package:jonggack_topik/_part2/features/category/screen/widgets/category_selector.dart';
 import 'package:jonggack_topik/_part2/features/category/screen/widgets/search_form.dart';
@@ -16,7 +15,6 @@ class CategoryScreen extends GetView<CategoryController> {
   static const String name = '/category';
   @override
   Widget build(BuildContext context) {
-    final dataCtl = Get.find<DataController>();
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -45,29 +43,27 @@ class CategoryScreen extends GetView<CategoryController> {
                       SizedBox(height: 10),
                       Expanded(
                         child: Obx(() {
-                          if (dataCtl.isLoadign.value) {
+                          if (controller.isLoadign.value) {
                             return Center(child: CircularProgressIndicator());
                           }
                           return CarouselSlider(
-                            items: List.generate(dataCtl.allCategories.length, (
-                              index,
-                            ) {
-                              return CategorySelector(
-                                category: dataCtl.allCategories[index],
-                                onTap: () {
-                                  dataCtl.onTapCategory(index);
-                                },
-                              );
-                            }),
+                            items: List.generate(
+                              controller.allCategories.length,
+                              (index) {
+                                return CategorySelector(
+                                  category: controller.allCategories[index],
+                                  onTap: () {
+                                    controller.onTapCategory(index);
+                                  },
+                                );
+                              },
+                            ),
                             options: CarouselOptions(
                               disableCenter: true,
                               viewportFraction: 0.75,
                               enableInfiniteScroll: false,
-                              initialPage: controller.curCategoryIndex,
                               enlargeCenterPage: true,
-                              onPageChanged:
-                                  (index, reason) =>
-                                      controller.onPageChanged(index),
+                              initialPage: controller.selectedCategoryIdx,
                               scrollDirection: Axis.horizontal,
                             ),
                           );

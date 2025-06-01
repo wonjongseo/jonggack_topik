@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/_part2/core/admob/banner_ad/global_banner_admob.dart';
 import 'package:jonggack_topik/_part2/core/models/subject.dart';
-import 'package:jonggack_topik/_part2/features/auth/controllers/data_controller.dart';
+import 'package:jonggack_topik/_part2/features/category/controller/category_controller.dart';
 import 'package:jonggack_topik/_part2/features/chapter/screen/widgets/step_body.dart';
 
 import 'package:jonggack_topik/_part2/features/chapter/screen/widgets/step_selector.dart';
@@ -21,7 +21,7 @@ class ChapterScreen extends StatefulWidget {
 }
 
 class _ChapterScreenState extends State<ChapterScreen> {
-  late DataController controller;
+  late CategoryController controller;
   late Chapter chapter;
 
   List<GlobalKey> gKeys = [];
@@ -31,7 +31,7 @@ class _ChapterScreenState extends State<ChapterScreen> {
 
   @override
   void initState() {
-    controller = Get.find<DataController>();
+    controller = Get.find<CategoryController>();
 
     chapter = controller.chapter;
 

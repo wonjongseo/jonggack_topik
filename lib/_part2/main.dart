@@ -6,9 +6,8 @@ import 'package:jonggack_topik/_part2/core/controllers/font_controller.dart';
 import 'package:jonggack_topik/_part2/core/repositories/hive_repository.dart';
 import 'package:jonggack_topik/_part2/core/repositories/setting_repository.dart';
 import 'package:jonggack_topik/_part2/core/utils/app_constant.dart';
-import 'package:jonggack_topik/_part2/features/auth/controllers/data_controller.dart';
-import 'package:jonggack_topik/_part2/features/auth/controllers/user_controller.dart';
 import 'package:jonggack_topik/_part2/features/category/controller/category_controller.dart';
+import 'package:jonggack_topik/_part2/features/auth/controllers/user_controller.dart';
 import 'package:jonggack_topik/_part2/features/main/controller/main_controller.dart';
 import 'package:jonggack_topik/_part2/features/main/screens/main_screen.dart';
 import 'package:jonggack_topik/_part2/routes.dart';
@@ -72,11 +71,11 @@ class InitBinding extends Bindings {
   void dependencies() {
     Get.lazyPut(() => FontController());
     Get.lazyPut(() => MainController());
-    Get.lazyPut(() => CategoryController());
+    // Get.lazyPut(() => CategoryController());
     Get.lazyPut(() => UserController());
 
     Get.lazyPut(() => DataRepositry());
-    Get.lazyPut(() => DataController(Get.find()));
+    Get.lazyPut(() => CategoryController(Get.find()));
   }
 }
 // flutter pub run build_runner build --delete-conflicting-outputs

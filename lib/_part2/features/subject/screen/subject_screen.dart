@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/_part2/core/admob/banner_ad/global_banner_admob.dart';
 import 'package:jonggack_topik/_part2/core/models/subject.dart';
-import 'package:jonggack_topik/_part2/features/auth/controllers/data_controller.dart';
+import 'package:jonggack_topik/_part2/features/category/controller/category_controller.dart';
 import 'package:jonggack_topik/_part2/features/category/screen/widgets/search_form.dart';
 import 'package:jonggack_topik/_part2/features/subject/screen/widgets/chapter_selector.dart';
 import 'package:jonggack_topik/_part2/features/subject/screen/widgets/subject_selector.dart';
@@ -19,12 +19,12 @@ class SubjectScreen extends StatefulWidget {
 
 class _SubjectScreenState extends State<SubjectScreen> {
   int selectedCategoryIndex = 0;
-  late DataController controller;
+  late CategoryController controller;
   late Category category;
 
   @override
   void initState() {
-    controller = Get.find<DataController>();
+    controller = Get.find<CategoryController>();
     category = controller.category;
 
     super.initState();
