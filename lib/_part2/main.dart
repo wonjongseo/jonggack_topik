@@ -10,6 +10,8 @@ import 'package:jonggack_topik/_part2/features/category/controller/category_cont
 import 'package:jonggack_topik/_part2/features/auth/controllers/user_controller.dart';
 import 'package:jonggack_topik/_part2/features/main/controller/main_controller.dart';
 import 'package:jonggack_topik/_part2/features/main/screens/main_screen.dart';
+import 'package:jonggack_topik/_part2/features/step/controller/step_controller.dart';
+import 'package:jonggack_topik/_part2/features/subject/controller/subject_controller.dart';
 import 'package:jonggack_topik/_part2/routes.dart';
 import 'package:jonggack_topik/_part2/theme.dart';
 
@@ -45,8 +47,12 @@ class _AppState extends State<App> {
     if (isDarkMode != null) {
       themeMode = isDarkMode ? ThemeMode.dark : ThemeMode.light;
     }
+  }
 
-    setState(() {});
+  @override
+  void initState() {
+    // getUsresSetting();
+    super.initState();
   }
 
   @override
@@ -76,6 +82,8 @@ class InitBinding extends Bindings {
 
     Get.lazyPut(() => DataRepositry());
     Get.lazyPut(() => CategoryController(Get.find()));
+    // Get.lazyPut(() => SubjectController());
+    // Get.lazyPut(() => StepController());
   }
 }
 // flutter pub run build_runner build --delete-conflicting-outputs

@@ -7,8 +7,6 @@ import 'package:jonggack_topik/_part2/features/category/controller/category_cont
 import 'package:jonggack_topik/_part2/features/category/screen/widgets/category_selector.dart';
 import 'package:jonggack_topik/_part2/features/category/screen/widgets/search_form.dart';
 import 'package:jonggack_topik/_part2/features/main/screens/widgets/welcome_widget.dart';
-import 'package:jonggack_topik/config/colors.dart';
-import 'package:jonggack_topik/config/theme.dart';
 
 class CategoryScreen extends GetView<CategoryController> {
   const CategoryScreen({super.key});
