@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:jonggack_topik/_part2/core/models/subject.dart';
+import 'package:jonggack_topik/_part2/core/models/step_model.dart';
 import 'package:jonggack_topik/_part2/features/word/screen/word_screen.dart';
 import 'package:jonggack_topik/config/colors.dart';
 

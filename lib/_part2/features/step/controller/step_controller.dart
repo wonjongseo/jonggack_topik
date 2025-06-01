@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:jonggack_topik/_part2/core/models/step_model.dart';
 import 'package:jonggack_topik/_part2/core/models/subject.dart';
 import 'package:jonggack_topik/_part2/core/models/word.dart';
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jonggack_topik/_part2/core/models/subject.dart';
+import 'package:jonggack_topik/_part2/core/models/chapter.dart';
+import 'package:jonggack_topik/_part2/core/models/step_model.dart';
 
 class ChapterController extends GetxController {
   final Chapter _chapter;

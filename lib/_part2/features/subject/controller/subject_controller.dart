@@ -1,5 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:get/get.dart';
+import 'package:jonggack_topik/_part2/core/models/category.dart';
+import 'package:jonggack_topik/_part2/core/models/chapter.dart';
 import 'package:jonggack_topik/_part2/core/models/subject.dart';
 import 'package:jonggack_topik/_part2/features/chapter/controller/chapter_controller.dart';
 import 'package:jonggack_topik/_part2/features/chapter/screen/chapter_screen.dart';

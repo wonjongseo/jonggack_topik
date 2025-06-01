@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/_part2/core/controllers/font_controller.dart';
-import 'package:jonggack_topik/_part2/core/models/subject.dart';
-import 'package:jonggack_topik/_part2/core/models/word.dart';
+import 'package:jonggack_topik/_part2/core/models/chapter.dart';
 
 class ChapterSelector extends StatelessWidget {
   const ChapterSelector({

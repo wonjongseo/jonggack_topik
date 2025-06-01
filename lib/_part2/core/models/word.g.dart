@@ -8,7 +8,7 @@ part of 'word.dart';
 
 class WordAdapter extends TypeAdapter<Word> {
   @override
-  final int typeId = 1;
+  final int typeId = 5;
 
   @override
   Word read(BinaryReader reader) {
@@ -24,13 +24,14 @@ class WordAdapter extends TypeAdapter<Word> {
       headTitle: fields[1] as String,
       examples: (fields[5] as List?)?.cast<Example>(),
       synonyms: (fields[6] as List?)?.cast<Synonym>(),
+      isSaved: fields[7] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, Word obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -44,7 +45,9 @@ class WordAdapter extends TypeAdapter<Word> {
       ..writeByte(5)
       ..write(obj.examples)
       ..writeByte(6)
-      ..write(obj.synonyms);
+      ..write(obj.synonyms)
+      ..writeByte(7)
+      ..write(obj.isSaved);
   }
 
   @override

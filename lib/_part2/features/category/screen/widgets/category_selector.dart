@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/_part2/core/controllers/font_controller.dart';
+import 'package:jonggack_topik/_part2/core/models/category.dart';
 import 'package:jonggack_topik/_part2/core/models/subject.dart';
 
 class CategorySelector extends StatelessWidget {
