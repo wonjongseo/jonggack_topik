@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/_part2/core/repositories/setting_repository.dart';
 import 'package:jonggack_topik/_part2/core/utils/app_constant.dart';
-import 'package:jonggack_topik/_part2/features/home/screen/home_screen.dart';
+import 'package:jonggack_topik/_part2/features/category/screen/category_screen.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 
 class MainController extends GetxController {
@@ -17,7 +17,7 @@ class MainController extends GetxController {
   }
 
   List<Widget> buildScreens() {
-    return [HomeScreen(), UserScreen(), UserScreen()];
+    return [CategoryScreen(), UserScreen(), UserScreen()];
   }
 }
 

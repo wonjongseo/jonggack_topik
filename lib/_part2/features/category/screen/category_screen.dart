@@ -4,16 +4,16 @@ import 'package:get/get.dart';
 import 'package:jonggack_topik/_part2/core/admob/banner_ad/global_banner_admob.dart';
 import 'package:jonggack_topik/_part2/core/controllers/font_controller.dart';
 import 'package:jonggack_topik/_part2/features/auth/controllers/data_controller.dart';
-import 'package:jonggack_topik/_part2/features/home/controller/home_controller.dart';
-import 'package:jonggack_topik/_part2/features/home/screen/widgets/category_selector.dart';
-import 'package:jonggack_topik/_part2/features/home/screen/widgets/search_form.dart';
+import 'package:jonggack_topik/_part2/features/category/controller/category_controller.dart';
+import 'package:jonggack_topik/_part2/features/category/screen/widgets/category_selector.dart';
+import 'package:jonggack_topik/_part2/features/category/screen/widgets/search_form.dart';
 import 'package:jonggack_topik/_part2/features/main/screens/widgets/welcome_widget.dart';
 import 'package:jonggack_topik/config/colors.dart';
 import 'package:jonggack_topik/config/theme.dart';
 
-class HomeScreen extends GetView<HomeController> {
-  const HomeScreen({super.key});
-  static const String name = '/home';
+class CategoryScreen extends GetView<CategoryController> {
+  const CategoryScreen({super.key});
+  static const String name = '/category';
   @override
   Widget build(BuildContext context) {
     final dataCtl = Get.find<DataController>();

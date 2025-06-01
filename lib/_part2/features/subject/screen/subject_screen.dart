@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:jonggack_topik/_part2/core/admob/banner_ad/global_banner_admob.dart';
 import 'package:jonggack_topik/_part2/core/models/subject.dart';
 import 'package:jonggack_topik/_part2/features/auth/controllers/data_controller.dart';
-import 'package:jonggack_topik/_part2/features/home/screen/widgets/search_form.dart';
+import 'package:jonggack_topik/_part2/features/category/screen/widgets/search_form.dart';
 import 'package:jonggack_topik/_part2/features/subject/screen/widgets/chapter_selector.dart';
 import 'package:jonggack_topik/_part2/features/subject/screen/widgets/subject_selector.dart';
 

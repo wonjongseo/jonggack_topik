@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:jonggack_topik/_part2/core/models/subject.dart';
 import 'package:jonggack_topik/_part2/core/utils/snackbar_helper.dart';
 import 'package:jonggack_topik/_part2/features/chapter/screen/chapter_screen.dart';
-import 'package:jonggack_topik/_part2/features/step/screen/step_screen.dart';
 import 'package:jonggack_topik/_part2/features/subject/screen/subject_screen.dart';
 
 class DataController extends GetxController {
@@ -24,6 +23,7 @@ class DataController extends GetxController {
     Get.to(() => SubjectScreen());
   }
 
+  ///
   int _selectedSubjectIdx = 0;
   int get selectedSubjectIdx => _selectedSubjectIdx;
   Subject get subject => category.subjects[_selectedSubjectIdx];

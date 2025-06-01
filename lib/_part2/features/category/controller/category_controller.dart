@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-class HomeController extends GetxController {
+class CategoryController extends GetxController {
   int curCategoryIndex = 0; //
 
   void onPageChanged(int index) {
