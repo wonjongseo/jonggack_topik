@@ -14,6 +14,7 @@ class WelcomeWidget extends StatelessWidget {
     return GetBuilder<UserController>(
       builder: (controller) {
         return Column(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Text(
               gretting,

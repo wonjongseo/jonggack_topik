@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/models/Question.dart';
-import 'package:jonggack_topik/core/models/step_model.dart';
 import 'package:jonggack_topik/core/models/word.dart';
-import 'package:jonggack_topik/core/repositories/hive_repository.dart';
 import 'package:jonggack_topik/core/utils/app_color.dart';
-import 'package:jonggack_topik/core/utils/app_function.dart';
 import 'package:jonggack_topik/features/quiz/controller/quiz_controller.dart';
 import 'package:jonggack_topik/features/quiz/screen/widgets/progressbar.dart';
 import 'package:jonggack_topik/theme.dart';
@@ -15,23 +12,7 @@ class QuizScreen extends GetView<QuizController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          String key =
-              '${getCategoryTitle()}-${getSubjectTitle()}-${getChapterTitle()}-${getStepTitle()}';
-
-          final stepRepo = Get.find<HiveRepository<StepModel>>(
-            tag: StepModel.boxKey,
-          );
-
-          StepModel? stepModel = stepRepo.get(key);
-          print('stepModel : ${stepModel!.wrongQestion}');
-        },
-      ),
-      appBar: _appBar(),
-      body: _body(context),
-    );
+    return Scaffold(appBar: _appBar(), body: _body(context));
   }
 
   Widget _body(BuildContext context) {

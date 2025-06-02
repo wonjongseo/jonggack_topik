@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:jonggack_topik/core/controllers/font_controller.dart';
 
 import 'package:jonggack_topik/core/utils/app_color.dart';
@@ -82,17 +81,19 @@ class AppThemings {
         color: Colors.black,
         fontWeight: FontWeight.bold,
         fontFamily: AppFonts.gMaretFont,
+        fontSize: 20,
       ),
       iconTheme: IconThemeData(color: Colors.black),
     ),
 
     listTileTheme: ListTileThemeData(
-      titleTextStyle: ThemeData.light().textTheme.bodyLarge?.copyWith(
-        fontFamily: AppFonts.cookieRunFont,
-        fontSize: FontController.to.baseFontSize.value,
-        color: ThemeData.light().textTheme.bodyLarge?.color, // 색상 유지
-      ),
-      subtitleTextStyle: ThemeData.light().textTheme.bodyMedium?.copyWith(
+      leadingAndTrailingTextStyle: ThemeData.light().textTheme.bodyLarge
+          ?.copyWith(
+            fontFamily: AppFonts.cookieRunFont,
+            fontSize: FontController.to.baseFontSize.value,
+            color: ThemeData.light().textTheme.bodyLarge?.color, // 색상 유지
+          ),
+      titleTextStyle: ThemeData.light().textTheme.bodyMedium?.copyWith(
         fontFamily: AppFonts.zenMaruGothic,
         fontSize: FontController.to.baseFontSize.value - 2,
         color: ThemeData.light().textTheme.bodyMedium?.color, // 색상 유지

@@ -2,13 +2,22 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+
 import 'package:jonggack_topik/core/controllers/hive_helper.dart';
 import 'package:jonggack_topik/core/models/category.dart';
 import 'package:jonggack_topik/core/models/category_hive.dart';
+import 'package:jonggack_topik/core/models/step_model.dart';
+import 'package:jonggack_topik/core/models/subject_hive.dart';
 import 'package:jonggack_topik/core/repositories/hive_repository.dart';
 import 'package:jonggack_topik/core/utils/snackbar_helper.dart';
 import 'package:jonggack_topik/features/subject/controller/subject_controller.dart';
 import 'package:jonggack_topik/features/subject/screen/subject_screen.dart';
+
+class TotalAndScore {
+  final int total;
+  final int score;
+  TotalAndScore({required this.total, required this.score});
+}
 
 class CategoryController extends GetxController {
   static CategoryController get to => Get.find<CategoryController>();
@@ -33,13 +42,59 @@ class CategoryController extends GetxController {
     );
   }
 
+  final totalAndScores = <List<TotalAndScore>>[].obs;
+
+  void setTotalAndScores() {
+    totalAndScores.clear();
+    for (CategoryHive category in allCategories) {
+      List<TotalAndScore> temp = [];
+      for (SubjectHive subject in category.subjects) {
+        final stepRepo = Get.find<HiveRepository<StepModel>>(
+          tag: StepModel.boxKey,
+        );
+        int score = 0;
+        int total = 0;
+        for (var chapter in subject.chapters) {
+          for (var stepKey in chapter.stepKeys) {
+            StepModel stepModel = stepRepo.get(stepKey)!;
+            score += stepModel.score;
+            total += stepModel.words.length;
+          }
+        }
+
+        temp.add(TotalAndScore(total: total, score: score));
+      }
+      totalAndScores.add(temp);
+    }
+  }
+
   @override
-  void onInit() {
-    super.onInit();
-    fatchAllSubject();
+  void onReady() async {
+    super.onReady();
+    await fatchAllSubject();
   }
 
   fatchAllSubject() async {
+    List<String> categoryNames = [
+      "韓国語能力試験",
+      "人",
+      "美容",
+      "暮らし",
+      "医療",
+      "自然",
+      "スポーツ",
+      "場所",
+      "芸能",
+      "ビジネス",
+      "教育",
+      "趣味",
+      "基本単語",
+      "旅行",
+      "グルメ",
+      "韓国語文法",
+      "社会",
+      "ネット",
+    ];
     try {
       isLoadign(true);
 
@@ -60,12 +115,15 @@ class CategoryController extends GetxController {
         print("No CategoryHive, Start putting CategoryHive");
 
         // 3-1) dataRepository에서 JSON → 원본 Category 모델 읽어오기
-        final category1 = await dataRepositry.getJson("韓国語能力試験.json");
-        // final category2 = await dataRepositry.getJson("final社会.json");
-        // final category3 = await dataRepositry.getJson("final芸能.json");
+
+        List<Category> categories = [];
+
+        for (String categoryName in categoryNames) {
+          categories.add(await dataRepositry.getJson("$categoryName.json"));
+        }
 
         // 3-2) saveCategory 함수를 통해 “원본 Category → Hive에 CategoryHive 등으로 저장”
-        await HiveHelper.saveCategory([category1]);
+        await HiveHelper.saveCategory(categories);
 
         // 3-3) 다시 Hive에서 저장된 CategoryHive 전체 읽기
         savedList = categoryHiveRepo.getAll();
@@ -75,6 +133,7 @@ class CategoryController extends GetxController {
 
       // 4) 최종적으로 _allCategories에 List<CategoryHive> 할당
       _allCategories.assignAll(savedList);
+      setTotalAndScores();
     } catch (e) {
       print('e : $e');
       SnackBarHelper.showErrorSnackBar("$e");

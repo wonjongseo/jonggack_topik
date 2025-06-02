@@ -14,6 +14,7 @@ class SubjectScreen extends GetView<SubjectController> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(title: Text(controller.categoryTitle)),
       body: SafeArea(
@@ -21,10 +22,13 @@ class SubjectScreen extends GetView<SubjectController> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Expanded(child: _subjecttSelectorRow()),
-              Expanded(flex: 2, child: SeacrhForm()),
-              Expanded(
-                flex: 4,
+              SeacrhForm(),
+              SizedBox(height: 32),
+              _subjecttSelectorRow(),
+              // SizedBox(height: size.height * .15),
+              SizedBox(height: 12),
+              SizedBox(
+                height: size.height * .525,
                 child: Obx(
                   () => CarouselSlider(
                     carouselController: controller.carouselController,
@@ -39,11 +43,9 @@ class SubjectScreen extends GetView<SubjectController> {
                     ),
                     options: CarouselOptions(
                       disableCenter: true,
-                      viewportFraction: 0.75,
+                      viewportFraction: 0.7,
                       enableInfiniteScroll: false,
                       enlargeCenterPage: true,
-                      initialPage: 0,
-                      scrollDirection: Axis.horizontal,
                     ),
                   ),
                 ),
@@ -60,7 +62,8 @@ class SubjectScreen extends GetView<SubjectController> {
 
   Widget _subjecttSelectorRow() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+      // padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+      padding: EdgeInsets.only(left: 24),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Obx(

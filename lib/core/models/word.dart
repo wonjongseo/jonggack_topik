@@ -30,6 +30,7 @@ class Word extends HiveObject {
   @HiveField(7)
   bool isSaved = false;
 
+  // String yomikata
   Word({
     required this.id,
     required this.word,

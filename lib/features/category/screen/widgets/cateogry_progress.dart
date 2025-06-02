@@ -15,21 +15,20 @@ class CateogryProgress extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      padding: EdgeInsets.all(8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            caregory,
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.w700,
-              fontSize: 15,
-            ),
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              Text(
+                caregory,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
               TweenAnimationBuilder(
                 tween: Tween<double>(begin: 0, end: curCnt / 100),
                 duration: const Duration(milliseconds: 1500),
@@ -53,11 +52,12 @@ class CateogryProgress extends StatelessWidget {
                   );
                 },
               ),
-              AnimatedLeanerProgressIndicator(
-                currentProgressCount: curCnt,
-                totalProgressCount: totalCnt,
-              ),
             ],
+          ),
+          SizedBox(height: 4),
+          AnimatedLeanerProgressIndicator(
+            currentProgressCount: curCnt,
+            totalProgressCount: totalCnt,
           ),
         ],
       ),
@@ -103,7 +103,7 @@ class AnimatedLeanerProgressIndicator extends StatelessWidget {
                   child: Text(
                     "${(value * 100).toInt()}%",
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 12),
+                    style: TextStyle(fontSize: 10),
                   ),
                 ),
               ],

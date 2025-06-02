@@ -5,6 +5,8 @@ import 'package:jonggack_topik/core/models/step_model.dart';
 import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/core/repositories/hive_repository.dart';
 import 'package:jonggack_topik/core/utils/app_function.dart';
+import 'package:jonggack_topik/features/category/controller/category_controller.dart';
+import 'package:jonggack_topik/features/quiz/screen/very_good_screen.dart';
 
 class QuizController extends GetxController with SingleGetTickerProviderMixin {
   // final List<Word> words;
@@ -175,6 +177,9 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
         );
 
         await stepRepo.put(key, stepModel);
+
+        //
+        CategoryController.to.setTotalAndScores();
       } else {
         Get.back();
       }
@@ -182,11 +187,11 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
       if (numOfCorrectAns == questions.length) {
         if (!isMyWordTest) {
           // jlptWordController.finishQuizAndchangeHeaderPageIndex();
-          // Get.off(() => const VeryGoodScreen());
+          Get.off(() => const VeryGoodScreen());
           print("Go to Very good screen");
         } else {
           print("Go to Very good screen");
-          // Get.to(() => const VeryGoodScreen());
+          Get.to(() => const VeryGoodScreen());
         }
         return;
       }

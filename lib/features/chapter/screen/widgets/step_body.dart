@@ -18,12 +18,17 @@ class StepBody extends StatelessWidget {
           controller: ChapterController.to.scrollController,
           itemBuilder: (context, index) {
             return ListTile(
-              titleAlignment: ListTileTitleAlignment.top,
-              title: Text(controller.words[index].word),
-              subtitle: Text(
-                controller.words[index].mean,
-                overflow: TextOverflow.ellipsis,
+              minLeadingWidth: 80,
+              // title: Text(controller.words[index].word),
+              leading: Text(controller.words[index].word),
+              title: SizedBox(
+                height: 30,
+                child: Text(
+                  controller.words[index].mean,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
+              subtitle: SizedBox(child: Text(controller.words[index].yomikata)),
               onTap: () {
                 Get.to(
                   () => WordScreen(),

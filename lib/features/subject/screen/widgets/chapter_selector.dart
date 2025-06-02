@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/controllers/font_controller.dart';
 import 'package:jonggack_topik/core/models/chapter_hive.dart';
+import 'package:jonggack_topik/theme.dart';
 
 class ChapterSelector extends StatelessWidget {
   const ChapterSelector({
@@ -25,17 +26,13 @@ class ChapterSelector extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(chapter.title, style: ftCtl.bold()),
+                child: Text(
+                  chapter.title,
+                  style: ftCtl.bold().copyWith(
+                    fontFamily: AppFonts.zenMaruGothic,
+                  ),
+                ),
               ),
-
-              // Text(step.words.length.toString()),
-              // Column(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: List.generate(step.words.length, (index) {
-              //     Word word = step.words[index];
-              //     return Text(word.word);
-              //   }),
-              // ),
             ],
           ),
         ),
