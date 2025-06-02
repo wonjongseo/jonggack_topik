@@ -26,6 +26,14 @@ class StepModel extends HiveObject {
     required this.wrongQestion,
   });
 
+  int get score {
+    if (finisedTime == null) {
+      return 0;
+    }
+
+    return words.length - wrongQestion.length;
+  }
+
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 

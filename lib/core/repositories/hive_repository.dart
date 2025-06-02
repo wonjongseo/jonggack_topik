@@ -3,10 +3,13 @@ import 'package:get/get.dart';
 import 'package:jonggack_topik/core/constant/hive_keys.dart';
 import 'package:jonggack_topik/core/models/Question.dart';
 import 'package:jonggack_topik/core/models/category.dart';
+import 'package:jonggack_topik/core/models/category_hive.dart';
 import 'package:jonggack_topik/core/models/chapter.dart';
+import 'package:jonggack_topik/core/models/chapter_hive.dart';
 import 'package:jonggack_topik/core/models/example.dart';
 import 'package:jonggack_topik/core/models/step_model.dart';
 import 'package:jonggack_topik/core/models/subject.dart';
+import 'package:jonggack_topik/core/models/subject_hive.dart';
 import 'package:jonggack_topik/core/models/synonym.dart';
 import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/features/auth/models/user.dart';
@@ -76,6 +79,15 @@ class HiveRepository<T extends HiveObject> {
     if (GetPlatform.isMobile) {
       await Hive.initFlutter();
     }
+    if (!Hive.isAdapterRegistered(HK.categoryHiveTypeID)) {
+      Hive.registerAdapter(CategoryHiveAdapter());
+    }
+    if (!Hive.isAdapterRegistered(HK.chapterHiveTypeID)) {
+      Hive.registerAdapter(ChapterHiveAdapter());
+    }
+    if (!Hive.isAdapterRegistered(HK.subjectHiveTypeID)) {
+      Hive.registerAdapter(SubjectHiveAdapter());
+    }
 
     if (!Hive.isAdapterRegistered(HK.categoryTypeID)) {
       Hive.registerAdapter(CategoryAdapter());
@@ -104,6 +116,16 @@ class HiveRepository<T extends HiveObject> {
 
     if (!Hive.isBoxOpen(User.boxKey)) {
       await Hive.openBox<User>(User.boxKey);
+    }
+    if (!Hive.isBoxOpen(CategoryHive.boxKey)) {
+      await Hive.openBox<CategoryHive>(CategoryHive.boxKey);
+    }
+    if (!Hive.isBoxOpen(SubjectHive.boxKey)) {
+      await Hive.openBox<SubjectHive>(SubjectHive.boxKey);
+    }
+
+    if (!Hive.isBoxOpen(ChapterHive.boxKey)) {
+      await Hive.openBox<ChapterHive>(ChapterHive.boxKey);
     }
     if (!Hive.isBoxOpen(Category.boxKey)) {
       await Hive.openBox<Category>(Category.boxKey);
@@ -173,8 +195,6 @@ class HiveRepository<T extends HiveObject> {
               '${category.title}-${subject.title}-${chapter.title}-${step.title}';
 
           if (!stepBox.containsKey(stepKey)) {
-            print('stepKey : ${stepKey}');
-
             await stepBox.put(stepKey, step);
           }
 

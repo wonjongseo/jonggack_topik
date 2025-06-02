@@ -26,4 +26,13 @@ class HK {
 
   static const int questionTypeID = 8;
   static const String questionBoxKey = 'question-box-key';
+
+  static const int chapterHiveTypeID = 9;
+  static const String chapterHiveBoxKey = 'chapter-hive-box-key';
+
+  static const int subjectHiveTypeID = 10;
+  static const String subjectHiveBoxKey = 'subject-hive-box-key';
+
+  static const int categoryHiveTypeID = 11;
+  static const String categoryHiveBoxKey = 'category-hive-box-key';
 }

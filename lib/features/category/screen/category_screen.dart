@@ -17,24 +17,6 @@ class CategoryScreen extends GetView<CategoryController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          //
-          String key = '韓国語能力試験-韓国語能力試験1・2級-Chapter 1-Step 1';
-
-          final stepRepo = Get.find<HiveRepository<StepModel>>(
-            tag: StepModel.boxKey,
-          );
-          var a = stepRepo.get(key);
-          print('a : ${a?.finisedTime}');
-          print('a.rongQestion : ${a!.wrongQestion.length}');
-
-          if (a!.finisedTime == null) {
-            a = a.copyWith(finisedTime: DateTime.now());
-            stepRepo.put(key, a);
-          }
-        },
-      ),
       body: SafeArea(
         child: Center(
           child: Padding(
@@ -43,12 +25,13 @@ class CategoryScreen extends GetView<CategoryController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                Spacer(),
                 Expanded(flex: 1, child: const WelcomeWidget()),
 
                 Expanded(flex: 2, child: SeacrhForm()),
-
+                Spacer(),
                 Expanded(
-                  flex: 4,
+                  flex: 5,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -91,8 +74,6 @@ class CategoryScreen extends GetView<CategoryController> {
                     ],
                   ),
                 ),
-
-                Spacer(),
               ],
             ),
           ),

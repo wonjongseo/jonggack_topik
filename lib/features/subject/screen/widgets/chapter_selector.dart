@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/controllers/font_controller.dart';
-import 'package:jonggack_topik/core/models/chapter.dart';
+import 'package:jonggack_topik/core/models/chapter_hive.dart';
 
 class ChapterSelector extends StatelessWidget {
   const ChapterSelector({
@@ -10,13 +10,10 @@ class ChapterSelector extends StatelessWidget {
     required this.onTap,
   });
 
-  final Chapter chapter;
+  final ChapterHive chapter;
   final Function() onTap;
   @override
   Widget build(BuildContext context) {
-    for (var step in chapter.steps) {
-      int a = step.words.length - (step.wrongQestion.length);
-    }
     final ftCtl = Get.find<FontController>();
     return Card(
       child: InkWell(

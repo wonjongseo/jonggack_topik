@@ -24,7 +24,9 @@ class ChapterScreen extends GetView<ChapterController> {
                 scrollDirection: Axis.horizontal,
                 child: Obx(
                   () => Row(
-                    children: List.generate(controller.steps.length, (index) {
+                    children: List.generate(controller.stepKeys.length, (
+                      index,
+                    ) {
                       return Padding(
                         padding: const EdgeInsets.only(left: 8),
                         child: InkWell(
