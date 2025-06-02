@@ -5,11 +5,11 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:jonggack_topik/core/controllers/font_controller.dart';
 import 'package:jonggack_topik/core/repositories/hive_repository.dart';
 import 'package:jonggack_topik/core/repositories/setting_repository.dart';
+import 'package:jonggack_topik/core/tts/tts_controller.dart';
 import 'package:jonggack_topik/core/utils/app_constant.dart';
 import 'package:jonggack_topik/features/category/controller/category_controller.dart';
 import 'package:jonggack_topik/features/auth/controllers/user_controller.dart';
 import 'package:jonggack_topik/features/category/controller/search_get_controller.dart';
-import 'package:jonggack_topik/features/category/screen/widgets/search_form.dart';
 import 'package:jonggack_topik/features/main/controller/main_controller.dart';
 import 'package:jonggack_topik/features/main/screens/main_screen.dart';
 import 'package:jonggack_topik/routes.dart';
@@ -75,6 +75,7 @@ class _AppState extends State<App> {
 class InitBinding extends Bindings {
   @override
   void dependencies() {
+    Get.put(TtsController());
     Get.lazyPut(() => FontController());
     Get.lazyPut(() => MainController());
     Get.lazyPut(() => SearchGetController());

@@ -67,8 +67,6 @@ class AppThemings {
     ),
   );
 
-  //
-
   static final ThemeData lightTheme = ThemeData.light().copyWith(
     textTheme: ThemeData.light().textTheme.apply(
       fontFamily: AppFonts.gMaretFont,
@@ -85,7 +83,6 @@ class AppThemings {
       ),
       iconTheme: IconThemeData(color: Colors.black),
     ),
-
     listTileTheme: ListTileThemeData(
       leadingAndTrailingTextStyle: ThemeData.light().textTheme.bodyLarge
           ?.copyWith(

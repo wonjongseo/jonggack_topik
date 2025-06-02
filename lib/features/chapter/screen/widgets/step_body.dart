@@ -19,7 +19,7 @@ class StepBody extends StatelessWidget {
           itemBuilder: (context, index) {
             return ListTile(
               minLeadingWidth: 80,
-              // title: Text(controller.words[index].word),
+
               leading: Text(controller.words[index].word),
               title: SizedBox(
                 height: 30,

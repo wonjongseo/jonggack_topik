@@ -18,7 +18,7 @@ class Word extends HiveObject {
   @HiveField(2)
   late String word;
   @HiveField(3)
-  late String yomikata;
+  late String _yomikata;
   @HiveField(4)
   late String mean;
 
@@ -30,27 +30,34 @@ class Word extends HiveObject {
   @HiveField(7)
   bool isSaved = false;
 
-  // String yomikata
+  String get yomikata {
+    if (_yomikata.contains('、')) {
+      final splited = _yomikata.split('、');
+      return splited.last;
+    }
+    return _yomikata;
+  }
+
   Word({
     required this.id,
     required this.word,
     required this.mean,
-    required this.yomikata,
+    required String yomikata,
     required this.headTitle,
     this.examples,
     this.synonyms,
     this.isSaved = false,
-  });
+  }) : _yomikata = yomikata;
 
   @override
   String toString() {
-    return "Word( word: $word, mean: $mean, yomikata: $yomikata, headTitle: $headTitle, examples: $examples)";
+    return "Word( word: $word, mean: $mean, yomikata: $_yomikata, headTitle: $headTitle, examples: $examples)";
   }
 
   Word.fromMap(Map<String, dynamic> map) {
     id = map['id'] ?? '';
     word = map['word'] ?? '';
-    yomikata = map['yomikata'] ?? '';
+    _yomikata = map['yomikata'] ?? '';
     mean = map['mean'] ?? '';
     headTitle = map['headTitle'] ?? '';
     examples =
@@ -75,7 +82,7 @@ class Word extends HiveObject {
 
     result.addAll({'headTitle': headTitle});
     result.addAll({'word': word});
-    result.addAll({'yomikata': yomikata});
+    result.addAll({'yomikata': _yomikata});
     result.addAll({'mean': mean});
 
     if (examples != null) {

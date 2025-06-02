@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/controllers/font_controller.dart';
 import 'package:jonggack_topik/core/models/word.dart';
+import 'package:jonggack_topik/core/tts/tts_controller.dart';
 import 'package:jonggack_topik/features/word/controller/word_controller.dart';
 import 'package:jonggack_topik/features/word/screen/widgets/example_widget.dart';
 import 'package:jonggack_topik/theme.dart';
@@ -67,7 +68,22 @@ class WordCard extends GetView<WordController> {
                     children: [
                       Flexible(child: AutoSizeText('[$yomikata]', maxLines: 1)),
                       SizedBox(width: 10),
-                      FaIcon(FontAwesomeIcons.volumeLow),
+                      Obx(() {
+                        final isPlayingThisWord =
+                            TtsController.to.isPlaying.value &&
+                            TtsController.to.currentWord.value == word.word;
+
+                        return InkWell(
+                          onTap: () => TtsController.to.speak(word.word),
+                          child: FaIcon(
+                            isPlayingThisWord
+                                ? FontAwesomeIcons.volumeLow
+                                : FontAwesomeIcons.volumeOff,
+                            color: AppColors.mainBordColor,
+                            size: 26,
+                          ),
+                        );
+                      }),
                     ],
                   ),
                   SizedBox(height: 20),
@@ -109,7 +125,6 @@ class WordCard extends GetView<WordController> {
           GestureDetector(
             onTap: () {
               controller.seeMoreExample();
-              // setState(() {});
             },
             child: Text(
               "More...",
