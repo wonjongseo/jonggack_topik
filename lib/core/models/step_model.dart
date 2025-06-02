@@ -7,7 +7,7 @@ import 'package:jonggack_topik/core/models/word.dart';
 part 'step_model.g.dart';
 
 @HiveType(typeId: HK.stepTypeID)
-class StepModel {
+class StepModel extends HiveObject {
   static String boxKey = HK.stepBoxKey;
   @HiveField(0)
   final String title;

@@ -8,7 +8,7 @@ part of 'example.dart';
 
 class ExampleAdapter extends TypeAdapter<Example> {
   @override
-  final int typeId = 13;
+  final int typeId = 6;
 
   @override
   Example read(BinaryReader reader) {
@@ -19,23 +19,17 @@ class ExampleAdapter extends TypeAdapter<Example> {
     return Example(
       word: fields[0] as String,
       mean: fields[1] as String,
-      answer: fields[2] as String?,
-      yomikata: fields[3] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Example obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(2)
       ..writeByte(0)
       ..write(obj.word)
       ..writeByte(1)
-      ..write(obj.mean)
-      ..writeByte(2)
-      ..write(obj.answer)
-      ..writeByte(3)
-      ..write(obj.yomikata);
+      ..write(obj.mean);
   }
 
   @override

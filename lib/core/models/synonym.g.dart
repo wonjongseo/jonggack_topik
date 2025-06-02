@@ -8,7 +8,7 @@ part of 'synonym.dart';
 
 class SynonymAdapter extends TypeAdapter<Synonym> {
   @override
-  final int typeId = 16;
+  final int typeId = 7;
 
   @override
   Synonym read(BinaryReader reader) {

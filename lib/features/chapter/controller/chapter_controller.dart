@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jonggack_topik/core/constant/hive_keys.dart';
 import 'package:jonggack_topik/core/models/chapter.dart';
 import 'package:jonggack_topik/core/models/step_model.dart';
+import 'package:jonggack_topik/core/models/word.dart';
+import 'package:jonggack_topik/core/repositories/hive_repository.dart';
+import 'package:jonggack_topik/features/step/controller/step_controller.dart';
 
 class ChapterController extends GetxController {
   final Chapter _chapter;
+  late StepController stepController;
   ChapterController(this._chapter);
 
   String get chapterTitle => _chapter.title;
@@ -20,9 +25,11 @@ class ChapterController extends GetxController {
 
   @override
   void onInit() {
-    _selectedStepIdx.value = 10;
+    _selectedStepIdx.value = 0;
     stepBodyPageCtl = PageController(initialPage: _selectedStepIdx.value);
     gKeys = List.generate(_chapter.steps.length, (index) => GlobalKey());
+
+    stepController = Get.put(StepController(step));
     super.onInit();
   }
 
@@ -41,7 +48,8 @@ class ChapterController extends GetxController {
   //
   onTapStepSelector(int index) {
     _selectedStepIdx.value = index;
-    stepBodyPageCtl.jumpToPage(_selectedStepIdx.value);
+    // stepBodyPageCtl.jumpToPage(_selectedStepIdx.value);
+    stepController.setStepModel(step);
   }
   //
 
@@ -50,4 +58,6 @@ class ChapterController extends GetxController {
     stepBodyPageCtl.dispose();
     super.onClose();
   }
+
+  // Step
 }

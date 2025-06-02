@@ -12,23 +12,17 @@ class Example {
   late String word;
   @HiveField(1)
   late String mean;
-  @HiveField(2)
-  late String? answer;
-  @HiveField(3)
-  late String? yomikata;
 
-  Example({required this.word, required this.mean, this.answer, this.yomikata});
+  Example({required this.word, required this.mean});
 
   Example.fromMap(Map<String, dynamic> map) {
     word = map['word'] ?? '';
     mean = map['mean'] ?? '';
-    answer = map['answer'] ?? '';
-    yomikata = map['yomikata'] ?? '';
   }
 
   @override
   String toString() {
-    return 'Example(word: "$word", mean: "$mean", yomikata: "$yomikata", answer: "$answer")';
+    return 'Example(word: "$word", mean: "$mean")';
   }
 
   Map<String, dynamic> toMap() {
@@ -36,12 +30,6 @@ class Example {
 
     result.addAll({'word': word});
     result.addAll({'mean': mean});
-    if (answer != null) {
-      result.addAll({'answer': answer});
-    }
-    if (yomikata != null) {
-      result.addAll({'yomikata': yomikata});
-    }
 
     return result;
   }

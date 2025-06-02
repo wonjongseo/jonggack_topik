@@ -16,6 +16,7 @@ class HK {
 
   static const int wordTypeID = 5;
   static const String wordBoxKey = 'word-box-key';
+  static const String myWordBoxKey = 'my-word-box-key';
 
   static const int exampleTypeID = 6;
   static const String exampleBoxKey = 'example-box-key';

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/models/category.dart';
+import 'package:jonggack_topik/core/repositories/hive_repository.dart';
 import 'package:jonggack_topik/core/utils/snackbar_helper.dart';
 import 'package:jonggack_topik/features/subject/controller/subject_controller.dart';
 import 'package:jonggack_topik/features/subject/screen/subject_screen.dart';
@@ -35,16 +36,24 @@ class CategoryController extends GetxController {
   fatchAllSubject() async {
     try {
       isLoadign(true);
-      final subject = await dataRepositry.getJson("韓国語能力試験.json");
-      print('subject : ${subject}');
+      // final wordRepo = HiveRepository<Word>(Word.boxKey);
+      // await wordRepo.initBox();
+      final categoryRepo = HiveRepository<Category>(Category.boxKey);
+      await categoryRepo.initBox();
 
-      _allCategories.assignAll([subject]);
+      List<Category> category = categoryRepo.getAll();
+      if (categoryRepo.getAll().isEmpty) {
+        print("No Category, Start putting Category");
+        final category = await dataRepositry.getJson("韓国語能力試験.json");
+        _allCategories.assignAll([category]);
+        HiveRepository.saveCategory(category);
+      } else {
+        print("Already Have Category");
+        _allCategories.assignAll(category);
+      }
     } catch (e) {
-      print('e.toString() : ${e.toString()}');
-
       SnackBarHelper.showErrorSnackBar("$e");
     } finally {
-      print('asdasd');
       isLoadign(false);
     }
   }

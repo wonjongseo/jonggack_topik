@@ -2,8 +2,10 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:jonggack_topik/core/constant/hive_keys.dart';
 import 'package:jonggack_topik/core/controllers/font_controller.dart';
 import 'package:jonggack_topik/core/models/word.dart';
+import 'package:jonggack_topik/core/repositories/hive_repository.dart';
 import 'package:jonggack_topik/features/word/screen/widgets/example_widget.dart';
 import 'package:jonggack_topik/theme.dart';
 import 'package:jonggack_topik/core/utils/app_color.dart';
@@ -18,6 +20,20 @@ class WordCard extends StatefulWidget {
 }
 
 class _WordCardState extends State<WordCard> {
+  final myWordBox = Get.find<HiveRepository<Word>>(tag: HK.myWordBoxKey);
+  bool isSavedWord(String id) {
+    return myWordBox.containsKey(id);
+  }
+
+  Future<void> toggleMyWord(Word word) async {
+    if (myWordBox.containsKey(word.id)) {
+      await myWordBox.delete(word.id);
+    } else {
+      await myWordBox.put(word.id, word);
+    }
+    setState(() {});
+  }
+
   bool isSeeMoreExample = false;
 
   bool isCanSeeMore() {
@@ -73,9 +89,12 @@ class _WordCardState extends State<WordCard> {
                       minimumSize: const Size(0, 0),
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      toggleMyWord(widget.word);
+                    },
                     icon:
-                        widget.word.isSaved
+                        // widget.word.isSaved
+                        isSavedWord(widget.word.id)
                             ? Icon(
                               FontAwesomeIcons.solidBookmark,
                               color: AppColors.mainBordColor,

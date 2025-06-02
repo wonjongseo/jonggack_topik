@@ -3,13 +3,12 @@ import 'dart:convert';
 import 'package:hive/hive.dart';
 import 'package:jonggack_topik/core/constant/hive_keys.dart';
 import 'package:jonggack_topik/core/models/subject.dart';
-import 'package:jonggack_topik/core/models/word.dart';
 
 part 'category.g.dart';
 
-@HiveType(typeId: HK.chapterTypeID)
-class Category {
-  static String boxKey = HK.chapterBoxKey;
+@HiveType(typeId: HK.categoryTypeID)
+class Category extends HiveObject {
+  static String boxKey = HK.categoryBoxKey;
   @HiveField(0)
   final String title;
   @HiveField(1)
