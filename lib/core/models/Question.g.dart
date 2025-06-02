@@ -1,41 +1,38 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'step_model.dart';
+part of 'Question.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class StepModelAdapter extends TypeAdapter<StepModel> {
+class QuestionAdapter extends TypeAdapter<Question> {
   @override
-  final int typeId = 4;
+  final int typeId = 8;
 
   @override
-  StepModel read(BinaryReader reader) {
+  Question read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return StepModel(
-      title: fields[0] as String,
-      words: (fields[1] as List).cast<Word>(),
-      finisedTime: fields[2] as DateTime?,
-      wrongQestion: (fields[3] as List).cast<Question>(),
+    return Question(
+      question: fields[1] as Word,
+      answer: fields[0] as int,
+      options: (fields[2] as List).cast<Word>(),
     );
   }
 
   @override
-  void write(BinaryWriter writer, StepModel obj) {
+  void write(BinaryWriter writer, Question obj) {
     writer
-      ..writeByte(4)
-      ..writeByte(0)
-      ..write(obj.title)
-      ..writeByte(1)
-      ..write(obj.words)
-      ..writeByte(2)
-      ..write(obj.finisedTime)
       ..writeByte(3)
-      ..write(obj.wrongQestion);
+      ..writeByte(0)
+      ..write(obj.answer)
+      ..writeByte(1)
+      ..write(obj.question)
+      ..writeByte(2)
+      ..write(obj.options);
   }
 
   @override
@@ -44,7 +41,7 @@ class StepModelAdapter extends TypeAdapter<StepModel> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is StepModelAdapter &&
+      other is QuestionAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

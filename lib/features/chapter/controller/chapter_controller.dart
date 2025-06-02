@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jonggack_topik/core/constant/hive_keys.dart';
 import 'package:jonggack_topik/core/models/chapter.dart';
 import 'package:jonggack_topik/core/models/step_model.dart';
-import 'package:jonggack_topik/core/models/word.dart';
-import 'package:jonggack_topik/core/repositories/hive_repository.dart';
+import 'package:jonggack_topik/core/utils/app_function.dart';
+import 'package:jonggack_topik/features/quiz/controller/quiz_controller.dart';
+import 'package:jonggack_topik/features/quiz/screen/quiz_screen.dart';
 import 'package:jonggack_topik/features/step/controller/step_controller.dart';
 
 class ChapterController extends GetxController {
+  static ChapterController get to => Get.find<ChapterController>();
+
   final Chapter _chapter;
   late StepController stepController;
   ChapterController(this._chapter);
@@ -23,6 +25,7 @@ class ChapterController extends GetxController {
 
   StepModel get step => _chapter.steps[_selectedStepIdx.value];
 
+  ScrollController scrollController = ScrollController();
   @override
   void onInit() {
     _selectedStepIdx.value = 0;
@@ -45,19 +48,26 @@ class ChapterController extends GetxController {
     super.onReady();
   }
 
-  //
   onTapStepSelector(int index) {
     _selectedStepIdx.value = index;
-    // stepBodyPageCtl.jumpToPage(_selectedStepIdx.value);
     stepController.setStepModel(step);
+    AppFunction.scrollGoToTop(scrollController);
   }
-  //
+
+  Future<void> goToQuizPage() async {
+    if (step.wrongQestion.isNotEmpty) {
+      return;
+    }
+    Get.to(
+      () => QuizScreen(),
+      binding: BindingsBuilder.put(() => Get.put(QuizController(step))),
+    );
+  }
 
   @override
   void onClose() {
     stepBodyPageCtl.dispose();
+    scrollController.dispose();
     super.onClose();
   }
-
-  // Step
 }

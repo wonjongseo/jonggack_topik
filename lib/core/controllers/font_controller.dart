@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class FontController extends GetxController {
-  // 기본 base 사이즈
+  static FontController get to => Get.find<FontController>();
   RxDouble baseFontSize = 16.0.obs;
 
   TextStyle get title =>

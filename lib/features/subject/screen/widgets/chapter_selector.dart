@@ -14,6 +14,9 @@ class ChapterSelector extends StatelessWidget {
   final Function() onTap;
   @override
   Widget build(BuildContext context) {
+    for (var step in chapter.steps) {
+      int a = step.words.length - (step.wrongQestion.length);
+    }
     final ftCtl = Get.find<FontController>();
     return Card(
       child: InkWell(

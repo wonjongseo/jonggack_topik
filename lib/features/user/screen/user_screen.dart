@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/constant/hive_keys.dart';
+import 'package:jonggack_topik/core/models/category.dart';
+import 'package:jonggack_topik/core/models/step_model.dart';
 import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/core/repositories/hive_repository.dart';
 import 'package:jonggack_topik/core/repositories/setting_repository.dart';
@@ -55,7 +57,25 @@ class _UserScreenState extends State<UserScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text('UserScreen'),
+              TextButton(
+                onPressed: () async {
+                  final wordRepo = Get.find<HiveRepository<Word>>(
+                    tag: HK.wordBoxKey,
+                  );
+                  final stepRepo = Get.find<HiveRepository<StepModel>>(
+                    tag: HK.stepBoxKey,
+                  );
 
+                  final cateRepo = Get.find<HiveRepository<Category>>(
+                    tag: HK.categoryBoxKey,
+                  );
+
+                  wordRepo.deleteFromDisk();
+                  stepRepo.deleteFromDisk();
+                  cateRepo.deleteFromDisk();
+                },
+                child: Text('remove all'),
+              ),
               Expanded(
                 child: ListView.builder(
                   shrinkWrap: false,
@@ -65,6 +85,7 @@ class _UserScreenState extends State<UserScreen> {
                   },
                 ),
               ),
+
               ToggleButtons(
                 borderRadius: BorderRadius.circular(10 * 2),
                 onPressed: changeTheme,

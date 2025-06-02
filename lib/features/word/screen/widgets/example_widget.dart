@@ -20,7 +20,7 @@ class ExampleWidget extends StatelessWidget {
           Text('${index + 1}. ${example.word}'),
           Text(
             example.mean,
-            style: Get.find<FontController>().caption.copyWith(
+            style: FontController.to.caption.copyWith(
               fontFamily: AppFonts.zenMaruGothic,
             ),
           ),

@@ -16,7 +16,7 @@ class GlobalBannerAdmob extends StatefulWidget {
 }
 
 class _GlobalBannerAdmobState extends State<GlobalBannerAdmob> {
-  UserController userController = Get.find<UserController>();
+  UserController userController = UserController.to;
   BannerAd? _bannerAd;
   AdUnitId adUnitId = AdUnitId();
   bool _bannerReady = false;

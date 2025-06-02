@@ -7,6 +7,8 @@ import 'package:jonggack_topik/features/chapter/controller/chapter_controller.da
 import 'package:jonggack_topik/features/chapter/screen/chapter_screen.dart';
 
 class SubjectController extends GetxController {
+  static SubjectController get to => Get.find<SubjectController>();
+
   final Category _category;
   SubjectController(this._category);
 

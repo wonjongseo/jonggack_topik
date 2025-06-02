@@ -89,12 +89,12 @@ class AppThemings {
     listTileTheme: ListTileThemeData(
       titleTextStyle: ThemeData.light().textTheme.bodyLarge?.copyWith(
         fontFamily: AppFonts.cookieRunFont,
-        fontSize: Get.find<FontController>().baseFontSize.value,
+        fontSize: FontController.to.baseFontSize.value,
         color: ThemeData.light().textTheme.bodyLarge?.color, // 색상 유지
       ),
       subtitleTextStyle: ThemeData.light().textTheme.bodyMedium?.copyWith(
         fontFamily: AppFonts.zenMaruGothic,
-        fontSize: Get.find<FontController>().baseFontSize.value - 2,
+        fontSize: FontController.to.baseFontSize.value - 2,
         color: ThemeData.light().textTheme.bodyMedium?.color, // 색상 유지
       ),
     ),

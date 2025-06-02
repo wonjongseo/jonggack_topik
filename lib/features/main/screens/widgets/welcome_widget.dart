@@ -11,7 +11,6 @@ class WelcomeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     String gretting = '안녕하세요';
 
-    final fc = Get.find<FontController>();
     return GetBuilder<UserController>(
       builder: (controller) {
         return Column(
@@ -19,14 +18,14 @@ class WelcomeWidget extends StatelessWidget {
             Text(
               gretting,
               // style: TextStyle(fontSize: fc.title, fontWeight: FontWeight.w600),
-              style: fc.title,
+              style: FontController.to.title,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   'TOPIK 종각',
-                  style: fc.title.copyWith(
+                  style: FontController.to.title.copyWith(
                     color: AppColors.mainBordColor,
                     fontWeight: FontWeight.w900,
                   ),
@@ -39,7 +38,9 @@ class WelcomeWidget extends StatelessWidget {
                 if (controller.user.isPremieum)
                   Text(
                     '+',
-                    style: fc.title.copyWith(fontWeight: FontWeight.w900),
+                    style: FontController.to.title.copyWith(
+                      fontWeight: FontWeight.w900,
+                    ),
                     // style: TextStyle(
                     //   fontSize: 25,
                     //   fontWeight: FontWeight.w900,
@@ -48,7 +49,9 @@ class WelcomeWidget extends StatelessWidget {
                   ),
                 Text(
                   '에 어서오세요',
-                  style: fc.title.copyWith(fontWeight: FontWeight.w900),
+                  style: FontController.to.title.copyWith(
+                    fontWeight: FontWeight.w900,
+                  ),
                   // style: TextStyle(fontSize: 25, fontWeight: FontWeight.w900),
                 ),
               ],

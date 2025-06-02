@@ -5,10 +5,13 @@ import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/core/repositories/hive_repository.dart';
 
 class StepController extends GetxController {
+  static StepController get to => Get.find<StepController>();
+
   late StepModel _step;
   StepController(StepModel initialStep) : _step = initialStep;
 
   StepModel get step => _step;
+  String get title => _step.title;
 
   void setStepModel(StepModel step) {
     _step = step;
@@ -31,4 +34,6 @@ class StepController extends GetxController {
     }
     update();
   }
+
+  // Word
 }

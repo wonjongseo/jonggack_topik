@@ -1,6 +1,7 @@
 import 'package:hive_flutter/adapters.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/constant/hive_keys.dart';
+import 'package:jonggack_topik/core/models/Question.dart';
 import 'package:jonggack_topik/core/models/category.dart';
 import 'package:jonggack_topik/core/models/chapter.dart';
 import 'package:jonggack_topik/core/models/example.dart';
@@ -11,6 +12,8 @@ import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/features/auth/models/user.dart';
 
 class HiveRepository<T extends HiveObject> {
+  static HiveRepository get to => Get.find<HiveRepository>();
+
   final String boxKey;
   late Box<T> _box;
 
@@ -27,7 +30,11 @@ class HiveRepository<T extends HiveObject> {
 
   /// 2) 단일 엔티티 저장/업데이트 (key: String)
   Future<void> put(String key, T value) async {
-    await _box.put(key, value);
+    try {
+      await _box.put(key, value);
+    } catch (e) {
+      print('e.toString() : ${e.toString()}');
+    }
   }
 
   /// 3) key로 조회
@@ -60,6 +67,11 @@ class HiveRepository<T extends HiveObject> {
     await _box.close();
   }
 
+  Future<void> deleteFromDisk() async {
+    print('${_box.runtimeType} is deleteFromDisk');
+    await _box.deleteFromDisk();
+  }
+
   static Future<void> init() async {
     if (GetPlatform.isMobile) {
       await Hive.initFlutter();
@@ -86,6 +98,9 @@ class HiveRepository<T extends HiveObject> {
     if (!Hive.isAdapterRegistered(SynonymAdapter().typeId)) {
       Hive.registerAdapter(SynonymAdapter());
     }
+    if (!Hive.isAdapterRegistered(QuestionAdapter().typeId)) {
+      Hive.registerAdapter(QuestionAdapter());
+    }
 
     if (!Hive.isBoxOpen(User.boxKey)) {
       await Hive.openBox<User>(User.boxKey);
@@ -111,8 +126,10 @@ class HiveRepository<T extends HiveObject> {
     if (!Hive.isBoxOpen(Synonym.boxKey)) {
       await Hive.openBox<Synonym>(Synonym.boxKey);
     }
+    if (!Hive.isBoxOpen(Question.boxKey)) {
+      await Hive.openBox<Question>(Question.boxKey);
+    }
 
-    //
     final wordRepo = HiveRepository<Word>(Word.boxKey);
     await wordRepo.initBox();
 
@@ -152,8 +169,12 @@ class HiveRepository<T extends HiveObject> {
     for (final subject in category.subjects) {
       for (final chapter in subject.chapters) {
         for (final step in chapter.steps) {
-          final stepKey = '${subject.title}-${chapter.title}-${step.title}';
+          final stepKey =
+              '${category.title}-${subject.title}-${chapter.title}-${step.title}';
+
           if (!stepBox.containsKey(stepKey)) {
+            print('stepKey : ${stepKey}');
+
             await stepBox.put(stepKey, step);
           }
 

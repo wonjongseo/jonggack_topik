@@ -23,4 +23,7 @@ class HK {
 
   static const int synonymTypeID = 7;
   static const String synonymBoxKey = 'synonym-box-key';
+
+  static const int questionTypeID = 8;
+  static const String questionBoxKey = 'question-box-key';
 }

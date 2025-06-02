@@ -22,9 +22,7 @@ class SubjectScreen extends GetView<SubjectController> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Expanded(child: _subjecttSelectorRow()),
-
               Expanded(flex: 2, child: SeacrhForm()),
-
               Expanded(
                 flex: 4,
                 child: Obx(

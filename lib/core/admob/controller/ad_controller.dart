@@ -15,7 +15,7 @@ class AdController extends GetxController {
   RewardedInterstitialAd? rewardedInterstitialAd;
   int _numRewardedInterstitialLoadAttempts = 0;
   RewardedAd? rewardedAd;
-  UserController userController = Get.find<UserController>();
+  UserController userController = UserController.to;
   AdUnitId adUnitId = AdUnitId();
 
   AppOpenAd? appOpenAd;

@@ -10,7 +10,6 @@ import 'package:jonggack_topik/features/category/controller/category_controller.
 import 'package:jonggack_topik/features/auth/controllers/user_controller.dart';
 import 'package:jonggack_topik/features/main/controller/main_controller.dart';
 import 'package:jonggack_topik/features/main/screens/main_screen.dart';
-import 'package:jonggack_topik/features/step/controller/step_controller.dart';
 import 'package:jonggack_topik/routes.dart';
 import 'package:jonggack_topik/theme.dart';
 

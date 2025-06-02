@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/admob/banner_ad/global_banner_admob.dart';
+import 'package:jonggack_topik/core/widgets/custom_button.dart';
 import 'package:jonggack_topik/features/chapter/controller/chapter_controller.dart';
 import 'package:jonggack_topik/features/chapter/screen/widgets/step_body.dart';
 
@@ -43,18 +44,6 @@ class ChapterScreen extends GetView<ChapterController> {
                   margin: const EdgeInsets.only(top: 8),
                   color: Colors.white,
                   child: StepBody(),
-                  // child: PageView.builder(
-                  //   physics: const NeverScrollableScrollPhysics(),
-                  //   controller: controller.stepBodyPageCtl,
-                  //   itemCount: controller.steps.length,
-                  //   itemBuilder: (context, index) {
-                  //     return Builder(
-                  //       builder: (context) {
-                  //         return StepBody(step: controller.steps[index]);
-                  //       },
-                  //     );
-                  //   },
-                  // ),
                 ),
               ),
             ],
@@ -62,7 +51,17 @@ class ChapterScreen extends GetView<ChapterController> {
         ),
       ),
 
-      bottomNavigationBar: GlobalBannerAdmob(),
+      bottomNavigationBar: GlobalBannerAdmob(
+        widgets: [
+          if (controller.step.words.length > 4)
+            BottomBtn(
+              label: "QUIZ",
+              onTap: () {
+                controller.goToQuizPage();
+              },
+            ),
+        ],
+      ),
     );
   }
 }

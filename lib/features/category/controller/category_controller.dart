@@ -9,6 +9,8 @@ import 'package:jonggack_topik/features/subject/controller/subject_controller.da
 import 'package:jonggack_topik/features/subject/screen/subject_screen.dart';
 
 class CategoryController extends GetxController {
+  static CategoryController get to => Get.find<CategoryController>();
+
   final isLoadign = false.obs;
   final DataRepositry dataRepositry;
   CategoryController(this.dataRepositry);
@@ -45,6 +47,7 @@ class CategoryController extends GetxController {
       if (categoryRepo.getAll().isEmpty) {
         print("No Category, Start putting Category");
         final category = await dataRepositry.getJson("韓国語能力試験.json");
+
         _allCategories.assignAll([category]);
         HiveRepository.saveCategory(category);
       } else {
@@ -52,6 +55,8 @@ class CategoryController extends GetxController {
         _allCategories.assignAll(category);
       }
     } catch (e) {
+      print('e : ${e}');
+
       SnackBarHelper.showErrorSnackBar("$e");
     } finally {
       isLoadign(false);

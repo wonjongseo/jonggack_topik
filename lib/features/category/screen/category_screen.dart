@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/admob/banner_ad/global_banner_admob.dart';
 import 'package:jonggack_topik/core/controllers/font_controller.dart';
+import 'package:jonggack_topik/core/models/step_model.dart';
+import 'package:jonggack_topik/core/repositories/hive_repository.dart';
+import 'package:jonggack_topik/core/utils/app_function.dart';
 import 'package:jonggack_topik/features/category/controller/category_controller.dart';
 import 'package:jonggack_topik/features/category/screen/widgets/category_selector.dart';
 import 'package:jonggack_topik/features/category/screen/widgets/search_form.dart';
@@ -14,6 +17,24 @@ class CategoryScreen extends GetView<CategoryController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          //
+          String key = '韓国語能力試験-韓国語能力試験1・2級-Chapter 1-Step 1';
+
+          final stepRepo = Get.find<HiveRepository<StepModel>>(
+            tag: StepModel.boxKey,
+          );
+          var a = stepRepo.get(key);
+          print('a : ${a?.finisedTime}');
+          print('a.rongQestion : ${a!.wrongQestion.length}');
+
+          if (a!.finisedTime == null) {
+            a = a.copyWith(finisedTime: DateTime.now());
+            stepRepo.put(key, a);
+          }
+        },
+      ),
       body: SafeArea(
         child: Center(
           child: Padding(
@@ -35,7 +56,7 @@ class CategoryScreen extends GetView<CategoryController> {
                         padding: EdgeInsets.symmetric(horizontal: 32),
                         child: Text(
                           ' Categories',
-                          style: Get.find<FontController>().bold(),
+                          style: FontController.to.bold(),
                         ),
                       ),
                       SizedBox(height: 10),

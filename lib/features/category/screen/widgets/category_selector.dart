@@ -15,7 +15,6 @@ class CategorySelector extends StatelessWidget {
   final Function() onTap;
   @override
   Widget build(BuildContext context) {
-    final ftCtl = Get.find<FontController>();
     return Card(
       child: InkWell(
         onTap: onTap,
@@ -26,7 +25,7 @@ class CategorySelector extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(category.title, style: ftCtl.bold()),
+                child: Text(category.title, style: FontController.to.bold()),
               ),
 
               Column(
