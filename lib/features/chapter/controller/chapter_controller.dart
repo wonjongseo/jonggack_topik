@@ -83,18 +83,22 @@ class ChapterController extends GetxController {
   }
 
   Future<void> goToQuizPage() async {
+    bool isTryAgain = false;
     if (step.wrongQestion.isNotEmpty) {
-      AppDialog.showMyDialog(
+      isTryAgain = await AppDialog.showMyDialog(
         title: AppString.youHavePreQuizData,
         bodyText: '틀린 ${step.wrongQestion.length} 문제를 다시 보시겠습니까?',
         onConfirm: () {},
         onCancel: () {},
       );
-      return;
     }
     Get.to(
       () => QuizScreen(),
-      binding: BindingsBuilder.put(() => Get.put(QuizController(step))),
+      binding: BindingsBuilder.put(
+        () => Get.put(
+          QuizController(isTryAgain ? step.wrongQestion : step.words),
+        ),
+      ),
     );
   }
 

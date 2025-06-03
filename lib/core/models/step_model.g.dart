@@ -20,7 +20,7 @@ class StepModelAdapter extends TypeAdapter<StepModel> {
       title: fields[0] as String,
       words: (fields[1] as List).cast<Word>(),
       lastQuizTime: fields[2] as DateTime?,
-      wrongQestion: (fields[3] as List).cast<Question>(),
+      wrongQestion: (fields[3] as List).cast<Word>(),
     );
   }
 

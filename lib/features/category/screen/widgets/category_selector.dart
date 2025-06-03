@@ -4,6 +4,7 @@ import 'package:jonggack_topik/core/models/category_hive.dart';
 import 'package:jonggack_topik/core/models/subject_hive.dart';
 import 'package:jonggack_topik/features/category/controller/category_controller.dart';
 import 'package:jonggack_topik/features/category/screen/widgets/cateogry_progress.dart';
+import 'package:jonggack_topik/features/user/screen/user_screen.dart';
 
 class CategorySelector extends StatelessWidget {
   const CategorySelector({
@@ -29,7 +30,7 @@ class CategorySelector extends StatelessWidget {
           ],
         ),
         Expanded(
-          child: Card(
+          child: CCard(
             child: InkWell(
               onTap: onTap,
               child: Padding(

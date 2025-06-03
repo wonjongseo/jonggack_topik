@@ -24,7 +24,7 @@ class WordAdapter extends TypeAdapter<Word> {
       mean: fields[4] as String,
       examples: (fields[5] as List?)?.cast<Example>(),
       synonyms: (fields[6] as List?)?.cast<Synonym>(),
-      isSaved: fields[7] as bool,
+      dicTypeNuimber: fields[7] as int,
     );
   }
 
@@ -47,7 +47,7 @@ class WordAdapter extends TypeAdapter<Word> {
       ..writeByte(6)
       ..write(obj.synonyms)
       ..writeByte(7)
-      ..write(obj.isSaved);
+      ..write(obj.dicTypeNuimber);
   }
 
   @override

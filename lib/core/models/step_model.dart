@@ -18,7 +18,7 @@ class StepModel extends HiveObject {
   @HiveField(2)
   DateTime? lastQuizTime;
   @HiveField(3)
-  List<Question> wrongQestion = [];
+  List<Word> wrongQestion = [];
   StepModel({
     required this.title,
     required this.words,
@@ -62,10 +62,10 @@ class StepModel extends HiveObject {
           map['finisedTile'] != null
               ? DateTime.fromMillisecondsSinceEpoch(map['finisedTile'])
               : null,
-      wrongQestion: List<Question>.from(
+      wrongQestion: List<Word>.from(
         map['wrongQestion'] == null
             ? []
-            : map['wrongQestion']?.map((x) => Question.fromMap(x)),
+            : map['wrongQestion']?.map((x) => Word.fromMap(x)),
       ),
     );
   }
@@ -79,7 +79,7 @@ class StepModel extends HiveObject {
     String? title,
     List<Word>? words,
     DateTime? finisedTime,
-    List<Question>? wrongQestion,
+    List<Word>? wrongQestion,
   }) {
     return StepModel(
       title: title ?? this.title,

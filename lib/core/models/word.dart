@@ -29,7 +29,7 @@ class Word extends HiveObject {
   List<Synonym> synonyms;
 
   @HiveField(7)
-  bool isSaved = false;
+  int dicTypeNuimber = 0; // 0은 기본
   Word({
     required this.id,
     required this.headTitle,
@@ -38,7 +38,7 @@ class Word extends HiveObject {
     required this.mean,
     List<Example>? examples,
     List<Synonym>? synonyms,
-    this.isSaved = false,
+    this.dicTypeNuimber = 0,
   }) : _yomikata = yomikata,
        examples = examples ?? [],
        synonyms = synonyms ?? [];
@@ -88,7 +88,7 @@ class Word extends HiveObject {
                   (s) => Synonym.fromMap(s as Map<String, dynamic>),
                 ),
               ),
-      isSaved = map['isSaved'] ?? false {
+      dicTypeNuimber = map['dicTypeNuimber'] ?? 0 {
     // 생성자 본문에 추가 로직이 필요하다면 여기에 작성
   }
 
@@ -100,13 +100,9 @@ class Word extends HiveObject {
     result.addAll({'yomikata': _yomikata});
     result.addAll({'mean': mean});
 
-    if (examples != null) {
-      result.addAll({'examples': examples!.map((x) => x?.toMap()).toList()});
-    }
-    if (synonyms != null) {
-      result.addAll({'synonyms': synonyms!.map((x) => x?.toMap()).toList()});
-    }
-    result.addAll({'isSaved': isSaved});
+    result.addAll({'examples': examples.map((x) => x.toMap()).toList()});
+    result.addAll({'synonyms': synonyms.map((x) => x.toMap()).toList()});
+    result.addAll({'dicTypeNuimber': dicTypeNuimber});
     return result;
   }
 

@@ -37,8 +37,7 @@ class WordScreen extends GetView<WordController> {
                         Get.to(
                           () => QuizScreen(),
                           binding: BindingsBuilder.put(
-                            () =>
-                                Get.put(QuizController(StepController.to.step)),
+                            () => Get.put(QuizController(controller.words)),
                           ),
                         );
                       },

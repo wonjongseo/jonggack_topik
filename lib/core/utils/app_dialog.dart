@@ -32,26 +32,26 @@ class MyCustomDialog extends StatelessWidget {
 }
 
 class AppDialog {
-  static void showMyDialog({
+  static Future<bool> showMyDialog({
     required String title,
     required String bodyText,
     required VoidCallback onConfirm,
     VoidCallback? onCancel,
-  }) {
-    Get.dialog(
+  }) async {
+    return await Get.dialog(
       MyCustomDialog(
         title: title,
         bodyText: bodyText,
         onConfirm: () {
-          Get.back(); // 다이얼로그 닫기
           onConfirm(); // 호출자에게 알림
+          return Get.back(result: true); // 다이얼로그 닫기
         },
         onCancel:
             onCancel == null
                 ? null
                 : () {
-                  Get.back(); // 다이얼로그 닫기
                   onCancel(); // 호출자에게 알림
+                  return Get.back(result: false); // 다이얼로그 닫기
                 },
       ),
       barrierDismissible: false, // 배경 터치 시 닫히지 않게

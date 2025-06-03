@@ -15,9 +15,9 @@ import 'package:jonggack_topik/features/score/screen/score_screen.dart';
 
 class QuizController extends GetxController with SingleGetTickerProviderMixin {
   // final List<Word> words;
-  final StepModel step;
-
-  QuizController(this.step);
+  // final StepModel step;
+  final List<Word> words;
+  QuizController(this.words);
 
   late AnimationController animationController; // 진행률 바
   late Animation animation; // 진행률 바 애니메이션
@@ -27,7 +27,7 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
   List<Map<int, List<Word>>> map = List.empty(growable: true);
   bool isWrong = false;
   List<Question> questions = [];
-  List<Question> wrongQuestions = [];
+  List<Word> wrongQuestions = [];
 
   String nextOrSkipText = 'skip';
   Color color = Colors.black;
@@ -133,8 +133,10 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
   }
 
   void saveWrongQuestion() {
-    if (!wrongQuestions.contains(questions[questionNumber.value - 1])) {
-      wrongQuestions.add(questions[questionNumber.value - 1]);
+    if (!wrongQuestions.contains(
+      questions[questionNumber.value - 1].question,
+    )) {
+      wrongQuestions.add(questions[questionNumber.value - 1].question);
     }
   }
 
@@ -175,26 +177,24 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
           return;
         }
 
-        stepModel = stepModel.copyWith(
-          wrongQestion: wrongQuestions,
-          finisedTime: DateTime.now(),
-        );
+        if (!stepModel.isAllCorrect) {
+          stepModel = stepModel.copyWith(
+            wrongQestion: wrongQuestions,
+            finisedTime: DateTime.now(),
+          );
+          await stepRepo.put(key, stepModel);
+        }
 
-        await stepRepo.put(key, stepModel);
-
-        //
         CategoryController.to.setTotalAndScores();
-        ChapterController.to.quizAllCorrect();
       } else {
         Get.back();
       }
 
       if (numOfCorrectAns == questions.length) {
         if (!isMyWordTest) {
+          ChapterController.to.quizAllCorrect();
           Get.off(() => const VeryGoodScreen());
-          print("Go to Very good screen");
         } else {
-          print("Go to Very good screen");
           Get.to(() => const VeryGoodScreen());
         }
         return;
@@ -206,21 +206,21 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
   }
 
   void setQuestions() {
-    List<Word> words = List.from(step.words);
+    List<Word> tempWords = List.from(words);
     Random random = Random();
 
-    int diff = words.length - 4;
+    int diff = tempWords.length - 4;
 
     if (diff < 0) {
       final wordRepo = Get.find<HiveRepository<Word>>(tag: Word.boxKey);
       List<Word> allWords = wordRepo.getAll();
       for (int i = 0; i < -diff; i++) {
         int randomIndex = random.nextInt(allWords.length);
-        words.add(allWords[randomIndex]);
+        tempWords.add(allWords[randomIndex]);
       }
     }
 
-    map = Question.generateQustion(words);
+    map = Question.generateQustion(tempWords);
 
     for (var vocas in map) {
       for (var e in vocas.entries) {
@@ -246,10 +246,10 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
 
   String get scoreResult => '$numOfCorrectAns / ${questions.length}';
   String wrongWord(int index) {
-    return wrongQuestions[index].question.word;
+    return wrongQuestions[index].word;
   }
 
   String wrongMean(int index) {
-    return '${wrongQuestions[index].options[wrongQuestions[index].answer].mean}\n${wrongQuestions[index].options[wrongQuestions[index].answer].yomikata}';
+    return '${wrongQuestions[index].mean}\n${wrongQuestions[index].yomikata}';
   }
 }
