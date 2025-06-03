@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/models/Question.dart';
+import 'package:jonggack_topik/core/models/quiz_history.dart';
 import 'package:jonggack_topik/core/models/step_model.dart';
 import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/core/repositories/hive_repository.dart';
@@ -12,6 +13,7 @@ import 'package:jonggack_topik/features/category/controller/category_controller.
 import 'package:jonggack_topik/features/chapter/controller/chapter_controller.dart';
 import 'package:jonggack_topik/features/quiz/screen/very_good_screen.dart';
 import 'package:jonggack_topik/features/score/screen/score_screen.dart';
+import 'package:jonggack_topik/features/user/repository/quiz_history_repository.dart';
 
 class QuizController extends GetxController with SingleGetTickerProviderMixin {
   // final List<Word> words;
@@ -27,6 +29,7 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
   List<Map<int, List<Word>>> map = List.empty(growable: true);
   bool isWrong = false;
   List<Question> questions = [];
+  List<Word> correctQuestions = [];
   List<Word> wrongQuestions = [];
 
   String nextOrSkipText = 'skip';
@@ -106,8 +109,10 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
 
   int numOfCorrectAns = 0;
   testCorect() {
+    saveCorrectQuestion();
     nextOrSkipText = 'skip';
     numOfCorrectAns++;
+
     color = Colors.blue;
     nextOrSkipText = 'next';
     if (isMyWordTest) {
@@ -130,6 +135,14 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
     Future.delayed(Duration(milliseconds: incorrectDurationTime), () {
       nextQuestion();
     });
+  }
+
+  void saveCorrectQuestion() {
+    if (!correctQuestions.contains(
+      questions[questionNumber.value - 1].question,
+    )) {
+      correctQuestions.add(questions[questionNumber.value - 1].question);
+    }
   }
 
   void saveWrongQuestion() {
@@ -163,6 +176,16 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
     }
     // 테스트를 다 풀 었으면
     else {
+      DateTime date = DateTime.now();
+      Random random = Random();
+      int ranNum = random.nextInt(5);
+      date = date.subtract(Duration(days: ranNum));
+      QuizHistoryRepository.saveOrUpdate(
+        date: date,
+        newCorrectIds: correctQuestions.map((word) => word.id).toSet().toList(),
+        newIncorrectIds: wrongQuestions.map((word) => word.id).toSet().toList(),
+      );
+
       if (!isMyWordTest) {
         final stepRepo = Get.find<HiveRepository<StepModel>>(
           tag: StepModel.boxKey,
@@ -177,13 +200,12 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
           return;
         }
 
-        if (!stepModel.isAllCorrect) {
-          stepModel = stepModel.copyWith(
-            wrongQestion: wrongQuestions,
-            finisedTime: DateTime.now(),
-          );
-          await stepRepo.put(key, stepModel);
-        }
+        stepModel = stepModel.copyWith(
+          wrongQestion: stepModel.isAllCorrect ? null : wrongQuestions,
+          finisedTime: DateTime.now(),
+        );
+
+        await stepRepo.put(key, stepModel);
 
         CategoryController.to.setTotalAndScores();
       } else {

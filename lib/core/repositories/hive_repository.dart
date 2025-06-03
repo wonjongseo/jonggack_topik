@@ -7,6 +7,7 @@ import 'package:jonggack_topik/core/models/category_hive.dart';
 import 'package:jonggack_topik/core/models/chapter.dart';
 import 'package:jonggack_topik/core/models/chapter_hive.dart';
 import 'package:jonggack_topik/core/models/example.dart';
+import 'package:jonggack_topik/core/models/quiz_history.dart';
 import 'package:jonggack_topik/core/models/step_model.dart';
 import 'package:jonggack_topik/core/models/subject.dart';
 import 'package:jonggack_topik/core/models/subject_hive.dart';
@@ -157,6 +158,13 @@ class HiveRepository<T extends HiveObject> {
     }
     if (!Hive.isBoxOpen(Question.boxKey)) {
       await Hive.openBox<Question>(Question.boxKey);
+    }
+
+    if (!Hive.isAdapterRegistered(QuizHistoryAdapter().typeId)) {
+      Hive.registerAdapter(QuizHistoryAdapter());
+    }
+    if (!Hive.isBoxOpen(QuizHistory.boxKey)) {
+      await Hive.openBox<QuizHistory>(QuizHistory.boxKey);
     }
 
     SettingRepository.init();

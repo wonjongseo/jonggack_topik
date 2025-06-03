@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/admob/banner_ad/global_banner_admob.dart';
+import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/features/quiz/controller/quiz_controller.dart';
 import 'package:jonggack_topik/features/quiz/screen/quiz_screen.dart';
-import 'package:jonggack_topik/features/step/controller/step_controller.dart';
 import 'package:jonggack_topik/features/word/controller/word_controller.dart';
 import 'package:jonggack_topik/features/word/screen/widgets/word_cart.dart';
 
@@ -27,34 +27,7 @@ class WordScreen extends GetView<WordController> {
               onPageChanged: controller.onPageChanged,
               itemBuilder: (context, index) {
                 if (index + 1 > controller.words.length) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 32,
-                      horizontal: 16,
-                    ),
-                    child: InkWell(
-                      onTap: () {
-                        Get.to(
-                          () => QuizScreen(),
-                          binding: BindingsBuilder.put(
-                            () => Get.put(QuizController(controller.words)),
-                          ),
-                        );
-                      },
-                      child: Card(
-                        child: Center(
-                          child: Text(
-                            '퀴즈 풀러 가기!',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.cyan.shade600,
-                              fontSize: 24,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
+                  return GoToQuizWidget(words: controller.words);
                 }
                 return WordCard(word: controller.words[index]);
               },
@@ -63,6 +36,39 @@ class WordScreen extends GetView<WordController> {
           ),
         ),
         bottomNavigationBar: GlobalBannerAdmob(),
+      ),
+    );
+  }
+}
+
+class GoToQuizWidget extends StatelessWidget {
+  const GoToQuizWidget({super.key, required this.words});
+
+  final List<Word> words;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
+      child: InkWell(
+        onTap: () {
+          Get.to(
+            () => QuizScreen(),
+            binding: BindingsBuilder.put(() => Get.put(QuizController(words))),
+          );
+        },
+        child: Card(
+          child: Center(
+            child: Text(
+              '퀴즈 풀러 가기!',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.cyan.shade600,
+                fontSize: 24,
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

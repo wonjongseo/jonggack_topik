@@ -10,7 +10,7 @@ class AppFonts {
   static const descriptionFont = japaneseFont;
   // static const gMaretFont = 'GMarket';
   static const gMaretFont = 'GMarket';
-  static const cookieRunFont = 'CookieRunFont';
+  // static const cookieRunFont = 'CookieRunFont';
   static const zenMaruGothic = 'ZenMaruGothic';
 }
 
@@ -83,10 +83,16 @@ class AppThemings {
       ),
       iconTheme: IconThemeData(color: Colors.black),
     ),
+    iconButtonTheme: IconButtonThemeData(
+      style: IconButton.styleFrom(
+        minimumSize: const Size(0, 0),
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      ),
+    ),
     listTileTheme: ListTileThemeData(
       leadingAndTrailingTextStyle: ThemeData.light().textTheme.bodyLarge
           ?.copyWith(
-            fontFamily: AppFonts.cookieRunFont,
+            fontFamily: AppFonts.gMaretFont,
             fontSize: FontController.to.baseFontSize.value,
             color: ThemeData.light().textTheme.bodyLarge?.color, // 색상 유지
           ),

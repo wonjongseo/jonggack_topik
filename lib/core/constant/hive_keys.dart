@@ -38,4 +38,7 @@ class HK {
 
   static const int stepModelHiveTypeID = 12;
   static const String stepModelHiveBoxKey = 'stepModel-hive-box-key';
+
+  static const int quizHistoryHiveTypeID = 13;
+  static const String quizHistoryHiveBoxKey = 'quizHistory-hive-box-key';
 }

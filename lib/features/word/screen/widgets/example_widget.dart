@@ -16,7 +16,7 @@ class ExampleWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 16.0),
+      padding: const EdgeInsets.only(bottom: 24.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -29,14 +29,14 @@ class ExampleWidget extends StatelessWidget {
                     TtsController.to.isPlaying.value &&
                     TtsController.to.currentWord.value == example.word;
 
-                return InkWell(
-                  onTap: () => TtsController.to.speak(example.word),
-                  child: FaIcon(
+                return IconButton(
+                  onPressed: () => TtsController.to.speak(example.word),
+                  icon: FaIcon(
                     isPlayingThisWord
                         ? FontAwesomeIcons.volumeLow
                         : FontAwesomeIcons.volumeOff,
                     color: AppColors.mainBordColor,
-                    size: 26,
+                    size: 22,
                   ),
                 );
               }),

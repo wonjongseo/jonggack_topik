@@ -33,20 +33,12 @@ class WordCard extends GetView<WordController> {
                       AutoSizeText(
                         word.word,
                         style: TextStyle(
-                          fontSize: FontController.to.baseFontSize.value + 8,
-                          fontWeight: FontWeight.w600,
+                          fontSize: FontController.to.baseFontSize.value + 10,
                         ),
                         maxLines: 1,
                       ),
                       IconButton(
-                        style: IconButton.styleFrom(
-                          padding: const EdgeInsets.all(2),
-                          minimumSize: const Size(0, 0),
-                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        ),
-                        onPressed: () {
-                          controller.toggleMyWord(word);
-                        },
+                        onPressed: () => controller.toggleMyWord(word),
                         icon:
                             controller.isSavedWord(word.id)
                                 ? Icon(
@@ -64,20 +56,20 @@ class WordCard extends GetView<WordController> {
                       Flexible(
                         child: AutoSizeText('[${word.yomikata}]', maxLines: 1),
                       ),
-                      SizedBox(width: 10),
+                      SizedBox(width: 12),
                       Obx(() {
                         final isPlayingThisWord =
                             TtsController.to.isPlaying.value &&
                             TtsController.to.currentWord.value == word.word;
 
-                        return InkWell(
-                          onTap: () => TtsController.to.speak(word.word),
-                          child: FaIcon(
+                        return IconButton(
+                          onPressed: () => TtsController.to.speak(word.word),
+                          icon: FaIcon(
                             isPlayingThisWord
                                 ? FontAwesomeIcons.volumeLow
                                 : FontAwesomeIcons.volumeOff,
                             color: AppColors.mainBordColor,
-                            size: 26,
+                            size: 22,
                           ),
                         );
                       }),

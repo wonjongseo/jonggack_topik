@@ -1,5 +1,6 @@
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:get/get.dart';
+import 'package:jonggack_topik/core/logger/logger_service.dart';
 
 /// 앱 전역에서 하나만 생성되어 사용하는 TTS 컨트롤러.
 /// - isPlaying: TTS가 현재 재생 중인지 여부
@@ -14,8 +15,14 @@ class TtsController extends GetxController {
   /// 현재 재생 중인 단어 (''이면 재생 중 아님)
   final RxString currentWord = ''.obs;
 
+  Future _setAwaitOptions() async {
+    await _tts.awaitSpeakCompletion(true);
+
+    await _tts.awaitSynthCompletion(true);
+  }
+
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
     _tts = FlutterTts();
 
@@ -28,6 +35,23 @@ class TtsController extends GetxController {
     _tts.setSpeechRate(0.5);
     _tts.setVolume(1.0);
     _tts.setPitch(1.0);
+
+    if (GetPlatform.isIOS) {
+      await _tts.setIosAudioCategory(
+        // IosTextToSpeechAudioCategory.playback,
+        IosTextToSpeechAudioCategory.playback,
+        [
+          IosTextToSpeechAudioCategoryOptions.allowBluetooth,
+          IosTextToSpeechAudioCategoryOptions.allowBluetoothA2DP,
+          IosTextToSpeechAudioCategoryOptions.mixWithOthers,
+        ],
+        IosTextToSpeechAudioMode.voicePrompt,
+      );
+    }
+    if (GetPlatform.isAndroid) {
+      getDefaultEngine();
+      getDefaultVoice();
+    }
 
     // 재생 완료 시 호출되는 콜백
     _tts.setCompletionHandler(() {
@@ -46,6 +70,20 @@ class TtsController extends GetxController {
   void onClose() {
     _tts.stop();
     super.onClose();
+  }
+
+  Future getDefaultEngine() async {
+    var engine = await _tts.getDefaultEngine;
+    if (engine != null) {
+      LogManager.info(engine);
+    }
+  }
+
+  Future getDefaultVoice() async {
+    var voice = await _tts.getDefaultVoice;
+    if (voice != null) {
+      LogManager.info(voice);
+    }
   }
 
   /// [word]를 TTS로 재생함.

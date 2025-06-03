@@ -39,10 +39,8 @@ class _AppState extends State<App> {
   // systemLanguage =
   //       await SettingRepository.getString(AppConstant.settingLanguageKey);
 
-  void getUsresSetting() async {
-    bool? isDarkMode = await SettingRepository.getBool(
-      AppConstant.isDarkModeKey,
-    );
+  void getUsresSetting() {
+    bool? isDarkMode = SettingRepository.getBool(AppConstant.isDarkModeKey);
 
     if (isDarkMode != null) {
       themeMode = isDarkMode ? ThemeMode.dark : ThemeMode.light;
