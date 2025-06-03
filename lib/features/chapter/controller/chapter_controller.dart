@@ -5,6 +5,7 @@ import 'package:jonggack_topik/core/models/step_model.dart';
 import 'package:jonggack_topik/core/repositories/hive_repository.dart';
 import 'package:jonggack_topik/core/repositories/setting_repository.dart';
 import 'package:jonggack_topik/core/utils/app_constant.dart';
+import 'package:jonggack_topik/core/utils/app_dialog.dart';
 import 'package:jonggack_topik/core/utils/app_function.dart';
 import 'package:jonggack_topik/features/category/controller/category_controller.dart';
 import 'package:jonggack_topik/features/quiz/controller/quiz_controller.dart';
@@ -83,6 +84,12 @@ class ChapterController extends GetxController {
 
   Future<void> goToQuizPage() async {
     if (step.wrongQestion.isNotEmpty) {
+      AppDialog.showMyDialog(
+        title: AppString.youHavePreQuizData,
+        bodyText: '틀린 ${step.wrongQestion.length} 문제를 다시 보시겠습니까?',
+        onConfirm: () {},
+        onCancel: () {},
+      );
       return;
     }
     Get.to(

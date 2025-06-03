@@ -16,21 +16,26 @@ class StepModel extends HiveObject {
   @HiveField(1)
   final List<Word> words; // Word 총 15개
   @HiveField(2)
-  DateTime? finisedTime;
+  DateTime? lastQuizTime;
   @HiveField(3)
   List<Question> wrongQestion = [];
   StepModel({
     required this.title,
     required this.words,
-    this.finisedTime,
+    this.lastQuizTime,
     required this.wrongQestion,
   });
 
+  bool get isAllCorrect {
+    if (lastQuizTime == null) return false;
+
+    return words.length - wrongQestion.length == 0;
+  }
+
   int get score {
-    if (finisedTime == null) {
+    if (lastQuizTime == null) {
       return 0;
     }
-
     return words.length - wrongQestion.length;
   }
 
@@ -39,8 +44,8 @@ class StepModel extends HiveObject {
 
     result.addAll({'title': title});
     result.addAll({'words': words.map((x) => x.toMap()).toList()});
-    if (finisedTime != null) {
-      result.addAll({'finisedTile': finisedTime!.millisecondsSinceEpoch});
+    if (lastQuizTime != null) {
+      result.addAll({'finisedTile': lastQuizTime!.millisecondsSinceEpoch});
     }
     result.addAll({
       'wrongQestion': wrongQestion.map((x) => x.toMap()).toList(),
@@ -53,7 +58,7 @@ class StepModel extends HiveObject {
     return StepModel(
       title: map['title'] ?? '',
       words: List<Word>.from(map['words']?.map((x) => Word.fromMap(x))),
-      finisedTime:
+      lastQuizTime:
           map['finisedTile'] != null
               ? DateTime.fromMillisecondsSinceEpoch(map['finisedTile'])
               : null,
@@ -79,7 +84,7 @@ class StepModel extends HiveObject {
     return StepModel(
       title: title ?? this.title,
       words: words ?? this.words,
-      finisedTime: finisedTime ?? this.finisedTime,
+      lastQuizTime: finisedTime ?? this.lastQuizTime,
       wrongQestion: wrongQestion ?? this.wrongQestion,
     );
   }

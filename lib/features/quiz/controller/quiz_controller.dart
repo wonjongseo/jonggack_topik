@@ -201,7 +201,7 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
       }
 
       print("Go to Score screen");
-      Get.offAll(() => ScoreScreen());
+      Get.off(() => ScoreScreen());
     }
   }
 

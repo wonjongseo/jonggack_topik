@@ -1,11 +1,14 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/admob/banner_ad/global_banner_admob.dart';
+import 'package:jonggack_topik/core/utils/app_color.dart';
 import 'package:jonggack_topik/features/category/screen/widgets/search_form.dart';
 import 'package:jonggack_topik/features/subject/controller/subject_controller.dart';
 import 'package:jonggack_topik/features/subject/screen/widgets/chapter_selector.dart';
 import 'package:jonggack_topik/features/subject/screen/widgets/subject_selector.dart';
+import 'package:jonggack_topik/theme.dart';
 
 // 韓国語能力試験・人・など
 class SubjectScreen extends GetView<SubjectController> {
@@ -25,7 +28,6 @@ class SubjectScreen extends GetView<SubjectController> {
               SeacrhForm(),
               SizedBox(height: 32),
               _subjecttSelectorRow(),
-              // SizedBox(height: size.height * .15),
               SizedBox(height: 12),
               SizedBox(
                 height: size.height * .525,
@@ -61,6 +63,31 @@ class SubjectScreen extends GetView<SubjectController> {
   }
 
   Widget _subjecttSelectorRow() {
+    // return Padding(
+    //   padding: EdgeInsets.symmetric(horizontal: 32),
+    //   child: Card(
+    //     child: DropdownButton2(
+    //       iconStyleData: IconStyleData(
+    //         icon: Icon(Icons.arrow_forward_ios_outlined),
+    //         iconSize: 16,
+    //       ),
+    //       isExpanded: true,
+    //       underline: SizedBox(),
+    //       onChanged: (v) {},
+    //       value: controller.subjects[0],
+    //       items: List.generate(controller.subjects.length, (index) {
+    //         final subject = controller.subjects[index];
+    //         return DropdownMenuItem(
+    //           value: subject,
+    //           child: Text(
+    //             subject.title,
+    //             style: TextStyle(fontFamily: AppFonts.zenMaruGothic),
+    //           ),
+    //         );
+    //       }),
+    //     ),
+    //   ),
+    // );
     return Padding(
       // padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
       padding: EdgeInsets.only(left: 24),

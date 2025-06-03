@@ -34,8 +34,7 @@ class ChapterScreen extends GetView<ChapterController> {
                           onTap: () => controller.onTapStepSelector(index),
                           child: StepSelector(
                             isCurrent: index == controller.selectedStepIdx,
-                            isFinished:
-                                controller.steps[index].finisedTime != null,
+                            isAllCorrect: controller.steps[index].isAllCorrect,
                           ),
                         ),
                       );
@@ -58,12 +57,7 @@ class ChapterScreen extends GetView<ChapterController> {
       bottomNavigationBar: GlobalBannerAdmob(
         widgets: [
           if (controller.step.words.length > 4)
-            BottomBtn(
-              label: "QUIZ",
-              onTap: () {
-                controller.goToQuizPage();
-              },
-            ),
+            BottomBtn(label: "QUIZ", onTap: () => controller.goToQuizPage()),
         ],
       ),
     );

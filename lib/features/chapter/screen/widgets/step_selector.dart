@@ -3,10 +3,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:jonggack_topik/core/utils/app_color.dart';
 
 class StepSelector extends StatelessWidget {
-  const StepSelector({super.key, this.isFinished, required this.isCurrent});
+  const StepSelector({super.key, this.isAllCorrect, required this.isCurrent});
 
   final bool isCurrent;
-  final bool? isFinished;
+  final bool? isAllCorrect;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -18,7 +18,7 @@ class StepSelector extends StatelessWidget {
         child:
             isCurrent
                 ? Icon(Icons.star, color: AppColors.primaryColor, size: 16)
-                : isFinished ?? false
+                : isAllCorrect ?? false
                 ? Icon(FontAwesomeIcons.check, size: 16)
                 : Icon(FontAwesomeIcons.lockOpen, size: 16),
       ),

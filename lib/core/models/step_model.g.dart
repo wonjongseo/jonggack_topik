@@ -19,7 +19,7 @@ class StepModelAdapter extends TypeAdapter<StepModel> {
     return StepModel(
       title: fields[0] as String,
       words: (fields[1] as List).cast<Word>(),
-      finisedTime: fields[2] as DateTime?,
+      lastQuizTime: fields[2] as DateTime?,
       wrongQestion: (fields[3] as List).cast<Question>(),
     );
   }
@@ -33,7 +33,7 @@ class StepModelAdapter extends TypeAdapter<StepModel> {
       ..writeByte(1)
       ..write(obj.words)
       ..writeByte(2)
-      ..write(obj.finisedTime)
+      ..write(obj.lastQuizTime)
       ..writeByte(3)
       ..write(obj.wrongQestion);
   }
