@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/controllers/font_controller.dart';
+import 'package:jonggack_topik/core/models/synonym.dart';
 import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/core/tts/tts_controller.dart';
 import 'package:jonggack_topik/features/word/controller/word_controller.dart';
@@ -16,18 +17,12 @@ class WordCard extends GetView<WordController> {
   final Word word;
   @override
   Widget build(BuildContext context) {
-    final fcCtr = Get.find<FontController>();
-
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           child: GetBuilder<WordController>(
             builder: (controller) {
-              String yomikata =
-                  word.yomikata.isNotEmpty
-                      ? word.yomikata
-                      : word.word.split(')')[0];
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -38,7 +33,7 @@ class WordCard extends GetView<WordController> {
                       AutoSizeText(
                         word.word,
                         style: TextStyle(
-                          fontSize: fcCtr.baseFontSize.value + 8,
+                          fontSize: FontController.to.baseFontSize.value + 8,
                           fontWeight: FontWeight.w600,
                         ),
                         maxLines: 1,
@@ -66,7 +61,9 @@ class WordCard extends GetView<WordController> {
                   SizedBox(height: 20),
                   Row(
                     children: [
-                      Flexible(child: AutoSizeText('[$yomikata]', maxLines: 1)),
+                      Flexible(
+                        child: AutoSizeText('[${word.yomikata}]', maxLines: 1),
+                      ),
                       SizedBox(width: 10),
                       Obx(() {
                         final isPlayingThisWord =
@@ -89,17 +86,14 @@ class WordCard extends GetView<WordController> {
                   SizedBox(height: 20),
                   AutoSizeText(
                     word.mean,
-                    style: fcCtr.body.copyWith(
+                    style: FontController.to.body.copyWith(
                       fontFamily: AppFonts.zenMaruGothic,
                     ),
                     maxLines: 1,
                   ),
                   Divider(height: 20),
-                  if (word.synonyms != null && word.synonyms!.isNotEmpty)
-                    _synonyms(fcCtr),
-
-                  if (word.examples != null && word.examples!.isNotEmpty)
-                    _examples(fcCtr),
+                  _synonyms(),
+                  if (word.examples.isNotEmpty) _examples(),
                 ],
               );
             },
@@ -109,38 +103,60 @@ class WordCard extends GetView<WordController> {
     );
   }
 
-  Column _examples(FontController fcCtr) {
+  Column _examples() {
+    final totalExamples = word.examples.length;
+    final exampleLen =
+        controller.isSeeMoreExample.value
+            ? totalExamples
+            : (totalExamples > 2 ? 2 : totalExamples);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("例文", style: fcCtr.bold(color: AppColors.mainBordColor)),
-        SizedBox(height: 20),
-        ...List.generate(
-          controller.getExamplesLen(),
-          (index) =>
-              ExampleWidget(index: index, example: word.examples![index]),
+        Text(
+          "例文",
+          style: FontController.to.bold(color: AppColors.mainBordColor),
         ),
-        if (controller.isCanSeeMore()) ...[
-          SizedBox(height: 10),
-          GestureDetector(
-            onTap: () {
-              controller.seeMoreExample();
-            },
-            child: Text(
-              "More...",
-              style: fcCtr.light(color: AppColors.mainBordColor),
-            ),
-          ),
-        ],
+        SizedBox(height: 20),
+
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ...List.generate(exampleLen, (index) {
+              return ExampleWidget(index: index, example: word.examples[index]);
+            }),
+
+            if (!controller.isSeeMoreExample.value && totalExamples > 2) ...[
+              const SizedBox(height: 10),
+              GestureDetector(
+                onTap: controller.seeMoreExample,
+                child: Text(
+                  "More...",
+                  style: FontController.to.light(
+                    color: AppColors.mainBordColor,
+                  ),
+                ),
+              ),
+            ],
+          ],
+        ),
       ],
     );
   }
 
-  Column _synonyms(FontController fcCtr) {
+  Widget _synonyms() {
+    List<Synonym> synonyms =
+        word.synonyms.where((synonym) {
+          return !controller.stack.contains(synonym.synonym);
+        }).toList();
+    if (synonyms.isEmpty) return SizedBox();
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("類義語", style: fcCtr.bold(color: AppColors.mainBordColor)),
+        Text(
+          "類義語",
+          style: FontController.to.bold(color: AppColors.mainBordColor),
+        ),
         Container(
           width: double.infinity,
           padding: EdgeInsets.symmetric(vertical: 12),
@@ -151,10 +167,10 @@ class WordCard extends GetView<WordController> {
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
-              children: List.generate(word.synonyms!.length, (index) {
+              children: List.generate(synonyms.length, (index) {
                 return InkWell(
                   onTap: () {
-                    controller.onTapSynonyms(word.synonyms![index].id);
+                    controller.onTapSynonyms(synonym: synonyms[index]);
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -164,7 +180,7 @@ class WordCard extends GetView<WordController> {
                     margin: EdgeInsets.symmetric(horizontal: 6),
                     padding: EdgeInsets.symmetric(vertical: 6, horizontal: 12),
                     child: Text(
-                      word.synonyms![index].synonym,
+                      synonyms[index].synonym,
                       style: TextStyle(color: Colors.white),
                     ),
                   ),

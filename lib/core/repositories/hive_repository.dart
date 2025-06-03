@@ -12,6 +12,8 @@ import 'package:jonggack_topik/core/models/subject.dart';
 import 'package:jonggack_topik/core/models/subject_hive.dart';
 import 'package:jonggack_topik/core/models/synonym.dart';
 import 'package:jonggack_topik/core/models/word.dart';
+import 'package:jonggack_topik/core/repositories/setting_repository.dart';
+import 'package:jonggack_topik/core/utils/app_constant.dart';
 import 'package:jonggack_topik/features/auth/models/user.dart';
 
 class HiveRepository<T extends HiveObject> {
@@ -79,6 +81,7 @@ class HiveRepository<T extends HiveObject> {
     if (GetPlatform.isMobile) {
       await Hive.initFlutter();
     }
+
     if (!Hive.isAdapterRegistered(HK.categoryHiveTypeID)) {
       Hive.registerAdapter(CategoryHiveAdapter());
     }
@@ -112,6 +115,10 @@ class HiveRepository<T extends HiveObject> {
     }
     if (!Hive.isAdapterRegistered(QuestionAdapter().typeId)) {
       Hive.registerAdapter(QuestionAdapter());
+    }
+
+    if (!Hive.isBoxOpen(AppConstant.settingModelBox)) {
+      await Hive.openBox(AppConstant.settingModelBox);
     }
 
     if (!Hive.isBoxOpen(User.boxKey)) {
@@ -151,6 +158,8 @@ class HiveRepository<T extends HiveObject> {
     if (!Hive.isBoxOpen(Question.boxKey)) {
       await Hive.openBox<Question>(Question.boxKey);
     }
+
+    SettingRepository.init();
 
     final wordRepo = HiveRepository<Word>(Word.boxKey);
     await wordRepo.initBox();

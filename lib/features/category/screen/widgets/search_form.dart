@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/utils/app_color.dart';
 import 'package:jonggack_topik/features/category/controller/search_get_controller.dart';
+import 'package:jonggack_topik/features/word/controller/word_controller.dart';
 import 'package:jonggack_topik/theme.dart';
 
 class SeacrhForm extends GetView<SearchGetController> {
@@ -13,7 +14,6 @@ class SeacrhForm extends GetView<SearchGetController> {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-          //   padding: const EdgeInsets.all(8),
           child: Stack(
             children: [
               Card(
@@ -84,21 +84,36 @@ class SeacrhForm extends GetView<SearchGetController> {
         Obx(
           () => Column(
             children: [
-              // if (controller.words.isNotEmpty) Icon(Icons.remove_outlined),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: List.generate(controller.words.length, (index) {
-                    return Container(
-                      margin: EdgeInsets.only(left: 14),
-                      padding: EdgeInsets.symmetric(horizontal: 6, vertical: 4),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: AppColors.mainColor,
-                      ),
-                      child: Text(
-                        controller.words[index].word,
-                        style: TextStyle(color: Colors.white),
+                    return InkWell(
+                      onTap: () {
+                        final wordController = Get.put(
+                          WordController(controller.words, index),
+                        );
+                        wordController.onTapSynonyms(
+                          tempWord: controller.words[index],
+                        );
+                      },
+                      child: Container(
+                        margin: EdgeInsets.symmetric(
+                          vertical: 4,
+                          horizontal: 7,
+                        ),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 6,
+                          vertical: 4,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: AppColors.mainColor,
+                        ),
+                        child: Text(
+                          controller.words[index].word,
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
                     );
                   }),

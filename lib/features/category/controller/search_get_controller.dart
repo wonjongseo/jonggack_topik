@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/core/repositories/hive_repository.dart';
 import 'package:flutter_debouncer/flutter_debouncer.dart' as FB;
+import 'package:jonggack_topik/features/word/screen/widgets/word_cart.dart';
 
 class SearchGetController extends GetxController {
   final _words = <Word>[].obs;
@@ -51,5 +52,31 @@ class SearchGetController extends GetxController {
         words.where((word) => word.word.contains(query)).toList();
 
     _words.assignAll(filteredWord);
+  }
+
+  List<String> stack = [];
+  Future<void> onTapSynonyms(Word word) async {
+    stack.add(word.word);
+
+    await Get.to(
+      preventDuplicates: false,
+      () => Scaffold(
+        appBar: AppBar(),
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SafeArea(
+            child: SizedBox(
+              height: double.infinity,
+              child: WordCard(word: word),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    if (stack.isNotEmpty) {
+      stack.removeLast();
+    }
+    print('stack : ${stack}');
   }
 }

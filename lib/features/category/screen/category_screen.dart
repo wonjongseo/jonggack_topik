@@ -35,6 +35,7 @@ class CategoryScreen extends GetView<CategoryController> {
                             return Center(child: CircularProgressIndicator());
                           }
                           return CarouselSlider(
+                            carouselController: controller.carouselController,
                             items: List.generate(
                               controller.allCategories.length,
                               (index) {
@@ -43,9 +44,7 @@ class CategoryScreen extends GetView<CategoryController> {
                                   totalAndScores:
                                       controller.totalAndScores[index],
 
-                                  onTap: () {
-                                    controller.onTapCategory(index);
-                                  },
+                                  onTap: () => controller.onTapCategory(index),
                                 );
                               },
                             ),
@@ -54,7 +53,7 @@ class CategoryScreen extends GetView<CategoryController> {
                               viewportFraction: 0.7,
                               enableInfiniteScroll: false,
                               enlargeCenterPage: true,
-                              initialPage: controller.selectedCategoryIdx,
+                              // initialPage: controller.selectedCategoryIdx,
                               scrollDirection: Axis.horizontal,
                             ),
                           );

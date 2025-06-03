@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
@@ -9,6 +11,8 @@ import 'package:jonggack_topik/core/models/category_hive.dart';
 import 'package:jonggack_topik/core/models/step_model.dart';
 import 'package:jonggack_topik/core/models/subject_hive.dart';
 import 'package:jonggack_topik/core/repositories/hive_repository.dart';
+import 'package:jonggack_topik/core/repositories/setting_repository.dart';
+import 'package:jonggack_topik/core/utils/app_constant.dart';
 import 'package:jonggack_topik/core/utils/snackbar_helper.dart';
 import 'package:jonggack_topik/features/subject/controller/subject_controller.dart';
 import 'package:jonggack_topik/features/subject/screen/subject_screen.dart';
@@ -25,16 +29,23 @@ class CategoryController extends GetxController {
   final isLoadign = false.obs;
   final DataRepositry dataRepositry;
   CategoryController(this.dataRepositry);
-  // final _allCategories = <Category>[].obs;
-  // List<Category> get allCategories => _allCategories.value;
+
   final _allCategories = <CategoryHive>[].obs;
   List<CategoryHive> get allCategories => _allCategories.value;
 
-  int _selectedCategoryIdx = 0;
+  late int _selectedCategoryIdx;
   int get selectedCategoryIdx => _selectedCategoryIdx;
   CategoryHive get category => allCategories[_selectedCategoryIdx];
-  onTapCategory(int index) {
+
+  final carouselController = CarouselSliderController();
+
+  void onTapCategory(int index) {
     _selectedCategoryIdx = index;
+
+    SettingRepository.setInt(
+      AppConstant.selectedCategoryIdx,
+      _selectedCategoryIdx,
+    );
 
     Get.to(
       () => SubjectScreen(),
@@ -69,12 +80,28 @@ class CategoryController extends GetxController {
   }
 
   @override
+  void onInit() {
+    super.onInit();
+  }
+  // onReady() {
+
+  // }
+
+  @override
   void onReady() async {
     super.onReady();
+
     await fatchAllSubject();
+    _selectedCategoryIdx =
+        SettingRepository.getInt(AppConstant.selectedCategoryIdx) ?? 0;
+
+    carouselController.animateToPage(
+      _selectedCategoryIdx,
+      curve: Curves.easeInOut,
+    );
   }
 
-  fatchAllSubject() async {
+  Future<void> fatchAllSubject() async {
     List<String> categoryNames = [
       "韓国語能力試験",
       "人",

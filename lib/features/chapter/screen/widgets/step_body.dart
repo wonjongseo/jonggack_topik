@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:jonggack_topik/features/auth/controllers/user_controller.dart';
 import 'package:jonggack_topik/features/chapter/controller/chapter_controller.dart';
 import 'package:jonggack_topik/features/step/controller/step_controller.dart';
-import 'package:jonggack_topik/features/word/controller/word_controller.dart';
-import 'package:jonggack_topik/features/word/screen/word_screen.dart';
 import 'package:jonggack_topik/core/utils/app_color.dart';
 
 class StepBody extends StatelessWidget {
@@ -29,14 +28,7 @@ class StepBody extends StatelessWidget {
                 ),
               ),
               subtitle: SizedBox(child: Text(controller.words[index].yomikata)),
-              onTap: () {
-                Get.to(
-                  () => WordScreen(),
-                  binding: BindingsBuilder.put(
-                    () => WordController(controller.words, index, Get.find()),
-                  ),
-                );
-              },
+              onTap: () => controller.goToWordScreen(index),
               trailing: IconButton(
                 style: IconButton.styleFrom(
                   padding: const EdgeInsets.all(2),

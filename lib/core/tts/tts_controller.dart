@@ -51,22 +51,17 @@ class TtsController extends GetxController {
   /// [word]를 TTS로 재생함.
   /// 이미 재생 중이면 먼저 중단 후 새로 재생.
   Future<void> speak(String word) async {
-    print('word : ${word}');
-
     // 동일한 단어가 이미 재생 중이면 아무 동작 안 함
     if (isPlaying.value && currentWord.value == word) return;
-    print('object');
     // 다른 단어가 재생 중이라면 먼저 중단
     if (isPlaying.value) {
       await _tts.stop();
       // onComplete 콜백에서 isPlaying, currentWord가 자동으로 false/''로 변함
     }
-    print('object1');
 
     currentWord.value = word;
     isPlaying.value = true;
     await _tts.speak(word);
-    print('object4');
     // flutter_tts 설정상 awaitSpeakCompletion(true)를 설정했기 때문에,
     // speak()가 끝나면 setCompletionHandler가 반드시 호출됩니다.
   }

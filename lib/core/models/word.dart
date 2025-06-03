@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:hive/hive.dart';
+
 import 'package:jonggack_topik/core/constant/hive_keys.dart';
 import 'package:jonggack_topik/core/models/example.dart';
 import 'package:jonggack_topik/core/models/synonym.dart';
@@ -23,12 +24,24 @@ class Word extends HiveObject {
   late String mean;
 
   @HiveField(5)
-  List<Example>? examples;
+  List<Example> examples;
   @HiveField(6)
-  List<Synonym>? synonyms;
+  List<Synonym> synonyms;
 
   @HiveField(7)
   bool isSaved = false;
+  Word({
+    required this.id,
+    required this.headTitle,
+    required this.word,
+    required String yomikata,
+    required this.mean,
+    List<Example>? examples,
+    List<Synonym>? synonyms,
+    this.isSaved = false,
+  }) : _yomikata = yomikata,
+       examples = examples ?? [],
+       synonyms = synonyms ?? [];
 
   String get yomikata {
     if (_yomikata.contains('、')) {
@@ -38,43 +51,45 @@ class Word extends HiveObject {
     return _yomikata;
   }
 
-  Word({
-    required this.id,
-    required this.word,
-    required this.mean,
-    required String yomikata,
-    required this.headTitle,
-    this.examples,
-    this.synonyms,
-    this.isSaved = false,
-  }) : _yomikata = yomikata;
+  int getExamplesLen() {
+    if (examples!.length > 2) {
+      return 2;
+    }
+
+    return examples!.length;
+  }
 
   @override
   String toString() {
     return "Word( word: $word, mean: $mean, yomikata: $_yomikata, headTitle: $headTitle, examples: $examples)";
   }
 
-  Word.fromMap(Map<String, dynamic> map) {
-    id = map['id'] ?? '';
-    word = map['word'] ?? '';
-    _yomikata = map['yomikata'] ?? '';
-    mean = map['mean'] ?? '';
-    headTitle = map['headTitle'] ?? '';
-    examples =
-        map['examples'] == null
-            ? []
-            : List.generate(
-              map['examples'].length,
-              (index) => Example.fromMap(map['examples'][index]),
-            );
-    synonyms =
-        map['synonyms'] == null
-            ? []
-            : List.generate(
-              map['synonyms'].length,
-              (index) => Synonym.fromMap(map['synonyms'][index]),
-            );
-    isSaved = map['isSaved'] ?? false;
+  Word.fromMap(Map<String, dynamic> map)
+    : id = map['id'] ?? '',
+      headTitle = map['headTitle'] ?? '',
+      word = map['word'] ?? '',
+      _yomikata = map['yomikata'] ?? '',
+      mean = map['mean'] ?? '',
+      // map['examples']가 null 이면 빈 리스트, 아니면 List<Example>로 변환
+      examples =
+          map['examples'] == null
+              ? <Example>[]
+              : List<Example>.from(
+                (map['examples'] as List<dynamic>).map(
+                  (e) => Example.fromMap(e as Map<String, dynamic>),
+                ),
+              ),
+      // map['synonyms']가 null 이면 빈 리스트, 아니면 List<Synonym>로 변환
+      synonyms =
+          map['synonyms'] == null
+              ? <Synonym>[]
+              : List<Synonym>.from(
+                (map['synonyms'] as List<dynamic>).map(
+                  (s) => Synonym.fromMap(s as Map<String, dynamic>),
+                ),
+              ),
+      isSaved = map['isSaved'] ?? false {
+    // 생성자 본문에 추가 로직이 필요하다면 여기에 작성
   }
 
   Map<String, dynamic> toMap() {

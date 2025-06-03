@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/models/Question.dart';
@@ -7,6 +10,7 @@ import 'package:jonggack_topik/core/repositories/hive_repository.dart';
 import 'package:jonggack_topik/core/utils/app_function.dart';
 import 'package:jonggack_topik/features/category/controller/category_controller.dart';
 import 'package:jonggack_topik/features/quiz/screen/very_good_screen.dart';
+import 'package:jonggack_topik/features/score/screen/score_screen.dart';
 
 class QuizController extends GetxController with SingleGetTickerProviderMixin {
   // final List<Word> words;
@@ -14,13 +18,9 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
 
   QuizController(this.step);
 
-  // 진행률 바
-  late AnimationController animationController;
-  // 진행률 바 애니메이션
-  late Animation animation;
-
-  // 문제 컨트롤러
-  late PageController pageController;
+  late AnimationController animationController; // 진행률 바
+  late Animation animation; // 진행률 바 애니메이션
+  late PageController pageController; // 문제 컨트롤러
 
   // 퀴즈를 위한 맵.
   List<Map<int, List<Word>>> map = List.empty(growable: true);
@@ -76,8 +76,6 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
 
     animationController.forward().whenComplete((nextQuestion));
     pageController = PageController();
-
-    map = Question.generateQustion(step.words);
 
     setQuestions();
     super.onInit();
@@ -186,7 +184,6 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
 
       if (numOfCorrectAns == questions.length) {
         if (!isMyWordTest) {
-          // jlptWordController.finishQuizAndchangeHeaderPageIndex();
           Get.off(() => const VeryGoodScreen());
           print("Go to Very good screen");
         } else {
@@ -197,24 +194,55 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
       }
 
       print("Go to Score screen");
-      // Get.offAndToNamed(SCORE_PATH);
+      Get.offAll(() => ScoreScreen());
     }
   }
 
   void setQuestions() {
+    List<Word> words = List.from(step.words);
+    Random random = Random();
+
+    int diff = words.length - 4;
+
+    if (diff < 0) {
+      final wordRepo = Get.find<HiveRepository<Word>>(tag: Word.boxKey);
+      List<Word> allWords = wordRepo.getAll();
+      for (int i = 0; i < -diff; i++) {
+        int randomIndex = random.nextInt(allWords.length);
+        words.add(allWords[randomIndex]);
+      }
+    }
+
+    map = Question.generateQustion(words);
+
     for (var vocas in map) {
       for (var e in vocas.entries) {
         List<Word> optionsVoca = e.value;
         Word questionVoca = optionsVoca[e.key];
+        ;
 
         Question question = Question(
           question: questionVoca,
-          answer: e.key,
+          answer: kReleaseMode ? e.key : 0,
           options: optionsVoca,
         );
 
         questions.add(question);
       }
     }
+
+    for (var i = 0; i < questions.length; i++) {
+      final q = questions[i];
+      print('${i + 1}번 : ${q.answer + 1}');
+    }
+  }
+
+  String get scoreResult => '$numOfCorrectAns / ${questions.length}';
+  String wrongWord(int index) {
+    return wrongQuestions[index].question.word;
+  }
+
+  String wrongMean(int index) {
+    return '${wrongQuestions[index].options[wrongQuestions[index].answer].mean}\n${wrongQuestions[index].options[wrongQuestions[index].answer].yomikata}';
   }
 }

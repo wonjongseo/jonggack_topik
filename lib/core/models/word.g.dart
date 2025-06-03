@@ -18,10 +18,10 @@ class WordAdapter extends TypeAdapter<Word> {
     };
     return Word(
       id: fields[0] as String,
-      word: fields[2] as String,
-      mean: fields[4] as String,
-      yomikata: fields[3] as String,
       headTitle: fields[1] as String,
+      word: fields[2] as String,
+      yomikata: fields[3] as String,
+      mean: fields[4] as String,
       examples: (fields[5] as List?)?.cast<Example>(),
       synonyms: (fields[6] as List?)?.cast<Synonym>(),
       isSaved: fields[7] as bool,
@@ -39,7 +39,7 @@ class WordAdapter extends TypeAdapter<Word> {
       ..writeByte(2)
       ..write(obj.word)
       ..writeByte(3)
-      ..write(obj.yomikata)
+      ..write(obj._yomikata)
       ..writeByte(4)
       ..write(obj.mean)
       ..writeByte(5)

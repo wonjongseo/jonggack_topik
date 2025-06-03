@@ -18,41 +18,53 @@ class CategorySelector extends StatelessWidget {
   final Function() onTap;
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: InkWell(
-        onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
+    return Column(
+      children: [
+        Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(category.title, style: FontController.to.bold()),
+            ),
+          ],
+        ),
+        Expanded(
+          child: Card(
+            child: InkWell(
+              onTap: onTap,
+              child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(category.title, style: FontController.to.bold()),
-              ),
-              Divider(),
-              Expanded(
-                child: SingleChildScrollView(
-                  padding: EdgeInsets.symmetric(horizontal: 8),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: List.generate(category.subjects.length, (index) {
-                      SubjectHive subject = category.subjects[index];
-                      TotalAndScore totalAndScore = totalAndScores[index];
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Divider(),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        padding: EdgeInsets.symmetric(horizontal: 8),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: List.generate(category.subjects.length, (
+                            index,
+                          ) {
+                            SubjectHive subject = category.subjects[index];
+                            TotalAndScore totalAndScore = totalAndScores[index];
 
-                      return CateogryProgress(
-                        caregory: subject.title,
-                        curCnt: totalAndScore.score,
-                        totalCnt: totalAndScore.total,
-                      );
-                    }),
-                  ),
+                            return CateogryProgress(
+                              caregory: subject.title,
+                              curCnt: totalAndScore.score,
+                              totalCnt: totalAndScore.total,
+                            );
+                          }),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ],
+            ),
           ),
         ),
-      ),
+      ],
     );
   }
 }

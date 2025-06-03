@@ -3,6 +3,9 @@ import 'package:jonggack_topik/core/constant/hive_keys.dart';
 import 'package:jonggack_topik/core/models/step_model.dart';
 import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/core/repositories/hive_repository.dart';
+import 'package:jonggack_topik/features/auth/controllers/user_controller.dart';
+import 'package:jonggack_topik/features/word/controller/word_controller.dart';
+import 'package:jonggack_topik/features/word/screen/word_screen.dart';
 
 class StepController extends GetxController {
   static StepController get to => Get.find<StepController>();
@@ -20,20 +23,19 @@ class StepController extends GetxController {
 
   List<Word> get words => _step.words;
 
-  final myWordBox = Get.find<HiveRepository<Word>>(tag: HK.myWordBoxKey);
-
-  bool isSavedWord(String id) {
-    return myWordBox.containsKey(id);
+  void goToWordScreen(int index) {
+    Get.to(
+      () => WordScreen(),
+      binding: BindingsBuilder.put(() => WordController(words, index)),
+    );
   }
 
   Future<void> toggleMyWord(Word word) async {
-    if (myWordBox.containsKey(word.id)) {
-      await myWordBox.delete(word.id);
-    } else {
-      await myWordBox.put(word.id, word);
-    }
+    UserController.to.toggleMyWord(word);
     update();
   }
 
-  // Word
+  bool isSavedWord(String id) {
+    return UserController.to.isSavedWord(id);
+  }
 }

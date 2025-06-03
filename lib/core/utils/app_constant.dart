@@ -1,6 +1,11 @@
 import 'package:get/get.dart';
 
+const double appBarHeight = 35;
+const double appBarTextSize = 18;
+
 class AppConstant {
+  static const String selectedCategoryIdx = 'selectedCategoryIdx';
+
   static const int diaryModelHiveId = 0;
   static const int healthModelHiveId = 1;
   static const int hospitalLogModelHiveId = 2;

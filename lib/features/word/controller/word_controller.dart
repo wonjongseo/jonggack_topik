@@ -1,88 +1,78 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/constant/hive_keys.dart';
+import 'package:jonggack_topik/core/models/synonym.dart';
 import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/core/repositories/hive_repository.dart';
+import 'package:jonggack_topik/core/tts/tts_controller.dart';
+import 'package:jonggack_topik/features/auth/controllers/user_controller.dart';
 import 'package:jonggack_topik/features/step/controller/step_controller.dart';
 import 'package:jonggack_topik/features/word/screen/widgets/word_cart.dart';
 
 class WordController extends GetxController {
+  static WordController get to => Get.find<WordController>();
   final List<Word> words;
   final Rx<int> _currentWordIdx;
-  final StepController stepController;
   int get currentWordIdx => _currentWordIdx.value;
 
   late PageController pgCtl;
 
-  WordController(this.words, int index, this.stepController)
-    : _currentWordIdx = index.obs;
+  WordController(this.words, int index) : _currentWordIdx = index.obs;
 
   @override
   void onInit() {
-    print('_currentWordIdx.value : ${_currentWordIdx.value}');
-
     pgCtl = PageController(initialPage: _currentWordIdx.value);
+    stack.add(words[_currentWordIdx.value].word);
     super.onInit();
   }
 
   bool isSavedWord(String id) {
-    return stepController.isSavedWord(id);
+    return UserController.to.isSavedWord(id);
   }
 
   Future<void> toggleMyWord(Word word) async {
-    stepController.toggleMyWord(word);
+    UserController.to.toggleMyWord(word);
     update();
   }
 
+  final isSeeMoreExample = false.obs;
   void onPageChanged(value) {
-    print('value : ${value}');
-
-    isSeeMoreExample = false;
-    if (value + 1 > words.length) {
-      print('END');
-      return;
+    if (value < 0 || value >= words.length) {
+      return; // 유효하지 않은 인덱스면 무시
     }
-
+    TtsController.to.stop();
+    isSeeMoreExample.value = false;
     _currentWordIdx.value = value;
   }
 
-  Word get word => words[_currentWordIdx.value];
-
-  bool isSeeMoreExample = false;
-
   void seeMoreExample() {
-    isSeeMoreExample = true;
+    isSeeMoreExample.value = true;
     update();
   }
 
-  bool isCanSeeMore() {
-    if (word.examples == null) {
-      return false;
-    }
-    if (word.examples!.length > 2 && !isSeeMoreExample) {
-      return true;
-    }
-    return false;
-  }
+  List<String> stack = [];
+  Future<void> onTapSynonyms({Synonym? synonym, Word? tempWord}) async {
+    assert(
+      !(tempWord == null && synonym == null),
+      "synonym and word is both null",
+    );
 
-  int getExamplesLen() {
-    if (word.examples == null) {
-      return 0;
-    } else if (word.examples!.length > 2 && !isSeeMoreExample) {
-      return 2;
+    Word? word;
+
+    if (tempWord == null || synonym != null) {
+      final wordBox = Get.find<HiveRepository<Word>>(tag: HK.wordBoxKey);
+      word = wordBox.get(synonym!.id);
+    } else {
+      word = tempWord;
     }
-
-    return word.examples!.length;
-  }
-
-  onTapSynonyms(String id) {
-    final wordBox = Get.find<HiveRepository<Word>>(tag: HK.wordBoxKey);
-    Word? word = wordBox.get(id);
 
     if (word == null) {
       return;
     }
-    Get.to(
+    stack.add(word.word);
+
+    await Get.to(
+      preventDuplicates: false,
       () => Scaffold(
         appBar: AppBar(),
         body: Padding(
@@ -90,17 +80,22 @@ class WordController extends GetxController {
           child: SafeArea(
             child: SizedBox(
               height: double.infinity,
-              child: WordCard(word: word),
+              child: WordCard(word: word!),
             ),
           ),
         ),
       ),
     );
+
+    if (stack.isNotEmpty) {
+      stack.removeLast();
+    }
   }
 
   @override
   void onClose() {
     pgCtl.dispose();
+    TtsController.to.stop();
     super.onClose();
   }
 }

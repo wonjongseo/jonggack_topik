@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:hive/hive.dart';
+
 import 'package:jonggack_topik/core/constant/hive_keys.dart';
 
 part 'synonym.g.dart';
@@ -22,7 +23,7 @@ class Synonym {
 
   @override
   String toString() {
-    return 'Example(id: "$id", synonym: "$synonym")';
+    return 'Synonym(id: "$id", synonym: "$synonym")';
   }
 
   Map<String, dynamic> toMap() {
@@ -38,4 +39,14 @@ class Synonym {
 
   factory Synonym.fromJson(String source) =>
       Synonym.fromMap(json.decode(source));
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is Synonym && other.id == id && other.synonym == synonym;
+  }
+
+  @override
+  int get hashCode => id.hashCode ^ synonym.hashCode;
 }

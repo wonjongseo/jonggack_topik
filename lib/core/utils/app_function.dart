@@ -40,18 +40,22 @@ String getKey({
 }) {
   String key = '';
 
-  if (category) {
-    key += '${getCategoryTitle()}-';
-  }
-  if (subject) {
-    key += '${getSubjectTitle()}-';
+  if (step) {
+    key += "${getStepTitle()}-";
   }
   if (chapter) {
     key += '${getChapterTitle()}-';
   }
-  if (chapter) {
-    key += '${getStepTitle()}';
+  if (subject) {
+    key += '${getSubjectTitle()}-';
+  }
+  if (category) {
+    key += '${getCategoryTitle()}-';
   }
 
-  return '';
+  if (key.endsWith('-')) {
+    key = key.substring(0, key.length - 1);
+  }
+
+  return key;
 }
