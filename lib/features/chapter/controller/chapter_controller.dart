@@ -11,6 +11,7 @@ import 'package:jonggack_topik/features/quiz/controller/quiz_controller.dart';
 import 'package:jonggack_topik/features/quiz/screen/quiz_screen.dart';
 import 'package:jonggack_topik/features/step/controller/step_controller.dart';
 import 'package:jonggack_topik/features/subject/controller/subject_controller.dart';
+import 'package:logger/logger.dart';
 
 class ChapterController extends GetxController {
   static ChapterController get to => Get.find<ChapterController>();
@@ -28,8 +29,8 @@ class ChapterController extends GetxController {
   int get selectedStepIdx => _selectedStepIdx.value;
   late PageController stepBodyPageCtl;
 
-  String get stepKey => _chapter.stepKeys[_selectedStepIdx.value];
-  late StepModel step;
+  StepModel get step => steps[_selectedStepIdx.value];
+  List<StepModel> steps = [];
 
   ScrollController scrollController = ScrollController();
 
@@ -41,12 +42,22 @@ class ChapterController extends GetxController {
     stepBodyPageCtl = PageController(initialPage: _selectedStepIdx.value);
     gKeys = List.generate(_chapter.stepKeys.length, (index) => GlobalKey());
 
-    step = stepRepo.get(stepKey)!;
-    stepController = Get.put(StepController(step));
+    _getSteps();
 
-    // String cateSubChapkey = getKey(category: true, subject: true);
-    // print('cateSubChapkey : ${cateSubChapkey}');
     super.onInit();
+  }
+
+  void quizAllCorrect() {
+    onTapStepSelector(_selectedStepIdx.value + 1);
+    _getSteps();
+  }
+
+  void _getSteps() {
+    steps.clear();
+    for (var stepKey in stepKeys) {
+      steps.add(stepRepo.get(stepKey)!);
+    }
+    stepController = Get.put(StepController(step));
   }
 
   @override
@@ -66,7 +77,6 @@ class ChapterController extends GetxController {
 
     SettingRepository.setInt(_getKey(), _selectedStepIdx.value);
 
-    step = stepRepo.get(stepKey)!;
     stepController.setStepModel(step);
     AppFunction.scrollGoToTop(scrollController);
   }
@@ -92,13 +102,7 @@ class ChapterController extends GetxController {
     String key = '';
 
     key +=
-        '${_chapter.title}-${SubjectController.to.categoryTitle}-${CategoryController.to.category.title}-${AppConstant.selectedCategoryIdx}';
-
-    print('key : ${key}');
-
-    // '${_chapter.title}-${_getKey()}';
-
-    // String cateSubChapkey = getKey(category: true, subject: true);
+        '${_chapter.title}-${SubjectController.to.selectedSubject.title}-${CategoryController.to.category.title}-${AppConstant.selectedCategoryIdx}';
 
     return key;
   }

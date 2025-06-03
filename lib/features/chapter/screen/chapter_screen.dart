@@ -34,6 +34,8 @@ class ChapterScreen extends GetView<ChapterController> {
                           onTap: () => controller.onTapStepSelector(index),
                           child: StepSelector(
                             isCurrent: index == controller.selectedStepIdx,
+                            isFinished:
+                                controller.steps[index].finisedTime != null,
                           ),
                         ),
                       );

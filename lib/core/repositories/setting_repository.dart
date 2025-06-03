@@ -52,6 +52,7 @@
 // }
 
 import 'package:hive/hive.dart';
+import 'package:jonggack_topik/core/logger/logger_service.dart';
 import 'package:jonggack_topik/core/utils/app_constant.dart';
 
 class SettingRepository {
@@ -69,6 +70,7 @@ class SettingRepository {
     // box가 null이면 Hive.openBox을 강제로 열어두도록 해도 되지만,
     // 이미 main()에서 열었다면 Hive.box()로 가져오기만 하면 됩니다.
     final box = _box ?? Hive.box(AppConstant.settingModelBox);
+    LogManager.info('키: $key, 값: $value 저장');
     await box.put(key, value);
   }
 
@@ -82,6 +84,7 @@ class SettingRepository {
   // List 저장 (비동기)
   static Future<void> setList(String key, List value) async {
     final box = _box ?? Hive.box(AppConstant.settingModelBox);
+    LogManager.info('키: $key, 값: $value 저장');
     await box.put(key, value);
   }
 
@@ -95,6 +98,7 @@ class SettingRepository {
   // String 저장 (비동기)
   static Future<void> setString(String key, String value) async {
     final box = _box ?? Hive.box(AppConstant.settingModelBox);
+    LogManager.info('키: $key, 값: $value 저장');
     await box.put(key, value);
   }
 
@@ -107,12 +111,14 @@ class SettingRepository {
   // int 저장 (비동기)
   static Future<void> setInt(String key, int value) async {
     final box = _box ?? Hive.box(AppConstant.settingModelBox);
+    LogManager.info('키: $key, 값: $value 저장');
     await box.put(key, value);
   }
 
   // int 조회 (동기)
   static int? getInt(String key) {
     final box = _box ?? Hive.box(AppConstant.settingModelBox);
+
     return box.get(key) as int?;
   }
 }

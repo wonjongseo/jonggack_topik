@@ -9,6 +9,7 @@ import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/core/repositories/hive_repository.dart';
 import 'package:jonggack_topik/core/utils/app_function.dart';
 import 'package:jonggack_topik/features/category/controller/category_controller.dart';
+import 'package:jonggack_topik/features/chapter/controller/chapter_controller.dart';
 import 'package:jonggack_topik/features/quiz/screen/very_good_screen.dart';
 import 'package:jonggack_topik/features/score/screen/score_screen.dart';
 
@@ -36,6 +37,11 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
   RxInt questionNumber = 1.obs;
 
   bool isDisTouchable = false;
+
+  // int correctDurationTime = 1200; // 맞출 시 다음 문제로 넘어갈 Duratiojn
+  int correctDurationTime = 200; // 맞출 시 다음 문제로 넘어갈 Duratiojn
+  int incorrectDurationTime = 1500; // 맞출 시 다음 문제로 넘어갈 Duratiojn
+  int skipDurationTime = 250; // 맞출 시 다음 문제로 넘어갈 Duratiojn
 
   @override
   void onClose() {
@@ -108,7 +114,7 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
       // 나만의 단어 알고 있음으로 변경.
       //   myVocaController!.updateWord(correctQuestion.word, true);
     }
-    Future.delayed(const Duration(milliseconds: 1200), () {
+    Future.delayed(Duration(milliseconds: correctDurationTime), () {
       nextQuestion();
     });
   }
@@ -121,7 +127,7 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
     isWrong = true;
     color = Colors.pink;
     nextOrSkipText = 'next';
-    Future.delayed(const Duration(milliseconds: 1500), () {
+    Future.delayed(Duration(milliseconds: incorrectDurationTime), () {
       nextQuestion();
     });
   }
@@ -146,7 +152,7 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
       isAnswered = false;
 
       pageController.nextPage(
-        duration: const Duration(milliseconds: 250),
+        duration: Duration(milliseconds: skipDurationTime),
         curve: Curves.ease,
       );
 
@@ -178,6 +184,7 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
 
         //
         CategoryController.to.setTotalAndScores();
+        ChapterController.to.quizAllCorrect();
       } else {
         Get.back();
       }
