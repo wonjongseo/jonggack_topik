@@ -20,7 +20,7 @@ class CToggleBtn extends StatelessWidget {
         style: TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.w600,
-          color: AppColors.mainColor,
+          color: AppColors.primaryColor,
         ),
       ),
       trailing: ToggleButtons(
@@ -35,7 +35,7 @@ class CToggleBtn extends StatelessWidget {
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w600,
-              color: AppColors.mainColor,
+              color: AppColors.primaryColor,
             ),
           ),
           Text(
@@ -43,7 +43,7 @@ class CToggleBtn extends StatelessWidget {
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w600,
-              color: AppColors.mainColor,
+              color: AppColors.primaryColor,
             ),
           ),
         ],
@@ -73,7 +73,7 @@ class CheckRowBtn extends StatelessWidget {
         style: TextStyle(
           fontSize: 14,
           fontWeight: FontWeight.w600,
-          color: AppColors.mainColor,
+          color: AppColors.primaryColor,
         ),
       ),
       trailing: Transform.scale(

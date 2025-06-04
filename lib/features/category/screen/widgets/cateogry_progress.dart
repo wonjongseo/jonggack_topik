@@ -96,7 +96,7 @@ class AnimatedLeanerProgressIndicator extends StatelessWidget {
               children: [
                 LinearProgressIndicator(
                   value: value,
-                  color: AppColors.primaryColor,
+                  color: AppColors.accentColor,
                   backgroundColor: Colors.grey.shade300,
                 ),
                 Center(

@@ -178,7 +178,7 @@ class WordCard extends GetView<WordController> {
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                      color: AppColors.mainColor,
+                      color: AppColors.primaryColor,
                       borderRadius: BorderRadius.circular(5),
                     ),
                     margin: EdgeInsets.symmetric(horizontal: 6),

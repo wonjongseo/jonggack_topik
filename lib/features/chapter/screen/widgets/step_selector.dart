@@ -10,14 +10,14 @@ class StepSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: isCurrent ? AppColors.mainColor : Colors.cyan.shade200,
+      color: isCurrent ? AppColors.primaryColor : Colors.cyan.shade200,
       elevation: isCurrent ? 3 : 0,
       child: Container(
         width: 85, //
         padding: EdgeInsets.all(8),
         child:
             isCurrent
-                ? Icon(Icons.star, color: AppColors.primaryColor, size: 16)
+                ? Icon(Icons.star, color: AppColors.accentColor, size: 16)
                 : isAllCorrect ?? false
                 ? Icon(FontAwesomeIcons.check, size: 16)
                 : Icon(FontAwesomeIcons.lockOpen, size: 16),

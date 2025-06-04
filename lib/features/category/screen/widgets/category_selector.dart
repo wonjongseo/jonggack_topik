@@ -5,6 +5,7 @@ import 'package:jonggack_topik/core/models/subject_hive.dart';
 import 'package:jonggack_topik/features/category/controller/category_controller.dart';
 import 'package:jonggack_topik/features/category/screen/widgets/cateogry_progress.dart';
 import 'package:jonggack_topik/features/user/screen/user_screen.dart';
+import 'package:jonggack_topik/theme.dart';
 
 class CategorySelector extends StatelessWidget {
   const CategorySelector({
@@ -21,24 +22,29 @@ class CategorySelector extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(category.title, style: FontController.to.bold()),
-            ),
-          ],
-        ),
+        // Row(
+        //   children: [
+
+        //   ],
+        // ),
         Expanded(
           child: CCard(
             child: InkWell(
               onTap: onTap,
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(14.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Divider(),
+                    Text(
+                      category.title,
+                      style: TextStyle(
+                        fontFamily: AppFonts.zenMaruGothic,
+                        fontSize: 21,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    Divider(),
                     Expanded(
                       child: SingleChildScrollView(
                         padding: EdgeInsets.symmetric(horizontal: 8),

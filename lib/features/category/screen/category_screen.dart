@@ -153,41 +153,32 @@ class CategoryScreen extends GetView<CategoryController> {
               else
                 SizedBox(
                   height: size.height * .5,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Obx(() {
-                          if (controller.isLoadign.value) {
-                            return Center(child: CircularProgressIndicator());
-                          }
-                          return CarouselSlider(
-                            carouselController: controller.carouselController,
-                            items: List.generate(
-                              controller.allCategories.length,
-                              (index) {
-                                return CategorySelector(
-                                  category: controller.allCategories[index],
-                                  totalAndScores:
-                                      controller.totalAndScores[index],
+                  child: Obx(() {
+                    if (controller.isLoadign.value) {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                    return CarouselSlider(
+                      carouselController: controller.carouselController,
+                      items: List.generate(controller.allCategories.length, (
+                        index,
+                      ) {
+                        return CategorySelector(
+                          category: controller.allCategories[index],
+                          totalAndScores: controller.totalAndScores[index],
 
-                                  onTap: () => controller.onTapCategory(index),
-                                );
-                              },
-                            ),
-                            options: CarouselOptions(
-                              disableCenter: true,
-                              viewportFraction: 0.7,
-                              enableInfiniteScroll: false,
-                              enlargeCenterPage: true,
-                              // initialPage: controller.selectedCategoryIdx,
-                              scrollDirection: Axis.horizontal,
-                            ),
-                          );
-                        }),
+                          onTap: () => controller.onTapCategory(index),
+                        );
+                      }),
+                      options: CarouselOptions(
+                        disableCenter: true,
+                        viewportFraction: 0.7,
+                        enableInfiniteScroll: false,
+                        enlargeCenterPage: true,
+                        // initialPage: controller.selectedCategoryIdx,
+                        scrollDirection: Axis.horizontal,
                       ),
-                    ],
-                  ),
+                    );
+                  }),
                 ),
             ],
           ),

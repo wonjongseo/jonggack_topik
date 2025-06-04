@@ -20,7 +20,7 @@ class MainScreen extends GetView<MainController> {
         PersistentBottomNavBarItem(
           icon: Icon(Icons.home),
           title: "Study",
-          activeColorPrimary: AppColors.mainColor,
+          activeColorPrimary: AppColors.primaryColor,
           activeColorSecondary: Colors.white,
           inactiveColorPrimary: Colors.grey,
           textStyle: TextStyle(color: Colors.white),
@@ -29,14 +29,14 @@ class MainScreen extends GetView<MainController> {
         PersistentBottomNavBarItem(
           icon: Icon(Icons.person),
           title: "Me",
-          activeColorPrimary: AppColors.mainColor,
+          activeColorPrimary: AppColors.primaryColor,
           activeColorSecondary: Colors.white,
           inactiveColorPrimary: Colors.grey,
         ),
         PersistentBottomNavBarItem(
           icon: Icon(Icons.settings),
           title: "Setting",
-          activeColorPrimary: AppColors.mainColor,
+          activeColorPrimary: AppColors.primaryColor,
           activeColorSecondary: Colors.white,
           inactiveColorPrimary: Colors.grey,
         ),

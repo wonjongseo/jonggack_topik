@@ -108,7 +108,7 @@ class SeacrhForm extends GetView<SearchGetController> {
                         ),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
-                          color: AppColors.mainColor,
+                          color: AppColors.primaryColor,
                         ),
                         child: Text(
                           controller.words[index].word,

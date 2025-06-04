@@ -16,7 +16,7 @@ class BottomBtn extends StatelessWidget {
         width: double.infinity,
         margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         decoration: BoxDecoration(
-          color: AppColors.mainColor,
+          color: AppColors.primaryColor,
           borderRadius: BorderRadius.circular(15),
         ),
         child: Center(
