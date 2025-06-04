@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/admob/banner_ad/global_banner_admob.dart';
+import 'package:jonggack_topik/core/utils/app_color.dart';
 import 'package:jonggack_topik/core/widgets/custom_button.dart';
 import 'package:jonggack_topik/core/widgets/custom_toggle_button.dart';
 import 'package:jonggack_topik/features/chapter/controller/chapter_controller.dart';
@@ -51,8 +52,11 @@ class ChapterScreen extends GetView<ChapterController> {
               ),
               Expanded(
                 child: Container(
+                  color:
+                      Get.isDarkMode
+                          ? AppColors.scaffoldBackground
+                          : AppColors.white,
                   margin: const EdgeInsets.only(top: 8),
-                  color: Colors.white,
                   child: Obx(() => StepBody(isSeeMean: controller.isSeeMean)),
                 ),
               ),

@@ -28,7 +28,7 @@ class CategorySelector extends StatelessWidget {
         //   ],
         // ),
         Expanded(
-          child: CCard(
+          child: Card(
             child: InkWell(
               onTap: onTap,
               child: Padding(

@@ -19,8 +19,11 @@ class BookStudyScreen extends GetView<BookStudyController> {
         child: Center(
           child: Obx(
             () => Container(
+              color:
+                  Get.isDarkMode
+                      ? AppColors.scaffoldBackground
+                      : AppColors.white,
               margin: const EdgeInsets.only(top: 8),
-              color: Colors.white,
               child: ListView.separated(
                 itemBuilder: (context, index) {
                   return WordListTIle(
@@ -30,7 +33,6 @@ class BookStudyScreen extends GetView<BookStudyController> {
                     onTap: () {
                       controller.goToWordScreen(index);
                     },
-
                     word: controller.words[index],
                     aisSeeMean: controller.isSeeMeanWords[index],
                     trailing: IconButton(
@@ -55,11 +57,11 @@ class BookStudyScreen extends GetView<BookStudyController> {
           if (controller.words.isNotEmpty)
             BottomBtn(label: "QUIZ", onTap: () => controller.goToQuizPage()),
 
-          // if (controller.book.bookNum != 0)
-          BottomBtn(
-            label: "Create",
-            onTap: () => controller.goToEditWordPage(),
-          ),
+          if (controller.book.bookNum != 0)
+            BottomBtn(
+              label: "Create",
+              onTap: () => controller.goToEditWordPage(),
+            ),
         ],
       ),
     );

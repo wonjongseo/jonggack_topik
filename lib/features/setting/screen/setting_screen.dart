@@ -7,6 +7,7 @@ import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/core/repositories/hive_repository.dart';
 import 'package:jonggack_topik/core/repositories/setting_repository.dart';
 import 'package:jonggack_topik/core/utils/app_constant.dart';
+import 'package:jonggack_topik/features/auth/controllers/user_controller.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
@@ -33,6 +34,7 @@ class _SettingScreenState extends State<SettingScreen> {
   }
 
   void changeTheme(int index) {
+    UserController.to.changeTheme(index);
     if (index == 0) {
       isDarkMode = true;
       SettingRepository.setBool(AppConstant.isDarkModeKey, true);

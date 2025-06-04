@@ -22,13 +22,7 @@ class CateogryProgress extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                caregory,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
+              Text(caregory, style: TextStyle(fontWeight: FontWeight.w700)),
               TweenAnimationBuilder(
                 tween: Tween<double>(begin: 0, end: curCnt / 100),
                 duration: const Duration(milliseconds: 1500),

@@ -30,12 +30,14 @@ class WordCard extends GetView<WordController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      AutoSizeText(
-                        word.word,
-                        style: TextStyle(
-                          fontSize: FontController.to.baseFontSize + 10,
+                      Expanded(
+                        child: AutoSizeText(
+                          word.word,
+                          style: TextStyle(
+                            fontSize: FontController.to.baseFontSize + 10,
+                          ),
+                          maxLines: 1,
                         ),
-                        maxLines: 1,
                       ),
 
                       if (controller.isMyWordTest)

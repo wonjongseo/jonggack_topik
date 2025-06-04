@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 class SnackBarHelper {
   static void showErrorSnackBar(String message, {String title = "Error"}) {
+    return;
     Get.rawSnackbar(
       title: title,
       message: message,
@@ -17,7 +18,7 @@ class SnackBarHelper {
 
   static void showSuccessSnackBar(String message, {String title = "Success"}) {
     print('message : ${message}');
-
+    return;
     Get.rawSnackbar(
       title: title,
       message: message,

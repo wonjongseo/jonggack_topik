@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:jonggack_topik/core/models/Question.dart';
 import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/core/utils/app_color.dart';
+import 'package:jonggack_topik/features/auth/controllers/user_controller.dart';
 import 'package:jonggack_topik/features/quiz/controller/quiz_controller.dart';
 import 'package:jonggack_topik/features/quiz/screen/widgets/progressbar.dart';
 import 'package:jonggack_topik/theme.dart';
@@ -128,7 +129,10 @@ class JlptTestCard extends StatelessWidget {
       margin: EdgeInsets.symmetric(horizontal: 20),
       padding: EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color:
+            UserController.to.isDarkMode.value
+                ? AppColors.black
+                : AppColors.white,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(24),
           topRight: Radius.circular(24),
@@ -136,17 +140,9 @@ class JlptTestCard extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Text(
-            qustionWord,
-            style: TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.w500,
-              fontFamily: AppFonts.japaneseFont,
-            ),
-          ),
+          Text(qustionWord, style: TextStyle(fontSize: 22)),
           SizedBox(height: 40),
-          // if (controller.settingController.isTestKeyBoard)
-          //   const JlptTestTextFormField(),
+
           Expanded(
             child: SingleChildScrollView(
               child: Column(
@@ -183,19 +179,8 @@ class JlptTestOption extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<QuizController>(
-      // init: JlptTestController(),
       builder: (qnController) {
         String getString() {
-          // if (qnController.textEditingController != null) {
-          //   if (!qnController.isSubmittedYomikata) {
-          //     return '???';
-          //   }
-          // }
-
-          // if (qnController.isAnswered) {
-          //   return '${test.mean}\n${test.yomikata}';
-          // }
-
           return test.mean;
         }
 
@@ -208,7 +193,11 @@ class JlptTestOption extends StatelessWidget {
               return const Color(0xFFE92E30);
             }
           }
-          return AppColors.scaffoldBackground.withOpacity(0.5);
+          return UserController.to.isDarkMode.value
+              ? AppColors.white
+              : AppColors.scaffoldBackground.withOpacity(0.5);
+
+          // AppColors.scaffoldBackground.withOpacity(0.5);
         }
 
         IconData getTheRightIcon() {
@@ -217,22 +206,11 @@ class JlptTestOption extends StatelessWidget {
               : Icons.done;
         }
 
-        // if (qnController.textEditingController == null) {
-        //   return qnController.isWrong
-        //       ? optionCard(getTheRightColor, getTheRightIcon, getString)
-        //       : InkWell(
-        //           onTap: press,
-        //           child:
-        //               optionCard(getTheRightColor, getTheRightIcon, getString),
-        //         );
-        // }
         return qnController.isWrong
             ? optionCard(getTheRightColor, getTheRightIcon, getString)
             : InkWell(
               onTap: press,
-              // qnController.textEditingController!.text.isNotEmpty
-              //     ? press
-              //     : () => qnController.requestFocus(),
+
               child: optionCard(getTheRightColor, getTheRightIcon, getString),
             );
       },

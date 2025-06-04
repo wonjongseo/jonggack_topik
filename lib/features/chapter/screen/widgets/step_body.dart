@@ -15,6 +15,7 @@ class StepBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<StepController>(
       builder: (controller) {
+        print("object");
         return ListView.separated(
           controller: ChapterController.to.scrollController,
           itemBuilder: (context, index) {

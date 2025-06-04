@@ -89,14 +89,7 @@ class SeacrhForm extends GetView<SearchGetController> {
                 child: Row(
                   children: List.generate(controller.words.length, (index) {
                     return InkWell(
-                      onTap: () {
-                        final wordController = Get.put(
-                          WordController(false, controller.words, index),
-                        );
-                        wordController.onTapSynonyms(
-                          tempWord: controller.words[index],
-                        );
-                      },
+                      onTap: () => controller.onTapSeachedWord(index),
                       child: Container(
                         margin: EdgeInsets.symmetric(
                           vertical: 4,

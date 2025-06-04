@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/core/repositories/hive_repository.dart';
 import 'package:flutter_debouncer/flutter_debouncer.dart' as FB;
+import 'package:jonggack_topik/features/word/controller/word_controller.dart';
 import 'package:jonggack_topik/features/word/screen/widgets/word_cart.dart';
 
 class SearchGetController extends GetxController {
@@ -12,7 +15,7 @@ class SearchGetController extends GetxController {
   late final FB.Debouncer debouncer;
 
   final isTyping = false.obs;
-
+  Timer? _clearTimer;
   @override
   void onInit() {
     debouncer = FB.Debouncer();
@@ -22,14 +25,17 @@ class SearchGetController extends GetxController {
   @override
   void onClose() {
     controller.dispose();
+    _clearTimer?.cancel();
     debouncer.cancel();
     super.onClose();
   }
 
   void onSearch(String query) {
+    _resetClearTimer();
     isTyping(true);
     if (query.isEmpty) {
       isTyping(false);
+      _words.clear();
     }
     debouncer.debounce(
       duration: Duration(milliseconds: 500),
@@ -43,40 +49,35 @@ class SearchGetController extends GetxController {
     );
   }
 
+  void _resetClearTimer() {
+    _clearTimer?.cancel();
+    _clearTimer = Timer(Duration(seconds: 30), () {
+      // controller.clear();
+      // _words.clear();
+    });
+  }
+
   _queryToHive(String query) {
     final wordRepo = Get.find<HiveRepository<Word>>(tag: Word.boxKey);
 
     List<Word> words = wordRepo.getAll();
 
     final filteredWord =
-        words.where((word) => word.word.contains(query)).toList();
+        words
+            .where(
+              (word) => word.word.contains(query) && word.dicTypeNuimber == 0,
+            )
+            .toList();
 
     _words.assignAll(filteredWord);
   }
 
-  List<String> stack = [];
-  Future<void> onTapSynonyms(Word word) async {
-    stack.add(word.word);
+  void onTapSeachedWord(int index) async {
+    final wordController = Get.put(WordController(false, _words, index));
+    await wordController.onTapSynonyms(tempWord: _words[index]);
 
-    await Get.to(
-      preventDuplicates: false,
-      () => Scaffold(
-        appBar: AppBar(),
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: SafeArea(
-            child: SizedBox(
-              height: double.infinity,
-              child: WordCard(word: word),
-            ),
-          ),
-        ),
-      ),
-    );
-
-    if (stack.isNotEmpty) {
-      stack.removeLast();
+    if (Get.isRegistered<WordController>()) {
+      Get.delete<WordController>();
     }
-    print('stack : ${stack}');
   }
 }

@@ -74,6 +74,18 @@ class BookController extends GetxController {
 
   void deleteBook(Book book) async {
     try {
+      if (book.bookNum == 0) {
+        LogManager.error('${AppString.appName}을 삭제 시도함');
+        SnackBarHelper.showErrorSnackBar(
+          '${AppString.appName}単語帳は削除することができません。',
+        );
+        return;
+      }
+      final wordRepo = Get.find<HiveRepository<Word>>(tag: Word.boxKey);
+
+      for (var wordId in book.wordIds) {
+        await wordRepo.delete(wordId);
+      }
       await _bookBox.delete(book.id);
     } catch (e) {
       LogManager.error('$e');

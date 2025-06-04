@@ -19,11 +19,8 @@ import 'package:jonggack_topik/theme.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await HiveRepository.init();
-
   MobileAds.instance.initialize();
-
   initializeDateFormatting();
-
   runApp(const App());
 }
 
@@ -36,6 +33,7 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   ThemeMode themeMode = ThemeMode.system;
+
   String? systemLanguage;
   // systemLanguage =
   //       await SettingRepository.getString(AppConstant.settingLanguageKey);
@@ -44,13 +42,15 @@ class _AppState extends State<App> {
     bool? isDarkMode = SettingRepository.getBool(AppConstant.isDarkModeKey);
 
     if (isDarkMode != null) {
-      themeMode = isDarkMode ? ThemeMode.dark : ThemeMode.light;
+      setState(() {
+        themeMode = isDarkMode ? ThemeMode.dark : ThemeMode.light;
+      });
     }
   }
 
   @override
   void initState() {
-    // getUsresSetting();
+    getUsresSetting();
     super.initState();
   }
 
@@ -65,7 +65,7 @@ class _AppState extends State<App> {
       locale: Get.deviceLocale,
       themeMode: themeMode,
       theme: AppThemings.lightTheme,
-      darkTheme: AppThemings.dartTheme,
+      darkTheme: AppThemings.darkTheme,
       initialBinding: InitBinding(),
     );
   }

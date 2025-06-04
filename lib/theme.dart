@@ -15,34 +15,50 @@ class AppFonts {
 }
 
 class AppThemings {
-  static final dartTheme = ThemeData.light(useMaterial3: true).copyWith(
-    textTheme:
-        ThemeData.dark().textTheme
-            .apply(
-              fontFamily: AppFonts.gMaretFont,
-              bodyColor: Colors.white,
-              displayColor: Colors.amber,
-              decorationColor: Colors.white,
-            )
-            .copyWith(),
-    primaryTextTheme: ThemeData.dark().textTheme.apply(
-      fontFamily: AppFonts.nanumGothic,
+  static final ThemeData darkTheme = ThemeData.dark().copyWith(
+    // 기본 텍스트 테마에 동일한 폰트 패밀리를 적용
+    textTheme: ThemeData.dark().textTheme.apply(
+      fontFamily: AppFonts.gMaretFont,
     ),
+
+    // 전체 배경색을 어두운 색으로 지정
     scaffoldBackgroundColor: AppColors.scaffoldBackground,
+
+    // AppBar 테마 (투명 배경 + 텍스트 흰색)
     appBarTheme: const AppBarTheme(
+      toolbarHeight: 40,
       color: Colors.transparent,
+      scrolledUnderElevation: 0.0,
       titleTextStyle: TextStyle(
-        color: Colors.black,
+        color: Colors.white, // 다크 모드에서는 흰색 텍스트
         fontWeight: FontWeight.bold,
-        fontSize: 18,
-        fontFamily: AppFonts.gMaretFont,
+        fontFamily: AppFonts.zenMaruGothic,
+        fontSize: 20,
       ),
-      iconTheme: IconThemeData(color: Colors.black),
+      iconTheme: IconThemeData(color: Colors.white),
     ),
-    cardTheme: CardTheme(color: Colors.white),
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+    // cardTheme: CardTheme(color: AppColors.black),
+
+    // IconButton 최소 크기 축소 유지
+    iconButtonTheme: IconButtonThemeData(
+      style: IconButton.styleFrom(
+        minimumSize: const Size(0, 0),
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      ),
+    ),
+
+    // ListTile 테마: 다크 모드 기본 텍스트 컬러 유지하면서 폰트만 지정
+    listTileTheme: ListTileThemeData(
+      leadingAndTrailingTextStyle: ThemeData.dark().textTheme.bodyLarge
+          ?.copyWith(
+            fontFamily: AppFonts.gMaretFont,
+            fontSize: FontController.to.baseFontSize,
+            color: ThemeData.dark().textTheme.bodyLarge?.color,
+          ),
+      titleTextStyle: ThemeData.dark().textTheme.bodyMedium?.copyWith(
+        fontFamily: AppFonts.zenMaruGothic,
+        fontSize: FontController.to.baseFontSize - 2,
+        color: ThemeData.dark().textTheme.bodyMedium?.color,
       ),
     ),
   );
@@ -53,14 +69,14 @@ class AppThemings {
     ),
     scaffoldBackgroundColor: Colors.grey.shade200,
     appBarTheme: const AppBarTheme(
-      toolbarHeight: 80,
+      toolbarHeight: 50,
       color: Colors.transparent,
       scrolledUnderElevation: 0.0,
       titleTextStyle: TextStyle(
         color: Colors.black,
         fontWeight: FontWeight.bold,
         fontFamily: AppFonts.zenMaruGothic,
-        fontSize: 20,
+        fontSize: 18,
       ),
       iconTheme: IconThemeData(color: Colors.black),
     ),

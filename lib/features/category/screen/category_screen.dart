@@ -165,7 +165,6 @@ class CategoryScreen extends GetView<CategoryController> {
                         return CategorySelector(
                           category: controller.allCategories[index],
                           totalAndScores: controller.totalAndScores[index],
-
                           onTap: () => controller.onTapCategory(index),
                         );
                       }),

@@ -5,7 +5,6 @@ import 'package:jonggack_topik/core/models/synonym.dart';
 import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/core/repositories/hive_repository.dart';
 import 'package:jonggack_topik/core/tts/tts_controller.dart';
-import 'package:jonggack_topik/features/auth/controllers/user_controller.dart';
 import 'package:jonggack_topik/features/book/controller/book_controller.dart';
 import 'package:jonggack_topik/features/book/controller/book_study_controller.dart';
 import 'package:jonggack_topik/features/step/controller/step_controller.dart';
@@ -32,15 +31,21 @@ class WordController extends GetxController {
   }
 
   bool isSavedWord(String id) {
-    return BookController.to.isSavedWord(id);
+    if (Get.isRegistered<StepController>()) {
+      return StepController.to.isSavedWord(id);
+    } else {
+      return BookController.to.isSavedWord(id);
+    }
   }
 
   Future<void> toggleMyWord(Word word) async {
-    await BookController.to.toggleMyWord(word);
+    if (Get.isRegistered<StepController>()) {
+      await StepController.to.toggleMyWord(word);
+    } else {
+      await BookController.to.toggleMyWord(word);
+    }
+
     update();
-    // if (Get.isRegistered<BookStudyController>()) {
-    //   BookStudyController.to.deteleWord(word);
-    // }
   }
 
   void deleteWord(Word word) {
@@ -53,8 +58,6 @@ class WordController extends GetxController {
 
   final isSeeMoreExample = false.obs;
   void onPageChanged(value) {
-    // 나의 단어를 다 삭제 했을 떄
-    // 자동 뒤로가기
     if (value == 0 && _currentWordIdx.value == -1) {
       Get.back();
     }

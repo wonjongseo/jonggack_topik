@@ -51,7 +51,8 @@ class UserScreen extends GetView<BookController> {
                             child: BookCard(
                               book: controller.books[index],
                               deleteBook: (book) => controller.deleteBook(book),
-                              updateBook: (book) => controller.deleteBook(book),
+                              updateBook: (book) => controller.updateBook(book),
+                              teCtl: index == 0 ? controller.bookNameCtl : null,
                             ),
                           );
                         }),
@@ -59,25 +60,6 @@ class UserScreen extends GetView<BookController> {
                           tECtl: controller.bookNameCtl,
                           onTap: () => controller.createBook(),
                         ),
-
-                        // ...controller.bookAndWords.entries.map((entry) {
-                        //   return InkWell(
-                        //     onTap: () {
-                        //       Get.to(
-                        //         () => BookStudyScreen(),
-                        //         binding: BindingsBuilder.put(
-                        //           () => BookStudyController(entry),
-                        //         ),
-                        //       );
-                        //     },
-                        //     child: BookCard(
-                        //       book: entry.key,
-                        //       words: entry.value,
-                        //       deleteBook: (book) => controller.deleteBook(book),
-                        //       updateBook: (book) => controller.deleteBook(book),
-                        //     ),
-                        //   );
-                        // }),
                       ],
                       options: CarouselOptions(
                         height: 400,
