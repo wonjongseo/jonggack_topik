@@ -16,7 +16,9 @@ class WordScreen extends GetView<WordController> {
       () => Scaffold(
         appBar: AppBar(
           title: Text(
-            '${controller.currentWordIdx + 1} / ${controller.words.length}',
+            controller.currentWordIdx < 0
+                ? ''
+                : '${controller.currentWordIdx + 1} / ${controller.words.length}',
           ),
         ),
         body: SafeArea(
@@ -29,9 +31,13 @@ class WordScreen extends GetView<WordController> {
                 if (index + 1 > controller.words.length) {
                   return GoToQuizWidget(words: controller.words);
                 }
+
                 return WordCard(word: controller.words[index]);
               },
-              itemCount: controller.words.length + 1,
+              itemCount:
+                  controller.words.isEmpty
+                      ? controller.words.length
+                      : controller.words.length + 1,
             ),
           ),
         ),

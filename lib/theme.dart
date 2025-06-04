@@ -73,6 +73,7 @@ class AppThemings {
     ),
     scaffoldBackgroundColor: Colors.grey.shade200,
     appBarTheme: const AppBarTheme(
+      toolbarHeight: 80,
       color: Colors.transparent,
       scrolledUnderElevation: 0.0,
       titleTextStyle: TextStyle(
@@ -96,6 +97,7 @@ class AppThemings {
             fontSize: FontController.to.baseFontSize,
             color: ThemeData.light().textTheme.bodyLarge?.color, // 색상 유지
           ),
+
       titleTextStyle: ThemeData.light().textTheme.bodyMedium?.copyWith(
         fontFamily: AppFonts.zenMaruGothic,
         fontSize: FontController.to.baseFontSize - 2,
@@ -165,3 +167,9 @@ class AppThemings {
 // String getFont({bool isKorean = true}) {
 //   return isKorean ? AppFonts.cookieRunFont : AppFonts.zenMaruGothic;
 // }
+
+ButtonStyle get cTrailingStyle => IconButton.styleFrom(
+  padding: const EdgeInsets.all(2),
+  minimumSize: const Size(0, 0),
+  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+);

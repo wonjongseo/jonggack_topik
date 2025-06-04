@@ -11,4 +11,7 @@ class AppString {
 
   static const String savedWordText = "保存された単語：";
   static const String unit = '個';
+  static const String word = '単語';
+  static const String mean = '意味';
+  static const String yomikata = '発音';
 }

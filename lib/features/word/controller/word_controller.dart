@@ -7,6 +7,7 @@ import 'package:jonggack_topik/core/repositories/hive_repository.dart';
 import 'package:jonggack_topik/core/tts/tts_controller.dart';
 import 'package:jonggack_topik/features/auth/controllers/user_controller.dart';
 import 'package:jonggack_topik/features/book/controller/book_controller.dart';
+import 'package:jonggack_topik/features/book/controller/book_study_controller.dart';
 import 'package:jonggack_topik/features/step/controller/step_controller.dart';
 import 'package:jonggack_topik/features/word/screen/widgets/word_cart.dart';
 
@@ -14,11 +15,14 @@ class WordController extends GetxController {
   static WordController get to => Get.find<WordController>();
   final List<Word> words;
   final Rx<int> _currentWordIdx;
+
+  final bool isMyWordTest;
   int get currentWordIdx => _currentWordIdx.value;
 
   late PageController pgCtl;
 
-  WordController(this.words, int index) : _currentWordIdx = index.obs;
+  WordController(this.isMyWordTest, this.words, int index)
+    : _currentWordIdx = index.obs;
 
   @override
   void onInit() {
@@ -32,15 +36,33 @@ class WordController extends GetxController {
   }
 
   Future<void> toggleMyWord(Word word) async {
-    BookController.to.toggleMyWord(word);
+    await BookController.to.toggleMyWord(word);
     update();
+    // if (Get.isRegistered<BookStudyController>()) {
+    //   BookStudyController.to.deteleWord(word);
+    // }
+  }
+
+  void deleteWord(Word word) {
+    BookStudyController.to.deteleWord(word);
+    onPageChanged(_currentWordIdx.value + 1);
+    _currentWordIdx.value--;
+
+    words.remove(word);
   }
 
   final isSeeMoreExample = false.obs;
   void onPageChanged(value) {
+    // 나의 단어를 다 삭제 했을 떄
+    // 자동 뒤로가기
+    if (value == 0 && _currentWordIdx.value == -1) {
+      Get.back();
+    }
+
     if (value < 0 || value >= words.length) {
       return; // 유효하지 않은 인덱스면 무시
     }
+
     TtsController.to.stop();
     isSeeMoreExample.value = false;
     _currentWordIdx.value = value;

@@ -34,7 +34,7 @@ class StepController extends GetxController {
   void goToWordScreen(int index) {
     Get.to(
       () => WordScreen(),
-      binding: BindingsBuilder.put(() => WordController(words, index)),
+      binding: BindingsBuilder.put(() => WordController(false, words, index)),
     );
   }
 

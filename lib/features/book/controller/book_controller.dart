@@ -17,9 +17,6 @@ class BookController extends GetxController {
 
   final _allBooks = <Book>[].obs;
   List<Book> get books => _allBooks.value;
-  // final _allMyWord = <Word>[].obs;
-  // var _bookAndWords = <Book, List<Word>>{}.obs;
-  // Map<Book, List<Word>> get bookAndWords => _bookAndWords.value;
 
   final carouselSliderController = CarouselSliderController();
   final bookNameCtl = TextEditingController();
@@ -32,20 +29,7 @@ class BookController extends GetxController {
 
   void getDatas() {
     getAllBooks();
-    // getAllWord();
-    // createBookAndWords();
   }
-
-  // void createBookAndWords() {
-  //   for (Book book in _allBooks) {
-  //     if (_bookAndWords[book] == null) {
-  //       _bookAndWords[book] = [];
-  //     }
-  //     _bookAndWords[book] = List.from(
-  //       _allMyWord.value.where((word) => word.dicTypeNuimber == book.bookNum),
-  //     );
-  //   }
-  // }
 
   late Book defaultBook;
 
@@ -58,8 +42,6 @@ class BookController extends GetxController {
 
       allBooks.sort((a, b) => b.createdAt.compareTo(a.createdAt));
 
-      print('defaultBook.wordIds : ${defaultBook.wordIds.length}');
-
       _allBooks.assignAll(allBooks);
     } catch (e) {
       LogManager.error('$e');
@@ -68,19 +50,6 @@ class BookController extends GetxController {
       isLoading(false);
     }
   }
-
-  // void getAllWord() {
-  //   try {
-  //     isLoading(true);
-  //     final allWord = _myWordBox.getAll();
-  //     _allMyWord.assignAll(allWord);
-  //   } catch (e) {
-  //     LogManager.error('$e');
-  //     SnackBarHelper.showErrorSnackBar('$e');
-  //   } finally {
-  //     isLoading(false);
-  //   }
-  // }
 
   void createBook() async {
     if (bookNameCtl.text.isEmpty && bookNameCtl.text.length < 5) {
@@ -133,12 +102,15 @@ class BookController extends GetxController {
   }
 
   toggleMyWord(Word word) {
-    if (defaultBook.wordIds.contains(word.id)) {
-      defaultBook.wordIds.remove(word.id);
+    Book book = _allBooks.firstWhere(
+      (book) => book.bookNum == word.dicTypeNuimber,
+    );
+    if (book.wordIds.contains(word.id)) {
+      book.wordIds.remove(word.id);
     } else {
-      defaultBook.wordIds.add(word.id);
+      book.wordIds.add(word.id);
     }
-    updateBook(defaultBook);
+    updateBook(book);
   }
 
   bool isSavedWord(String id) {

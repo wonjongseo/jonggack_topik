@@ -91,7 +91,7 @@ class SeacrhForm extends GetView<SearchGetController> {
                     return InkWell(
                       onTap: () {
                         final wordController = Get.put(
-                          WordController(controller.words, index),
+                          WordController(false, controller.words, index),
                         );
                         wordController.onTapSynonyms(
                           tempWord: controller.words[index],

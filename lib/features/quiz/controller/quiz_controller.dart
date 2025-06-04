@@ -12,6 +12,7 @@ import 'package:jonggack_topik/features/category/controller/category_controller.
 import 'package:jonggack_topik/features/chapter/controller/chapter_controller.dart';
 import 'package:jonggack_topik/features/quiz/screen/very_good_screen.dart';
 import 'package:jonggack_topik/features/score/screen/score_screen.dart';
+import 'package:jonggack_topik/features/step/controller/step_controller.dart';
 import 'package:jonggack_topik/features/user/repository/quiz_history_repository.dart';
 
 // ignore: deprecated_member_use
@@ -85,6 +86,9 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
     pageController = PageController();
 
     setQuestions();
+
+    isMyWordTest = !Get.isRegistered<StepController>();
+
     super.onInit();
   }
 
@@ -151,7 +155,7 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
     }
   }
 
-  bool isMyWordTest = false;
+  late bool isMyWordTest;
 
   void nextQuestion() async {
     isDisTouchable = false;

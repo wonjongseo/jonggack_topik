@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+
+import 'package:jonggack_topik/core/models/word.dart';
+import 'package:jonggack_topik/core/utils/app_color.dart';
 import 'package:jonggack_topik/features/chapter/controller/chapter_controller.dart';
 import 'package:jonggack_topik/features/step/controller/step_controller.dart';
-import 'package:jonggack_topik/core/utils/app_color.dart';
 
 class StepBody extends StatelessWidget {
   const StepBody({super.key, required this.isSeeMean});
@@ -18,25 +20,10 @@ class StepBody extends StatelessWidget {
           itemBuilder: (context, index) {
             bool aisSeeMean = controller.isSeeMeanWords[index] && isSeeMean;
 
-            return ListTile(
-              minLeadingWidth: 80,
-              leading: Text(controller.words[index].word),
-              title: InkWell(
-                onTap: () => controller.onTapMean(index),
-                child: SizedBox(
-                  height: 30,
-                  child: Container(
-                    decoration:
-                        aisSeeMean ? BoxDecoration(color: Colors.grey) : null,
-                    child: Text(
-                      controller.words[index].mean,
-                      style: TextStyle(color: aisSeeMean ? Colors.grey : null),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ),
-              ),
-              subtitle: SizedBox(child: Text(controller.words[index].yomikata)),
+            return WordListTIle(
+              word: controller.words[index],
+              aisSeeMean: aisSeeMean,
+              onTapMean: () => controller.onTapMean(index),
               onTap: () => controller.goToWordScreen(index),
               trailing: IconButton(
                 style: IconButton.styleFrom(
@@ -55,13 +42,53 @@ class StepBody extends StatelessWidget {
                         )
                         : Icon(FontAwesomeIcons.bookmark, size: 20),
               ),
-              isThreeLine: true,
             );
           },
           separatorBuilder: (context, index) => Divider(),
           itemCount: controller.words.length,
         );
       },
+    );
+  }
+}
+
+class WordListTIle extends StatelessWidget {
+  const WordListTIle({
+    Key? key,
+    required this.onTapMean,
+    required this.onTap,
+    required this.word,
+    required this.aisSeeMean,
+    required this.trailing,
+  }) : super(key: key);
+  final Function() onTapMean;
+  final Function() onTap;
+  final Word word;
+  final bool aisSeeMean;
+  final Widget trailing;
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      minLeadingWidth: 80,
+      leading: Text(word.word),
+      title: InkWell(
+        onTap: onTapMean,
+        child: SizedBox(
+          height: 30,
+          child: Container(
+            decoration: aisSeeMean ? BoxDecoration(color: Colors.grey) : null,
+            child: Text(
+              word.mean,
+              style: TextStyle(color: aisSeeMean ? Colors.grey : null),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ),
+      ),
+      subtitle: SizedBox(child: Text(word.yomikata)),
+      onTap: () => onTap(),
+      trailing: trailing,
+      isThreeLine: true,
     );
   }
 }

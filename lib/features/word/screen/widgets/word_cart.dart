@@ -37,17 +37,28 @@ class WordCard extends GetView<WordController> {
                         ),
                         maxLines: 1,
                       ),
-                      IconButton(
-                        onPressed: () => controller.toggleMyWord(word),
-                        icon:
-                            controller.isSavedWord(word.id)
-                                ? Icon(
-                                  FontAwesomeIcons.solidBookmark,
-                                  color: AppColors.mainBordColor,
-                                  size: 20,
-                                )
-                                : Icon(FontAwesomeIcons.bookmark, size: 20),
-                      ),
+
+                      if (controller.isMyWordTest)
+                        IconButton(
+                          onPressed: () => controller.deleteWord(word),
+                          icon: Icon(
+                            FontAwesomeIcons.xmark,
+                            size: 20,
+                            color: AppColors.pink,
+                          ),
+                        )
+                      else
+                        IconButton(
+                          onPressed: () => controller.toggleMyWord(word),
+                          icon:
+                              controller.isSavedWord(word.id)
+                                  ? Icon(
+                                    FontAwesomeIcons.solidBookmark,
+                                    color: AppColors.mainBordColor,
+                                    size: 20,
+                                  )
+                                  : Icon(FontAwesomeIcons.bookmark, size: 20),
+                        ),
                     ],
                   ),
                   SizedBox(height: 20),

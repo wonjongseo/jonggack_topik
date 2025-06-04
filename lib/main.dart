@@ -75,11 +75,11 @@ class InitBinding extends Bindings {
   @override
   void dependencies() {
     Get.put(TtsController());
-    Get.lazyPut(() => FontController());
-    Get.lazyPut(() => MainController());
+    Get.lazyPut(() => FontController(), fenix: true);
+    Get.lazyPut(() => MainController(), fenix: true);
     Get.lazyPut(() => SearchGetController());
     // Get.lazyPut(() => CategoryController());
-    Get.lazyPut(() => UserController());
+    Get.lazyPut(() => UserController(), fenix: true);
     Get.lazyPut(() => BookController());
 
     Get.lazyPut(() => DataRepositry());
