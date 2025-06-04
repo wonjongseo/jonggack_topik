@@ -93,12 +93,12 @@ class AppThemings {
       leadingAndTrailingTextStyle: ThemeData.light().textTheme.bodyLarge
           ?.copyWith(
             fontFamily: AppFonts.gMaretFont,
-            fontSize: FontController.to.baseFontSize.value,
+            fontSize: FontController.to.baseFontSize,
             color: ThemeData.light().textTheme.bodyLarge?.color, // 색상 유지
           ),
       titleTextStyle: ThemeData.light().textTheme.bodyMedium?.copyWith(
         fontFamily: AppFonts.zenMaruGothic,
-        fontSize: FontController.to.baseFontSize.value - 2,
+        fontSize: FontController.to.baseFontSize - 2,
         color: ThemeData.light().textTheme.bodyMedium?.color, // 색상 유지
       ),
     ),

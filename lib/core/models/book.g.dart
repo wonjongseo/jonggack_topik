@@ -17,15 +17,18 @@ class BookAdapter extends TypeAdapter<Book> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Book(
+      id: fields[0] as String?,
+      createdAt: fields[3] as String?,
       title: fields[1] as String,
       bookNum: fields[2] as int,
+      wordIds: (fields[4] as List?)?.cast<String>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, Book obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -33,7 +36,9 @@ class BookAdapter extends TypeAdapter<Book> {
       ..writeByte(2)
       ..write(obj.bookNum)
       ..writeByte(3)
-      ..write(obj.createdAt);
+      ..write(obj.createdAt)
+      ..writeByte(4)
+      ..write(obj.wordIds);
   }
 
   @override

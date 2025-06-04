@@ -3,20 +3,21 @@ import 'package:get/get.dart';
 
 class FontController extends GetxController {
   static FontController get to => Get.find<FontController>();
-  RxDouble baseFontSize = 16.0.obs;
+  RxDouble _baseFontSize = 16.0.obs;
+  double get baseFontSize => _baseFontSize.value;
 
   TextStyle get title =>
-      TextStyle(fontSize: baseFontSize.value + 4, fontWeight: FontWeight.bold);
+      TextStyle(fontSize: _baseFontSize.value + 4, fontWeight: FontWeight.bold);
 
   TextStyle get body =>
-      TextStyle(fontSize: baseFontSize.value, fontWeight: FontWeight.normal);
+      TextStyle(fontSize: _baseFontSize.value, fontWeight: FontWeight.normal);
 
   TextStyle get caption =>
-      TextStyle(fontSize: baseFontSize.value - 2, color: Colors.grey);
+      TextStyle(fontSize: _baseFontSize.value - 2, color: Colors.grey);
 
   TextStyle light({Color? color}) {
     return TextStyle(
-      fontSize: baseFontSize.value,
+      fontSize: _baseFontSize.value,
       fontWeight: FontWeight.w400,
       color: color,
     );
@@ -24,17 +25,17 @@ class FontController extends GetxController {
 
   TextStyle bold({Color? color}) {
     return TextStyle(
-      fontSize: baseFontSize.value,
+      fontSize: _baseFontSize.value,
       fontWeight: FontWeight.w700,
       color: color,
     );
   }
 
   void increaseFont() {
-    if (baseFontSize.value < 30) baseFontSize.value += 2;
+    if (_baseFontSize.value < 30) _baseFontSize.value += 2;
   }
 
   void decreaseFont() {
-    if (baseFontSize.value > 10) baseFontSize.value -= 2;
+    if (_baseFontSize.value > 10) _baseFontSize.value -= 2;
   }
 }

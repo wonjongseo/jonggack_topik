@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/features/auth/controllers/user_controller.dart';
+import 'package:jonggack_topik/features/book/controller/book_controller.dart';
 import 'package:jonggack_topik/features/category/screen/category_screen.dart';
 import 'package:jonggack_topik/features/setting/screen/setting_screen.dart';
 import 'package:jonggack_topik/features/user/screen/user_screen.dart';
@@ -25,7 +26,7 @@ class MainController extends GetxController {
 
   onPageSelected(int index) {
     if (index == 1) {
-      UserController.to.getData();
+      BookController.to.getDatas();
     }
   }
 }

@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:jonggack_topik/core/models/step_model.dart';
 import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/features/auth/controllers/user_controller.dart';
+import 'package:jonggack_topik/features/book/controller/book_controller.dart';
 import 'package:jonggack_topik/features/word/controller/word_controller.dart';
 import 'package:jonggack_topik/features/word/screen/word_screen.dart';
 
@@ -38,11 +39,11 @@ class StepController extends GetxController {
   }
 
   Future<void> toggleMyWord(Word word) async {
-    UserController.to.toggleMyWord(word);
+    BookController.to.toggleMyWord(word);
     update();
   }
 
   bool isSavedWord(String id) {
-    return UserController.to.isSavedWord(id);
+    return BookController.to.isSavedWord(id);
   }
 }

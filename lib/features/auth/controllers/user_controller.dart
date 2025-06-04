@@ -27,15 +27,14 @@ class UserController extends GetxController {
   List<Book> get allBooks => _allBooks.value;
 
   final isLoading = false.obs;
-  final _myWordBox = Get.find<HiveRepository<Word>>(tag: HK.myWordBoxKey);
-  final _userBox = Get.find<HiveRepository<User>>();
-  final _bookBox = Get.find<HiveRepository<Book>>(tag: Book.boxKey);
-  // 시험 본 날 , 맞춘 문제, 틀린 문제
-  //
+  // final _myWordBox = Get.find<HiveRepository<Word>>(tag: HK.myWordBoxKey);
+  // final _bookBox = Get.find<HiveRepository<Book>>(tag: Book.boxKey);
 
-  //  Map<Book, List<Word>> bookAndWords = {};
-  var _bookAndWords = <Book, List<Word>>{}.obs;
-  Map<Book, List<Word>> get bookAndWords => _bookAndWords.value;
+  final _userBox = Get.find<HiveRepository<User>>();
+
+  // var _bookAndWords = <Book, List<Word>>{}.obs;
+  // Map<Book, List<Word>> get bookAndWords => _bookAndWords.value;
+
   @override
   void onInit() {
     getData();
@@ -45,16 +44,6 @@ class UserController extends GetxController {
   getData() {
     getUsersData();
     getHistories();
-    getAllBooks();
-    getAllWord();
-    for (Book book in _allBooks) {
-      if (_bookAndWords[book] == null) {
-        _bookAndWords[book] = [];
-      }
-      _bookAndWords[book] = List.from(
-        _allMyWord.value.where((word) => word.dicTypeNuimber == book.bookNum),
-      );
-    }
   }
 
   void getUsersData() {
@@ -66,75 +55,6 @@ class UserController extends GetxController {
     } else {
       user = isUserExist[0];
     }
-  }
-
-  void getAllBooks() {
-    try {
-      isLoading(true);
-      var allBooks = _bookBox.getAll();
-      // allBooks = allBooks.where((book) => book.bookNum != 0).toList();
-
-      allBooks.sort((a, b) => b.createdAt.compareTo(a.createdAt));
-      _allBooks.assignAll(allBooks);
-    } catch (e) {
-      LogManager.error('$e');
-      SnackBarHelper.showErrorSnackBar('$e');
-    } finally {
-      isLoading(false);
-    }
-  }
-
-  CarouselSliderController carouselSliderController =
-      CarouselSliderController();
-  TextEditingController bookNameCtl = TextEditingController();
-
-  void createBook() async {
-    if (bookNameCtl.text.isEmpty && bookNameCtl.text.length < 5) {
-      SnackBarHelper.showErrorSnackBar('5${AppString.plzMoreChar}');
-      return;
-    }
-
-    String bookName = bookNameCtl.text;
-    Book newBook = Book(title: bookName, bookNum: _allBooks.length + 1);
-    try {
-      await _bookBox.put(newBook.id, newBook);
-    } catch (e) {
-      LogManager.error('$e');
-      SnackBarHelper.showErrorSnackBar('$e');
-    }
-    bookNameCtl.clear();
-    getAllBooks();
-    SnackBarHelper.showErrorSnackBar('$bookName${AppString.isCreated}');
-
-    carouselSliderController.animateToPage(0);
-  }
-
-  void deleteBook(Book book) async {
-    try {
-      await _bookBox.delete(book.id);
-    } catch (e) {
-      LogManager.error('$e');
-      SnackBarHelper.showErrorSnackBar('$e');
-    }
-    bookNameCtl.clear();
-    getAllBooks();
-    SnackBarHelper.showErrorSnackBar('${book.title}${AppString.isDeleted}');
-  }
-
-  void updateBook(Book book) async {}
-
-  void getAllWord() {
-    try {
-      isLoading(true);
-      final allWord = _myWordBox.getAll();
-      _allMyWord.assignAll(allWord);
-    } catch (e) {
-      LogManager.error('$e');
-      SnackBarHelper.showErrorSnackBar('$e');
-    } finally {
-      isLoading(false);
-    }
-    //
   }
 
   void getHistories() {
@@ -150,6 +70,8 @@ class UserController extends GetxController {
     }
   }
 
+  final _myWordBox = Get.find<HiveRepository<Word>>(tag: HK.myWordBoxKey);
+
   bool isSavedWord(String id) {
     return _myWordBox.containsKey(id);
   }
@@ -161,11 +83,5 @@ class UserController extends GetxController {
       await _myWordBox.put(word.id, word);
     }
     update();
-  }
-
-  @override
-  void dispose() {
-    bookNameCtl.dispose();
-    super.dispose();
   }
 }

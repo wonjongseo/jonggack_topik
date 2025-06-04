@@ -33,7 +33,7 @@ class WordCard extends GetView<WordController> {
                       AutoSizeText(
                         word.word,
                         style: TextStyle(
-                          fontSize: FontController.to.baseFontSize.value + 10,
+                          fontSize: FontController.to.baseFontSize + 10,
                         ),
                         maxLines: 1,
                       ),

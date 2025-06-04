@@ -7,6 +7,7 @@ import 'package:jonggack_topik/core/repositories/hive_repository.dart';
 import 'package:jonggack_topik/core/repositories/setting_repository.dart';
 import 'package:jonggack_topik/core/tts/tts_controller.dart';
 import 'package:jonggack_topik/core/utils/app_constant.dart';
+import 'package:jonggack_topik/features/book/controller/book_controller.dart';
 import 'package:jonggack_topik/features/category/controller/category_controller.dart';
 import 'package:jonggack_topik/features/auth/controllers/user_controller.dart';
 import 'package:jonggack_topik/features/category/controller/search_get_controller.dart';
@@ -79,12 +80,10 @@ class InitBinding extends Bindings {
     Get.lazyPut(() => SearchGetController());
     // Get.lazyPut(() => CategoryController());
     Get.lazyPut(() => UserController());
+    Get.lazyPut(() => BookController());
 
     Get.lazyPut(() => DataRepositry());
     Get.lazyPut(() => CategoryController(Get.find()));
-
-    // Get.lazyPut(() => SubjectController());
-    // Get.lazyPut(() => StepController());
   }
 }
 // flutter pub run build_runner build --delete-conflicting-outputs

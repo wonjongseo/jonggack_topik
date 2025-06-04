@@ -1,10 +1,16 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 
 import 'package:jonggack_topik/core/constant/hive_keys.dart';
 
 part 'book.g.dart';
+
+//  Book({required this.title, required this.bookNum, List<String>? wordIds})
+//     : id = '${DateTime.now().microsecondsSinceEpoch}',
+//       createdAt = DateTime.now().toIso8601String(),
+//       wordIds = wordIds ?? [];
 
 @HiveType(typeId: HK.bookTypeID)
 class Book extends HiveObject {
@@ -17,10 +23,17 @@ class Book extends HiveObject {
   final int bookNum;
   @HiveField(3)
   final String createdAt;
-
-  Book({required this.title, required this.bookNum})
-    : id = '${DateTime.now().microsecondsSinceEpoch}',
-      createdAt = DateTime.now().toIso8601String();
+  @HiveField(4)
+  List<String> wordIds;
+  Book({
+    String? id,
+    String? createdAt,
+    required this.title,
+    required this.bookNum,
+    List<String>? wordIds,
+  }) : id = id ?? '${DateTime.now().microsecondsSinceEpoch}',
+       createdAt = createdAt ?? DateTime.now().toIso8601String(),
+       wordIds = wordIds ?? [];
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
@@ -28,15 +41,44 @@ class Book extends HiveObject {
     result.addAll({'id': id});
     result.addAll({'title': title});
     result.addAll({'bookNum': bookNum});
+    result.addAll({'createdAt': createdAt});
+    result.addAll({'wordIds': wordIds});
 
     return result;
   }
 
   factory Book.fromMap(Map<String, dynamic> map) {
-    return Book(title: map['title'] ?? '', bookNum: map['bookNum'] ?? '');
+    return Book(
+      id: map['id'] ?? '',
+      title: map['title'] ?? '',
+      bookNum: map['bookNum']?.toInt() ?? 0,
+      createdAt: map['createdAt'] ?? '',
+      wordIds: List<String>.from(map['wordIds']),
+    );
   }
 
   String toJson() => json.encode(toMap());
 
   factory Book.fromJson(String source) => Book.fromMap(json.decode(source));
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is Book &&
+        other.id == id &&
+        other.title == title &&
+        other.bookNum == bookNum &&
+        other.createdAt == createdAt &&
+        listEquals(other.wordIds, wordIds);
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode ^
+        title.hashCode ^
+        bookNum.hashCode ^
+        createdAt.hashCode ^
+        wordIds.hashCode;
+  }
 }

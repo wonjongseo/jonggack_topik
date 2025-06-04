@@ -2,11 +2,13 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:jonggack_topik/features/auth/controllers/user_controller.dart';
+import 'package:jonggack_topik/features/book/controller/book_controller.dart';
+import 'package:jonggack_topik/features/book/controller/book_study_controller.dart';
+import 'package:jonggack_topik/features/book/screen/book_study_screen.dart';
 import 'package:jonggack_topik/features/user/screen/widgets/add_book_card.dart';
 import 'package:jonggack_topik/features/user/screen/widgets/book_card.dart';
 
-class UserScreen extends GetView<UserController> {
+class UserScreen extends GetView<BookController> {
   const UserScreen({super.key});
 
   @override
@@ -26,18 +28,48 @@ class UserScreen extends GetView<UserController> {
                   return CarouselSlider(
                     carouselController: controller.carouselSliderController,
                     items: [
-                      ...controller.bookAndWords.entries.map((entry) {
-                        return BookCard(
-                          book: entry.key,
-                          words: entry.value,
-                          deleteBook: (book) => controller.deleteBook(book),
-                          updateBook: (book) => controller.deleteBook(book),
+                      ...List.generate(controller.books.length, (index) {
+                        return InkWell(
+                          onTap: () {
+                            Get.to(
+                              () => BookStudyScreen(),
+                              binding: BindingsBuilder.put(
+                                () => BookStudyController(
+                                  controller.books[index],
+                                ),
+                              ),
+                            );
+                          },
+                          child: BookCard(
+                            book: controller.books[index],
+                            deleteBook: (book) => controller.deleteBook(book),
+                            updateBook: (book) => controller.deleteBook(book),
+                          ),
                         );
                       }),
                       AddBookCard(
                         tECtl: controller.bookNameCtl,
                         onTap: () => controller.createBook(),
                       ),
+
+                      // ...controller.bookAndWords.entries.map((entry) {
+                      //   return InkWell(
+                      //     onTap: () {
+                      //       Get.to(
+                      //         () => BookStudyScreen(),
+                      //         binding: BindingsBuilder.put(
+                      //           () => BookStudyController(entry),
+                      //         ),
+                      //       );
+                      //     },
+                      //     child: BookCard(
+                      //       book: entry.key,
+                      //       words: entry.value,
+                      //       deleteBook: (book) => controller.deleteBook(book),
+                      //       updateBook: (book) => controller.deleteBook(book),
+                      //     ),
+                      //   );
+                      // }),
                     ],
                     options: CarouselOptions(
                       height: 400,

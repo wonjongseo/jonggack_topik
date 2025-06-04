@@ -9,13 +9,11 @@ class BookCard extends StatelessWidget {
   const BookCard({
     super.key,
     required this.book,
-    required this.words,
     required this.deleteBook,
     required this.updateBook,
   });
 
   final Book book;
-  final List<Word> words;
   final Function(Book) deleteBook;
   final Function(Book) updateBook;
 
@@ -38,16 +36,21 @@ class BookCard extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
+
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    if (book.bookNum != 0)
-                      InkWell(
-                        onTap: () => deleteBook(book),
-                        child: Icon(FontAwesomeIcons.trash, size: 18),
+                    if (book.bookNum != 0) ...[
+                      IconButton(
+                        onPressed: () => deleteBook(book),
+                        icon: Icon(FontAwesomeIcons.trash, size: 18),
                       ),
-                    InkWell(
-                      onTap: () => updateBook(book),
-                      child: Icon(FontAwesomeIcons.pen, size: 18),
+                      SizedBox(width: 10),
+                    ],
+
+                    IconButton(
+                      onPressed: () => updateBook(book),
+                      icon: Icon(FontAwesomeIcons.pen, size: 18),
                     ),
                   ],
                 ),
@@ -57,7 +60,7 @@ class BookCard extends StatelessWidget {
             Divider(),
             SizedBox(height: 10),
             Text(
-              '${AppString.savedWordText}${words.length}${AppString.unit}',
+              '${AppString.savedWordText}${book.wordIds.length}${AppString.unit}',
               style: TextStyle(fontFamily: AppFonts.zenMaruGothic),
             ),
           ],

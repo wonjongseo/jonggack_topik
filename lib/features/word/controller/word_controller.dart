@@ -6,6 +6,7 @@ import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/core/repositories/hive_repository.dart';
 import 'package:jonggack_topik/core/tts/tts_controller.dart';
 import 'package:jonggack_topik/features/auth/controllers/user_controller.dart';
+import 'package:jonggack_topik/features/book/controller/book_controller.dart';
 import 'package:jonggack_topik/features/step/controller/step_controller.dart';
 import 'package:jonggack_topik/features/word/screen/widgets/word_cart.dart';
 
@@ -27,11 +28,11 @@ class WordController extends GetxController {
   }
 
   bool isSavedWord(String id) {
-    return UserController.to.isSavedWord(id);
+    return BookController.to.isSavedWord(id);
   }
 
   Future<void> toggleMyWord(Word word) async {
-    UserController.to.toggleMyWord(word);
+    BookController.to.toggleMyWord(word);
     update();
   }
 
