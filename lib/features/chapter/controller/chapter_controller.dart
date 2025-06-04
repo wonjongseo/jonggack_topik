@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/models/chapter_hive.dart';
 import 'package:jonggack_topik/core/models/step_model.dart';
+import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/core/repositories/hive_repository.dart';
 import 'package:jonggack_topik/core/repositories/setting_repository.dart';
 import 'package:jonggack_topik/core/utils/app_constant.dart';
 import 'package:jonggack_topik/core/utils/app_dialog.dart';
 import 'package:jonggack_topik/core/utils/app_function.dart';
+import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/features/category/controller/category_controller.dart';
 import 'package:jonggack_topik/features/quiz/controller/quiz_controller.dart';
 import 'package:jonggack_topik/features/quiz/screen/quiz_screen.dart';
 import 'package:jonggack_topik/features/step/controller/step_controller.dart';
 import 'package:jonggack_topik/features/subject/controller/subject_controller.dart';
-import 'package:logger/logger.dart';
 
 class ChapterController extends GetxController {
   static ChapterController get to => Get.find<ChapterController>();
@@ -37,6 +38,48 @@ class ChapterController extends GetxController {
 
   final stepRepo = Get.find<HiveRepository<StepModel>>(tag: StepModel.boxKey);
 
+  final _isSeeMean = false.obs;
+  bool get isSeeMean => _isSeeMean.value;
+  final _isSeeYomikata = false.obs;
+  bool get isSeeYomikata => _isSeeYomikata.value;
+  final RxBool _isAllSaved = false.obs;
+  bool get isAllSaved => _isAllSaved.value;
+
+  void toggleSeeMean(bool value) {
+    _isSeeMean.value = !_isSeeMean.value;
+  }
+
+  void toggleSeeYomikata(bool value) {
+    _isSeeYomikata.value = !_isSeeYomikata.value;
+  }
+
+  bool _computeAllSaved() {
+    if (!Get.isRegistered<StepController>()) return false;
+    for (Word word in step.words) {
+      if (!stepController.isSavedWord(word.id)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  Future<void> toggleAllSave() async {
+    if (!Get.isRegistered<StepController>()) return;
+
+    final shouldSave = !_isAllSaved.value;
+
+    for (Word word in step.words) {
+      final currentlySaved = stepController.isSavedWord(word.id);
+      if (shouldSave && !currentlySaved) {
+        await stepController.toggleMyWord(word);
+      } else if (!shouldSave && currentlySaved) {
+        await stepController.toggleMyWord(word);
+      }
+    }
+
+    _isAllSaved.value = shouldSave;
+  }
+
   @override
   void onInit() {
     _selectedStepIdx.value = SettingRepository.getInt(_getKey()) ?? 0;
@@ -44,6 +87,8 @@ class ChapterController extends GetxController {
     gKeys = List.generate(_chapter.stepKeys.length, (index) => GlobalKey());
 
     _getSteps();
+
+    _isAllSaved.value = _computeAllSaved();
 
     super.onInit();
   }

@@ -16,7 +16,11 @@ class CategoryHive extends HiveObject {
   @HiveField(1)
   final List<SubjectHive> subjects;
 
-  CategoryHive({required this.title, required this.subjects});
+  @HiveField(2)
+  final int createdAt;
+
+  CategoryHive({required this.title, required this.subjects})
+    : createdAt = DateTime.now().microsecondsSinceEpoch;
 
   Map<String, dynamic> toMap() {
     return {

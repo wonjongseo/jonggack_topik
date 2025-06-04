@@ -1,7 +1,10 @@
 import 'package:hive_flutter/adapters.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/constant/hive_keys.dart';
+import 'package:jonggack_topik/core/controllers/hive_helper.dart';
+import 'package:jonggack_topik/core/logger/logger_service.dart';
 import 'package:jonggack_topik/core/models/Question.dart';
+import 'package:jonggack_topik/core/models/book.dart';
 import 'package:jonggack_topik/core/models/category.dart';
 import 'package:jonggack_topik/core/models/category_hive.dart';
 import 'package:jonggack_topik/core/models/chapter.dart';
@@ -15,7 +18,10 @@ import 'package:jonggack_topik/core/models/synonym.dart';
 import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/core/repositories/setting_repository.dart';
 import 'package:jonggack_topik/core/utils/app_constant.dart';
+import 'package:jonggack_topik/core/utils/app_dialog.dart';
+import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/features/auth/models/user.dart';
+import 'package:jonggack_topik/features/category/controller/category_controller.dart';
 
 class HiveRepository<T extends HiveObject> {
   static HiveRepository get to => Get.find<HiveRepository>();
@@ -39,7 +45,7 @@ class HiveRepository<T extends HiveObject> {
     try {
       await _box.put(key, value);
     } catch (e) {
-      print('e.toString() : ${e.toString()}');
+      LogManager.error("$e");
     }
   }
 
@@ -50,7 +56,11 @@ class HiveRepository<T extends HiveObject> {
 
   /// 4) key로 삭제
   Future<void> delete(String key) async {
-    await _box.delete(key);
+    try {
+      await _box.delete(key);
+    } catch (e) {
+      LogManager.error("$e");
+    }
   }
 
   /// 5) 모든 값 가져오기
@@ -78,11 +88,10 @@ class HiveRepository<T extends HiveObject> {
     await _box.deleteFromDisk();
   }
 
-  static Future<void> init() async {
-    if (GetPlatform.isMobile) {
-      await Hive.initFlutter();
+  static void _initAdapters() {
+    if (!Hive.isAdapterRegistered(HK.userTypeID)) {
+      Hive.registerAdapter(UserAdapter());
     }
-
     if (!Hive.isAdapterRegistered(HK.categoryHiveTypeID)) {
       Hive.registerAdapter(CategoryHiveAdapter());
     }
@@ -118,6 +127,15 @@ class HiveRepository<T extends HiveObject> {
       Hive.registerAdapter(QuestionAdapter());
     }
 
+    if (!Hive.isAdapterRegistered(QuizHistoryAdapter().typeId)) {
+      Hive.registerAdapter(QuizHistoryAdapter());
+    }
+    if (!Hive.isAdapterRegistered(BookAdapter().typeId)) {
+      Hive.registerAdapter(BookAdapter());
+    }
+  }
+
+  static Future<void> _initOpenBoxs() async {
     if (!Hive.isBoxOpen(AppConstant.settingModelBox)) {
       await Hive.openBox(AppConstant.settingModelBox);
     }
@@ -160,14 +178,65 @@ class HiveRepository<T extends HiveObject> {
       await Hive.openBox<Question>(Question.boxKey);
     }
 
-    if (!Hive.isAdapterRegistered(QuizHistoryAdapter().typeId)) {
-      Hive.registerAdapter(QuizHistoryAdapter());
-    }
     if (!Hive.isBoxOpen(QuizHistory.boxKey)) {
       await Hive.openBox<QuizHistory>(QuizHistory.boxKey);
     }
+    if (!Hive.isBoxOpen(Book.boxKey)) {
+      await Hive.openBox<Book>(Book.boxKey);
+    }
+  }
 
+  static Future<void> init() async {
+    if (GetPlatform.isMobile) {
+      await Hive.initFlutter();
+    }
+
+    _initAdapters();
+    await _initOpenBoxs();
+
+    await _initRepositories();
+
+    await _initDatas();
+  }
+
+  static DataRepositry dataRepositry = DataRepositry();
+
+  static Future<void> _initDatas() async {
+    final categoryHiveRepo = Get.find<HiveRepository<CategoryHive>>(
+      tag: CategoryHive.boxKey,
+    );
+
+    List<Category> categories = [];
+
+    for (var categoryName in categoryNames) {
+      if (categoryHiveRepo.get(categoryName) == null) {
+        LogManager.info('$categoryName 저장중...');
+        categories.add(await dataRepositry.getJson('$categoryName.json'));
+      }
+    }
+    if (categories.isNotEmpty) {
+      await HiveHelper.saveCategory(categories);
+    }
+
+    final bookRepo = Get.find<HiveRepository<Book>>(tag: Book.boxKey);
+
+    List<Book> books = bookRepo.getAll();
+    if (books.isEmpty) {
+      // Create Book
+      String title = '${AppString.appName}単語帳';
+      Book book = Book(title: title, bookNum: 0);
+
+      LogManager.info('$title 저장중...');
+      bookRepo.put(book.id, book);
+    }
+  }
+
+  static Future<void> _initRepositories() async {
     SettingRepository.init();
+
+    final userRepo = HiveRepository<User>(User.boxKey);
+    await userRepo.initBox();
+    Get.put<HiveRepository<User>>(userRepo);
 
     final wordRepo = HiveRepository<Word>(Word.boxKey);
     await wordRepo.initBox();
@@ -178,50 +247,113 @@ class HiveRepository<T extends HiveObject> {
     Get.put<HiveRepository<Word>>(wordRepo, tag: Word.boxKey);
     Get.put<HiveRepository<Word>>(myWordRepo, tag: HK.myWordBoxKey);
 
-    // 만약 StepModel 박스도 DI에 등록하려면
     final stepRepo = HiveRepository<StepModel>(StepModel.boxKey);
     await stepRepo.initBox();
     Get.put<HiveRepository<StepModel>>(stepRepo, tag: StepModel.boxKey);
 
+    final categoryHiveRepo = HiveRepository<CategoryHive>(CategoryHive.boxKey);
+    await categoryHiveRepo.initBox();
+    Get.put<HiveRepository<CategoryHive>>(
+      categoryHiveRepo,
+      tag: CategoryHive.boxKey,
+    );
+
     final categoryRepo = HiveRepository<Category>(Category.boxKey);
     await categoryRepo.initBox();
     Get.put<HiveRepository<Category>>(categoryRepo, tag: Category.boxKey);
+
+    final quizHistoryRepo = HiveRepository<QuizHistory>(QuizHistory.boxKey);
+    await quizHistoryRepo.initBox();
+    Get.put<HiveRepository<QuizHistory>>(
+      quizHistoryRepo,
+      tag: QuizHistory.boxKey,
+    );
+
+    final bookRepo = HiveRepository<Book>(Book.boxKey);
+    await bookRepo.initBox();
+    Get.put<HiveRepository<Book>>(bookRepo, tag: Book.boxKey);
   }
 
-  // static void getWord(String wordId) {
-  //   final wordBox = Hive.box<Word>(Word.boxKey);
-  //   Word? word = wordBox.get(wordId);
-  //   print('word : ${word}');
+  // static Future<void> saveCategory(Category category) async {
+  //   final categoryRepo = Get.find<HiveRepository<Category>>(
+  //     tag: Category.boxKey,
+  //   );
+
+  //   if (categoryRepo.get(category.title) != null) {
+  //     LogManager.info('${category.title}은 이미 저장되어 있음');
+  //     return;
+  //   }
+
+  //   await categoryRepo.put(category.title, category);
+
+  //   final stepRepo = Get.find<HiveRepository<StepModel>>(tag: StepModel.boxKey);
+  //   final wordRepo = Get.find<HiveRepository<Word>>(tag: Word.boxKey);
+
+  //   for (final subject in category.subjects) {
+  //     for (final chapter in subject.chapters) {
+  //       for (final step in chapter.steps) {
+  //         final stepKey =
+  //             '${category.title}-${subject.title}-${chapter.title}-${step.title}';
+
+  //         if (stepRepo.get(stepKey) == null) {
+  //           stepRepo.put(stepKey, step);
+  //         }
+
+  //         for (final word in step.words) {
+  //           if (wordRepo.get(word.id) == null) {
+  //             wordRepo.put(word.id, word);
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
+  //   // if (categoryBox.containsKey(category.title)) {
+  //   //   return;
+  //   // }
+
+  //   // await categoryBox.put(category.title, category);
+
+  //   // final stepBox = Hive.box<StepModel>(StepModel.boxKey);
+  //   // final wordBox = Hive.box<Word>(Word.boxKey);
+
+  //   // for (final subject in category.subjects) {
+  //   //   for (final chapter in subject.chapters) {
+  //   //     for (final step in chapter.steps) {
+  //   //       final stepKey =
+  //   //           '${category.title}-${subject.title}-${chapter.title}-${step.title}';
+
+  //   //       if (!stepBox.containsKey(stepKey)) {
+  //   //         await stepBox.put(stepKey, step);
+  //   //       }
+
+  //   //       for (final word in step.words) {
+  //   //         if (!wordBox.containsKey(word.id)) {
+  //   //           await wordBox.put(word.id, word);
+  //   //         }
+  //   //       }
+  //   //     }
+  //   //   }
+  //   // }
   // }
-
-  static Future<void> saveCategory(Category category) async {
-    final categoryBox = Hive.box<Category>(Category.boxKey);
-
-    if (categoryBox.containsKey(category.title)) {
-      return;
-    }
-    await categoryBox.put(category.title, category);
-
-    final stepBox = Hive.box<StepModel>(StepModel.boxKey);
-    final wordBox = Hive.box<Word>(Word.boxKey);
-
-    for (final subject in category.subjects) {
-      for (final chapter in subject.chapters) {
-        for (final step in chapter.steps) {
-          final stepKey =
-              '${category.title}-${subject.title}-${chapter.title}-${step.title}';
-
-          if (!stepBox.containsKey(stepKey)) {
-            await stepBox.put(stepKey, step);
-          }
-
-          for (final word in step.words) {
-            if (!wordBox.containsKey(word.id)) {
-              await wordBox.put(word.id, word);
-            }
-          }
-        }
-      }
-    }
-  }
 }
+
+List<String> categoryNames = [
+  "韓国語能力試験",
+  "人",
+  "美容",
+  "暮らし",
+  "医療",
+  "自然",
+  "スポーツ",
+  "場所",
+  "芸能",
+  "ビジネス",
+  "教育",
+  "趣味",
+  "基本単語",
+  "旅行",
+  "グルメ",
+  "韓国語文法",
+  "社会",
+  "ネット",
+];

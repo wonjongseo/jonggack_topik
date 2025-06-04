@@ -101,27 +101,25 @@ class CategoryController extends GetxController {
     );
   }
 
+  final categoryHiveRepo = Get.find<HiveRepository<CategoryHive>>(
+    tag: CategoryHive.boxKey,
+  );
   Future<void> fatchAllSubject() async {
-    List<String> categoryNames = [
-      "韓国語能力試験",
-      "人",
-      "美容",
-      "暮らし",
-      "医療",
-      "自然",
-      "スポーツ",
-      "場所",
-      "芸能",
-      "ビジネス",
-      "教育",
-      "趣味",
-      "基本単語",
-      "旅行",
-      "グルメ",
-      "韓国語文法",
-      "社会",
-      "ネット",
-    ];
+    try {
+      isLoadign(true);
+      List<CategoryHive> savedList = categoryHiveRepo.getAll();
+      savedList.sort((a, b) => a.createdAt.compareTo(b.createdAt));
+      _allCategories.assignAll(savedList);
+      setTotalAndScores();
+    } catch (e) {
+      print('e : $e');
+      SnackBarHelper.showErrorSnackBar("$e");
+    } finally {
+      isLoadign(false);
+    }
+  }
+
+  Future<void> fatchAllSubject2() async {
     try {
       isLoadign(true);
 
@@ -131,34 +129,25 @@ class CategoryController extends GetxController {
       );
       await categoryHiveRepo.initBox();
 
-      // 2) Hive에 저장된 CategoryHive 전체 읽어오기
       List<CategoryHive> savedList = categoryHiveRepo.getAll();
 
       if (savedList.isEmpty) {
-        // ───────────────────────────────────────────────────
-        // 3) Hive에 저장된 카테고리가 없으면, JSON에서 원본 Category를 불러와서
-        //    Hive에 CategoryHive 형태로 저장해야 한다.
-        //    (이 부분은 이미 앞서 작성한 saveCategory() 함수 로직을 재활용)
         print("No CategoryHive, Start putting CategoryHive");
-
-        // 3-1) dataRepository에서 JSON → 원본 Category 모델 읽어오기
 
         List<Category> categories = [];
 
         for (String categoryName in categoryNames) {
           categories.add(await dataRepositry.getJson("$categoryName.json"));
         }
-
-        // 3-2) saveCategory 함수를 통해 “원본 Category → Hive에 CategoryHive 등으로 저장”
         await HiveHelper.saveCategory(categories);
 
-        // 3-3) 다시 Hive에서 저장된 CategoryHive 전체 읽기
         savedList = categoryHiveRepo.getAll();
       } else {
         print("Already Have CategoryHive");
       }
 
-      // 4) 최종적으로 _allCategories에 List<CategoryHive> 할당
+      savedList.sort((a, b) => a.createdAt.compareTo(b.createdAt));
+
       _allCategories.assignAll(savedList);
       setTotalAndScores();
     } catch (e) {

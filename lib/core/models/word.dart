@@ -52,11 +52,11 @@ class Word extends HiveObject {
   }
 
   int getExamplesLen() {
-    if (examples!.length > 2) {
+    if (examples.length > 2) {
       return 2;
     }
 
-    return examples!.length;
+    return examples.length;
   }
 
   @override

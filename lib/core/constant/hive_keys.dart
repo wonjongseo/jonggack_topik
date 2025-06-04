@@ -41,4 +41,7 @@ class HK {
 
   static const int quizHistoryHiveTypeID = 13;
   static const String quizHistoryHiveBoxKey = 'quizHistory-hive-box-key';
+
+  static const int bookTypeID = 14;
+  static const String bookHiveBoxKey = 'book-hive-box-key';
 }

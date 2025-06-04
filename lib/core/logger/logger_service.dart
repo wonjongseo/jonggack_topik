@@ -1,9 +1,9 @@
 import 'package:logger/web.dart';
 
 class LogManager {
-  static Logger logger = Logger(
+  static final Logger _logger = Logger(
     printer: PrettyPrinter(
-      methodCount: 2, // 스택트레이스에서 출력할 호출 깊이
+      methodCount: 3, // 스택트레이스에서 출력할 호출 깊이
       errorMethodCount: 8, // 에러 시 더 깊은 스택트레이스 출력
       lineLength: 80,
       colors: true, // 콘솔에서 컬러 출력 사용 여부
@@ -19,7 +19,7 @@ class LogManager {
     Object? error,
     StackTrace? stackTrace,
   }) {
-    logger.d(message, time: time, error: error, stackTrace: stackTrace);
+    _logger.d(message, time: time, error: error, stackTrace: stackTrace);
   }
 
   static void info(
@@ -28,7 +28,7 @@ class LogManager {
     Object? error,
     StackTrace? stackTrace,
   }) {
-    logger.i(message, time: time, error: error, stackTrace: stackTrace);
+    _logger.i(message, time: time, error: error, stackTrace: stackTrace);
   }
 
   static void warning(
@@ -37,7 +37,7 @@ class LogManager {
     Object? error,
     StackTrace? stackTrace,
   }) {
-    logger.w(message, time: time, error: error, stackTrace: stackTrace);
+    _logger.w(message, time: time, error: error, stackTrace: stackTrace);
   }
 
   static void error(
@@ -46,7 +46,7 @@ class LogManager {
     Object? error,
     StackTrace? stackTrace,
   }) {
-    logger.e(message, time: time, error: error, stackTrace: stackTrace);
+    _logger.e(message, time: time, error: error, stackTrace: stackTrace);
   }
 
   static void wtf(
@@ -55,7 +55,7 @@ class LogManager {
     Object? error,
     StackTrace? stackTrace,
   }) {
-    logger.wtf(message, time: time, error: error, stackTrace: stackTrace);
+    _logger.wtf(message, time: time, error: error, stackTrace: stackTrace);
   }
 
   //

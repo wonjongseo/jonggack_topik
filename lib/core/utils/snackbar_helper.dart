@@ -9,9 +9,13 @@ class SnackBarHelper {
             ? EdgeInsets.symmetric(horizontal: 300)
             : EdgeInsets.zero;
 
-    Get.rawSnackbar(
-      title: title,
-      message: message,
+    // Get.rawSnackbar(
+    //   title: title,
+    //   message: message,
+    Get.snackbar(
+      title,
+      message,
+
       backgroundColor: Colors.red,
       borderRadius: 20,
       margin: margin,

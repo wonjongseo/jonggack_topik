@@ -58,7 +58,3 @@ class AppDialog {
     );
   }
 }
-
-class AppString {
-  static const String youHavePreQuizData = '과거 퀴즈를 본 경험이 있습니다.';
-}

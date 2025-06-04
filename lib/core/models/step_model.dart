@@ -27,15 +27,14 @@ class StepModel extends HiveObject {
   });
 
   bool get isAllCorrect {
-    if (lastQuizTime == null) return false;
-
-    return words.length - wrongQestion.length == 0;
+    return lastQuizTime != null && wrongQestion.isEmpty;
   }
 
   int get score {
     if (lastQuizTime == null) {
       return 0;
     }
+
     return words.length - wrongQestion.length;
   }
 
@@ -78,13 +77,13 @@ class StepModel extends HiveObject {
   StepModel copyWith({
     String? title,
     List<Word>? words,
-    DateTime? finisedTime,
+    DateTime? lastQuizTime,
     List<Word>? wrongQestion,
   }) {
     return StepModel(
       title: title ?? this.title,
       words: words ?? this.words,
-      lastQuizTime: finisedTime ?? this.lastQuizTime,
+      lastQuizTime: lastQuizTime ?? this.lastQuizTime,
       wrongQestion: wrongQestion ?? this.wrongQestion,
     );
   }

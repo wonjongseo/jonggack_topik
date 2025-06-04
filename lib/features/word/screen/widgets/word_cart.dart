@@ -83,6 +83,7 @@ class WordCard extends GetView<WordController> {
                     ),
                     maxLines: 1,
                   ),
+
                   Divider(height: 20),
                   _synonyms(),
                   if (word.examples.isNotEmpty) _examples(),

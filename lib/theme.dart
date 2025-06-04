@@ -78,7 +78,7 @@ class AppThemings {
       titleTextStyle: TextStyle(
         color: Colors.black,
         fontWeight: FontWeight.bold,
-        fontFamily: AppFonts.gMaretFont,
+        fontFamily: AppFonts.zenMaruGothic,
         fontSize: 20,
       ),
       iconTheme: IconThemeData(color: Colors.black),

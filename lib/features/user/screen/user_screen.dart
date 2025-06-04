@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:jonggack_topik/features/auth/controllers/user_controller.dart';
-import 'package:jonggack_topik/features/user/screen/widgets/graph.dart';
-
-List<String> temp = ['a', 'b'];
+import 'package:jonggack_topik/features/user/screen/widgets/add_book_card.dart';
+import 'package:jonggack_topik/features/user/screen/widgets/book_card.dart';
 
 class UserScreen extends GetView<UserController> {
   const UserScreen({super.key});
@@ -13,49 +12,44 @@ class UserScreen extends GetView<UserController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Obx(() {
-                if (controller.isLoading.value) {
-                  return CircularProgressIndicator();
-                }
-
-                return Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: QuizHistoryChart(historyList: controller.allHistory),
-                );
-              }),
-              Obx(() {
-                if (controller.isLoading.value) {
-                  return CircularProgressIndicator();
-                }
-
-                return CarouselSlider(
-                  items: List.generate(temp.length + 1, (index) {
-                    if (index == temp.length) {
-                      return CCard(child: Center(child: Icon(Icons.add)));
-                    }
-                    return CCard(child: Center(child: Text(temp[index])));
-                  }),
-                  options: CarouselOptions(
-                    height: 400,
-                    disableCenter: true,
-                    viewportFraction: 0.7,
-                    enableInfiniteScroll: false,
-                    enlargeCenterPage: true,
-                  ),
-                );
-                // return Column(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   children: List.generate(controller.myWords.length, (index) {
-                //     return Text(controller.myWords[index].word);
-                //   }),
-                // );
-              }),
-            ],
+      body: GestureDetector(
+        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+        child: SafeArea(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Obx(() {
+                  if (controller.isLoading.value) {
+                    return CircularProgressIndicator();
+                  }
+                  return CarouselSlider(
+                    carouselController: controller.carouselSliderController,
+                    items: [
+                      ...controller.bookAndWords.entries.map((entry) {
+                        return BookCard(
+                          book: entry.key,
+                          words: entry.value,
+                          deleteBook: (book) => controller.deleteBook(book),
+                          updateBook: (book) => controller.deleteBook(book),
+                        );
+                      }),
+                      AddBookCard(
+                        tECtl: controller.bookNameCtl,
+                        onTap: () => controller.createBook(),
+                      ),
+                    ],
+                    options: CarouselOptions(
+                      height: 400,
+                      disableCenter: true,
+                      viewportFraction: 0.7,
+                      enableInfiniteScroll: false,
+                      enlargeCenterPage: true,
+                    ),
+                  );
+                }),
+              ],
+            ),
           ),
         ),
       ),

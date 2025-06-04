@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/models/Question.dart';
-import 'package:jonggack_topik/core/models/quiz_history.dart';
 import 'package:jonggack_topik/core/models/step_model.dart';
 import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/core/repositories/hive_repository.dart';
@@ -15,9 +14,8 @@ import 'package:jonggack_topik/features/quiz/screen/very_good_screen.dart';
 import 'package:jonggack_topik/features/score/screen/score_screen.dart';
 import 'package:jonggack_topik/features/user/repository/quiz_history_repository.dart';
 
+// ignore: deprecated_member_use
 class QuizController extends GetxController with SingleGetTickerProviderMixin {
-  // final List<Word> words;
-  // final StepModel step;
   final List<Word> words;
   QuizController(this.words);
 
@@ -27,19 +25,19 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
 
   // 퀴즈를 위한 맵.
   List<Map<int, List<Word>>> map = List.empty(growable: true);
-  bool isWrong = false;
   List<Question> questions = [];
   List<Word> correctQuestions = [];
   List<Word> wrongQuestions = [];
 
+  bool isWrong = false;
+  bool isAnswered = false;
+  bool isDisTouchable = false;
+
   String nextOrSkipText = 'skip';
   Color color = Colors.black;
-  bool isAnswered = false;
   int correctAns = 0;
   late int selectedAns;
   RxInt questionNumber = 1.obs;
-
-  bool isDisTouchable = false;
 
   // int correctDurationTime = 1200; // 맞출 시 다음 문제로 넘어갈 Duratiojn
   int correctDurationTime = 200; // 맞출 시 다음 문제로 넘어갈 Duratiojn
@@ -70,7 +68,7 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
     questionNumber.value = index + 1;
   }
 
-  late Word correctQuestion;
+  // late Word correctQuestion;
 
   @override
   void onInit() {
@@ -96,7 +94,7 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
     selectedAns = selectedIndex;
     isAnswered = true;
 
-    correctQuestion = question.options[correctAns];
+    //correctQuestion = question.options[correctAns];
 
     animationController.stop();
     update();
@@ -186,6 +184,7 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
         newIncorrectIds: wrongQuestions.map((word) => word.id).toSet().toList(),
       );
 
+      bool isTryAgain = false;
       if (!isMyWordTest) {
         final stepRepo = Get.find<HiveRepository<StepModel>>(
           tag: StepModel.boxKey,
@@ -195,14 +194,14 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
             '${getCategoryTitle()}-${getSubjectTitle()}-${getChapterTitle()}-${getStepTitle()}';
 
         StepModel? stepModel = stepRepo.get(key);
-
         if (stepModel == null) {
           return;
         }
+        isTryAgain = stepModel.lastQuizTime != null;
 
         stepModel = stepModel.copyWith(
           wrongQestion: stepModel.isAllCorrect ? null : wrongQuestions,
-          finisedTime: DateTime.now(),
+          lastQuizTime: DateTime.now(),
         );
 
         await stepRepo.put(key, stepModel);
@@ -214,7 +213,9 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
 
       if (numOfCorrectAns == questions.length) {
         if (!isMyWordTest) {
-          ChapterController.to.quizAllCorrect();
+          if (!isTryAgain) {
+            ChapterController.to.quizAllCorrect();
+          }
           Get.off(() => const VeryGoodScreen());
         } else {
           Get.to(() => const VeryGoodScreen());
@@ -222,7 +223,6 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
         return;
       }
 
-      print("Go to Score screen");
       Get.off(() => ScoreScreen());
     }
   }

@@ -25,11 +25,13 @@ class CategoryHiveAdapter extends TypeAdapter<CategoryHive> {
   @override
   void write(BinaryWriter writer, CategoryHive obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.title)
       ..writeByte(1)
-      ..write(obj.subjects);
+      ..write(obj.subjects)
+      ..writeByte(2)
+      ..write(obj.createdAt);
   }
 
   @override
