@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,6 +9,8 @@ import 'package:jonggack_topik/core/models/book.dart';
 import 'package:jonggack_topik/core/models/category.dart';
 import 'package:jonggack_topik/core/models/category_hive.dart';
 import 'package:jonggack_topik/core/models/chapter_hive.dart';
+import 'package:jonggack_topik/core/models/step_model.dart';
+import 'package:jonggack_topik/core/models/subject_hive.dart';
 import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/core/repositories/hive_repository.dart';
 import 'package:jonggack_topik/core/repositories/setting_repository.dart';
@@ -30,43 +34,83 @@ class BookController extends GetxController {
   @override
   void onInit() {
     getDatas();
-    test();
+    createRandomWords();
     super.onInit();
   }
 
-  void test() {
+  void createRandomWords() async {
     String? lastSelected = SettingRepository.getString(
       AppConstant.lastSelected,
     );
 
-    print('lastSelected : ${lastSelected}');
+    if (lastSelected == null) return;
 
-    // lastSelected : Chapter 3-3・4級-韓国語能力試験-selectedCategoryIdx
-    // Chapter 1-1・2級-韓国語能力試験
-    // 韓国語能力試験
-    final categoryHiveRepo = Get.find<HiveRepository<CategoryHive>>(
-      tag: CategoryHive.boxKey,
+    List<String> parts = lastSelected.split(
+      '-${AppConstant.selectedCategoryIdx}',
     );
+    if (parts.length < 2) return;
 
-    final categoryRepo = Get.find<HiveRepository<ChapterHive>>(
-      tag: ChapterHive.boxKey,
-    );
+    List<Word> recommendWords = [];
+    Random random = Random();
+    List<String> prefixSegments = parts.first.split('-');
+    final stepRepo = Get.find<HiveRepository<StepModel>>(tag: StepModel.boxKey);
 
-    if (lastSelected != null) {
-      final splited = lastSelected.split('-${AppConstant.selectedCategoryIdx}');
-      if (splited.length == 2) {
-        print('splited : ${splited}');
+    switch (prefixSegments.length) {
+      case 3: // 暮らし-洗濯・掃除-Chapter 1
+        final categoryRepo = Get.find<HiveRepository<ChapterHive>>(
+          tag: ChapterHive.boxKey,
+        );
+        final chapterHive = categoryRepo.get(parts[0]);
 
-        final categories = categoryRepo.get(splited[0]);
-        print('categories : ${categories}');
+        if (chapterHive == null) return;
 
-        print('categories : ${categories}'); //// ("Chapter 3-3・4級-韓国語能力試験");
-      }
+        int randomInt = random.nextInt(chapterHive.stepKeys.length);
+        String stepKey = chapterHive.stepKeys[randomInt];
+        StepModel? stepModel = stepRepo.get(stepKey);
+        if (stepModel == null) return;
+
+        recommendWords.assignAll(stepModel.words);
+
+        break;
+      case 2: // 暮らし-洗濯・掃除
+        final subjectRepo = HiveRepository<SubjectHive>(SubjectHive.boxKey);
+        await subjectRepo.initBox();
+        final subject = subjectRepo.get(parts[0]);
+
+        if (subject == null) return;
+
+        int randomInt = random.nextInt(subject.chapters.length);
+        ChapterHive chapterHive = subject.chapters[randomInt];
+
+        randomInt = random.nextInt(chapterHive.stepKeys.length);
+        String stepKey = chapterHive.stepKeys[randomInt];
+        StepModel? stepModel = stepRepo.get(stepKey);
+        if (stepModel == null) return;
+
+        recommendWords.assignAll(stepModel.words);
+        break;
+      case 1: // 暮らし
+        final categoryRepo = HiveRepository<CategoryHive>(CategoryHive.boxKey);
+        await categoryRepo.initBox();
+        final category = categoryRepo.get(parts[0]);
+
+        if (category == null) return;
+        int randomInt = random.nextInt(category.subjects.length);
+
+        SubjectHive subjectHive = category.subjects[randomInt];
+        randomInt = random.nextInt(subjectHive.chapters.length);
+        ChapterHive chapterHive = subjectHive.chapters[randomInt];
+
+        randomInt = random.nextInt(chapterHive.stepKeys.length);
+        String stepKey = chapterHive.stepKeys[randomInt];
+        StepModel? stepModel = stepRepo.get(stepKey);
+        if (stepModel == null) return;
+
+        recommendWords.assignAll(stepModel.words);
+        break;
+      default:
+        break;
     }
-
-    // print('CategoryController.to.category : ${CategoryController.to.category}');
-
-    // print('lastSelected : ${lastSelected}');
   }
 
   void getDatas() {

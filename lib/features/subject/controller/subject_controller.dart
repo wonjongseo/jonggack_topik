@@ -64,7 +64,7 @@ class SubjectController extends GetxController {
         0;
 
     String key =
-        '${selectedSubject.title}-${_category.title}-${AppConstant.selectedCategoryIdx}';
+        '${_category.title}-${selectedSubject.title}-${AppConstant.selectedCategoryIdx}';
 
     _selectedChapter = SettingRepository.getInt(key) ?? 0;
 
@@ -80,7 +80,7 @@ class SubjectController extends GetxController {
     _selectedChapter = index;
 
     String key =
-        '${selectedSubject.title}-${_category.title}-${AppConstant.selectedCategoryIdx}';
+        '${_category.title}-${selectedSubject.title}-${AppConstant.selectedCategoryIdx}';
 
     SettingRepository.setInt(key, _selectedChapter);
 
@@ -93,7 +93,7 @@ class SubjectController extends GetxController {
   void changeSubject(int index) {
     _selectedSubjectIndex.value = index;
     String key =
-        '${selectedSubject.title}-${_category.title}-${AppConstant.selectedCategoryIdx}';
+        '${_category.title}-${selectedSubject.title}-${AppConstant.selectedCategoryIdx}';
 
     int tempIndex = SettingRepository.getInt(key) ?? 0;
 

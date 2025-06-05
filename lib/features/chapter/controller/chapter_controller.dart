@@ -158,7 +158,7 @@ class ChapterController extends GetxController {
     String key = '';
 
     key +=
-        '${_chapter.title}-${SubjectController.to.selectedSubject.title}-${CategoryController.to.category.title}-${AppConstant.selectedCategoryIdx}';
+        '${CategoryController.to.category.title}-${SubjectController.to.selectedSubject.title}-${_chapter.title}-${AppConstant.selectedCategoryIdx}';
 
     return key;
   }

@@ -94,12 +94,9 @@ class Word extends HiveObject {
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
-
-    result.addAll({'headTitle': headTitle});
     result.addAll({'word': word});
     result.addAll({'yomikata': _yomikata});
     result.addAll({'mean': mean});
-
     result.addAll({'examples': examples.map((x) => x.toMap()).toList()});
     result.addAll({'synonyms': synonyms.map((x) => x.toMap()).toList()});
     result.addAll({'dicTypeNuimber': dicTypeNuimber});
