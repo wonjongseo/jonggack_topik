@@ -13,7 +13,7 @@ class MainController extends GetxController {
 
   @override
   void onInit() {
-    initialIndex = 1;
+    initialIndex = 0;
 
     tabController = PersistentTabController(initialIndex: initialIndex);
 

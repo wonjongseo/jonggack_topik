@@ -19,7 +19,7 @@ class ChapterScreen extends GetView<ChapterController> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          '${SubjectController.to.categoryTitle}-${controller.chapterTitle}',
+          '${SubjectController.to.selectedSubject.title}-${controller.chapterTitle}',
         ),
         actions: [_bottomSheet()],
       ),
@@ -57,7 +57,9 @@ class ChapterScreen extends GetView<ChapterController> {
                           ? AppColors.scaffoldBackground
                           : AppColors.white,
                   margin: const EdgeInsets.only(top: 8),
-                  child: Obx(() => StepBody(isSeeMean: controller.isSeeMean)),
+                  child: Obx(
+                    () => StepBody(isHidenMean: controller.isHidenMean),
+                  ),
                 ),
               ),
             ],
@@ -95,7 +97,7 @@ class ChapterScreen extends GetView<ChapterController> {
                   CToggleBtn(
                     label: '의미 가리기',
                     toggle: controller.toggleSeeMean,
-                    value: controller.isSeeMean,
+                    value: controller.isHidenMean,
                   ),
                   const SizedBox(height: 10),
                   CToggleBtn(

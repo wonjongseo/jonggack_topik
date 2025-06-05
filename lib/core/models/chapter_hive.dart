@@ -5,7 +5,7 @@ import 'package:jonggack_topik/core/constant/hive_keys.dart';
 part 'chapter_hive.g.dart';
 
 @HiveType(typeId: HK.chapterHiveTypeID)
-class ChapterHive {
+class ChapterHive extends HiveObject {
   static String boxKey = HK.chapterHiveBoxKey;
 
   @HiveField(0)

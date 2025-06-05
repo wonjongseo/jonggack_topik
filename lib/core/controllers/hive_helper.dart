@@ -47,12 +47,16 @@ class HiveHelper {
           }
 
           // 5) ChapterHive 생성 → chapterBox에 저장
-          final chapKey = '${category.title}-${subj.title}-${chap.title}';
+          // final chapKey = '${category.title}-${subj.title}-${chap.title}';
+          final chapKey = '${chap.title}-${subj.title}-${category.title}';
           final hiveChapter = ChapterHive(
             title: chap.title,
             stepKeys: stepKeys,
           );
           if (!chapterBox.containsKey(chapKey)) {
+            print('chapKey : ${chapKey}');
+            //韓国語能力試験-1・2級-Chapter 1
+            //人-生理現象-Chapter 1
             await chapterBox.put(chapKey, hiveChapter);
           }
           chapterHiveList.add(hiveChapter);

@@ -13,6 +13,7 @@ import 'package:jonggack_topik/features/chapter/controller/chapter_controller.da
 import 'package:jonggack_topik/features/quiz/screen/very_good_screen.dart';
 import 'package:jonggack_topik/features/score/screen/score_screen.dart';
 import 'package:jonggack_topik/features/step/controller/step_controller.dart';
+import 'package:jonggack_topik/features/subject/controller/subject_controller.dart';
 import 'package:jonggack_topik/features/user/repository/quiz_history_repository.dart';
 
 // ignore: deprecated_member_use
@@ -209,7 +210,7 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
         );
 
         await stepRepo.put(key, stepModel);
-
+        SubjectController.to.setTotalAndScores();
         CategoryController.to.setTotalAndScores();
       } else {
         Get.back();
@@ -232,27 +233,27 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
   }
 
   void setQuestions() {
-    List<Word> tempWords = List.from(words);
+    List<Word> baseWords = List.from(words);
     Random random = Random();
 
-    int diff = tempWords.length - 4;
-
-    if (diff < 0) {
+    int needed = baseWords.length - 4;
+    List<Word> extraWords = [];
+    if (needed < 0) {
       final wordRepo = Get.find<HiveRepository<Word>>(tag: Word.boxKey);
       List<Word> allWords = wordRepo.getAll();
-      for (int i = 0; i < -diff; i++) {
+      for (int i = 0; i < -needed; i++) {
         int randomIndex = random.nextInt(allWords.length);
-        tempWords.add(allWords[randomIndex]);
+        baseWords.add(allWords[randomIndex]);
+        extraWords.add(allWords[randomIndex]);
       }
     }
 
-    map = Question.generateQustion(tempWords);
+    map = Question.generateQustion(baseWords);
 
     for (var vocas in map) {
       for (var e in vocas.entries) {
         List<Word> optionsVoca = e.value;
         Word questionVoca = optionsVoca[e.key];
-        ;
 
         Question question = Question(
           question: questionVoca,
@@ -264,6 +265,14 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
       }
     }
 
+    if (extraWords.isNotEmpty) {
+      questions.removeWhere((question) {
+        Word? word = extraWords.firstWhereOrNull(
+          (tWord) => tWord.id == question.question.id,
+        );
+        return word != null;
+      });
+    }
     for (var i = 0; i < questions.length; i++) {
       final q = questions[i];
       print('${i + 1}번 : ${q.answer + 1}');

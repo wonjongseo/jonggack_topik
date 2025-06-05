@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:jonggack_topik/core/controllers/font_controller.dart';
 import 'package:jonggack_topik/core/models/chapter_hive.dart';
+import 'package:jonggack_topik/features/auth/controllers/user_controller.dart';
+import 'package:jonggack_topik/features/category/controller/category_controller.dart';
+import 'package:jonggack_topik/features/category/screen/widgets/cateogry_progress.dart';
 
 class ChapterSelector extends StatelessWidget {
   const ChapterSelector({
     super.key,
     required this.chapter,
     required this.onTap,
+    required this.totalAndScore,
   });
 
   final ChapterHive chapter;
   final Function() onTap;
+  final TotalAndScore totalAndScore;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -26,10 +30,16 @@ class ChapterSelector extends StatelessWidget {
                 child: Text(
                   chapter.title,
                   style: TextStyle(
-                    fontSize: FontController.to.baseFontSize + 10,
+                    fontSize: UserController.to.baseFontSize + 10,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
+              ),
+
+              CateogryProgress(
+                caregory: chapter.title,
+                curCnt: totalAndScore.score,
+                totalCnt: totalAndScore.total,
               ),
             ],
           ),

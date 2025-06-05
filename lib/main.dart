@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:jonggack_topik/core/controllers/font_controller.dart';
 import 'package:jonggack_topik/core/repositories/hive_repository.dart';
 import 'package:jonggack_topik/core/repositories/setting_repository.dart';
 import 'package:jonggack_topik/core/tts/tts_controller.dart';
@@ -56,7 +55,7 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(FontController());
+    Get.put(UserController());
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: MainScreen.name,
@@ -75,13 +74,11 @@ class InitBinding extends Bindings {
   @override
   void dependencies() {
     Get.put(TtsController());
-    Get.lazyPut(() => FontController(), fenix: true);
     Get.lazyPut(() => MainController(), fenix: true);
     Get.lazyPut(() => SearchGetController());
     // Get.lazyPut(() => CategoryController());
-    Get.lazyPut(() => UserController(), fenix: true);
-    Get.lazyPut(() => BookController());
-
+    // Get.lazyPut(() => BookController());
+    Get.put(BookController());
     Get.lazyPut(() => DataRepositry());
     Get.lazyPut(() => CategoryController(Get.find()));
   }

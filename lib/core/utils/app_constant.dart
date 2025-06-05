@@ -5,6 +5,7 @@ const double appBarTextSize = 18;
 
 class AppConstant {
   static const String selectedCategoryIdx = 'selectedCategoryIdx';
+  static const String lastSelected = 'lastSelected';
 
   static const int diaryModelHiveId = 0;
   static const int healthModelHiveId = 1;

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jonggack_topik/core/controllers/font_controller.dart';
 
 import 'package:jonggack_topik/core/utils/app_color.dart';
+import 'package:jonggack_topik/features/auth/controllers/user_controller.dart';
 
 class AppFonts {
   // static const nanumGothic = 'NanumGothic';
@@ -52,12 +53,12 @@ class AppThemings {
       leadingAndTrailingTextStyle: ThemeData.dark().textTheme.bodyLarge
           ?.copyWith(
             fontFamily: AppFonts.gMaretFont,
-            fontSize: FontController.to.baseFontSize,
+            fontSize: UserController.to.baseFontSize,
             color: ThemeData.dark().textTheme.bodyLarge?.color,
           ),
       titleTextStyle: ThemeData.dark().textTheme.bodyMedium?.copyWith(
         fontFamily: AppFonts.zenMaruGothic,
-        fontSize: FontController.to.baseFontSize - 2,
+        fontSize: UserController.to.baseFontSize - 2,
         color: ThemeData.dark().textTheme.bodyMedium?.color,
       ),
     ),
@@ -90,13 +91,13 @@ class AppThemings {
       leadingAndTrailingTextStyle: ThemeData.light().textTheme.bodyLarge
           ?.copyWith(
             fontFamily: AppFonts.gMaretFont,
-            fontSize: FontController.to.baseFontSize,
+            fontSize: UserController.to.baseFontSize,
             color: ThemeData.light().textTheme.bodyLarge?.color, // 색상 유지
           ),
 
       titleTextStyle: ThemeData.light().textTheme.bodyMedium?.copyWith(
         fontFamily: AppFonts.zenMaruGothic,
-        fontSize: FontController.to.baseFontSize - 2,
+        fontSize: UserController.to.baseFontSize - 2,
         color: ThemeData.light().textTheme.bodyMedium?.color, // 색상 유지
       ),
     ),

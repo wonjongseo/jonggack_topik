@@ -2,10 +2,10 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:jonggack_topik/core/controllers/font_controller.dart';
 import 'package:jonggack_topik/core/models/synonym.dart';
 import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/core/tts/tts_controller.dart';
+import 'package:jonggack_topik/features/auth/controllers/user_controller.dart';
 import 'package:jonggack_topik/features/word/controller/word_controller.dart';
 import 'package:jonggack_topik/features/word/screen/widgets/example_widget.dart';
 import 'package:jonggack_topik/theme.dart';
@@ -34,7 +34,7 @@ class WordCard extends GetView<WordController> {
                         child: AutoSizeText(
                           word.word,
                           style: TextStyle(
-                            fontSize: FontController.to.baseFontSize + 10,
+                            fontSize: UserController.to.baseFontSize + 10,
                           ),
                           maxLines: 1,
                         ),
@@ -91,7 +91,12 @@ class WordCard extends GetView<WordController> {
                   SizedBox(height: 20),
                   AutoSizeText(
                     word.mean,
-                    style: FontController.to.body.copyWith(
+                    // style: UserController.to.body.copyWith(
+                    //   fontFamily: AppFonts.zenMaruGothic,
+                    // ),
+                    style: TextStyle(
+                      fontSize: UserController.to.baseFontSize,
+                      fontWeight: FontWeight.normal,
                       fontFamily: AppFonts.zenMaruGothic,
                     ),
                     maxLines: 1,
@@ -120,7 +125,11 @@ class WordCard extends GetView<WordController> {
       children: [
         Text(
           "例文",
-          style: FontController.to.bold(color: AppColors.mainBordColor),
+          style: TextStyle(
+            fontSize: UserController.to.baseFontSize,
+            fontWeight: FontWeight.normal,
+            color: AppColors.mainBordColor,
+          ),
         ),
         SizedBox(height: 20),
 
@@ -137,7 +146,10 @@ class WordCard extends GetView<WordController> {
                 onTap: controller.seeMoreExample,
                 child: Text(
                   "More...",
-                  style: FontController.to.light(
+
+                  style: TextStyle(
+                    fontSize: UserController.to.baseFontSize,
+                    fontWeight: FontWeight.w400,
                     color: AppColors.mainBordColor,
                   ),
                 ),
@@ -161,7 +173,11 @@ class WordCard extends GetView<WordController> {
       children: [
         Text(
           "類義語",
-          style: FontController.to.bold(color: AppColors.mainBordColor),
+          style: TextStyle(
+            fontSize: UserController.to.baseFontSize,
+            fontWeight: FontWeight.normal,
+            color: AppColors.mainBordColor,
+          ),
         ),
         Container(
           width: double.infinity,

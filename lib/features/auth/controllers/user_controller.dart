@@ -1,10 +1,7 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/constant/hive_keys.dart';
 import 'package:jonggack_topik/core/logger/logger_service.dart';
-import 'package:jonggack_topik/core/models/book.dart';
 import 'package:jonggack_topik/core/models/quiz_history.dart';
 import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/core/repositories/hive_repository.dart';
@@ -27,7 +24,7 @@ class UserController extends GetxController {
 
   @override
   void onInit() {
-    isDarkMode.value =
+    _isDarkMode.value =
         SettingRepository.getBool(AppConstant.isDarkModeKey) ?? false;
     getData();
     super.onInit();
@@ -79,14 +76,18 @@ class UserController extends GetxController {
 
   //Setting
 
-  var isDarkMode = false.obs;
+  final _isDarkMode = false.obs;
+  bool get isDarkMode => _isDarkMode.value;
+  final _baseFontSize = 16.0.obs;
+  double get baseFontSize => _baseFontSize.value;
+
   void changeTheme(int index) {
     if (index == 0) {
-      isDarkMode.value = true;
+      _isDarkMode.value = true;
       SettingRepository.setBool(AppConstant.isDarkModeKey, true);
       Get.changeThemeMode(ThemeMode.dark);
     } else {
-      isDarkMode.value = false;
+      _isDarkMode.value = false;
       SettingRepository.setBool(AppConstant.isDarkModeKey, false);
       Get.changeThemeMode(ThemeMode.light);
     }

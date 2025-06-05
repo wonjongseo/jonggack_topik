@@ -18,7 +18,6 @@ import 'package:jonggack_topik/core/models/synonym.dart';
 import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/core/repositories/setting_repository.dart';
 import 'package:jonggack_topik/core/utils/app_constant.dart';
-import 'package:jonggack_topik/core/utils/app_dialog.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/features/auth/models/user.dart';
 import 'package:jonggack_topik/features/category/controller/category_controller.dart';
@@ -257,6 +256,15 @@ class HiveRepository<T extends HiveObject> {
       categoryHiveRepo,
       tag: CategoryHive.boxKey,
     );
+
+    //
+    final chapterHiveRepo = HiveRepository<ChapterHive>(ChapterHive.boxKey);
+    await chapterHiveRepo.initBox();
+    Get.put<HiveRepository<ChapterHive>>(
+      chapterHiveRepo,
+      tag: ChapterHive.boxKey,
+    );
+    //
 
     final categoryRepo = HiveRepository<Category>(Category.boxKey);
     await categoryRepo.initBox();

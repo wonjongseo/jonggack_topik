@@ -28,7 +28,7 @@ class CToggleBtn extends StatelessWidget {
         onPressed: (index) {
           index == 1 ? toggle(false) : toggle(true);
         },
-        isSelected: [!value, value],
+        isSelected: [value, !value],
         children: [
           Text(
             'ON',

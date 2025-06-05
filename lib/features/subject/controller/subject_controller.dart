@@ -2,9 +2,12 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/models/category_hive.dart';
 import 'package:jonggack_topik/core/models/chapter_hive.dart';
+import 'package:jonggack_topik/core/models/step_model.dart';
 import 'package:jonggack_topik/core/models/subject_hive.dart';
+import 'package:jonggack_topik/core/repositories/hive_repository.dart';
 import 'package:jonggack_topik/core/repositories/setting_repository.dart';
 import 'package:jonggack_topik/core/utils/app_constant.dart';
+import 'package:jonggack_topik/features/category/controller/category_controller.dart';
 import 'package:jonggack_topik/features/chapter/controller/chapter_controller.dart';
 import 'package:jonggack_topik/features/chapter/screen/chapter_screen.dart';
 
@@ -26,6 +29,30 @@ class SubjectController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    setTotalAndScores();
+  }
+
+  final _totalAndScoress = <List<TotalAndScore>>[].obs;
+  List<TotalAndScore> get totalAndScores =>
+      _totalAndScoress[_selectedSubjectIndex.value];
+  void setTotalAndScores() {
+    _totalAndScoress.clear();
+    final stepRepo = Get.find<HiveRepository<StepModel>>(tag: StepModel.boxKey);
+
+    for (SubjectHive subject in subjects) {
+      List<TotalAndScore> temp = [];
+      for (var chapter in subject.chapters) {
+        int score = 0;
+        int total = 0;
+        for (var stepKey in chapter.stepKeys) {
+          StepModel stepModel = stepRepo.get(stepKey)!;
+          score += stepModel.score;
+          total += stepModel.words.length;
+        }
+        temp.add(TotalAndScore(total: total, score: score));
+      }
+      _totalAndScoress.add(temp);
+    }
   }
 
   @override

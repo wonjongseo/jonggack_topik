@@ -8,23 +8,23 @@ import 'package:jonggack_topik/features/chapter/controller/chapter_controller.da
 import 'package:jonggack_topik/features/step/controller/step_controller.dart';
 
 class StepBody extends StatelessWidget {
-  const StepBody({super.key, required this.isSeeMean});
+  const StepBody({super.key, required this.isHidenMean});
 
-  final bool isSeeMean;
+  final bool isHidenMean;
   @override
   Widget build(BuildContext context) {
     return GetBuilder<StepController>(
       builder: (controller) {
-        print("object");
         return ListView.separated(
           controller: ChapterController.to.scrollController,
           itemBuilder: (context, index) {
-            bool aisSeeMean = controller.isSeeMeanWords[index] && isSeeMean;
+            bool aIsHidenMean = controller.isHidenMeans[index] && isHidenMean;
 
             return WordListTIle(
               word: controller.words[index],
-              aisSeeMean: aisSeeMean,
-              onTapMean: () => controller.onTapMean(index),
+              isHidenMean: aIsHidenMean,
+              onTapMean:
+                  aIsHidenMean ? () => controller.onTapMean(index) : null,
               onTap: () => controller.goToWordScreen(index),
               trailing: IconButton(
                 style: IconButton.styleFrom(
@@ -55,17 +55,17 @@ class StepBody extends StatelessWidget {
 
 class WordListTIle extends StatelessWidget {
   const WordListTIle({
-    Key? key,
-    required this.onTapMean,
+    super.key,
+    this.onTapMean,
     required this.onTap,
     required this.word,
-    required this.aisSeeMean,
+    required this.isHidenMean,
     required this.trailing,
-  }) : super(key: key);
-  final Function() onTapMean;
+  });
+  final Function()? onTapMean;
   final Function() onTap;
   final Word word;
-  final bool aisSeeMean;
+  final bool isHidenMean;
   final Widget trailing;
   @override
   Widget build(BuildContext context) {
@@ -77,10 +77,10 @@ class WordListTIle extends StatelessWidget {
         child: SizedBox(
           height: 30,
           child: Container(
-            decoration: aisSeeMean ? BoxDecoration(color: Colors.grey) : null,
+            decoration: isHidenMean ? BoxDecoration(color: Colors.grey) : null,
             child: Text(
               word.mean,
-              style: TextStyle(color: aisSeeMean ? Colors.grey : null),
+              style: TextStyle(color: isHidenMean ? Colors.grey : null),
               overflow: TextOverflow.ellipsis,
             ),
           ),

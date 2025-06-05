@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/models/step_model.dart';
 import 'package:jonggack_topik/core/models/word.dart';
-import 'package:jonggack_topik/features/auth/controllers/user_controller.dart';
 import 'package:jonggack_topik/features/book/controller/book_controller.dart';
+import 'package:jonggack_topik/features/chapter/controller/chapter_controller.dart';
 import 'package:jonggack_topik/features/word/controller/word_controller.dart';
 import 'package:jonggack_topik/features/word/screen/word_screen.dart';
 
@@ -12,20 +12,21 @@ class StepController extends GetxController {
   late StepModel _step;
   StepController(StepModel initialStep)
     : _step = initialStep,
-      isSeeMeanWords = List.generate(initialStep.words.length, (_) => true);
+      isHidenMeans = List.generate(initialStep.words.length, (_) => true);
 
   StepModel get step => _step;
   String get title => _step.title;
 
-  List<bool> isSeeMeanWords = [];
+  List<bool> isHidenMeans = [];
 
   void setStepModel(StepModel step) {
     _step = step;
+    isHidenMeans = List.generate(_step.words.length, (_) => true);
     update();
   }
 
   void onTapMean(int index) {
-    isSeeMeanWords[index] = !isSeeMeanWords[index];
+    isHidenMeans[index] = !isHidenMeans[index];
     update();
   }
 

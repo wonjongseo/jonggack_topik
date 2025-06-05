@@ -34,7 +34,7 @@ class BookStudyScreen extends GetView<BookStudyController> {
                       controller.goToWordScreen(index);
                     },
                     word: controller.words[index],
-                    aisSeeMean: controller.isSeeMeanWords[index],
+                    isHidenMean: controller.isSeeMeanWords[index],
                     trailing: IconButton(
                       style: cTrailingStyle,
                       onPressed: () {

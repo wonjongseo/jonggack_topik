@@ -38,15 +38,15 @@ class ChapterController extends GetxController {
 
   final stepRepo = Get.find<HiveRepository<StepModel>>(tag: StepModel.boxKey);
 
-  final _isSeeMean = false.obs;
-  bool get isSeeMean => _isSeeMean.value;
+  final _isHidenMean = false.obs;
+  bool get isHidenMean => _isHidenMean.value;
   final _isSeeYomikata = false.obs;
   bool get isSeeYomikata => _isSeeYomikata.value;
   final RxBool _isAllSaved = false.obs;
   bool get isAllSaved => _isAllSaved.value;
 
   void toggleSeeMean(bool value) {
-    _isSeeMean.value = !_isSeeMean.value;
+    _isHidenMean.value = !_isHidenMean.value;
   }
 
   void toggleSeeYomikata(bool value) {

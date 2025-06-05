@@ -4,10 +4,16 @@ import 'package:get/get.dart';
 import 'package:jonggack_topik/core/constant/hive_keys.dart';
 import 'package:jonggack_topik/core/logger/logger_service.dart';
 import 'package:jonggack_topik/core/models/book.dart';
+import 'package:jonggack_topik/core/models/category.dart';
+import 'package:jonggack_topik/core/models/category_hive.dart';
+import 'package:jonggack_topik/core/models/chapter_hive.dart';
 import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/core/repositories/hive_repository.dart';
+import 'package:jonggack_topik/core/repositories/setting_repository.dart';
+import 'package:jonggack_topik/core/utils/app_constant.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/core/utils/snackbar_helper.dart';
+import 'package:jonggack_topik/features/category/controller/category_controller.dart';
 
 class BookController extends GetxController {
   static BookController get to => Get.find<BookController>();
@@ -24,7 +30,43 @@ class BookController extends GetxController {
   @override
   void onInit() {
     getDatas();
+    test();
     super.onInit();
+  }
+
+  void test() {
+    String? lastSelected = SettingRepository.getString(
+      AppConstant.lastSelected,
+    );
+
+    print('lastSelected : ${lastSelected}');
+
+    // lastSelected : Chapter 3-3・4級-韓国語能力試験-selectedCategoryIdx
+    // Chapter 1-1・2級-韓国語能力試験
+    // 韓国語能力試験
+    final categoryHiveRepo = Get.find<HiveRepository<CategoryHive>>(
+      tag: CategoryHive.boxKey,
+    );
+
+    final categoryRepo = Get.find<HiveRepository<ChapterHive>>(
+      tag: ChapterHive.boxKey,
+    );
+
+    if (lastSelected != null) {
+      final splited = lastSelected.split('-${AppConstant.selectedCategoryIdx}');
+      if (splited.length == 2) {
+        print('splited : ${splited}');
+
+        final categories = categoryRepo.get(splited[0]);
+        print('categories : ${categories}');
+
+        print('categories : ${categories}'); //// ("Chapter 3-3・4級-韓国語能力試験");
+      }
+    }
+
+    // print('CategoryController.to.category : ${CategoryController.to.category}');
+
+    // print('lastSelected : ${lastSelected}');
   }
 
   void getDatas() {

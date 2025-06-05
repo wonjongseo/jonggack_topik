@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:jonggack_topik/core/controllers/font_controller.dart';
 import 'package:jonggack_topik/core/models/example.dart';
 import 'package:jonggack_topik/core/tts/tts_controller.dart';
 import 'package:jonggack_topik/core/utils/app_color.dart';
+import 'package:jonggack_topik/features/auth/controllers/user_controller.dart';
 import 'package:jonggack_topik/theme.dart';
 
 class ExampleWidget extends StatelessWidget {
@@ -44,7 +44,9 @@ class ExampleWidget extends StatelessWidget {
           ),
           Text(
             example.mean,
-            style: FontController.to.caption.copyWith(
+            style: TextStyle(
+              fontSize: UserController.to.baseFontSize - 2,
+              color: Colors.grey,
               fontFamily: AppFonts.zenMaruGothic,
             ),
           ),

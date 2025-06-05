@@ -13,7 +13,7 @@ class MainScreen extends GetView<MainController> {
   Widget build(BuildContext context) {
     return Obx(() {
       final bgColor =
-          UserController.to.isDarkMode.value
+          UserController.to.isDarkMode
               ? AppColors.scaffoldBackground
               : Colors.grey.shade200;
 

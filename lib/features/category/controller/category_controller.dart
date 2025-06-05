@@ -53,16 +53,14 @@ class CategoryController extends GetxController {
     );
   }
 
-  final totalAndScores = <List<TotalAndScore>>[].obs;
+  final totalAndScoress = <List<TotalAndScore>>[].obs;
 
   void setTotalAndScores() {
-    totalAndScores.clear();
+    totalAndScoress.clear();
+    final stepRepo = Get.find<HiveRepository<StepModel>>(tag: StepModel.boxKey);
     for (CategoryHive category in allCategories) {
       List<TotalAndScore> temp = [];
       for (SubjectHive subject in category.subjects) {
-        final stepRepo = Get.find<HiveRepository<StepModel>>(
-          tag: StepModel.boxKey,
-        );
         int score = 0;
         int total = 0;
         for (var chapter in subject.chapters) {
@@ -75,7 +73,7 @@ class CategoryController extends GetxController {
 
         temp.add(TotalAndScore(total: total, score: score));
       }
-      totalAndScores.add(temp);
+      totalAndScoress.add(temp);
     }
   }
 
