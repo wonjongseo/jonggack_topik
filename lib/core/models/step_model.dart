@@ -14,20 +14,20 @@ class StepModel extends HiveObject {
   @HiveField(0)
   final String title;
   @HiveField(1)
-  final List<Word> words; // Word 총 15개
+  final List<String> words; // Word 총 15개
   @HiveField(2)
   DateTime? lastQuizTime;
   @HiveField(3)
-  List<Word> wrongQestion = [];
+  List<String> wrongWords = [];
   StepModel({
     required this.title,
     required this.words,
     this.lastQuizTime,
-    required this.wrongQestion,
+    required this.wrongWords,
   });
 
   bool get isAllCorrect {
-    return lastQuizTime != null && wrongQestion.isEmpty;
+    return lastQuizTime != null && wrongWords.isEmpty;
   }
 
   int get score {
@@ -35,20 +35,18 @@ class StepModel extends HiveObject {
       return 0;
     }
 
-    return words.length - wrongQestion.length;
+    return words.length - wrongWords.length;
   }
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
     result.addAll({'title': title});
-    result.addAll({'words': words.map((x) => x.toMap()).toList()});
+    result.addAll({'words': words.map((x) => x).toList()});
     if (lastQuizTime != null) {
       result.addAll({'finisedTile': lastQuizTime!.millisecondsSinceEpoch});
     }
-    result.addAll({
-      'wrongQestion': wrongQestion.map((x) => x.toMap()).toList(),
-    });
+    result.addAll({'wrongQestion': wrongWords.map((x) => x).toList()});
 
     return result;
   }
@@ -56,12 +54,12 @@ class StepModel extends HiveObject {
   factory StepModel.fromMap(Map<String, dynamic> map) {
     return StepModel(
       title: map['title'] ?? '',
-      words: List<Word>.from(map['words']?.map((x) => Word.fromMap(x))),
+      words: List<String>.from(map['wordIds']?.map((x) => (x))),
       lastQuizTime:
           map['finisedTile'] != null
               ? DateTime.fromMillisecondsSinceEpoch(map['finisedTile'])
               : null,
-      wrongQestion: List<Word>.from(
+      wrongWords: List<String>.from(
         map['wrongQestion'] == null
             ? []
             : map['wrongQestion']?.map((x) => Word.fromMap(x)),
@@ -76,15 +74,15 @@ class StepModel extends HiveObject {
 
   StepModel copyWith({
     String? title,
-    List<Word>? words,
+    List<String>? wordIds,
     DateTime? lastQuizTime,
-    List<Word>? wrongQestion,
+    List<String>? wrongWordIds,
   }) {
     return StepModel(
       title: title ?? this.title,
-      words: words ?? this.words,
+      words: wordIds ?? this.words,
       lastQuizTime: lastQuizTime ?? this.lastQuizTime,
-      wrongQestion: wrongQestion ?? this.wrongQestion,
+      wrongWords: wrongWordIds ?? this.wrongWords,
     );
   }
 }

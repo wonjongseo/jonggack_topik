@@ -81,6 +81,9 @@ class AppThemings {
       ),
       iconTheme: IconThemeData(color: Colors.black),
     ),
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(foregroundColor: AppColors.mainBordColor),
+    ),
     iconButtonTheme: IconButtonThemeData(
       style: IconButton.styleFrom(
         minimumSize: const Size(0, 0),

@@ -27,19 +27,14 @@ class BookStudyScreen extends GetView<BookStudyController> {
               child: ListView.separated(
                 itemBuilder: (context, index) {
                   return WordListTIle(
-                    onTapMean: () {
-                      controller.onTapMean(index);
-                    },
-                    onTap: () {
-                      controller.goToWordScreen(index);
-                    },
+                    onTapMean: () => controller.onTapMean(index),
+                    onTap: () => controller.goToWordScreen(index),
                     word: controller.words[index],
                     isHidenMean: controller.isSeeMeanWords[index],
                     trailing: IconButton(
                       style: cTrailingStyle,
-                      onPressed: () {
-                        controller.deteleWord(controller.words[index]);
-                      },
+                      onPressed:
+                          () => controller.deteleWord(controller.words[index]),
                       icon: Icon(FontAwesomeIcons.xmark, color: AppColors.pink),
                     ),
                   );

@@ -4,6 +4,9 @@ const double appBarHeight = 35;
 const double appBarTextSize = 18;
 
 class AppConstant {
+  static const String firstDay = "firstDay";
+  static const String lastDay = "lastDay";
+
   static const String selectedCategoryIdx = 'selectedCategoryIdx';
   static const String lastSelected = 'lastSelected';
 

@@ -25,7 +25,7 @@ class WordAdapter extends TypeAdapter<Word> {
       examples: (fields[5] as List?)?.cast<Example>(),
       synonyms: (fields[6] as List?)?.cast<Synonym>(),
       dicTypeNuimber: fields[7] as int,
-    ).._yomikata = fields[3] as String;
+    );
   }
 
   @override

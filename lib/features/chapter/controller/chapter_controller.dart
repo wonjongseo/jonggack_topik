@@ -55,8 +55,8 @@ class ChapterController extends GetxController {
 
   bool _computeAllSaved() {
     if (!Get.isRegistered<StepController>()) return false;
-    for (Word word in step.words) {
-      if (!stepController.isSavedWord(word.id)) {
+    for (String wordId in step.words) {
+      if (!stepController.isSavedWord(wordId)) {
         return false;
       }
     }
@@ -64,16 +64,18 @@ class ChapterController extends GetxController {
   }
 
   Future<void> toggleAllSave() async {
+    final wordRepo = Get.find<HiveRepository<Word>>(tag: Word.boxKey);
+
     if (!Get.isRegistered<StepController>()) return;
 
     final shouldSave = !_isAllSaved.value;
 
-    for (Word word in step.words) {
-      final currentlySaved = stepController.isSavedWord(word.id);
+    for (String wordId in step.words) {
+      final currentlySaved = stepController.isSavedWord(wordId);
       if (shouldSave && !currentlySaved) {
-        await stepController.toggleMyWord(word);
+        await stepController.toggleMyWord(wordRepo.get(wordId)!);
       } else if (!shouldSave && currentlySaved) {
-        await stepController.toggleMyWord(word);
+        await stepController.toggleMyWord(wordRepo.get(wordId)!);
       }
     }
 
@@ -94,6 +96,9 @@ class ChapterController extends GetxController {
   }
 
   void quizAllCorrect() {
+    if (_chapter.stepKeys.length == _selectedStepIdx.value + 1) {
+      return;
+    }
     onTapStepSelector(_selectedStepIdx.value + 1);
     _getSteps();
   }
@@ -127,12 +132,14 @@ class ChapterController extends GetxController {
     AppFunction.scrollGoToTop(scrollController);
   }
 
+  final wordRepo = Get.find<HiveRepository<Word>>(tag: Word.boxKey);
+
   Future<void> goToQuizPage() async {
     bool isTryAgain = false;
-    if (step.wrongQestion.isNotEmpty) {
+    if (step.wrongWords.isNotEmpty) {
       isTryAgain = await AppDialog.showMyDialog(
         title: AppString.youHavePreQuizData,
-        bodyText: '틀린 ${step.wrongQestion.length} 문제를 다시 보시겠습니까?',
+        bodyText: '틀린 ${step.wrongWords.length} 문제를 다시 보시겠습니까?',
         onConfirm: () {},
         onCancel: () {},
       );
@@ -141,7 +148,12 @@ class ChapterController extends GetxController {
       () => QuizScreen(),
       binding: BindingsBuilder.put(
         () => Get.put(
-          QuizController(isTryAgain ? step.wrongQestion : step.words),
+          QuizController(
+            isTryAgain
+                ? step.wrongWords.map((id) => wordRepo.get(id)!).toList()
+                : step.words.map((id) => wordRepo.get(id)!).toList(),
+            // : step.words,
+          ),
         ),
       ),
     );

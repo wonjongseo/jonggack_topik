@@ -36,7 +36,7 @@ class ChapterSelector extends StatelessWidget {
                 ),
               ),
 
-              CateogryProgress(
+              ChapterProgress(
                 caregory: chapter.title,
                 curCnt: totalAndScore.score,
                 totalCnt: totalAndScore.total,

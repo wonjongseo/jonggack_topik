@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/utils/app_color.dart';
 import 'package:jonggack_topik/features/auth/controllers/user_controller.dart';
@@ -25,7 +26,8 @@ class MainScreen extends GetView<MainController> {
         onItemSelected: controller.onPageSelected,
         items: [
           PersistentBottomNavBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(FontAwesomeIcons.book),
+            iconSize: 20,
             title: "Study",
             activeColorPrimary: AppColors.primaryColor,
             activeColorSecondary: Colors.white,
@@ -34,14 +36,33 @@ class MainScreen extends GetView<MainController> {
           ),
 
           PersistentBottomNavBarItem(
-            icon: Icon(Icons.person),
+            icon: Icon(FontAwesomeIcons.user),
+            iconSize: 20,
             title: "Me",
             activeColorPrimary: AppColors.primaryColor,
             activeColorSecondary: Colors.white,
             inactiveColorPrimary: Colors.grey,
           ),
+
           PersistentBottomNavBarItem(
-            icon: Icon(Icons.settings),
+            icon: Icon(FontAwesomeIcons.question),
+            iconSize: 20,
+            title: "Random Quiz",
+            activeColorPrimary: AppColors.primaryColor,
+            activeColorSecondary: Colors.white,
+            inactiveColorPrimary: Colors.grey,
+          ),
+          PersistentBottomNavBarItem(
+            icon: Icon(FontAwesomeIcons.lineChart),
+            iconSize: 20,
+            title: "Chart",
+            activeColorPrimary: AppColors.primaryColor,
+            activeColorSecondary: Colors.white,
+            inactiveColorPrimary: Colors.grey,
+          ),
+          PersistentBottomNavBarItem(
+            icon: Icon(FontAwesomeIcons.gear),
+            iconSize: 20,
             title: "Setting",
             activeColorPrimary: AppColors.primaryColor,
             activeColorSecondary: Colors.white,
@@ -49,7 +70,8 @@ class MainScreen extends GetView<MainController> {
           ),
         ],
 
-        navBarStyle: NavBarStyle.style10,
+        navBarStyle: NavBarStyle.style16,
+        // navBarStyle: NavBarStyle.style10,
       );
     });
   }

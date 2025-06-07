@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jonggack_topik/core/utils/app_color.dart';
+import 'package:jonggack_topik/core/widgets/animate_progressIndicator.dart';
 
 class CateogryProgress extends StatelessWidget {
   final String caregory;
@@ -22,7 +23,13 @@ class CateogryProgress extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(caregory, style: TextStyle(fontWeight: FontWeight.w700)),
+              Text(
+                caregory,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
               TweenAnimationBuilder(
                 tween: Tween<double>(begin: 0, end: curCnt / 100),
                 duration: const Duration(milliseconds: 1500),
@@ -59,49 +66,56 @@ class CateogryProgress extends StatelessWidget {
   }
 }
 
-class AnimatedLeanerProgressIndicator extends StatelessWidget {
-  const AnimatedLeanerProgressIndicator({
-    super.key,
-    this.currentProgressCount,
-    required this.totalProgressCount,
-  });
+//
 
-  final int? currentProgressCount;
-  final int? totalProgressCount;
+class ChapterProgress extends StatelessWidget {
+  final String caregory;
+  final int curCnt;
+  final int totalCnt;
+  const ChapterProgress({
+    super.key,
+    required this.caregory,
+    required this.curCnt,
+    required this.totalCnt,
+  });
 
   @override
   Widget build(BuildContext context) {
-    double percentage;
-    if (currentProgressCount == null) {
-      percentage = 0;
-    } else {
-      percentage = currentProgressCount! / totalProgressCount!;
-    }
+    return Padding(
+      padding: EdgeInsets.all(8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          AnimatedCircleProgressIndicator(
+            currentProgressCount: curCnt,
+            totalProgressCount: totalCnt,
+          ),
 
-    return SizedBox(
-      height: 17,
-      child: TweenAnimationBuilder(
-        tween: Tween<double>(begin: 0, end: percentage),
-        duration: const Duration(milliseconds: 1500),
-        builder:
-            (context, double value, child) => Stack(
-              fit: StackFit.expand,
-              alignment: Alignment.center,
-              children: [
-                LinearProgressIndicator(
-                  value: value,
-                  color: AppColors.accentColor,
-                  backgroundColor: Colors.grey.shade300,
-                ),
-                Center(
-                  child: Text(
-                    "${(value * 100).toInt()}%",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 10),
+          SizedBox(height: 10),
+          TweenAnimationBuilder(
+            tween: Tween<double>(begin: 0, end: curCnt / 100),
+            duration: const Duration(milliseconds: 1500),
+            builder: (context, value, child) {
+              return RichText(
+                text: TextSpan(
+                  style: TextStyle(
+                    color: const Color.fromARGB(255, 3, 3, 3),
+                    fontSize: 12,
+                    letterSpacing: 2,
                   ),
+                  children: [
+                    TextSpan(
+                      text: '${(value * 100).ceil()}',
+                      style: TextStyle(color: AppColors.mainBordColor),
+                    ),
+                    const TextSpan(text: '/'),
+                    TextSpan(text: '$totalCnt'),
+                  ],
                 ),
-              ],
-            ),
+              );
+            },
+          ),
+        ],
       ),
     );
   }

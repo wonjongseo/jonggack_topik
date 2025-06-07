@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/models/step_model.dart';
 import 'package:jonggack_topik/core/models/word.dart';
+import 'package:jonggack_topik/core/repositories/hive_repository.dart';
 import 'package:jonggack_topik/features/book/controller/book_controller.dart';
-import 'package:jonggack_topik/features/chapter/controller/chapter_controller.dart';
 import 'package:jonggack_topik/features/word/controller/word_controller.dart';
 import 'package:jonggack_topik/features/word/screen/word_screen.dart';
 
@@ -30,7 +30,13 @@ class StepController extends GetxController {
     update();
   }
 
-  List<Word> get words => _step.words;
+  // List<Word> get words => _step.words;
+  List<Word> get words {
+    final wordRepo = Get.find<HiveRepository<Word>>(tag: Word.boxKey);
+
+    List<Word> result = _step.words.map((item) => wordRepo.get(item)!).toList();
+    return result;
+  }
 
   void goToWordScreen(int index) {
     Get.to(

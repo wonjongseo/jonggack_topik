@@ -186,6 +186,7 @@ class HiveRepository<T extends HiveObject> {
   }
 
   static Future<void> init() async {
+    print('HIVE init');
     if (GetPlatform.isMobile) {
       await Hive.initFlutter();
     }
@@ -201,32 +202,57 @@ class HiveRepository<T extends HiveObject> {
   static DataRepositry dataRepositry = DataRepositry();
 
   static Future<void> _initDatas() async {
-    final categoryHiveRepo = Get.find<HiveRepository<CategoryHive>>(
-      tag: CategoryHive.boxKey,
-    );
+    try {
+      String? firstDay = SettingRepository.getString(AppConstant.firstDay);
 
-    List<Category> categories = [];
-
-    for (var categoryName in categoryNames) {
-      if (categoryHiveRepo.get(categoryName) == null) {
-        LogManager.info('$categoryName 저장중...');
-        categories.add(await dataRepositry.getJson('$categoryName.json'));
+      if (firstDay == null) {
+        SettingRepository.setString(
+          AppConstant.firstDay,
+          DateTime.now().toIso8601String(),
+        );
       }
-    }
-    if (categories.isNotEmpty) {
-      await HiveHelper.saveCategory(categories);
-    }
 
-    final bookRepo = Get.find<HiveRepository<Book>>(tag: Book.boxKey);
+      final categoryHiveRepo = Get.find<HiveRepository<CategoryHive>>(
+        tag: CategoryHive.boxKey,
+      );
 
-    List<Book> books = bookRepo.getAll();
-    if (books.isEmpty) {
-      // Create Book
-      String title = '${AppString.appName}単語帳';
-      Book book = Book(title: title, bookNum: 0);
+      // Save All Words
+      final wordBox = Hive.box<Word>(Word.boxKey);
+      if (wordBox.keys.isEmpty) {
+        List<Word> _allwords = await dataRepositry.getAllWords("global_words");
 
-      LogManager.info('$title 저장중...');
-      bookRepo.put(book.id, book);
+        for (var word in _allwords) {
+          if (!wordBox.containsKey(word.id)) {
+            await wordBox.put(word.id, word);
+          }
+        }
+      }
+
+      List<Category> categories = [];
+
+      for (var categoryName in categoryNames) {
+        if (categoryHiveRepo.get(categoryName) == null) {
+          LogManager.info('$categoryName 저장중...');
+          categories.add(await dataRepositry.getJson('$categoryName.json'));
+        }
+      }
+      if (categories.isNotEmpty) {
+        await HiveHelper.saveCategory(categories);
+      }
+
+      final bookRepo = Get.find<HiveRepository<Book>>(tag: Book.boxKey);
+
+      List<Book> books = bookRepo.getAll();
+      if (books.isEmpty) {
+        // Create Book
+        String title = '${AppString.appName}単語帳';
+        Book book = Book(title: title, bookNum: 0);
+
+        LogManager.info('$title 저장중...');
+        bookRepo.put(book.id, book);
+      }
+    } catch (e) {
+      print('e.toString() : ${e.toString()}');
     }
   }
 

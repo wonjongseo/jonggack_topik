@@ -6,18 +6,12 @@ import 'package:get/get.dart';
 import 'package:jonggack_topik/core/constant/hive_keys.dart';
 import 'package:jonggack_topik/core/logger/logger_service.dart';
 import 'package:jonggack_topik/core/models/book.dart';
-import 'package:jonggack_topik/core/models/category.dart';
-import 'package:jonggack_topik/core/models/category_hive.dart';
-import 'package:jonggack_topik/core/models/chapter_hive.dart';
-import 'package:jonggack_topik/core/models/step_model.dart';
-import 'package:jonggack_topik/core/models/subject_hive.dart';
+
 import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/core/repositories/hive_repository.dart';
-import 'package:jonggack_topik/core/repositories/setting_repository.dart';
-import 'package:jonggack_topik/core/utils/app_constant.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/core/utils/snackbar_helper.dart';
-import 'package:jonggack_topik/features/category/controller/category_controller.dart';
+import 'package:jonggack_topik/core/repositories/setting_repository.dart';
 
 class BookController extends GetxController {
   static BookController get to => Get.find<BookController>();
@@ -34,83 +28,8 @@ class BookController extends GetxController {
   @override
   void onInit() {
     getDatas();
-    createRandomWords();
+    // createRandomWords();
     super.onInit();
-  }
-
-  void createRandomWords() async {
-    String? lastSelected = SettingRepository.getString(
-      AppConstant.lastSelected,
-    );
-
-    if (lastSelected == null) return;
-
-    List<String> parts = lastSelected.split(
-      '-${AppConstant.selectedCategoryIdx}',
-    );
-    if (parts.length < 2) return;
-
-    List<Word> recommendWords = [];
-    Random random = Random();
-    List<String> prefixSegments = parts.first.split('-');
-    final stepRepo = Get.find<HiveRepository<StepModel>>(tag: StepModel.boxKey);
-
-    switch (prefixSegments.length) {
-      case 3: // 暮らし-洗濯・掃除-Chapter 1
-        final categoryRepo = Get.find<HiveRepository<ChapterHive>>(
-          tag: ChapterHive.boxKey,
-        );
-        final chapterHive = categoryRepo.get(parts[0]);
-
-        if (chapterHive == null) return;
-
-        int randomInt = random.nextInt(chapterHive.stepKeys.length);
-        String stepKey = chapterHive.stepKeys[randomInt];
-        StepModel? stepModel = stepRepo.get(stepKey);
-        if (stepModel == null) return;
-
-        recommendWords.assignAll(stepModel.words);
-
-        break;
-      case 2: // 暮らし-洗濯・掃除
-        final subjectRepo = HiveRepository<SubjectHive>(SubjectHive.boxKey);
-        await subjectRepo.initBox();
-        final subject = subjectRepo.get(parts[0]);
-
-        if (subject == null) return;
-
-        int randomInt = random.nextInt(subject.chapters.length);
-        ChapterHive chapterHive = subject.chapters[randomInt];
-
-        randomInt = random.nextInt(chapterHive.stepKeys.length);
-        String stepKey = chapterHive.stepKeys[randomInt];
-        StepModel? stepModel = stepRepo.get(stepKey);
-        if (stepModel == null) return;
-
-        recommendWords.assignAll(stepModel.words);
-        break;
-      case 1: // 暮らし
-        final categoryRepo = HiveRepository<CategoryHive>(CategoryHive.boxKey);
-        await categoryRepo.initBox();
-        final category = categoryRepo.get(parts[0]);
-
-        if (category == null) return;
-        int randomInt = random.nextInt(category.subjects.length);
-
-        SubjectHive subjectHive = category.subjects[randomInt];
-        randomInt = random.nextInt(subjectHive.chapters.length);
-        ChapterHive chapterHive = subjectHive.chapters[randomInt];
-
-        randomInt = random.nextInt(chapterHive.stepKeys.length);
-        String stepKey = chapterHive.stepKeys[randomInt];
-        StepModel? stepModel = stepRepo.get(stepKey);
-        if (stepModel == null) return;
-
-        recommendWords.assignAll(stepModel.words);
-        break;
-      default:
-        break;
-    }
   }
 
   void getDatas() {

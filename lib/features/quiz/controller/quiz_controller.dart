@@ -180,9 +180,9 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
     // 테스트를 다 풀 었으면
     else {
       DateTime date = DateTime.now();
-      Random random = Random();
-      int ranNum = random.nextInt(5);
-      date = date.subtract(Duration(days: ranNum));
+      // Random random = Random();
+      // int ranNum = random.nextInt(5);
+      // date = date.subtract(Duration(days: ranNum));
       QuizHistoryRepository.saveOrUpdate(
         date: date,
         newCorrectIds: correctQuestions.map((word) => word.id).toSet().toList(),
@@ -205,7 +205,10 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
         isTryAgain = stepModel.lastQuizTime != null;
 
         stepModel = stepModel.copyWith(
-          wrongQestion: stepModel.isAllCorrect ? null : wrongQuestions,
+          wrongWordIds:
+              stepModel.isAllCorrect
+                  ? null
+                  : wrongQuestions.map((word) => word.id).toList(),
           lastQuizTime: DateTime.now(),
         );
 

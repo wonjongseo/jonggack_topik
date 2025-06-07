@@ -79,7 +79,6 @@ class Word extends HiveObject {
                   (e) => Example.fromMap(e as Map<String, dynamic>),
                 ),
               ),
-      // map['synonyms']가 null 이면 빈 리스트, 아니면 List<Synonym>로 변환
       synonyms =
           map['synonyms'] == null
               ? <Synonym>[]

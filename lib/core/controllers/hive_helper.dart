@@ -5,7 +5,6 @@ import 'package:jonggack_topik/core/models/category_hive.dart';
 import 'package:jonggack_topik/core/models/chapter_hive.dart';
 import 'package:jonggack_topik/core/models/step_model.dart';
 import 'package:jonggack_topik/core/models/subject_hive.dart';
-import 'package:jonggack_topik/core/models/word.dart';
 
 class HiveHelper {
   /// 원본 Category (Category → Subject → Chapter → List<StepModel>)를 받아 Hive에 저장
@@ -15,7 +14,6 @@ class HiveHelper {
     final subjectBox = Hive.box<SubjectHive>(SubjectHive.boxKey);
     final chapterBox = Hive.box<ChapterHive>(ChapterHive.boxKey);
     final stepBox = Hive.box<StepModel>(StepModel.boxKey);
-    final wordBox = Hive.box<Word>(Word.boxKey);
 
     // 2) Subject 순회
     for (var category in categorys) {
@@ -37,13 +35,6 @@ class HiveHelper {
               await stepBox.put(stepKey, step);
             }
             stepKeys.add(stepKey);
-
-            // 4-2) Word도 함께 저장
-            for (final word in step.words) {
-              if (!wordBox.containsKey(word.id)) {
-                await wordBox.put(word.id, word);
-              }
-            }
           }
 
           // 5) ChapterHive 생성 → chapterBox에 저장

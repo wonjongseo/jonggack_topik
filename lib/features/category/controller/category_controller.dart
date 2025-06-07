@@ -6,10 +6,12 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import 'package:jonggack_topik/core/controllers/hive_helper.dart';
+import 'package:jonggack_topik/core/logger/logger_service.dart';
 import 'package:jonggack_topik/core/models/category.dart';
 import 'package:jonggack_topik/core/models/category_hive.dart';
 import 'package:jonggack_topik/core/models/step_model.dart';
 import 'package:jonggack_topik/core/models/subject_hive.dart';
+import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/core/repositories/hive_repository.dart';
 import 'package:jonggack_topik/core/repositories/setting_repository.dart';
 import 'package:jonggack_topik/core/utils/app_constant.dart';
@@ -106,11 +108,13 @@ class CategoryController extends GetxController {
     try {
       isLoadign(true);
       List<CategoryHive> savedList = categoryHiveRepo.getAll();
+      print('savedList : ${savedList}');
+
       savedList.sort((a, b) => a.createdAt.compareTo(b.createdAt));
       _allCategories.assignAll(savedList);
       setTotalAndScores();
     } catch (e) {
-      print('e : $e');
+      LogManager.error('$e');
       SnackBarHelper.showErrorSnackBar("$e");
     } finally {
       isLoadign(false);
@@ -149,7 +153,7 @@ class CategoryController extends GetxController {
       _allCategories.assignAll(savedList);
       setTotalAndScores();
     } catch (e) {
-      print('e : $e');
+      LogManager.error('$e');
       SnackBarHelper.showErrorSnackBar("$e");
     } finally {
       isLoadign(false);
@@ -158,6 +162,29 @@ class CategoryController extends GetxController {
 }
 
 class DataRepositry {
+  Future<List<Word>> getAllWords(String fileName) async {
+    print('getAllWords');
+    try {
+      // final jsonString = await rootBundle.loadString('assets/data/$fileName');
+      final jsonString = await rootBundle.loadString(
+        'assets/data/global_words.json',
+      );
+
+      final jsonMap = json.decode(jsonString);
+
+      List<Word> allWords =
+          (jsonMap as List<dynamic>).map((map) {
+            return Word.fromMap(map);
+          }).toList();
+
+      print('allWords.length : ${allWords.length}');
+      return allWords;
+    } catch (e) {
+      print(e.toString());
+      rethrow;
+    }
+  }
+
   Future<Category> getJson(String fileName) async {
     final jsonString = await rootBundle.loadString('assets/data/$fileName');
 
