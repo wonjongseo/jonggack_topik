@@ -72,20 +72,11 @@ class CategoryController extends GetxController {
             total += stepModel.words.length;
           }
         }
-
         temp.add(TotalAndScore(total: total, score: score));
       }
       totalAndScoress.add(temp);
     }
   }
-
-  @override
-  void onInit() {
-    super.onInit();
-  }
-  // onReady() {
-
-  // }
 
   @override
   void onReady() async {
@@ -108,10 +99,10 @@ class CategoryController extends GetxController {
     try {
       isLoadign(true);
       List<CategoryHive> savedList = categoryHiveRepo.getAll();
-      print('savedList : ${savedList}');
 
       savedList.sort((a, b) => a.createdAt.compareTo(b.createdAt));
-      _allCategories.assignAll(savedList);
+      // _allCategories.assignAll(savedList);
+      _allCategories.assign(savedList[0]);
       setTotalAndScores();
     } catch (e) {
       LogManager.error('$e');

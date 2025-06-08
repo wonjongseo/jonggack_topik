@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jonggack_topik/core/admob/banner_ad/global_banner_admob.dart';
 import 'package:jonggack_topik/features/auth/controllers/user_controller.dart';
 
 class SettingScreen extends GetView<UserController> {
@@ -28,6 +29,7 @@ class SettingScreen extends GetView<UserController> {
           ),
         ),
       ),
+      bottomNavigationBar: GlobalBannerAdmob(),
     );
   }
 }

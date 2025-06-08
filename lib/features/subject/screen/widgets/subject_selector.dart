@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:jonggack_topik/core/controllers/font_controller.dart';
-import 'package:jonggack_topik/core/models/subject.dart';
 import 'package:jonggack_topik/theme.dart';
 
 class SubjecttSelector extends StatelessWidget {
@@ -17,10 +14,10 @@ class SubjecttSelector extends StatelessWidget {
   final Function() onTap;
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: 4, horizontal: 16),
+        margin: EdgeInsets.symmetric(vertical: 4, horizontal: 32),
         decoration:
             isSelected
                 ? BoxDecoration(
@@ -37,7 +34,6 @@ class SubjecttSelector extends StatelessWidget {
                     ? TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.cyan.shade600,
-
                       fontSize: 17,
                       fontFamily: AppFonts.zenMaruGothic,
                     )

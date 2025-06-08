@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jonggack_topik/core/admob/banner_ad/global_banner_admob.dart';
 
 import 'package:jonggack_topik/features/book/controller/book_controller.dart';
 import 'package:jonggack_topik/features/book/controller/book_study_controller.dart';
@@ -27,8 +28,7 @@ class UserScreen extends GetView<BookController> {
                 SizedBox(height: 16),
                 SizedBox(height: 100, child: const WelcomeWidget()),
                 SizedBox(height: size.height * .15, child: SeacrhForm()),
-                SizedBox(
-                  height: size.height * .5,
+                Expanded(
                   child: Obx(() {
                     if (controller.isLoading.value) {
                       return CircularProgressIndicator();
@@ -76,6 +76,8 @@ class UserScreen extends GetView<BookController> {
           ),
         ),
       ),
+
+      bottomNavigationBar: GlobalBannerAdmob(),
     );
   }
 }

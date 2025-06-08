@@ -23,6 +23,7 @@ class QuizHistory extends HiveObject {
     required this.incorrectWordIds,
   });
 
+  int get totalCnt => correctWordIds.length + incorrectWordIds.length;
   @override
   String toString() =>
       'QuizHistory(date: $date, correctWordIds: $correctWordIds, incorrectWordIds: $incorrectWordIds)';

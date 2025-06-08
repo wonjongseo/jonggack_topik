@@ -18,7 +18,6 @@ import 'package:jonggack_topik/theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await HiveRepository.init();
   MobileAds.instance.initialize();
   initializeDateFormatting();
   runApp(const App());

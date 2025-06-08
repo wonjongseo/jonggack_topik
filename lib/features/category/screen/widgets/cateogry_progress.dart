@@ -86,6 +86,10 @@ class ChapterProgress extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          Text(
+            caregory,
+            style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700),
+          ),
           AnimatedCircleProgressIndicator(
             currentProgressCount: curCnt,
             totalProgressCount: totalCnt,

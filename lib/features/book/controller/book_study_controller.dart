@@ -23,16 +23,16 @@ class BookStudyController extends GetxController {
 
   @override
   void onInit() {
-    getWordsById();
+    getMyWords();
     super.onInit();
   }
 
   void deteleWord(Word word) async {
     BookController.to.toggleMyWord(word);
-    getWordsById();
+    getMyWords();
   }
 
-  void getWordsById() {
+  void getMyWords() {
     _allWords.clear();
 
     for (var wordId in book.wordIds) {

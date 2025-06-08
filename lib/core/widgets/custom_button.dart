@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jonggack_topik/core/utils/app_color.dart';
+import 'package:jonggack_topik/theme.dart';
 
 class BottomBtn extends StatelessWidget {
   const BottomBtn({super.key, required this.label, required this.onTap});

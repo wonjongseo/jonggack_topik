@@ -1,44 +1,69 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 import 'package:jonggack_topik/core/logger/logger_service.dart';
+import 'package:jonggack_topik/core/models/missed_word.dart';
 import 'package:jonggack_topik/core/models/quiz_history.dart';
 import 'package:jonggack_topik/core/models/word.dart';
-import 'package:jonggack_topik/core/services/random_word_service.dart';
 import 'package:jonggack_topik/core/utils/snackbar_helper.dart';
 import 'package:jonggack_topik/features/book/controller/book_controller.dart';
+import 'package:jonggack_topik/features/quiz/controller/quiz_controller.dart';
+import 'package:jonggack_topik/features/quiz/screen/quiz_screen.dart';
 import 'package:jonggack_topik/features/user/repository/quiz_history_repository.dart';
+import 'package:jonggack_topik/features/word/controller/word_controller.dart';
+import 'package:jonggack_topik/features/word/screen/word_screen.dart';
 
 class ChartController extends GetxController {
   static ChartController get to => Get.find<ChartController>();
+
+  // MissedWord
+  final _missedWords = <MissedWord>[].obs;
+  bool isWordLoading = false;
+  List<MissedWord> get missedWords => _missedWords.value;
+  List<Word> get words => missedWords.map((missed) => missed.word).toList();
+
+  void getMissedWords() {
+    final Box<MissedWord> box = Hive.box<MissedWord>(MissedWord.boxKey);
+
+    final missedWords = box.values.toList();
+
+    missedWords.sort((b, a) => a.missCount.compareTo(b.missCount));
+    _missedWords.assignAll(missedWords);
+  }
+
+  void goToWordScreen(int index) {
+    Get.to(
+      () => WordScreen(),
+      binding: BindingsBuilder.put(() => WordController(true, words, index)),
+    );
+  }
+
+  void goToQuizPage() {
+    Get.to(
+      () => QuizScreen(),
+      binding: BindingsBuilder.put(() => Get.put(QuizController(words))),
+    );
+  }
+
+  // Corract Rate - Graph
+
+  bool isGraphWidget = true;
 
   final _allHistory = <QuizHistory>[].obs;
   List<QuizHistory> get allHistory => _allHistory.value;
   final isLoading = false.obs;
 
-  bool isWordLoading = false;
-  List<Word> todayWords = [];
-
+  void deteleWord(Word word) {}
   @override
   void onInit() {
     super.onInit();
-    getHistories();
+    getAllData();
   }
 
-  @override
-  void onReady() async {
-    try {
-      isWordLoading = true;
-      todayWords.assignAll(await RandomWordService.createRandomWords());
-    } catch (e) {
-      LogManager.error('$e');
-      SnackBarHelper.showErrorSnackBar('$e');
-    } finally {
-      isWordLoading = false;
-      update();
-    }
-
-    super.onReady();
+  getAllData() {
+    getHistories();
+    getMissedWords();
   }
 
   void getHistories() {
@@ -65,6 +90,7 @@ class ChartController extends GetxController {
     return BookController.to.isSavedWord(id);
   }
 
+  // Graph
   ShowGraphType showGraphType = ShowGraphType.day;
   int maxX = 0; // 전체 인덱스 개수 (예: 12개월이면 12)
   DateTime selectedDay = DateTime.now();
@@ -131,9 +157,10 @@ class ChartController extends GetxController {
     for (var history in allHistory) {
       final key = DateFormat(showGraphType.dateFormat).format(history.date);
 
-      if (grouped.containsKey(key)) {
-        grouped[key] = grouped[key]! + history.correctWordIds.length;
-      }
+      int percentage =
+          ((history.correctWordIds.length / history.totalCnt) * 100).toInt();
+
+      grouped[key] = grouped[key]! + percentage;
     }
 
     // FlSpot 리스트 생성: index는 0부터 시작, y는 누적 개수
@@ -151,7 +178,9 @@ class ChartController extends GetxController {
     return DateTime(date.year + yearOffset, month, 1);
   }
 
-  //
+  // Corract Rate -  Calrendaer
+
+  DateTime focusDay = DateTime.now();
 }
 
 enum ShowGraphType {
@@ -182,3 +211,18 @@ enum ShowGraphType {
     }
   }
 }
+
+
+// List<Word> todayWords = [];
+  //  getTodayWords() {
+  // try {
+  //   isWordLoading = true;
+  //   todayWords.assignAll(await RandomWordService.createRandomWords());
+  // } catch (e) {
+  //   LogManager.error('$e');
+  //   SnackBarHelper.showErrorSnackBar('$e');
+  // } finally {
+  //   isWordLoading = false;
+  //   update();
+  //  }
+  //   }

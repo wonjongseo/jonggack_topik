@@ -15,7 +15,43 @@ class RandomWordService {
   static const _prefKey = 'lastShownDate'; // 마지막으로 단어를 보여준 날짜 (YYYY-MM-DD 형식)
   static const _prefWord = 'lastShownWord'; // 마지막으로 보여준 단어 (선택 사항)
 
-  static List<Word> _createDefaultRandomWords() {
+  static List<Word> createRandomWordBySubject({
+    String categoryName = '韓国語能力試験',
+    int subjectIndex = 0,
+    int quizNumber = 15,
+  }) {
+    final stepRepo = Get.find<HiveRepository<StepModel>>(tag: StepModel.boxKey);
+    final wordRepo = Get.find<HiveRepository<Word>>(tag: Word.boxKey);
+
+    Random random = Random();
+
+    final categoryRepo = Get.find<HiveRepository<CategoryHive>>(
+      tag: CategoryHive.boxKey,
+    );
+
+    final category = categoryRepo.get(categoryName);
+    print('Category : $categoryName');
+    final subject = category!.subjects[subjectIndex];
+    print('Subject Index: $subjectIndex');
+    List<Word> randomWord = [];
+    for (int i = 0; i < quizNumber; i++) {
+      int randomInt = random.nextInt(subject.chapters.length);
+      print("Random Chapter: $randomInt");
+      ChapterHive chapterHive = subject.chapters[randomInt];
+
+      randomInt = random.nextInt(chapterHive.stepKeys.length);
+      print("Random step: $randomInt");
+      String stepKey = chapterHive.stepKeys[randomInt];
+      StepModel stepModel = stepRepo.get(stepKey)!;
+
+      String wordId = stepModel.words[random.nextInt(stepModel.words.length)];
+      randomWord.add(wordRepo.get(wordId)!);
+    }
+
+    return randomWord;
+  }
+
+  static List<Word> createDefaultRandomWords() {
     final wordRepo = Get.find<HiveRepository<Word>>(tag: Word.boxKey);
     Random random = Random();
     List<Word> allWords = wordRepo.getAll();
@@ -42,7 +78,7 @@ class RandomWordService {
     }
     Random random = Random();
 
-    List<Word> recommendWords = _createDefaultRandomWords();
+    List<Word> recommendWords = createDefaultRandomWords();
     final wordRepo = Get.find<HiveRepository<Word>>(tag: Word.boxKey);
     String? lastSelected = SettingRepository.getString(
       AppConstant.lastSelected,

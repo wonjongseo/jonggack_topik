@@ -32,17 +32,14 @@ class EditWordScreen extends GetView<EditWordController> {
                 hintText: AppString.mean,
                 controller: controller.meanCtl,
               ),
-              // SizedBox(height: 16),
-              // CustomTextFormField(),
             ],
           ),
         ),
       ),
       bottomNavigationBar: GlobalBannerAdmob(
         widgets: [
-          // if (controller.book.bookNum != 0)
           BottomBtn(
-            label: "Create",
+            label: "追加",
             onTap: () {
               controller.onCreateBtn();
             },

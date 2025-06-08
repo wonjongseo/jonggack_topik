@@ -10,6 +10,7 @@ import 'package:jonggack_topik/core/models/category_hive.dart';
 import 'package:jonggack_topik/core/models/chapter.dart';
 import 'package:jonggack_topik/core/models/chapter_hive.dart';
 import 'package:jonggack_topik/core/models/example.dart';
+import 'package:jonggack_topik/core/models/missed_word.dart';
 import 'package:jonggack_topik/core/models/quiz_history.dart';
 import 'package:jonggack_topik/core/models/step_model.dart';
 import 'package:jonggack_topik/core/models/subject.dart';
@@ -132,6 +133,9 @@ class HiveRepository<T extends HiveObject> {
     if (!Hive.isAdapterRegistered(BookAdapter().typeId)) {
       Hive.registerAdapter(BookAdapter());
     }
+    if (!Hive.isAdapterRegistered(MissedWordAdapter().typeId)) {
+      Hive.registerAdapter(MissedWordAdapter());
+    }
   }
 
   static Future<void> _initOpenBoxs() async {
@@ -182,6 +186,9 @@ class HiveRepository<T extends HiveObject> {
     }
     if (!Hive.isBoxOpen(Book.boxKey)) {
       await Hive.openBox<Book>(Book.boxKey);
+    }
+    if (!Hive.isBoxOpen(MissedWord.boxKey)) {
+      await Hive.openBox<MissedWord>(MissedWord.boxKey);
     }
   }
 

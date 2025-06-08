@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:jonggack_topik/core/logger/logger_service.dart';
@@ -36,7 +37,7 @@ class EditWordController extends GetxController {
       bookRepo.put(book.id, book);
       LogManager.info('${word.id}가 생성되었습니다.');
       BookController.to.getDatas();
-      BookStudyController.to.getWordsById();
+      BookStudyController.to.getMyWords();
     } catch (e) {
       LogManager.error('$e');
       SnackBarHelper.showErrorSnackBar('$e');
@@ -51,9 +52,15 @@ class EditWordController extends GetxController {
   @override
   void onInit() {
     book = BookStudyController.to.book;
-    wordCtl = TextEditingController(text: DateTime.now().toIso8601String());
-    yomikataCtl = TextEditingController(text: DateTime.now().toIso8601String());
-    meanCtl = TextEditingController(text: DateTime.now().toIso8601String());
+    wordCtl = TextEditingController(
+      text: !kReleaseMode ? DateTime.now().toIso8601String() : '',
+    );
+    yomikataCtl = TextEditingController(
+      text: !kReleaseMode ? DateTime.now().toIso8601String() : '',
+    );
+    meanCtl = TextEditingController(
+      text: !kReleaseMode ? DateTime.now().toIso8601String() : '',
+    );
     super.onInit();
   }
 

@@ -44,4 +44,7 @@ class HK {
 
   static const int bookTypeID = 14;
   static const String bookHiveBoxKey = 'book-hive-box-key';
+
+  static const int missedWordID = 15;
+  static const String missedWordBoxKey = 'missedWord-box-key';
 }

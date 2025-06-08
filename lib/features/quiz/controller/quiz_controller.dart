@@ -3,7 +3,9 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:jonggack_topik/core/models/Question.dart';
+import 'package:jonggack_topik/core/models/missed_word.dart';
 import 'package:jonggack_topik/core/models/step_model.dart';
 import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/core/repositories/hive_repository.dart';
@@ -45,6 +47,8 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
   int correctDurationTime = 200; // 맞출 시 다음 문제로 넘어갈 Duratiojn
   int incorrectDurationTime = 1500; // 맞출 시 다음 문제로 넘어갈 Duratiojn
   int skipDurationTime = 250; // 맞출 시 다음 문제로 넘어갈 Duratiojn
+
+  late bool isMyWordTest;
 
   @override
   void onClose() {
@@ -156,7 +160,21 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
     }
   }
 
-  late bool isMyWordTest;
+  Future<void> registerMiss(List<Word> words) async {
+    final Box<MissedWord> box = Hive.box<MissedWord>(MissedWord.boxKey);
+
+    for (var word in words) {
+      final existing = box.values.toList().firstWhereOrNull(
+        (e) => e.word.id == word.id,
+      );
+      if (existing != null) {
+        existing.missCount++;
+        await existing.save();
+      } else {
+        box.add(MissedWord(word: word, category: ''));
+      }
+    }
+  }
 
   void nextQuestion() async {
     isDisTouchable = false;
@@ -184,10 +202,15 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
       // int ranNum = random.nextInt(5);
       // date = date.subtract(Duration(days: ranNum));
       QuizHistoryRepository.saveOrUpdate(
-        date: date,
+        date: date.add(Duration(days: 1)),
+        // date: date,
         newCorrectIds: correctQuestions.map((word) => word.id).toSet().toList(),
         newIncorrectIds: wrongQuestions.map((word) => word.id).toSet().toList(),
       );
+      //
+      await registerMiss(wrongQuestions);
+
+      //
 
       bool isTryAgain = false;
       if (!isMyWordTest) {
@@ -216,6 +239,8 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
         SubjectController.to.setTotalAndScores();
         CategoryController.to.setTotalAndScores();
       } else {
+        // 뭐야 이거
+        print('Get.back()');
         Get.back();
       }
 
@@ -224,13 +249,16 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
           if (!isTryAgain) {
             ChapterController.to.quizAllCorrect();
           }
+          print('3');
           Get.off(() => const VeryGoodScreen());
         } else {
+          print('2');
           Get.to(() => const VeryGoodScreen());
         }
         return;
       }
-
+      print('여기야');
+      print('isMyWordTest : ${isMyWordTest}');
       Get.off(() => ScoreScreen());
     }
   }
