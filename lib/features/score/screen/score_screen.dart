@@ -9,10 +9,9 @@ import 'package:jonggack_topik/core/utils/app_constant.dart';
 import 'package:jonggack_topik/features/quiz/controller/quiz_controller.dart';
 import 'package:jonggack_topik/theme.dart';
 
-const SCORE_PATH = '/score';
-
 class ScoreScreen extends StatefulWidget {
-  const ScoreScreen({Key? key}) : super(key: key);
+  static const name = '/score';
+  const ScoreScreen({super.key});
 
   @override
   State<ScoreScreen> createState() => _ScoreScreenState();
@@ -82,7 +81,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: Text(
-            '오답',
+            '間違え',
             style: TextStyle(
               color: AppColors.mainBordColor,
               fontWeight: FontWeight.bold,

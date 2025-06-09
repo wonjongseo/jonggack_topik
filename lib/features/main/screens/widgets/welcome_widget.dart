@@ -18,7 +18,7 @@ class WelcomeWidget extends StatelessWidget {
             Text(
               gretting,
               style: TextStyle(
-                fontSize: UserController.to.baseFontSize + 4,
+                fontSize: SettingController.to.baseFontSize + 4,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -29,7 +29,7 @@ class WelcomeWidget extends StatelessWidget {
                   'TOPIK 종각',
 
                   style: TextStyle(
-                    fontSize: UserController.to.baseFontSize + 4,
+                    fontSize: SettingController.to.baseFontSize + 4,
                     color: AppColors.mainBordColor,
                     fontWeight: FontWeight.w900,
                   ),
@@ -38,7 +38,7 @@ class WelcomeWidget extends StatelessWidget {
                   Text(
                     '+',
                     style: TextStyle(
-                      fontSize: UserController.to.baseFontSize + 4,
+                      fontSize: SettingController.to.baseFontSize + 4,
                       fontWeight: FontWeight.w900,
                     ),
                   ),
@@ -46,7 +46,7 @@ class WelcomeWidget extends StatelessWidget {
                   '에 어서오세요',
 
                   style: TextStyle(
-                    fontSize: UserController.to.baseFontSize + 4,
+                    fontSize: SettingController.to.baseFontSize + 4,
                     fontWeight: FontWeight.w900,
                   ),
                 ),

@@ -129,7 +129,8 @@ class JlptTestCard extends StatelessWidget {
       margin: EdgeInsets.symmetric(horizontal: 20),
       padding: EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: UserController.to.isDarkMode ? AppColors.black : AppColors.white,
+        color:
+            SettingController.to.isDarkMode ? AppColors.black : AppColors.white,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(24),
           topRight: Radius.circular(24),
@@ -190,7 +191,7 @@ class JlptTestOption extends StatelessWidget {
               return const Color(0xFFE92E30);
             }
           }
-          return UserController.to.isDarkMode
+          return SettingController.to.isDarkMode
               ? AppColors.white
               : AppColors.scaffoldBackground.withOpacity(0.5);
 

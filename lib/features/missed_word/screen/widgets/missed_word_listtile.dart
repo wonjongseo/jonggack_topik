@@ -1,0 +1,80 @@
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:jonggack_topik/core/models/missed_word.dart';
+import 'package:jonggack_topik/core/models/word.dart';
+import 'package:jonggack_topik/features/auth/controllers/user_controller.dart';
+
+class MissedWordListTIle extends StatelessWidget {
+  const MissedWordListTIle({
+    super.key,
+    this.onTapMean,
+    required this.onTap,
+    required this.missedWord,
+    required this.word,
+    required this.isHidenMean,
+    required this.onTrailingTap,
+  });
+  final Function()? onTapMean;
+  final Function() onTap;
+
+  final Function() onTrailingTap;
+  final MissedWord missedWord;
+  final Word word;
+
+  final bool isHidenMean;
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      minLeadingWidth: 80,
+      leading: Text(word.word),
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          InkWell(
+            onTap: onTapMean,
+            child: SizedBox(
+              height: 30,
+              child: Container(
+                decoration:
+                    isHidenMean ? BoxDecoration(color: Colors.grey) : null,
+                child: Text(
+                  word.mean,
+                  style: TextStyle(
+                    color: isHidenMean ? Colors.grey : null,
+                    fontSize: SettingController.to.baseFontSize - 1,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: 6),
+          Text(word.yomikata, style: TextStyle(fontSize: 10)),
+        ],
+      ),
+      // subtitle: ,
+      onTap: onTap,
+      trailing: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          IconButton(
+            style: IconButton.styleFrom(
+              minimumSize: const Size(0, 0),
+              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            ),
+            onPressed: onTrailingTap,
+            icon: Icon(FontAwesomeIcons.trash),
+            iconSize: 16,
+            color: Colors.pinkAccent,
+          ),
+          Text(
+            '${missedWord.missCount}回',
+            style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
+          ),
+        ],
+      ),
+      // isThreeLine: true,
+    );
+  }
+}

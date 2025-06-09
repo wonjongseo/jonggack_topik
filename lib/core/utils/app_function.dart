@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/utils.dart';
+import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/features/category/controller/category_controller.dart';
 import 'package:jonggack_topik/features/chapter/controller/chapter_controller.dart';
 import 'package:jonggack_topik/features/step/controller/step_controller.dart';
@@ -11,6 +14,66 @@ class AppFunction {
       0,
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
+    );
+  }
+
+  static Future<TimeOfDay?> pickTime(
+    BuildContext context, {
+    String? helpText,
+    String? errorInvalidText,
+    TimeOfDay? initialTime,
+  }) async {
+    return await showTimePicker(
+      cancelText: AppString.cancelBtnTextTr.tr,
+      helpText: helpText ?? AppString.plzAlarmTime.tr,
+      errorInvalidText: errorInvalidText ?? AppString.plzInputCollectTime.tr,
+      hourLabelText: AppString.hour.tr,
+      minuteLabelText: AppString.minute.tr,
+      context: context,
+      initialEntryMode: TimePickerEntryMode.input,
+      // initialTime: initialTime ?? TimeOfDay(hour: 0, minute: 0)
+      initialTime: initialTime ?? TimeOfDay.now(),
+    );
+  }
+
+  static int createIdByDay(int day, int hour, int minute) {
+    return day * Random().nextInt(1000) +
+        hour * Random().nextInt(100) +
+        minute +
+        Random().nextInt(10);
+  }
+
+  static Future showBottomSheet({
+    required BuildContext context,
+    required Widget child,
+  }) async {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      context: context,
+      builder: (context) {
+        return Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                margin: EdgeInsets.only(top: 10),
+                width: 100,
+                height: 5,
+                decoration: BoxDecoration(
+                  color: Colors.grey,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              const SizedBox(height: 10),
+              child,
+              SizedBox(height: 10 * 5),
+            ],
+          ),
+        );
+      },
     );
   }
 }

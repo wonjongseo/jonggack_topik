@@ -12,6 +12,7 @@ import 'package:jonggack_topik/core/repositories/hive_repository.dart';
 import 'package:jonggack_topik/core/utils/app_function.dart';
 import 'package:jonggack_topik/features/category/controller/category_controller.dart';
 import 'package:jonggack_topik/features/chapter/controller/chapter_controller.dart';
+import 'package:jonggack_topik/features/missed_word/controller/missed_word_controller.dart';
 import 'package:jonggack_topik/features/quiz/screen/very_good_screen.dart';
 import 'package:jonggack_topik/features/score/screen/score_screen.dart';
 import 'package:jonggack_topik/features/step/controller/step_controller.dart';
@@ -165,14 +166,18 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
 
     for (var word in words) {
       final existing = box.values.toList().firstWhereOrNull(
-        (e) => e.word.id == word.id,
+        (e) => e.wordId == word.id,
       );
       if (existing != null) {
         existing.missCount++;
         await existing.save();
       } else {
-        box.add(MissedWord(word: word, category: ''));
+        box.add(MissedWord(wordId: word.id, category: ''));
       }
+    }
+
+    if (Get.isRegistered<MissedWordController>()) {
+      MissedWordController.to.getMissedWords();
     }
   }
 
@@ -202,8 +207,8 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
       // int ranNum = random.nextInt(5);
       // date = date.subtract(Duration(days: ranNum));
       QuizHistoryRepository.saveOrUpdate(
-        date: date.add(Duration(days: 1)),
-        // date: date,
+        // date: date.add(Duration(days: 1)),
+        date: date,
         newCorrectIds: correctQuestions.map((word) => word.id).toSet().toList(),
         newIncorrectIds: wrongQuestions.map((word) => word.id).toSet().toList(),
       );
@@ -240,8 +245,8 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
         CategoryController.to.setTotalAndScores();
       } else {
         // 뭐야 이거
-        print('Get.back()');
-        Get.back();
+        // print('Get.back()');
+        // Get.back();
       }
 
       if (numOfCorrectAns == questions.length) {
@@ -259,7 +264,7 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
       }
       print('여기야');
       print('isMyWordTest : ${isMyWordTest}');
-      Get.off(() => ScoreScreen());
+      Get.offAndToNamed(ScoreScreen.name);
     }
   }
 

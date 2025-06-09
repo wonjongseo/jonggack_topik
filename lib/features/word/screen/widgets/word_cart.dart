@@ -34,7 +34,7 @@ class WordCard extends GetView<WordController> {
                         child: AutoSizeText(
                           word.word,
                           style: TextStyle(
-                            fontSize: UserController.to.baseFontSize + 10,
+                            fontSize: SettingController.to.baseFontSize + 10,
                           ),
                           maxLines: 1,
                         ),
@@ -91,11 +91,9 @@ class WordCard extends GetView<WordController> {
                   SizedBox(height: 20),
                   AutoSizeText(
                     word.mean,
-                    // style: UserController.to.body.copyWith(
-                    //   fontFamily: AppFonts.zenMaruGothic,
-                    // ),
+
                     style: TextStyle(
-                      fontSize: UserController.to.baseFontSize,
+                      fontSize: SettingController.to.baseFontSize,
                       fontWeight: FontWeight.normal,
                       fontFamily: AppFonts.zenMaruGothic,
                     ),
@@ -126,7 +124,7 @@ class WordCard extends GetView<WordController> {
         Text(
           "例文",
           style: TextStyle(
-            fontSize: UserController.to.baseFontSize,
+            fontSize: SettingController.to.baseFontSize,
             fontWeight: FontWeight.normal,
             color: AppColors.mainBordColor,
           ),
@@ -148,7 +146,7 @@ class WordCard extends GetView<WordController> {
                   "More...",
 
                   style: TextStyle(
-                    fontSize: UserController.to.baseFontSize,
+                    fontSize: SettingController.to.baseFontSize,
                     fontWeight: FontWeight.w400,
                     color: AppColors.mainBordColor,
                   ),
@@ -174,7 +172,7 @@ class WordCard extends GetView<WordController> {
         Text(
           "類義語",
           style: TextStyle(
-            fontSize: UserController.to.baseFontSize,
+            fontSize: SettingController.to.baseFontSize,
             fontWeight: FontWeight.normal,
             color: AppColors.mainBordColor,
           ),

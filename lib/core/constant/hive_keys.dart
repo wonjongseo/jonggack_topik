@@ -47,4 +47,16 @@ class HK {
 
   static const int missedWordID = 15;
   static const String missedWordBoxKey = 'missedWord-box-key';
+
+  static const int weekDayTypeHiveId = 16;
+  static const String weekDayTypeBoxKey = 'weekDayType-box-key';
+
+  static const int dayPeriodTypeHiveId = 17;
+  static const String dayPeriodTypedBoxKey = 'dayPeriodType-box-key';
+
+  static const int taskModelHiveId = 18;
+  static const String taskModelBoxKey = 'taskModel-box-key';
+
+  static const int notificationModelHiveId = 19;
+  static const String notificationModelBoxKey = 'notificationModel-box-key';
 }

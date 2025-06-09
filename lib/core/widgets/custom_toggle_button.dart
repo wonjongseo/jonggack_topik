@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:jonggack_topik/core/utils/app_color.dart';
 
-class CToggleBtn extends StatelessWidget {
-  const CToggleBtn({
+class CustomToggleListTile extends StatelessWidget {
+  const CustomToggleListTile({
     super.key,
     required this.toggle,
     required this.value,
@@ -23,31 +23,45 @@ class CToggleBtn extends StatelessWidget {
           color: AppColors.primaryColor,
         ),
       ),
-      trailing: ToggleButtons(
-        borderRadius: BorderRadius.circular(20),
-        onPressed: (index) {
-          index == 1 ? toggle(false) : toggle(true);
-        },
-        isSelected: [value, !value],
-        children: [
-          Text(
-            'ON',
-            style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
-              color: AppColors.primaryColor,
-            ),
+      trailing: CustomToggleButton(toggle: toggle, value: value),
+    );
+  }
+}
+
+class CustomToggleButton extends StatelessWidget {
+  const CustomToggleButton({
+    super.key,
+    required this.toggle,
+    required this.value,
+  });
+  final Function(bool) toggle;
+  final bool value;
+  @override
+  Widget build(BuildContext context) {
+    return ToggleButtons(
+      borderRadius: BorderRadius.circular(20),
+      onPressed: (index) {
+        index == 1 ? toggle(false) : toggle(true);
+      },
+      isSelected: [value, !value],
+      children: [
+        Text(
+          'ON',
+          style: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w600,
+            color: AppColors.primaryColor,
           ),
-          Text(
-            'OFF',
-            style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
-              color: AppColors.primaryColor,
-            ),
+        ),
+        Text(
+          'OFF',
+          style: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w600,
+            color: AppColors.primaryColor,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

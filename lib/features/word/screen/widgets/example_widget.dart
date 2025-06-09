@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/models/example.dart';
@@ -23,7 +24,15 @@ class ExampleWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Expanded(child: Text('${index + 1}. ${example.word}')),
+              Expanded(
+                child: Text(
+                  '${index + 1}. ${example.word}',
+                  style: TextStyle(
+                    fontSize: SettingController.to.baseFontSize + 1,
+                  ),
+                ),
+              ),
+
               Obx(() {
                 final isPlayingThisWord =
                     TtsController.to.isPlaying.value &&
@@ -42,14 +51,33 @@ class ExampleWidget extends StatelessWidget {
               }),
             ],
           ),
-          Text(
-            example.mean,
-            style: TextStyle(
-              fontSize: UserController.to.baseFontSize - 2,
-              color: Colors.grey,
-              fontFamily: AppFonts.zenMaruGothic,
+          HtmlWidget(
+            example.yomikata,
+            textStyle: TextStyle(
+              fontSize: SettingController.to.baseFontSize - 2,
             ),
+            customStylesBuilder: (element) {
+              if (element.classes.contains('bold')) {
+                return {'color': 'red', 'font-weight': 'bold'};
+              }
+              if (element.toString().contains('rt')) {
+                return {
+                  // 'color': 'red',
+                  'font-size': 'x-small',
+                  'font-weight': 'bold',
+                };
+              }
+              return null;
+            },
           ),
+          // Text(
+          //   example.mean,
+          //   style: TextStyle(
+          //     fontSize: SettingController.to.baseFontSize - 2,
+          //     color: Colors.grey,
+          //     fontFamily: AppFonts.zenMaruGothic,
+          //   ),
+          // ),
         ],
       ), // 예문 표시
     );

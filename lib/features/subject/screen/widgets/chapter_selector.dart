@@ -35,7 +35,7 @@ class ChapterSelector extends StatelessWidget {
                 child: Text(
                   label,
                   style: TextStyle(
-                    fontSize: UserController.to.baseFontSize + 10,
+                    fontSize: SettingController.to.baseFontSize + 10,
                     fontWeight: FontWeight.w600,
                     fontFamily: AppFonts.zenMaruGothic,
                   ),

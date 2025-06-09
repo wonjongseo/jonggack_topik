@@ -29,7 +29,7 @@ class BookStudyScreen extends GetView<BookStudyController> {
                         ],
                         style: TextStyle(
                           fontFamily: AppFonts.zenMaruGothic,
-                          fontSize: UserController.to.baseFontSize,
+                          fontSize: SettingController.to.baseFontSize,
                         ),
                       ),
                     )

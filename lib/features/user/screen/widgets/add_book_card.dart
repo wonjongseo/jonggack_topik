@@ -19,11 +19,7 @@ class AddBookCard extends StatelessWidget {
           children: [
             Text(
               '単語帳作成',
-              style: TextStyle(
-                fontFamily: AppFonts.zenMaruGothic,
-                fontSize: 22,
-                fontWeight: FontWeight.w600,
-              ),
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 24),
             CustomTextFormField(

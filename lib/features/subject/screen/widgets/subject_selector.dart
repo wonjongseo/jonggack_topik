@@ -35,13 +35,8 @@ class SubjecttSelector extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       color: Colors.cyan.shade600,
                       fontSize: 17,
-                      fontFamily: AppFonts.zenMaruGothic,
                     )
-                    : TextStyle(
-                      color: Colors.grey.shade600,
-                      fontSize: 15,
-                      fontFamily: AppFonts.zenMaruGothic,
-                    ),
+                    : TextStyle(color: Colors.grey.shade600, fontSize: 15),
           ),
         ),
       ),

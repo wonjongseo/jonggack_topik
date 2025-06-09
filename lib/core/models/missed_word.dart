@@ -8,7 +8,7 @@ part 'missed_word.g.dart';
 class MissedWord extends HiveObject {
   static const String boxKey = HK.missedWordBoxKey;
   @HiveField(0)
-  Word word;
+  String wordId;
   @HiveField(1)
   String category;
   @HiveField(2)
@@ -16,6 +16,6 @@ class MissedWord extends HiveObject {
   @HiveField(3)
   String lastMissedDay;
 
-  MissedWord({required this.word, required this.category, this.missCount = 1})
+  MissedWord({required this.wordId, required this.category, this.missCount = 1})
     : lastMissedDay = DateTime.now().toIso8601String();
 }

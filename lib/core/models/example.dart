@@ -12,12 +12,15 @@ class Example {
   late String word;
   @HiveField(1)
   late String mean;
+  @HiveField(2)
+  late String yomikata;
 
   Example({required this.word, required this.mean});
 
   Example.fromMap(Map<String, dynamic> map) {
     word = map['word'] ?? '';
     mean = map['mean'] ?? '';
+    yomikata = map['yomikata'] ?? '';
   }
 
   @override
@@ -30,6 +33,7 @@ class Example {
 
     result.addAll({'word': word});
     result.addAll({'mean': mean});
+    result.addAll({'yomikata': yomikata});
 
     return result;
   }

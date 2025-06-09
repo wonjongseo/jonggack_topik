@@ -94,13 +94,13 @@ class ChapterScreen extends GetView<ChapterController> {
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
-                  CToggleBtn(
+                  CustomToggleListTile(
                     label: '의미 가리기',
                     toggle: controller.toggleSeeMean,
                     value: controller.isHidenMean,
                   ),
                   const SizedBox(height: 10),
-                  CToggleBtn(
+                  CustomToggleListTile(
                     label: '읽는 법 가리기',
                     toggle: controller.toggleSeeYomikata,
                     value: controller.isSeeYomikata,

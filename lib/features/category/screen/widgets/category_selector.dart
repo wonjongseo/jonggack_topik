@@ -39,7 +39,6 @@ class CategorySelector extends StatelessWidget {
                     Text(
                       category.title,
                       style: TextStyle(
-                        fontFamily: AppFonts.zenMaruGothic,
                         fontSize: 21,
                         fontWeight: FontWeight.w600,
                       ),

@@ -17,7 +17,7 @@ class MissedWordAdapter extends TypeAdapter<MissedWord> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return MissedWord(
-      word: fields[0] as Word,
+      wordId: fields[0] as String,
       category: fields[1] as String,
       missCount: fields[2] as int,
     )..lastMissedDay = fields[3] as String;
@@ -28,7 +28,7 @@ class MissedWordAdapter extends TypeAdapter<MissedWord> {
     writer
       ..writeByte(4)
       ..writeByte(0)
-      ..write(obj.word)
+      ..write(obj.wordId)
       ..writeByte(1)
       ..write(obj.category)
       ..writeByte(2)

@@ -8,6 +8,7 @@ import 'package:jonggack_topik/core/models/quiz_history.dart';
 import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/core/utils/snackbar_helper.dart';
 import 'package:jonggack_topik/features/book/controller/book_controller.dart';
+import 'package:jonggack_topik/features/missed_word/controller/missed_word_controller.dart';
 import 'package:jonggack_topik/features/quiz/controller/quiz_controller.dart';
 import 'package:jonggack_topik/features/quiz/screen/quiz_screen.dart';
 import 'package:jonggack_topik/features/user/repository/quiz_history_repository.dart';
@@ -18,33 +19,33 @@ class ChartController extends GetxController {
   static ChartController get to => Get.find<ChartController>();
 
   // MissedWord
-  final _missedWords = <MissedWord>[].obs;
-  bool isWordLoading = false;
-  List<MissedWord> get missedWords => _missedWords.value;
-  List<Word> get words => missedWords.map((missed) => missed.word).toList();
+  // final _missedWords = <MissedWord>[].obs;
+  // bool isWordLoading = false;
+  // List<MissedWord> get missedWords => _missedWords.value;
+  // List<Word> get words => missedWords.map((missed) => missed.word).toList();
 
-  void getMissedWords() {
-    final Box<MissedWord> box = Hive.box<MissedWord>(MissedWord.boxKey);
+  // void getMissedWords() {
+  //   final Box<MissedWord> box = Hive.box<MissedWord>(MissedWord.boxKey);
 
-    final missedWords = box.values.toList();
+  //   final missedWords = box.values.toList();
 
-    missedWords.sort((b, a) => a.missCount.compareTo(b.missCount));
-    _missedWords.assignAll(missedWords);
-  }
+  //   missedWords.sort((b, a) => a.missCount.compareTo(b.missCount));
+  //   _missedWords.assignAll(missedWords);
+  // }
 
-  void goToWordScreen(int index) {
-    Get.to(
-      () => WordScreen(),
-      binding: BindingsBuilder.put(() => WordController(true, words, index)),
-    );
-  }
+  // void goToWordScreen(int index) {
+  //   Get.to(
+  //     () => WordScreen(),
+  //     binding: BindingsBuilder.put(() => WordController(true, words, index)),
+  //   );
+  // }
 
-  void goToQuizPage() {
-    Get.to(
-      () => QuizScreen(),
-      binding: BindingsBuilder.put(() => Get.put(QuizController(words))),
-    );
-  }
+  // void goToQuizPage() {
+  //   Get.to(
+  //     () => QuizScreen(),
+  //     binding: BindingsBuilder.put(() => Get.put(QuizController(words))),
+  //   );
+  // }
 
   // Corract Rate - Graph
 
@@ -63,7 +64,7 @@ class ChartController extends GetxController {
 
   getAllData() {
     getHistories();
-    getMissedWords();
+    MissedWordController.to.getMissedWords();
   }
 
   void getHistories() {

@@ -18,8 +18,6 @@ class UserController extends GetxController {
 
   @override
   void onInit() {
-    _isDarkMode.value =
-        SettingRepository.getBool(AppConstant.isDarkModeKey) ?? false;
     getData();
     super.onInit();
   }
@@ -55,11 +53,20 @@ class UserController extends GetxController {
   }
 
   //Setting
+}
 
+class SettingController extends GetxController {
+  static SettingController get to => Get.find<SettingController>();
   final _isDarkMode = false.obs;
   bool get isDarkMode => _isDarkMode.value;
   final _baseFontSize = 16.0.obs;
   double get baseFontSize => _baseFontSize.value;
+  @override
+  void onInit() {
+    _isDarkMode.value =
+        SettingRepository.getBool(AppConstant.isDarkModeKey) ?? false;
+    super.onInit();
+  }
 
   void changeTheme(int index) {
     if (index == 0) {

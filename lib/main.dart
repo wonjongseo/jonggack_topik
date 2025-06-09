@@ -2,24 +2,40 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:jonggack_topik/core/logger/logger_service.dart';
 import 'package:jonggack_topik/core/repositories/hive_repository.dart';
 import 'package:jonggack_topik/core/repositories/setting_repository.dart';
 import 'package:jonggack_topik/core/tts/tts_controller.dart';
 import 'package:jonggack_topik/core/utils/app_constant.dart';
+import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/features/book/controller/book_controller.dart';
 import 'package:jonggack_topik/features/category/controller/category_controller.dart';
 import 'package:jonggack_topik/features/auth/controllers/user_controller.dart';
 import 'package:jonggack_topik/features/category/controller/search_get_controller.dart';
 import 'package:jonggack_topik/features/chart/controller/chart_controller.dart';
 import 'package:jonggack_topik/features/main/controller/main_controller.dart';
-import 'package:jonggack_topik/features/main/screens/main_screen.dart';
+import 'package:jonggack_topik/features/missed_word/controller/missed_word_controller.dart';
+import 'package:jonggack_topik/features/onboarding/controller/onboarding_controller.dart';
 import 'package:jonggack_topik/routes.dart';
+import 'package:jonggack_topik/splash_screen.dart';
 import 'package:jonggack_topik/theme.dart';
+
+import 'package:flutter_timezone/flutter_timezone.dart';
+import 'package:timezone/data/latest_all.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
+
+Future<void> _initializeTimeZone() async {
+  tz.initializeTimeZones();
+  final String currentTimeZone = await FlutterTimezone.getLocalTimezone();
+  LogManager.info("📌 Timezone: $currentTimeZone");
+  tz.setLocalLocation(tz.getLocation(currentTimeZone));
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   MobileAds.instance.initialize();
   initializeDateFormatting();
+  await _initializeTimeZone();
   runApp(const App());
 }
 
@@ -64,17 +80,19 @@ class _AppState extends State<App> {
       future: fufu(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          Get.put(UserController());
+          // Get.put(OnboardingController());
+          Get.put(SettingController());
           return GetMaterialApp(
             debugShowCheckedModeBanner: false,
-            initialRoute: MainScreen.name,
+            initialRoute: SplashScreen.name,
             getPages: AppRoutes.getPages,
-            fallbackLocale: const Locale('ko', 'KR'),
+            fallbackLocale: const Locale('ja', 'JP'),
             locale: Get.deviceLocale,
             themeMode: themeMode,
             theme: AppThemings.lightTheme,
             darkTheme: AppThemings.darkTheme,
             initialBinding: InitBinding(),
+            translations: AppTranslations(),
           );
         }
         return loadingMaterialApp(context);
@@ -91,8 +109,10 @@ class _AppState extends State<App> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'データを読み込んでおります。',
-                style: Theme.of(context).textTheme.titleMedium,
+                'データを読み込んでいります。',
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  fontFamily: AppFonts.zenMaruGothic,
+                ),
               ),
               const SizedBox(height: 12),
               TweenAnimationBuilder(
@@ -128,6 +148,10 @@ class InitBinding extends Bindings {
   @override
   void dependencies() {
     Get.put(TtsController());
+
+    Get.lazyPut(() => OnboardingController());
+
+    Get.lazyPut(() => UserController(), fenix: true);
     Get.lazyPut(() => MainController(), fenix: true);
     Get.lazyPut(() => SearchGetController());
     // Get.lazyPut(() => CategoryController());
@@ -136,6 +160,7 @@ class InitBinding extends Bindings {
     Get.lazyPut(() => DataRepositry());
     Get.lazyPut(() => CategoryController(Get.find()));
     Get.lazyPut(() => ChartController());
+    Get.lazyPut(() => MissedWordController());
   }
 }
 // flutter pub run build_runner build --delete-conflicting-outputs

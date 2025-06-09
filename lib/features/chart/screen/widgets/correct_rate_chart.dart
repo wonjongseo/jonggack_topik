@@ -2,6 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/utils/app_color.dart';
+import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/features/chart/controller/chart_controller.dart';
 import 'package:jonggack_topik/theme.dart';
 
@@ -21,6 +22,22 @@ class CorrectRateChart extends StatelessWidget {
               BarChartData(
                 minY: 0,
                 maxY: 100,
+                barTouchData: BarTouchData(
+                  enabled: true,
+                  touchTooltipData: BarTouchTooltipData(
+                    tooltipPadding: EdgeInsets.all(8),
+                    getTooltipItem: (group, groupIndex, rod, rodIndex) {
+                      final value = rod.toY;
+                      return BarTooltipItem(
+                        '${AppString.correctRate} ${value.toInt()}%',
+                        TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      );
+                    },
+                  ),
+                ),
                 barGroups: _makeBarGroups(controller),
                 titlesData: FlTitlesData(
                   leftTitles: AxisTitles(
@@ -54,11 +71,7 @@ class CorrectRateChart extends StatelessWidget {
                         }
                         final label = controller.xLabels[idx];
 
-                        return Text(
-                          "$label日",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontFamily: AppFonts.zenMaruGothic),
-                        );
+                        return Text("$label日", textAlign: TextAlign.center);
                       },
                     ),
                   ),
@@ -102,9 +115,11 @@ class CorrectRateChart extends StatelessWidget {
 
   double _computeLeftInterval(ChartController controller) {
     if (controller.salesQuantity.isEmpty) return 1;
+
     final maxY = controller.salesQuantity
         .map((e) => e.y)
         .reduce((a, b) => a > b ? a : b);
-    return (maxY).ceilToDouble().clamp(1, double.infinity);
+
+    return maxY == 0 ? 100 : 25;
   }
 }
