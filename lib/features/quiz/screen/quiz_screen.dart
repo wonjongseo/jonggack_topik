@@ -1,9 +1,10 @@
+import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/models/Question.dart';
 import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/core/utils/app_color.dart';
-import 'package:jonggack_topik/features/auth/controllers/user_controller.dart';
+
 import 'package:jonggack_topik/features/quiz/controller/quiz_controller.dart';
 import 'package:jonggack_topik/features/quiz/screen/widgets/progressbar.dart';
 import 'package:jonggack_topik/theme.dart';
@@ -121,10 +122,6 @@ class JlptTestCard extends StatelessWidget {
   Widget build(BuildContext context) {
     String qustionWord = question.question.word;
 
-    if (qustionWord.contains('·')) {
-      qustionWord = qustionWord.split('·')[0];
-    }
-
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20),
       padding: EdgeInsets.all(20),
@@ -140,7 +137,6 @@ class JlptTestCard extends StatelessWidget {
         children: [
           Text(qustionWord, style: TextStyle(fontSize: 22)),
           SizedBox(height: 40),
-
           Expanded(
             child: SingleChildScrollView(
               child: Column(
@@ -179,6 +175,9 @@ class JlptTestOption extends StatelessWidget {
     return GetBuilder<QuizController>(
       builder: (qnController) {
         String getString() {
+          if (test.mean.contains('、')) {
+            return test.mean.split('、')[0];
+          }
           return test.mean;
         }
 
@@ -194,8 +193,6 @@ class JlptTestOption extends StatelessWidget {
           return SettingController.to.isDarkMode
               ? AppColors.white
               : AppColors.scaffoldBackground.withOpacity(0.5);
-
-          // AppColors.scaffoldBackground.withOpacity(0.5);
         }
 
         IconData getTheRightIcon() {
@@ -235,7 +232,7 @@ class JlptTestOption extends StatelessWidget {
               '${index + 1}. ${getString()}',
               style: TextStyle(
                 color: getTheRightColor(),
-                fontSize: 16,
+                fontSize: SettingController.to.baseFS - 2,
                 fontFamily: AppFonts.japaneseFont,
               ),
             ),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/admob/banner_ad/global_banner_admob.dart';
-import 'package:jonggack_topik/core/utils/app_color.dart';
 import 'package:jonggack_topik/core/widgets/custom_button.dart';
 import 'package:jonggack_topik/core/widgets/custom_toggle_button.dart';
 import 'package:jonggack_topik/features/chapter/controller/chapter_controller.dart';
@@ -9,6 +8,7 @@ import 'package:jonggack_topik/features/chapter/screen/widgets/step_body.dart';
 
 import 'package:jonggack_topik/features/chapter/screen/widgets/step_selector.dart';
 import 'package:jonggack_topik/features/subject/controller/subject_controller.dart';
+import 'package:jonggack_topik/theme.dart';
 
 class ChapterScreen extends GetView<ChapterController> {
   const ChapterScreen({super.key});
@@ -52,10 +52,7 @@ class ChapterScreen extends GetView<ChapterController> {
               ),
               Expanded(
                 child: Container(
-                  color:
-                      Get.isDarkMode
-                          ? AppColors.scaffoldBackground
-                          : AppColors.white,
+                  color: dyBackground,
                   margin: const EdgeInsets.only(top: 8),
                   child: Obx(
                     () => StepBody(isHidenMean: controller.isHidenMean),

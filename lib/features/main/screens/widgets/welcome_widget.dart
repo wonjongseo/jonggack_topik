@@ -2,59 +2,59 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/utils/app_color.dart';
 import 'package:jonggack_topik/features/auth/controllers/user_controller.dart';
+import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
 
-class WelcomeWidget extends StatelessWidget {
+class WelcomeWidget extends GetView<SettingController> {
   const WelcomeWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
     String gretting = '안녕하세요';
 
-    return GetBuilder<UserController>(
-      builder: (controller) {
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Text(
-              gretting,
-              style: TextStyle(
-                fontSize: SettingController.to.baseFontSize + 4,
-                fontWeight: FontWeight.bold,
-              ),
+    return Obx(() {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Text(
+            gretting,
+            style: TextStyle(
+              fontSize: controller.baseFS + 4,
+              fontWeight: FontWeight.bold,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'TOPIK 종각',
-
-                  style: TextStyle(
-                    fontSize: SettingController.to.baseFontSize + 4,
-                    color: AppColors.mainBordColor,
-                    fontWeight: FontWeight.w900,
-                  ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'TOPIK 종각',
+                style: TextStyle(
+                  fontSize: controller.baseFS + 4,
+                  color: AppColors.mainBordColor,
+                  fontWeight: FontWeight.w900,
                 ),
-                if (controller.user.isPremieum)
-                  Text(
-                    '+',
+              ),
+              GetBuilder<UserController>(
+                builder: (userController) {
+                  return Text(
+                    userController.user.isPremieum ? '+' : '',
                     style: TextStyle(
-                      fontSize: SettingController.to.baseFontSize + 4,
+                      fontSize: controller.baseFS + 4,
                       fontWeight: FontWeight.w900,
                     ),
-                  ),
-                Text(
-                  '에 어서오세요',
-
-                  style: TextStyle(
-                    fontSize: SettingController.to.baseFontSize + 4,
-                    fontWeight: FontWeight.w900,
-                  ),
+                  );
+                },
+              ),
+              Text(
+                '에 어서오세요',
+                style: TextStyle(
+                  fontSize: controller.baseFS + 4,
+                  fontWeight: FontWeight.w900,
                 ),
-              ],
-            ),
-          ],
-        );
-      },
-    );
+              ),
+            ],
+          ),
+        ],
+      );
+    });
   }
 }

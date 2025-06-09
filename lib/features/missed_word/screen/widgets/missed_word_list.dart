@@ -4,6 +4,8 @@ import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/features/missed_word/screen/missed_words_screen.dart';
 import 'package:jonggack_topik/features/missed_word/controller/missed_word_controller.dart';
 import 'package:jonggack_topik/features/missed_word/screen/widgets/missed_word_listtile.dart';
+import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
+import 'package:jonggack_topik/theme.dart';
 
 class MissWordList extends GetView<MissedWordController> {
   const MissWordList({super.key});
@@ -15,25 +17,27 @@ class MissWordList extends GetView<MissedWordController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'よく間違える単語',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 22,
-              letterSpacing: 1.2,
+          Obx(
+            () => Text(
+              'よく間違える単語',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: SettingController.to.baseFS + 6,
+                letterSpacing: 1.2,
+              ),
             ),
           ),
           Divider(),
 
           Obx(() {
             if (controller.missedWords.isEmpty) {
-              return Text(AppString.noRecordedData);
+              return Text(AppString.noRecordedData.tr);
             }
 
             return Column(
               children: [
                 Container(
-                  color: Colors.white60,
+                  color: dyBackground,
                   child: ListView.separated(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),

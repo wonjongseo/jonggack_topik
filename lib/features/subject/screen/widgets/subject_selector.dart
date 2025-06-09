@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
 import 'package:jonggack_topik/theme.dart';
 
 class SubjecttSelector extends StatelessWidget {
@@ -34,7 +35,7 @@ class SubjecttSelector extends StatelessWidget {
                     ? TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.cyan.shade600,
-                      fontSize: 17,
+                      fontSize: SettingController.to.baseFS + 1,
                     )
                     : TextStyle(color: Colors.grey.shade600, fontSize: 15),
           ),

@@ -154,7 +154,6 @@ class CategoryController extends GetxController {
 
 class DataRepositry {
   Future<List<Word>> getAllWords(String fileName) async {
-    print('getAllWords');
     try {
       // final jsonString = await rootBundle.loadString('assets/data/$fileName');
       final jsonString = await rootBundle.loadString(

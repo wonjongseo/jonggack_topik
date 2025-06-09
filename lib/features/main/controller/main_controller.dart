@@ -23,15 +23,13 @@ class MainController extends GetxController {
     super.onInit();
   }
 
-  List<Widget> buildScreens() {
-    return [
-      CategoryScreen(),
-      UserScreen(),
-      RandomQuizScreen(),
-      ChartSceen(),
-      SettingScreen(),
-    ];
-  }
+  List<Widget> get buildScreens => [
+    CategoryScreen(),
+    UserScreen(),
+    RandomQuizScreen(),
+    ChartSceen(),
+    SettingScreen(),
+  ];
 
   void onPageSelected(int index) {
     if (index == 1) {

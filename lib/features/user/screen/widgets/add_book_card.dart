@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/core/widgets/custom_text_form_field.dart';
-import 'package:jonggack_topik/theme.dart';
+import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
 
 class AddBookCard extends StatelessWidget {
   const AddBookCard({super.key, required this.tECtl, required this.onTap});
@@ -19,12 +20,15 @@ class AddBookCard extends StatelessWidget {
           children: [
             Text(
               '単語帳作成',
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
+              style: TextStyle(
+                fontSize: SettingController.to.baseFS + 6,
+                fontWeight: FontWeight.w600,
+              ),
             ),
             const SizedBox(height: 24),
             CustomTextFormField(
               controller: tECtl,
-              hintText: AppString.bookCtlHint,
+              hintText: AppString.bookCtlHint.tr,
             ),
             const SizedBox(height: 12),
             Align(

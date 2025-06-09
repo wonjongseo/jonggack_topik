@@ -73,4 +73,23 @@ class SettingRepository {
 
     return box.get(key) as int?;
   }
+
+  // int 저장 (비동기)
+  static Future<void> setDouble(String key, double value) async {
+    final box = _box ?? Hive.box(AppConstant.settingModelBox);
+
+    // 유저가 마지막으로 학습한 Category, Subject, Chapter 확인하기 위해
+    if (key.contains(AppConstant.selectedCategoryIdx)) {
+      await box.put(AppConstant.lastSelected, key);
+    }
+    LogManager.info('키: $key, 값: $value 저장');
+    await box.put(key, value);
+  }
+
+  // int 조회 (동기)
+  static double? getDouble(String key) {
+    final box = _box ?? Hive.box(AppConstant.settingModelBox);
+
+    return box.get(key) as double?;
+  }
 }

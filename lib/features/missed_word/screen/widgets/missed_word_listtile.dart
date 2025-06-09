@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:jonggack_topik/core/models/missed_word.dart';
 import 'package:jonggack_topik/core/models/word.dart';
-import 'package:jonggack_topik/features/auth/controllers/user_controller.dart';
+import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
 
 class MissedWordListTIle extends StatelessWidget {
   const MissedWordListTIle({
@@ -26,7 +26,10 @@ class MissedWordListTIle extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       minLeadingWidth: 80,
-      leading: Text(word.word),
+      leading: Text(
+        word.word,
+        style: TextStyle(fontSize: SettingController.to.baseFS - 2),
+      ),
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -41,7 +44,7 @@ class MissedWordListTIle extends StatelessWidget {
                   word.mean,
                   style: TextStyle(
                     color: isHidenMean ? Colors.grey : null,
-                    fontSize: SettingController.to.baseFontSize - 1,
+                    fontSize: SettingController.to.baseFS - 4,
                   ),
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -49,7 +52,10 @@ class MissedWordListTIle extends StatelessWidget {
             ),
           ),
           SizedBox(height: 6),
-          Text(word.yomikata, style: TextStyle(fontSize: 10)),
+          Text(
+            word.yomikata,
+            style: TextStyle(fontSize: SettingController.to.baseFS - 4),
+          ),
         ],
       ),
       // subtitle: ,
@@ -66,11 +72,14 @@ class MissedWordListTIle extends StatelessWidget {
             onPressed: onTrailingTap,
             icon: Icon(FontAwesomeIcons.trash),
             iconSize: 16,
-            color: Colors.pinkAccent,
+            color: Colors.redAccent,
           ),
           Text(
             '${missedWord.missCount}回',
-            style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
+            style: TextStyle(
+              color: Colors.grey.shade600,
+              fontSize: SettingController.to.baseFS - 5,
+            ),
           ),
         ],
       ),

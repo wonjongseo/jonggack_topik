@@ -8,7 +8,7 @@ part of 'week_day_type.dart';
 
 class WeekDayTypeAdapter extends TypeAdapter<WeekDayType> {
   @override
-  final int typeId = 12;
+  final int typeId = 16;
 
   @override
   WeekDayType read(BinaryReader reader) {

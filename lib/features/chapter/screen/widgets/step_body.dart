@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/core/utils/app_color.dart';
 import 'package:jonggack_topik/features/chapter/controller/chapter_controller.dart';
+import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
 import 'package:jonggack_topik/features/step/controller/step_controller.dart';
 
 class StepBody extends StatelessWidget {
@@ -71,7 +72,10 @@ class WordListTIle extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       minLeadingWidth: 80,
-      leading: Text(word.word),
+      leading: Text(
+        word.word,
+        style: TextStyle(fontSize: SettingController.to.baseFS - 2),
+      ),
       title: InkWell(
         onTap: onTapMean,
         child: SizedBox(
@@ -80,13 +84,21 @@ class WordListTIle extends StatelessWidget {
             decoration: isHidenMean ? BoxDecoration(color: Colors.grey) : null,
             child: Text(
               word.mean,
-              style: TextStyle(color: isHidenMean ? Colors.grey : null),
+              style: TextStyle(
+                fontSize: SettingController.to.baseFS - 4,
+                color: isHidenMean ? Colors.grey : null,
+              ),
               overflow: TextOverflow.ellipsis,
             ),
           ),
         ),
       ),
-      subtitle: SizedBox(child: Text(word.yomikata)),
+      subtitle: SizedBox(
+        child: Text(
+          word.yomikata,
+          style: TextStyle(fontSize: SettingController.to.baseFS - 4),
+        ),
+      ),
       onTap: () => onTap(),
       trailing: trailing,
       isThreeLine: true,

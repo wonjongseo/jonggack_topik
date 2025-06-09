@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get_utils/get_utils.dart';
 import 'package:jonggack_topik/core/models/book.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
+import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
 import 'package:jonggack_topik/theme.dart';
 
 class BookCard extends StatelessWidget {
@@ -29,12 +31,13 @@ class BookCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  book.title,
-                  style: TextStyle(
-                    fontFamily: AppFonts.zenMaruGothic,
-                    fontSize: 22,
-                    fontWeight: FontWeight.w600,
+                Expanded(
+                  child: Text(
+                    book.title,
+                    style: TextStyle(
+                      fontSize: SettingController.to.baseFS + 6,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
                 if (book.bookNum != 0)
@@ -59,7 +62,7 @@ class BookCard extends StatelessWidget {
             Divider(),
             SizedBox(height: 10),
             Text(
-              '${AppString.savedWordText}${book.wordIds.length}${AppString.unit}',
+              '${AppString.savedWordText.tr}${book.wordIds.length}${AppString.unit.tr}',
               style: TextStyle(fontFamily: AppFonts.zenMaruGothic),
             ),
           ],

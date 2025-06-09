@@ -1,5 +1,7 @@
 import 'dart:convert';
+
 import 'package:hive/hive.dart';
+
 import 'package:jonggack_topik/core/constant/hive_keys.dart';
 
 part 'chapter_hive.g.dart';
@@ -32,4 +34,7 @@ class ChapterHive extends HiveObject {
 
   factory ChapterHive.fromJson(String source) =>
       ChapterHive.fromMap(json.decode(source));
+
+  @override
+  String toString() => 'ChapterHive(title: $title, stepKeys: $stepKeys)';
 }

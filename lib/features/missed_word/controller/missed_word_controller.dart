@@ -8,7 +8,6 @@ import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/core/repositories/hive_repository.dart';
 import 'package:jonggack_topik/core/utils/app_function.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
-import 'package:jonggack_topik/core/utils/snackbar_helper.dart';
 import 'package:jonggack_topik/features/missed_word/screen/widgets/quiz_opation_bottomsheet.dart';
 import 'package:jonggack_topik/features/quiz/controller/quiz_controller.dart';
 import 'package:jonggack_topik/features/quiz/screen/quiz_screen.dart';
@@ -91,11 +90,12 @@ class MissedWordController extends GetxController {
 
       case QuizType.random:
         if (randomSize < 0) {
-          isInValidMessage.value = "０${AppString.plzInputMore}";
+          isInValidMessage.value = "０${AppString.plzInputMore.tr}";
 
           return;
         } else if (randomSize > words.length) {
-          isInValidMessage.value = "${words.length}${AppString.plzInputLess}";
+          isInValidMessage.value =
+              "${words.length}${AppString.plzInputLess.tr}";
           return;
         }
 

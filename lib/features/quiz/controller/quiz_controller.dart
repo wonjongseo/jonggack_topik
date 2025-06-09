@@ -15,6 +15,7 @@ import 'package:jonggack_topik/features/chapter/controller/chapter_controller.da
 import 'package:jonggack_topik/features/missed_word/controller/missed_word_controller.dart';
 import 'package:jonggack_topik/features/quiz/screen/very_good_screen.dart';
 import 'package:jonggack_topik/features/score/screen/score_screen.dart';
+import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
 import 'package:jonggack_topik/features/step/controller/step_controller.dart';
 import 'package:jonggack_topik/features/subject/controller/subject_controller.dart';
 import 'package:jonggack_topik/features/user/repository/quiz_history_repository.dart';
@@ -45,8 +46,10 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
   RxInt questionNumber = 1.obs;
 
   // int correctDurationTime = 1200; // 맞출 시 다음 문제로 넘어갈 Duratiojn
-  int correctDurationTime = 200; // 맞출 시 다음 문제로 넘어갈 Duratiojn
-  int incorrectDurationTime = 1500; // 맞출 시 다음 문제로 넘어갈 Duratiojn
+  int correctDurationTime =
+      SettingController.to.correctDuration.value; // 맞출 시 다음 문제로 넘어갈 Duratiojn
+  int incorrectDurationTime =
+      SettingController.to.incorrectDuration.value; // 맞출 시 다음 문제로 넘어갈 Duratiojn
   int skipDurationTime = 250; // 맞출 시 다음 문제로 넘어갈 Duratiojn
 
   late bool isMyWordTest;
@@ -255,10 +258,11 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
             ChapterController.to.quizAllCorrect();
           }
           print('3');
-          Get.off(() => const VeryGoodScreen());
+          // Get.off(() => const VeryGoodScreen());
+          Get.offAndToNamed(VeryGoodScreen.name);
         } else {
           print('2');
-          Get.to(() => const VeryGoodScreen());
+          Get.offAndToNamed(VeryGoodScreen.name);
         }
         return;
       }

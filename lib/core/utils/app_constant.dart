@@ -10,6 +10,19 @@ class AppConstant {
   static const String selectedCategoryIdx = 'selectedCategoryIdx';
   static const String lastSelected = 'lastSelected';
 
+  // Base font size
+  static const String fontSizeKey = 'fontSizeKey';
+  // Tts
+  static const String speechRateKey = 'speechRateKey';
+  static const String volumnKey = 'volumnKey';
+  static const String pitchKey = 'pitchKey';
+
+  // Quiz
+  static const String incorrectDurationKey = 'incorrectDurationKey';
+  static const String correctDurationKey = 'correctDurationKey';
+
+  static const defaultCategory = "韓国語能力試験";
+
   static const int diaryModelHiveId = 0;
   static const int healthModelHiveId = 1;
   static const int hospitalLogModelHiveId = 2;

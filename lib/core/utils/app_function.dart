@@ -1,14 +1,32 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:get/utils.dart';
+import 'package:jonggack_topik/core/utils/app_color.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
+import 'package:jonggack_topik/core/utils/snackbar_helper.dart';
 import 'package:jonggack_topik/features/category/controller/category_controller.dart';
 import 'package:jonggack_topik/features/chapter/controller/chapter_controller.dart';
 import 'package:jonggack_topik/features/step/controller/step_controller.dart';
 import 'package:jonggack_topik/features/subject/controller/subject_controller.dart';
 
+bool get isKo => Get.locale.toString().contains('ko');
+
 class AppFunction {
+  static void copyWord(String text) {
+    Clipboard.setData(ClipboardData(text: text));
+
+    if (!Get.isSnackbarOpen) {
+      Get.closeAllSnackbars();
+
+      String message = '「$text」${AppString.copyWordMsg.tr}';
+
+      SnackBarHelper.showSuccessSnackBar(message);
+    }
+  }
+
   static void scrollGoToTop(ScrollController scrollController) {
     scrollController.animateTo(
       0,

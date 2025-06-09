@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:jonggack_topik/core/admob/banner_ad/global_banner_admob.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/core/widgets/custom_button.dart';
@@ -19,18 +20,18 @@ class EditWordScreen extends GetView<EditWordController> {
           child: Column(
             children: [
               CustomTextFormField(
-                hintText: AppString.word,
+                hintText: AppString.word.tr,
                 controller: controller.wordCtl,
               ),
               SizedBox(height: 16),
               CustomTextFormField(
-                hintText: AppString.yomikata,
+                hintText: AppString.yomikata.tr,
                 controller: controller.meanCtl,
               ),
               SizedBox(height: 16),
               CustomTextFormField(
-                hintText: AppString.mean,
-                controller: controller.meanCtl,
+                hintText: AppString.mean.tr,
+                controller: controller.yomikataCtl,
               ),
             ],
           ),

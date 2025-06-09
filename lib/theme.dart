@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:jonggack_topik/core/controllers/font_controller.dart';
+import 'package:get/get.dart';
 
 import 'package:jonggack_topik/core/utils/app_color.dart';
-import 'package:jonggack_topik/features/auth/controllers/user_controller.dart';
+import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
 
 class AppFonts {
   static const japaneseFont = 'NotoSerifJP';
@@ -49,12 +49,12 @@ class AppThemings {
       leadingAndTrailingTextStyle: ThemeData.dark().textTheme.bodyLarge
           ?.copyWith(
             fontFamily: AppFonts.gMaretFont,
-            fontSize: SettingController.to.baseFontSize,
+            fontSize: SettingController.to.baseFS,
             color: ThemeData.dark().textTheme.bodyLarge?.color,
           ),
       titleTextStyle: ThemeData.dark().textTheme.bodyMedium?.copyWith(
         fontFamily: AppFonts.zenMaruGothic,
-        fontSize: SettingController.to.baseFontSize - 2,
+        fontSize: SettingController.to.baseFS - 2,
         color: ThemeData.dark().textTheme.bodyMedium?.color,
       ),
     ),
@@ -65,6 +65,7 @@ class AppThemings {
       fontFamily: AppFonts.zenMaruGothic,
     ),
     scaffoldBackgroundColor: Colors.grey.shade200,
+
     appBarTheme: const AppBarTheme(
       toolbarHeight: 50,
       color: Colors.transparent,
@@ -86,17 +87,18 @@ class AppThemings {
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
       ),
     ),
+
     listTileTheme: ListTileThemeData(
       leadingAndTrailingTextStyle: ThemeData.light().textTheme.bodyLarge
           ?.copyWith(
             fontFamily: AppFonts.gMaretFont,
-            fontSize: SettingController.to.baseFontSize,
+            fontSize: SettingController.to.baseFS,
             color: ThemeData.light().textTheme.bodyLarge?.color, // 색상 유지
           ),
 
       titleTextStyle: ThemeData.light().textTheme.bodyMedium?.copyWith(
         fontFamily: AppFonts.zenMaruGothic,
-        fontSize: SettingController.to.baseFontSize - 2,
+        fontSize: SettingController.to.baseFS - 2,
         color: ThemeData.light().textTheme.bodyMedium?.color, // 색상 유지
       ),
     ),
@@ -109,3 +111,6 @@ ButtonStyle get cTrailingStyle => IconButton.styleFrom(
   minimumSize: const Size(0, 0),
   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
 );
+
+Color get dyBackground =>
+    Get.isDarkMode ? AppColors.scaffoldBackground : AppColors.white;

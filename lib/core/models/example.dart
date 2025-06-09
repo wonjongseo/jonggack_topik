@@ -15,7 +15,7 @@ class Example {
   @HiveField(2)
   late String yomikata;
 
-  Example({required this.word, required this.mean});
+  Example({required this.word, required this.mean, required this.yomikata});
 
   Example.fromMap(Map<String, dynamic> map) {
     word = map['word'] ?? '';

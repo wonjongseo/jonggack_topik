@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:jonggack_topik/core/admob/banner_ad/global_banner_admob.dart';
 
 class VeryGoodScreen extends StatelessWidget {
+  static const String name = '/very-good';
   const VeryGoodScreen({super.key});
 
   @override

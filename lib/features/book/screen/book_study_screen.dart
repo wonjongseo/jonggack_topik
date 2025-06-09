@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:jonggack_topik/core/admob/banner_ad/global_banner_admob.dart';
 import 'package:jonggack_topik/core/utils/app_color.dart';
 import 'package:jonggack_topik/core/widgets/custom_button.dart';
-import 'package:jonggack_topik/features/auth/controllers/user_controller.dart';
+import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
 import 'package:jonggack_topik/features/book/controller/book_study_controller.dart';
 import 'package:jonggack_topik/features/chapter/screen/widgets/step_body.dart';
 import 'package:jonggack_topik/theme.dart';
@@ -29,7 +29,7 @@ class BookStudyScreen extends GetView<BookStudyController> {
                         ],
                         style: TextStyle(
                           fontFamily: AppFonts.zenMaruGothic,
-                          fontSize: SettingController.to.baseFontSize,
+                          fontSize: SettingController.to.baseFS,
                         ),
                       ),
                     )
@@ -53,8 +53,8 @@ class BookStudyScreen extends GetView<BookStudyController> {
                                     controller.words[index],
                                   ),
                               icon: Icon(
-                                FontAwesomeIcons.xmark,
-                                color: AppColors.pink,
+                                FontAwesomeIcons.trash,
+                                color: Colors.redAccent,
                               ),
                             ),
                           );

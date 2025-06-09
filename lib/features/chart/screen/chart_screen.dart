@@ -6,7 +6,7 @@ import 'package:jonggack_topik/features/chart/controller/chart_controller.dart';
 import 'package:jonggack_topik/features/chart/screen/widgets/correct_rate_calendar.dart';
 import 'package:jonggack_topik/features/chart/screen/widgets/correct_rate_chart.dart';
 import 'package:jonggack_topik/features/missed_word/screen/widgets/missed_word_list.dart';
-import 'package:jonggack_topik/theme.dart';
+import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
 
 class ChartSceen extends StatelessWidget {
   const ChartSceen({super.key});
@@ -30,10 +30,10 @@ class ChartSceen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              AppString.correctRate,
+                              AppString.correctRate.tr,
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 22,
+                                fontSize: SettingController.to.baseFS + 6,
                                 letterSpacing: 1.2,
                               ),
                             ),

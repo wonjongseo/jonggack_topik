@@ -25,7 +25,6 @@ class UserScreen extends GetView<BookController> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: 16),
                 SizedBox(height: 100, child: const WelcomeWidget()),
                 SizedBox(height: size.height * .15, child: SeacrhForm()),
                 Expanded(
@@ -62,15 +61,15 @@ class UserScreen extends GetView<BookController> {
                         ),
                       ],
                       options: CarouselOptions(
-                        height: 400,
                         disableCenter: true,
-                        viewportFraction: 0.7,
+                        viewportFraction: 0.65,
                         enableInfiniteScroll: false,
                         enlargeCenterPage: true,
                       ),
                     );
                   }),
                 ),
+                SizedBox(height: 16),
               ],
             ),
           ),

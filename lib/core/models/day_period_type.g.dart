@@ -8,7 +8,7 @@ part of 'day_period_type.dart';
 
 class DayPeriodTypeAdapter extends TypeAdapter<DayPeriodType> {
   @override
-  final int typeId = 11;
+  final int typeId = 17;
 
   @override
   DayPeriodType read(BinaryReader reader) {

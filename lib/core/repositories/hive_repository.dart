@@ -252,7 +252,7 @@ class HiveRepository<T extends HiveObject> {
       List<Book> books = bookRepo.getAll();
       if (books.isEmpty) {
         // Create Book
-        String title = '${AppString.appName}単語帳';
+        String title = '${AppString.appName.tr}単語帳';
         Book book = Book(title: title, bookNum: 0);
 
         LogManager.info('$title 저장중...');

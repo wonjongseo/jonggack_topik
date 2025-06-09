@@ -17,7 +17,7 @@ class QuizOpationBottomsheet extends GetView<MissedWordController> {
         mainAxisSize: MainAxisSize.min,
         children: [
           ListTile(
-            title: Text(AppString.doQuizAllMissedWords),
+            title: Text(AppString.doQuizAllMissedWords.tr),
             trailing: Radio(
               value: QuizType.all,
               groupValue: controller.selectedQuizTyp.value,

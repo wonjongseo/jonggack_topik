@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:jonggack_topik/features/chapter/screen/chapter_screen.dart';
 import 'package:jonggack_topik/features/main/screens/main_screen.dart';
 import 'package:jonggack_topik/features/onboarding/screen/onboarding_screen.dart';
+import 'package:jonggack_topik/features/quiz/screen/very_good_screen.dart';
 import 'package:jonggack_topik/features/score/screen/score_screen.dart';
 import 'package:jonggack_topik/features/subject/screen/subject_screen.dart';
 import 'package:jonggack_topik/splash_screen.dart';
@@ -18,6 +19,7 @@ class AppRoutes {
     GetPage(name: MainScreen.name, page: () => const MainScreen()),
     GetPage(name: SubjectScreen.name, page: () => const SubjectScreen()),
     GetPage(name: ChapterScreen.name, page: () => const ChapterScreen()),
+    GetPage(name: VeryGoodScreen.name, page: () => const VeryGoodScreen()),
 
     GetPage(name: ScoreScreen.name, page: () => const ScoreScreen()),
   ];

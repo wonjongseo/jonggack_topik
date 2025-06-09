@@ -11,7 +11,6 @@ import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/core/repositories/hive_repository.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/core/utils/snackbar_helper.dart';
-import 'package:jonggack_topik/core/repositories/setting_repository.dart';
 
 class BookController extends GetxController {
   static BookController get to => Get.find<BookController>();
@@ -58,7 +57,7 @@ class BookController extends GetxController {
 
   void createBook() async {
     if (bookNameCtl.text.isEmpty && bookNameCtl.text.length < 5) {
-      SnackBarHelper.showErrorSnackBar('5${AppString.plzMoreChar}');
+      SnackBarHelper.showErrorSnackBar('5${AppString.plzInputMore.tr}');
       return;
     }
 
@@ -72,7 +71,7 @@ class BookController extends GetxController {
     }
     bookNameCtl.clear();
     getAllBooks();
-    SnackBarHelper.showErrorSnackBar('$bookName${AppString.isCreated}');
+    SnackBarHelper.showSuccessSnackBar('$bookName${AppString.isCreated.tr}');
 
     carouselSliderController.animateToPage(0);
   }
@@ -80,9 +79,9 @@ class BookController extends GetxController {
   void deleteBook(Book book) async {
     try {
       if (book.bookNum == 0) {
-        LogManager.error('${AppString.appName}을 삭제 시도함');
+        LogManager.error('${AppString.appName.tr}을 삭제 시도함');
         SnackBarHelper.showErrorSnackBar(
-          '${AppString.appName}単語帳は削除することができません。',
+          '${AppString.appName.tr}単語帳は削除することができません。',
         );
         return;
       }
@@ -98,7 +97,9 @@ class BookController extends GetxController {
     }
     bookNameCtl.clear();
     getAllBooks();
-    SnackBarHelper.showErrorSnackBar('${book.title}${AppString.isDeleted}');
+    SnackBarHelper.showSuccessSnackBar(
+      '${book.title}${AppString.isDeleted.tr}',
+    );
   }
 
   void updateBook(Book book) async {

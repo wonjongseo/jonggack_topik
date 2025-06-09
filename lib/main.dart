@@ -1,3 +1,4 @@
+import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -50,25 +51,16 @@ class _AppState extends State<App> {
   ThemeMode themeMode = ThemeMode.system;
 
   String? systemLanguage;
-  // systemLanguage =
-  //       await SettingRepository.getString(AppConstant.settingLanguageKey);
 
   void getUsresSetting() {
     bool? isDarkMode = SettingRepository.getBool(AppConstant.isDarkModeKey);
 
     if (isDarkMode != null) {
-      // setState(() {
       themeMode = isDarkMode ? ThemeMode.dark : ThemeMode.light;
-      // });
     }
   }
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  Future<bool> fufu() async {
+  Future<bool> loadDatas() async {
     await HiveRepository.init();
     getUsresSetting();
     return true;
@@ -77,10 +69,9 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: fufu(),
+      future: loadDatas(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          // Get.put(OnboardingController());
           Get.put(SettingController());
           return GetMaterialApp(
             debugShowCheckedModeBanner: false,
@@ -160,7 +151,7 @@ class InitBinding extends Bindings {
     Get.lazyPut(() => DataRepositry());
     Get.lazyPut(() => CategoryController(Get.find()));
     Get.lazyPut(() => ChartController());
-    Get.lazyPut(() => MissedWordController());
+    Get.lazyPut(() => MissedWordController(), fenix: true);
   }
 }
 // flutter pub run build_runner build --delete-conflicting-outputs

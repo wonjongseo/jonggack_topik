@@ -14,7 +14,7 @@ class CorrectRateChart extends StatelessWidget {
     return GetBuilder<ChartController>(
       builder: (controller) {
         return Container(
-          color: Colors.white60,
+          color: dyBackground,
           padding: EdgeInsets.symmetric(vertical: 20),
           child: AspectRatio(
             aspectRatio: 2 / 1,
@@ -29,11 +29,8 @@ class CorrectRateChart extends StatelessWidget {
                     getTooltipItem: (group, groupIndex, rod, rodIndex) {
                       final value = rod.toY;
                       return BarTooltipItem(
-                        '${AppString.correctRate} ${value.toInt()}%',
-                        TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        '${AppString.correctRate.tr} ${value.toInt()}%',
+                        TextStyle(fontWeight: FontWeight.bold),
                       );
                     },
                   ),
@@ -46,10 +43,7 @@ class CorrectRateChart extends StatelessWidget {
                       showTitles: true,
                       interval: _computeLeftInterval(controller),
                       getTitlesWidget: (value, meta) {
-                        return Text(
-                          "${value.toInt()}%",
-                          style: TextStyle(color: Colors.black54),
-                        );
+                        return Text("${value.toInt()}%");
                       },
                     ),
                   ),

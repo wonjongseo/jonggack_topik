@@ -19,17 +19,20 @@ class ExampleAdapter extends TypeAdapter<Example> {
     return Example(
       word: fields[0] as String,
       mean: fields[1] as String,
+      yomikata: fields[2] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, Example obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.word)
       ..writeByte(1)
-      ..write(obj.mean);
+      ..write(obj.mean)
+      ..writeByte(2)
+      ..write(obj.yomikata);
   }
 
   @override

@@ -1,11 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/constant/hive_keys.dart';
 import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/core/repositories/hive_repository.dart';
-import 'package:jonggack_topik/core/repositories/setting_repository.dart';
 
-import 'package:jonggack_topik/core/utils/app_constant.dart';
 import 'package:jonggack_topik/features/auth/models/user.dart';
 
 class UserController extends GetxController {
@@ -53,30 +50,4 @@ class UserController extends GetxController {
   }
 
   //Setting
-}
-
-class SettingController extends GetxController {
-  static SettingController get to => Get.find<SettingController>();
-  final _isDarkMode = false.obs;
-  bool get isDarkMode => _isDarkMode.value;
-  final _baseFontSize = 16.0.obs;
-  double get baseFontSize => _baseFontSize.value;
-  @override
-  void onInit() {
-    _isDarkMode.value =
-        SettingRepository.getBool(AppConstant.isDarkModeKey) ?? false;
-    super.onInit();
-  }
-
-  void changeTheme(int index) {
-    if (index == 0) {
-      _isDarkMode.value = true;
-      SettingRepository.setBool(AppConstant.isDarkModeKey, true);
-      Get.changeThemeMode(ThemeMode.dark);
-    } else {
-      _isDarkMode.value = false;
-      SettingRepository.setBool(AppConstant.isDarkModeKey, false);
-      Get.changeThemeMode(ThemeMode.light);
-    }
-  }
 }

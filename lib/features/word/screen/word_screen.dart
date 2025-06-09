@@ -4,6 +4,7 @@ import 'package:jonggack_topik/core/admob/banner_ad/global_banner_admob.dart';
 import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/features/quiz/controller/quiz_controller.dart';
 import 'package:jonggack_topik/features/quiz/screen/quiz_screen.dart';
+import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
 import 'package:jonggack_topik/features/word/controller/word_controller.dart';
 import 'package:jonggack_topik/features/word/screen/widgets/word_cart.dart';
 
@@ -70,7 +71,7 @@ class GoToQuizWidget extends StatelessWidget {
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.cyan.shade600,
-                fontSize: 24,
+                fontSize: SettingController.to.baseFS + 8,
               ),
             ),
           ),

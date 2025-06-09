@@ -167,7 +167,7 @@ class OnboardingController extends GetxController {
       box = Hive.box(AppConstant.settingModelBox);
     }
     String key =
-        '$selectedSubject-${AppString.defaultCategory}-${AppConstant.selectedCategoryIdx}';
+        '$selectedSubject-${AppConstant.defaultCategory}-${AppConstant.selectedCategoryIdx}';
 
     LogManager.info('목표 레벨 Key: $key');
 
