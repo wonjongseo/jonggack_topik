@@ -76,7 +76,7 @@ class OnboardingController extends GetxController {
   // DayPeriodType.values.toList(); // 0:아침, 1:점심, 2: 저녁
   List<WeekDayType> selectedWeekDays = WeekDayType.values.toList(); // 0:월, 1: 화
 
-  bool isAlermEnable = false;
+  bool isNotifiEnable = false;
   String morningTime = '08:30';
   String lunchTime = '12:30';
   String eveningTime = '18:30';
@@ -85,11 +85,11 @@ class OnboardingController extends GetxController {
 
   void togglePillAlarm(int v) {
     if (v == 0) {
-      isAlermEnable = true;
+      isNotifiEnable = true;
       notificationService = NotificationService();
-      PermissionService().permissionWithNotification();
+      PermissionService.permissionWithNotification();
     } else {
-      isAlermEnable = false;
+      isNotifiEnable = false;
     }
 
     update();
@@ -150,7 +150,6 @@ class OnboardingController extends GetxController {
         selectedSubject = "5・6級";
         break;
     }
-    LogManager.info('목표 레벨 : $selectedSubject');
 
     Box box;
     if (!Hive.isBoxOpen(AppConstant.settingModelBox)) {
@@ -164,10 +163,7 @@ class OnboardingController extends GetxController {
     box.put(AppConstant.goalLevel, selectedSubject);
   }
 
-  Future<void> goToMainScreenAndSaveUserData() async {
-    //
-    await _saveTopikLevel();
-
+  Future<void> _setNotification() async {
     List<int> notificationIds = [];
     selectedWeekDays.sort((a, b) => a.index.compareTo(b.index));
 
@@ -192,7 +188,7 @@ class OnboardingController extends GetxController {
           minute,
         );
 
-        if (isAlermEnable && notificationService != null) {
+        if (isNotifiEnable && notificationService != null) {
           String message =
               '$hour${AppString.hour.tr} $minute${AppString.minute.tr} ${AppString.timeToStudy.tr}';
 
@@ -212,14 +208,23 @@ class OnboardingController extends GetxController {
         notificationIds.add(id);
       }
     }
+  }
+
+  Future<void> goToMainScreenAndSaveUserData() async {
+    //
+    await _saveTopikLevel();
+
+    _setNotification();
+    if (isNotifiEnable) {
+      _setNotification();
+      // SettingRepository.setList(AppConstant.notificationsIdsKey, notificationIds);
+      SettingRepository.setString(AppConstant.notificationTimeKey, lunchTime);
+    }
 
     User user = User();
     final userRepo = Get.find<HiveRepository<User>>();
 
     userRepo.put(user.userId, user);
-
-    // SettingRepository.setList(AppConstant.notificationsIdsKey, notificationIds);
-    SettingRepository.setString(AppConstant.notificationTimeKey, lunchTime);
 
     Get.offAllNamed(MainScreen.name);
     SnackBarHelper.showSuccessSnackBar(AppString.completeSetting.tr);

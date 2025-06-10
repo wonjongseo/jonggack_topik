@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/admob/banner_ad/global_banner_admob.dart';
 import 'package:jonggack_topik/core/utils/app_color.dart';
+import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/core/widgets/custom_button.dart';
 import 'package:jonggack_topik/features/missed_word/controller/missed_word_controller.dart';
 import 'package:jonggack_topik/features/missed_word/screen/widgets/missed_word_listtile.dart';
@@ -15,7 +16,7 @@ class MissedWordsScreen extends GetView<MissedWordController> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(title: Text('よく間違える単語')),
+      appBar: AppBar(title: Text(AppString.frequentlyWrong.tr)),
       body: _body(),
       bottomNavigationBar: GlobalBannerAdmob(
         widgets: [

@@ -30,10 +30,10 @@ class Onboarding3 extends StatelessWidget {
                 CustomToggleBtn(
                   onTap: conroller.togglePillAlarm,
                   isSelected: [
-                    conroller.isAlermEnable,
-                    !conroller.isAlermEnable,
+                    conroller.isNotifiEnable,
+                    !conroller.isNotifiEnable,
                   ],
-                  isChecked: conroller.isAlermEnable,
+                  isChecked: conroller.isNotifiEnable,
                 ),
                 SizedBox(height: 32),
                 Column(
@@ -42,7 +42,7 @@ class Onboarding3 extends StatelessWidget {
                   ) {
                     return GestureDetector(
                       onTap:
-                          !conroller.isAlermEnable
+                          !conroller.isNotifiEnable
                               ? null
                               : () => conroller.changeNotifcationTime(
                                 conroller.notificationPeriod[index],
@@ -53,7 +53,7 @@ class Onboarding3 extends StatelessWidget {
                         time: conroller.getAlramTimeDayPeriod(
                           conroller.notificationPeriod[index],
                         ),
-                        isAlermEnable: conroller.isAlermEnable,
+                        isAlermEnable: conroller.isNotifiEnable,
                       ),
                     );
                   }),

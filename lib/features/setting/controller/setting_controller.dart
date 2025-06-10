@@ -1,3 +1,4 @@
+import 'package:jonggack_topik/core/services/permission_service.dart';
 import 'package:jonggack_topik/core/utils/snackbar_helper.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'dart:io';
@@ -17,6 +18,14 @@ class SettingController extends GetxController {
   static SettingController get to => Get.find<SettingController>();
   final _isDarkMode = false.obs;
   bool get isDarkMode => _isDarkMode.value;
+  set isDarkMode(bool isDarkMode) {
+    _isDarkMode.value = isDarkMode;
+  }
+
+  SettingController(bool isDarkMode) {
+    _isDarkMode.value = isDarkMode;
+    SettingRepository.setBool(AppConstant.isDarkModeKey, _isDarkMode.value);
+  }
 
   @override
   void onInit() {
@@ -25,9 +34,9 @@ class SettingController extends GetxController {
   }
 
   void getDatas() {
-    _isDarkMode.value =
-        SettingRepository.getBool(AppConstant.isDarkModeKey) ??
-        ThemeMode.system == ThemeMode.dark;
+    // _isDarkModeub.value =
+    //     SettingRepository.getBool(AppConstant.isDarkModeKey) ??
+    //     ThemeMode.system == ThemeMode.dark;
     getTtsValue();
     getQuizValue();
     getNotificationTime();
@@ -217,6 +226,9 @@ class SettingController extends GetxController {
     );
     if (settedTimeOfDay == null) return false;
 
+    if (!await PermissionService.permissionWithNotification()) {
+      return false;
+    }
     await deleteAllNotification();
 
     _notificationTime.value =

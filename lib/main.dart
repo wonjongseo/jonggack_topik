@@ -49,15 +49,13 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   ThemeMode themeMode = ThemeMode.system;
-
+  late bool isDarkMode;
   String? systemLanguage;
 
   void getUsresSetting() {
-    bool? isDarkMode = SettingRepository.getBool(AppConstant.isDarkModeKey);
+    isDarkMode = SettingRepository.getBool(AppConstant.isDarkModeKey) ?? false;
 
-    if (isDarkMode != null) {
-      themeMode = isDarkMode ? ThemeMode.dark : ThemeMode.light;
-    }
+    themeMode = isDarkMode ? ThemeMode.dark : ThemeMode.light;
   }
 
   Future<bool> loadDatas() async {
@@ -72,7 +70,7 @@ class _AppState extends State<App> {
       future: loadDatas(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          Get.put(SettingController());
+          Get.put(SettingController(isDarkMode));
           return GetMaterialApp(
             debugShowCheckedModeBanner: false,
             initialRoute: SplashScreen.name,

@@ -20,6 +20,7 @@ class AppTranslations extends Translations {
       AppString.plzInputMore: AppString.plzInputMoreJp,
       AppString.plzInputLess: AppString.plzInputLessJp,
       AppString.correctRate: AppString.correctRateJp,
+      AppString.frequentlyWrong: AppString.frequentlyWrongJp,
       AppString.welcome: AppString.welcomeJp,
       AppString.beforeStart: AppString.beforeStartJp,
       AppString.plzSetting: AppString.plzSettingJp,
@@ -94,6 +95,7 @@ class AppTranslations extends Translations {
       AppString.plzInputMore: AppString.plzInputMoreKr,
       AppString.plzInputLess: AppString.plzInputLessKr,
       AppString.correctRate: AppString.correctRateKr,
+      AppString.frequentlyWrong: AppString.frequentlyWrongKr,
       AppString.welcome: AppString.welcomeKr,
       AppString.beforeStart: AppString.beforeStartKr,
       AppString.plzSetting: AppString.plzSettingKr,
@@ -231,6 +233,11 @@ class AppString {
   static String correctRateKr = '정답률';
   static String correctRateJp = "正答率";
   static String correctRateEn = "";
+
+  static String frequentlyWrong = "frequentlyWrongTr";
+  static String frequentlyWrongKr = '자주 틀리는 단어';
+  static String frequentlyWrongJp = "よく間違える単語";
+  static String frequentlyWrongEn = "";
 
   static String welcome = "welcomeTr";
   static String welcomeKr = "에 오신것을 환영합니다\n\n";
