@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/utils/app_color.dart';
+import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/features/auth/controllers/user_controller.dart';
 import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
 
@@ -26,7 +27,7 @@ class WelcomeWidget extends GetView<SettingController> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'TOPIK 종각',
+                AppString.appName.tr,
                 style: TextStyle(
                   fontSize: controller.baseFS + 4,
                   color: AppColors.mainBordColor,

@@ -144,7 +144,6 @@ class WordCard extends GetView<WordController> {
                 onTap: controller.seeMoreExample,
                 child: Text(
                   "More...",
-
                   style: TextStyle(
                     fontSize: SettingController.to.baseFS,
                     fontWeight: FontWeight.w400,
@@ -177,35 +176,44 @@ class WordCard extends GetView<WordController> {
             color: AppColors.mainBordColor,
           ),
         ),
-        Container(
-          width: double.infinity,
-          padding: EdgeInsets.symmetric(vertical: 12),
-          decoration: BoxDecoration(
-            color: Colors.grey.shade300,
-            borderRadius: BorderRadius.circular(5),
-          ),
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: List.generate(synonyms.length, (index) {
-                return InkWell(
-                  onTap: () {
-                    controller.onTapSynonyms(synonym: synonyms[index]);
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: AppColors.primaryColor,
-                      borderRadius: BorderRadius.circular(5),
+
+        Obx(
+          () => Container(
+            width: double.infinity,
+            padding: EdgeInsets.symmetric(vertical: 12, horizontal: 6),
+            decoration: BoxDecoration(
+              color:
+                  SettingController.to.isDarkMode
+                      ? Colors.grey.shade800
+                      : Colors.grey.shade300,
+              borderRadius: BorderRadius.circular(5),
+            ),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: List.generate(synonyms.length, (index) {
+                  return InkWell(
+                    onTap: () {
+                      controller.onTapSynonyms(synonym: synonyms[index]);
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.primaryColor,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      margin: EdgeInsets.symmetric(horizontal: 6),
+                      padding: EdgeInsets.symmetric(
+                        vertical: 6,
+                        horizontal: 12,
+                      ),
+                      child: Text(
+                        synonyms[index].synonym,
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
-                    margin: EdgeInsets.symmetric(horizontal: 6),
-                    padding: EdgeInsets.symmetric(vertical: 6, horizontal: 12),
-                    child: Text(
-                      synonyms[index].synonym,
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                );
-              }),
+                  );
+                }),
+              ),
             ),
           ),
         ),

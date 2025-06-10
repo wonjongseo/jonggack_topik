@@ -19,7 +19,7 @@ class MissWordList extends GetView<MissedWordController> {
         children: [
           Obx(
             () => Text(
-              'よく間違える単語',
+              AppString.frequentlyWrong.tr,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: SettingController.to.baseFS + 6,
@@ -37,7 +37,7 @@ class MissWordList extends GetView<MissedWordController> {
             return Column(
               children: [
                 Container(
-                  color: dyBackground,
+                  color: dfBackground,
                   child: ListView.separated(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),

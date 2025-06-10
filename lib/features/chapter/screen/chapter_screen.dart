@@ -52,7 +52,7 @@ class ChapterScreen extends GetView<ChapterController> {
               ),
               Expanded(
                 child: Container(
-                  color: dyBackground,
+                  color: dfBackground,
                   margin: const EdgeInsets.only(top: 8),
                   child: Obx(
                     () => StepBody(isHidenMean: controller.isHidenMean),

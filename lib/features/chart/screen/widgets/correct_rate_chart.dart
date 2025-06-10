@@ -14,7 +14,7 @@ class CorrectRateChart extends StatelessWidget {
     return GetBuilder<ChartController>(
       builder: (controller) {
         return Container(
-          color: dyBackground,
+          color: dfBackground,
           padding: EdgeInsets.symmetric(vertical: 20),
           child: AspectRatio(
             aspectRatio: 2 / 1,

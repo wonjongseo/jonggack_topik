@@ -203,12 +203,12 @@ class SettingController extends GetxController {
     if (_notificationTime.value == null) {
       if (await changeNotificationTime()) {
         SnackBarHelper.showSuccessSnackBar(
-          "${AppFunction.formatTime(_notificationTime.value!)}に通知が設定されました",
+          "${AppFunction.formatTime(_notificationTime.value!)}",
         );
       }
     } else {
       await deleteAllNotification();
-      SnackBarHelper.showSuccessSnackBar("通知が設定が解除されました");
+      SnackBarHelper.showSuccessSnackBar("");
     }
   }
 
@@ -226,9 +226,6 @@ class SettingController extends GetxController {
     );
     if (settedTimeOfDay == null) return false;
 
-    if (!await PermissionService.permissionWithNotification()) {
-      return false;
-    }
     await deleteAllNotification();
 
     _notificationTime.value =
@@ -241,8 +238,7 @@ class SettingController extends GetxController {
       int minute = settedTimeOfDay.minute;
       int id = AppFunction.createIdByDay(day, hour, minute);
 
-      String message =
-          '${AppFunction.formatTime(_notificationTime.value!)} ${AppString.timeToStudy.tr}';
+      String message = AppString.goToRandomQuiz.tr;
 
       await NotificationService().scheduleWeeklyNotification(
         title: '📖  ${AppString.studyAlram.tr}',

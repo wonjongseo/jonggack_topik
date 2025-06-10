@@ -40,7 +40,7 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
   bool isDisTouchable = false;
 
   String nextOrSkipText = 'skip';
-  Color color = Colors.black;
+  Color skipColor = Get.isDarkMode ? Colors.white : Colors.black;
   int correctAns = 0;
   late int selectedAns;
   RxInt questionNumber = 1.obs;
@@ -69,7 +69,7 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
     animationController.stop();
     saveWrongQuestion();
     isWrong = true;
-    color = Colors.pink;
+    skipColor = Colors.pink;
     nextOrSkipText = 'next';
     nextQuestion();
   }
@@ -124,7 +124,7 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
     nextOrSkipText = 'skip';
     numOfCorrectAns++;
 
-    color = Colors.blue;
+    skipColor = Colors.blue;
     nextOrSkipText = 'next';
     if (isMyWordTest) {
       // 나만의 단어 알고 있음으로 변경.
@@ -141,7 +141,7 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
     }
     saveWrongQuestion();
     isWrong = true;
-    color = Colors.pink;
+    skipColor = Colors.pink;
     nextOrSkipText = 'next';
     Future.delayed(Duration(milliseconds: incorrectDurationTime), () {
       nextQuestion();
@@ -192,7 +192,8 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
       }
       isWrong = false;
       nextOrSkipText = 'skip';
-      color = Colors.black;
+      skipColor = Get.isDarkMode ? Colors.white : Colors.black;
+
       isAnswered = false;
 
       pageController.nextPage(

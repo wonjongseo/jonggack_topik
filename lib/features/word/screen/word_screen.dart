@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/admob/banner_ad/global_banner_admob.dart';
 import 'package:jonggack_topik/core/models/word.dart';
+import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/features/quiz/controller/quiz_controller.dart';
 import 'package:jonggack_topik/features/quiz/screen/quiz_screen.dart';
 import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
+import 'package:jonggack_topik/features/setting/screen/setting_screen.dart';
 import 'package:jonggack_topik/features/word/controller/word_controller.dart';
 import 'package:jonggack_topik/features/word/screen/widgets/word_cart.dart';
 
@@ -21,6 +23,14 @@ class WordScreen extends GetView<WordController> {
                 ? ''
                 : '${controller.currentWordIdx + 1} / ${controller.words.length}',
           ),
+          actions: [
+            IconButton(
+              onPressed: () {
+                Get.to(() => SettingScreen());
+              },
+              icon: Icon(Icons.settings),
+            ),
+          ],
         ),
         body: SafeArea(
           child: Padding(
@@ -67,7 +77,7 @@ class GoToQuizWidget extends StatelessWidget {
         child: Card(
           child: Center(
             child: Text(
-              '퀴즈 풀러 가기!',
+              AppString.goToQuiz.tr,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.cyan.shade600,

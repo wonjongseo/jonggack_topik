@@ -112,7 +112,7 @@ ButtonStyle get cTrailingStyle => IconButton.styleFrom(
   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
 );
 
-Color get dyBackground =>
+Color get dfBackground =>
     SettingController.to.isDarkMode
         ? AppColors.scaffoldBackground
         : AppColors.white;

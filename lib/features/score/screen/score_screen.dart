@@ -6,7 +6,9 @@ import 'package:get/get.dart';
 import 'package:jonggack_topik/core/admob/banner_ad/global_banner_admob.dart';
 import 'package:jonggack_topik/core/utils/app_color.dart';
 import 'package:jonggack_topik/core/utils/app_constant.dart';
+import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/features/quiz/controller/quiz_controller.dart';
+import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
 import 'package:jonggack_topik/theme.dart';
 
 class ScoreScreen extends StatefulWidget {
@@ -64,7 +66,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
         preferredSize: const Size.fromHeight(appBarHeight),
         child: AppBar(
           title: Text(
-            "점수 ${jlptController.scoreResult}",
+            "${AppString.score.tr} ${jlptController.scoreResult}",
             style: TextStyle(fontSize: appBarTextSize),
           ),
         ),
@@ -81,7 +83,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: Text(
-            '間違え',
+            AppString.wrong.tr,
             style: TextStyle(
               color: AppColors.mainBordColor,
               fontWeight: FontWeight.bold,
@@ -92,7 +94,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
         Expanded(
           child: SingleChildScrollView(
             child: Container(
-              color: Colors.white,
+              color: dfBackground,
               child: Column(
                 children: List.generate(qnController.wrongQuestions.length, (
                   index,
@@ -113,14 +115,22 @@ class _ScoreScreenState extends State<ScoreScreen> {
                         leading: Text(
                           word,
                           style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w700,
-                            fontFamily: AppFonts.japaneseFont,
-                            overflow: TextOverflow.ellipsis,
+                            fontSize: SettingController.to.baseFS,
                           ),
                         ),
-                        title: Text(mean),
-                        subtitle: Text(yomikata),
+                        title: Text(
+                          mean,
+                          style: TextStyle(
+                            fontSize: SettingController.to.baseFS - 2,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        subtitle: Text(
+                          yomikata,
+                          style: TextStyle(
+                            fontSize: SettingController.to.baseFS - 3,
+                          ),
+                        ),
                       ),
                     ),
                   );

@@ -78,6 +78,10 @@ class AppTranslations extends Translations {
       AppString.whenCorrect: AppString.whenCorrectJp,
       AppString.fontSize: AppString.fontSizeJp,
       AppString.init: AppString.initJp,
+      AppString.notifiSetted: AppString.notifiSettedJp,
+      AppString.notifiUnSetted: AppString.notifiUnSettedJp,
+      AppString.goToRandomQuiz: AppString.goToRandomQuizJp,
+      AppString.goToQuiz: AppString.goToQuizJp,
     },
     'ko_KR': {
       AppString.appName: AppString.appNameKr,
@@ -153,6 +157,10 @@ class AppTranslations extends Translations {
       AppString.whenCorrect: AppString.whenCorrectKr,
       AppString.fontSize: AppString.fontSizeKr,
       AppString.init: AppString.initKr,
+      AppString.notifiSetted: AppString.notifiSettedKr,
+      AppString.notifiUnSetted: AppString.notifiUnSettedKr,
+      AppString.goToRandomQuiz: AppString.goToRandomQuizKr,
+      AppString.goToQuiz: AppString.goToQuizKr,
     },
   };
 }
@@ -160,7 +168,7 @@ class AppTranslations extends Translations {
 class AppString {
   static String appName = "appNameTr";
   static String appNameKr = "종각 TOPIK";
-  static String appNameJp = "종각 TOPIK";
+  static String appNameJp = "いちばんTopik";
   static String appNameEn = "종각 TOPIK";
 
   static String youHavePreQuizData = "youHavePreQuizDataTr";
@@ -210,7 +218,7 @@ class AppString {
   static String yomikataEn = "";
 
   static String noRecordedData = "noRecordedDataTr";
-  static String noRecordedDataKr = '발음';
+  static String noRecordedDataKr = '기록된 데이터가 없습니다.';
   static String noRecordedDataJp = "記録データがありません";
   static String noRecordedDataEn = "";
 
@@ -261,7 +269,8 @@ class AppString {
 
   static String doYouWantToAlert = "doYouWantToAlertTr";
   static String doYouWantToAlertKr = "학습 알람을 받으시겠습니까?";
-  static String doYouWantToAlertJp = '前へ';
+  static String doYouWantToAlertJp = '学習の通知を受けませんか。';
+
   static String doYouWantToAlert2 = "doYouWantToAlert2Tr";
   static String doYouWantToAlert2Kr = "목표의 레벨의 기출 단어를 랜덤으로 학습 할 수 있습니다.";
   static String doYouWantToAlert2Jp = '目標のレベルの単語をランダムで学習することができます。';
@@ -373,8 +382,6 @@ class AppString {
   static String timeToStudyKr = '공부할 시간입니다!';
   static String timeToStudyJp = '勉強のお時間です！';
   static String timeToStudyEn = "It's time to take the medicine!";
-
-  //
 
   static String theme = "themeTr";
   static String themeKr = "테마";
@@ -568,4 +575,34 @@ Would you like to copy the email [visionwill3322@gmail.com]?
   static String initKr = '초기화';
   static String initJp = '初期化';
   static String initEn = "";
+
+  static String notifiSetted = "notifiSettedTr";
+  static String notifiSettedKr = '에 알람이 설정되었습니다.';
+  static String notifiSettedJp = 'に通知が設定されました';
+  static String notifiSettedEn = "";
+
+  static String notifiUnSetted = "notifiUnSettedTr";
+  static String notifiUnSettedKr = '알람 설정이 해제되었습니다.';
+  static String notifiUnSettedJp = '通知が設定が解除されました';
+  static String notifiUnSettedEn = "";
+
+  static String goToRandomQuiz = "goToRandomQuizTr";
+  static String goToRandomQuizKr = '오늘의 랜텀 퀴즈를 보러가요!';
+  static String goToRandomQuizJp = '今日のランダムQuizを受けましょう！';
+  static String goToRandomQuizEn = "";
+
+  static String goToQuiz = "goToQuizTr";
+  static String goToQuizKr = '퀴즈 풀러 가기!';
+  static String goToQuizJp = 'QUIZを解けにいく！';
+  static String goToQuizEn = "";
+  //
+  static String score = "scoreTr";
+  static String scoreKr = '점수';
+  static String scoreJp = '点数';
+  static String scoreEn = "";
+
+  static String wrong = "wrongTr";
+  static String wrongKr = '오답';
+  static String wrongJp = '誤答';
+  static String wrongEn = "";
 }

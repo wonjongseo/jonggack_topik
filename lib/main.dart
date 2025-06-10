@@ -53,7 +53,9 @@ class _AppState extends State<App> {
   String? systemLanguage;
 
   void getUsresSetting() {
-    isDarkMode = SettingRepository.getBool(AppConstant.isDarkModeKey) ?? false;
+    isDarkMode =
+        SettingRepository.getBool(AppConstant.isDarkModeKey) ??
+        ThemeMode.system == ThemeMode.dark;
 
     themeMode = isDarkMode ? ThemeMode.dark : ThemeMode.light;
   }
@@ -98,7 +100,7 @@ class _AppState extends State<App> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'データを読み込んでいります。',
+                'データを読み込んでいます。',
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   fontFamily: AppFonts.zenMaruGothic,
                 ),

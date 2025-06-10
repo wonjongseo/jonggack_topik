@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/core/utils/app_color.dart';
 import 'package:jonggack_topik/features/chapter/controller/chapter_controller.dart';
+import 'package:jonggack_topik/features/chapter/screen/widgets/word_listtile.dart';
 import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
 import 'package:jonggack_topik/features/step/controller/step_controller.dart';
 
@@ -21,7 +22,7 @@ class StepBody extends StatelessWidget {
           itemBuilder: (context, index) {
             bool aIsHidenMean = controller.isHidenMeans[index] && isHidenMean;
 
-            return WordListTIle(
+            return WordListTile(
               word: controller.words[index],
               isHidenMean: aIsHidenMean,
               onTapMean:
@@ -50,58 +51,6 @@ class StepBody extends StatelessWidget {
           itemCount: controller.words.length,
         );
       },
-    );
-  }
-}
-
-class WordListTIle extends StatelessWidget {
-  const WordListTIle({
-    super.key,
-    this.onTapMean,
-    required this.onTap,
-    required this.word,
-    required this.isHidenMean,
-    required this.trailing,
-  });
-  final Function()? onTapMean;
-  final Function() onTap;
-  final Word word;
-  final bool isHidenMean;
-  final Widget trailing;
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      minLeadingWidth: 80,
-      leading: Text(
-        word.word,
-        style: TextStyle(fontSize: SettingController.to.baseFS - 2),
-      ),
-      title: InkWell(
-        onTap: onTapMean,
-        child: SizedBox(
-          height: 30,
-          child: Container(
-            decoration: isHidenMean ? BoxDecoration(color: Colors.grey) : null,
-            child: Text(
-              word.mean,
-              style: TextStyle(
-                fontSize: SettingController.to.baseFS - 4,
-                color: isHidenMean ? Colors.grey : null,
-              ),
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-        ),
-      ),
-      subtitle: SizedBox(
-        child: Text(
-          word.yomikata,
-          style: TextStyle(fontSize: SettingController.to.baseFS - 4),
-        ),
-      ),
-      onTap: () => onTap(),
-      trailing: trailing,
-      isThreeLine: true,
     );
   }
 }

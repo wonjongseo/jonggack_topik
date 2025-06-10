@@ -95,14 +95,11 @@ class QuizScreen extends GetView<QuizController> {
       actions: [
         GetBuilder<QuizController>(
           builder: (controller) {
-            return Padding(
-              padding: const EdgeInsets.only(right: 15),
-              child: TextButton(
-                onPressed: controller.skipQuestion,
-                child: Text(
-                  controller.nextOrSkipText,
-                  style: TextStyle(color: controller.color, fontSize: 20),
-                ),
+            return TextButton(
+              onPressed: controller.skipQuestion,
+              child: Text(
+                controller.nextOrSkipText,
+                style: TextStyle(color: controller.skipColor, fontSize: 20),
               ),
             );
           },

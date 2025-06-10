@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:jonggack_topik/core/admob/banner_ad/global_banner_admob.dart';
 import 'package:jonggack_topik/core/utils/app_color.dart';
 import 'package:jonggack_topik/core/widgets/custom_button.dart';
+import 'package:jonggack_topik/features/chapter/screen/widgets/word_listtile.dart';
 import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
 import 'package:jonggack_topik/features/book/controller/book_study_controller.dart';
 import 'package:jonggack_topik/features/chapter/screen/widgets/step_body.dart';
@@ -41,7 +42,7 @@ class BookStudyScreen extends GetView<BookStudyController> {
                       margin: const EdgeInsets.only(top: 8),
                       child: ListView.separated(
                         itemBuilder: (context, index) {
-                          return WordListTIle(
+                          return WordListTile(
                             onTapMean: () => controller.onTapMean(index),
                             onTap: () => controller.goToWordScreen(index),
                             word: controller.words[index],

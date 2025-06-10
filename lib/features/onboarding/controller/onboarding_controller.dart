@@ -87,7 +87,7 @@ class OnboardingController extends GetxController {
     if (v == 0) {
       isNotifiEnable = true;
       notificationService = NotificationService();
-      PermissionService.permissionWithNotification();
+      // PermissionService.permissionWithNotification();
     } else {
       isNotifiEnable = false;
     }
@@ -189,8 +189,7 @@ class OnboardingController extends GetxController {
         );
 
         if (isNotifiEnable && notificationService != null) {
-          String message =
-              '$hour${AppString.hour.tr} $minute${AppString.minute.tr} ${AppString.timeToStudy.tr}';
+          String message = AppString.goToRandomQuiz.tr;
 
           taskTime = await notificationService!.scheduleWeeklyNotification(
             title: '📖  ${AppString.studyAlram.tr}',

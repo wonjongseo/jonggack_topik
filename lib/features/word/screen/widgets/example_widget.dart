@@ -19,9 +19,11 @@ class ExampleWidget extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 24.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
                 child: Text(
@@ -52,17 +54,9 @@ class ExampleWidget extends StatelessWidget {
             example.yomikata,
             textStyle: TextStyle(fontSize: SettingController.to.baseFS - 2),
             customStylesBuilder: (element) {
-              if (element.classes.contains('bold')) {
-                return {'color': 'red', 'font-weight': 'bold'};
-              }
               if (element.toString().contains('rt')) {
-                return {
-                  // 'color': 'red',
-                  'font-size': 'x-small',
-                  'font-weight': 'bold',
-                };
+                return {'font-size': 'x-small', 'font-weight': 'bold'};
               }
-              return null;
             },
           ),
         ],
