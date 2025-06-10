@@ -113,4 +113,6 @@ ButtonStyle get cTrailingStyle => IconButton.styleFrom(
 );
 
 Color get dyBackground =>
-    Get.isDarkMode ? AppColors.scaffoldBackground : AppColors.white;
+    SettingController.to.isDarkMode
+        ? AppColors.scaffoldBackground
+        : AppColors.white;

@@ -11,6 +11,7 @@ import 'package:jonggack_topik/core/models/chapter.dart';
 import 'package:jonggack_topik/core/models/chapter_hive.dart';
 import 'package:jonggack_topik/core/models/example.dart';
 import 'package:jonggack_topik/core/models/missed_word.dart';
+import 'package:jonggack_topik/core/models/notification_model.dart';
 import 'package:jonggack_topik/core/models/quiz_history.dart';
 import 'package:jonggack_topik/core/models/step_model.dart';
 import 'package:jonggack_topik/core/models/subject.dart';
@@ -136,6 +137,10 @@ class HiveRepository<T extends HiveObject> {
     if (!Hive.isAdapterRegistered(MissedWordAdapter().typeId)) {
       Hive.registerAdapter(MissedWordAdapter());
     }
+
+    if (!Hive.isAdapterRegistered(NotificationModelAdapter().typeId)) {
+      Hive.registerAdapter(NotificationModelAdapter());
+    }
   }
 
   static Future<void> _initOpenBoxs() async {
@@ -189,6 +194,9 @@ class HiveRepository<T extends HiveObject> {
     }
     if (!Hive.isBoxOpen(MissedWord.boxKey)) {
       await Hive.openBox<MissedWord>(MissedWord.boxKey);
+    }
+    if (!Hive.isBoxOpen(NotificationModel.boxKey)) {
+      await Hive.openBox<NotificationModel>(NotificationModel.boxKey);
     }
   }
 
@@ -252,14 +260,14 @@ class HiveRepository<T extends HiveObject> {
       List<Book> books = bookRepo.getAll();
       if (books.isEmpty) {
         // Create Book
-        String title = '${AppString.appName.tr}単語帳';
+        String title = '${AppString.appNameJp}単語帳';
         Book book = Book(title: title, bookNum: 0);
 
         LogManager.info('$title 저장중...');
         bookRepo.put(book.id, book);
       }
     } catch (e) {
-      print('e.toString() : ${e.toString()}');
+      LogManager.error('$e');
     }
   }
 
@@ -313,6 +321,8 @@ class HiveRepository<T extends HiveObject> {
     final bookRepo = HiveRepository<Book>(Book.boxKey);
     await bookRepo.initBox();
     Get.put<HiveRepository<Book>>(bookRepo, tag: Book.boxKey);
+
+    await HiveRepository<NotificationModel>(NotificationModel.boxKey).initBox();
   }
 
   // static Future<void> saveCategory(Category category) async {

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/repositories/hive_repository.dart';
@@ -16,7 +17,17 @@ class SplashScreen extends StatelessWidget {
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [Text('Splash')],
+            children: [
+              Container(
+                width: 200,
+                height: 200,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/app_icon.png'),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -30,7 +41,8 @@ class SplashController extends GetxController {
   void onReady() {
     super.onReady();
     final hasUser = userRepo.getAll();
-    if (hasUser.isEmpty) {
+
+    if (hasUser.isEmpty || kDebugMode) {
       Get.offAllNamed(OnboardingScreen.name);
     } else {
       Get.offAllNamed(MainScreen.name);

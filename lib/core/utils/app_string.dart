@@ -20,11 +20,13 @@ class AppTranslations extends Translations {
       AppString.plzInputMore: AppString.plzInputMoreJp,
       AppString.plzInputLess: AppString.plzInputLessJp,
       AppString.correctRate: AppString.correctRateJp,
+      AppString.welcome: AppString.welcomeJp,
       AppString.beforeStart: AppString.beforeStartJp,
       AppString.plzSetting: AppString.plzSettingJp,
       AppString.back: AppString.backJp,
       AppString.selectGoalLevel: AppString.selectGoalLevelJp,
       AppString.doYouWantToAlert: AppString.doYouWantToAlertJp,
+      AppString.doYouWantToAlert2: AppString.doYouWantToAlert2Jp,
       AppString.cancelBtnText: AppString.cancelBtnTextJp,
       AppString.plzAlarmTime: AppString.plzAlarmTimeJp,
       AppString.plzInputCollectTime: AppString.plzInputCollectTimeJp,
@@ -42,10 +44,10 @@ class AppTranslations extends Translations {
       AppString.saturday: AppString.saturdayJp,
       AppString.sunday: AppString.sundayJp,
       AppString.pillcCannelDescription: AppString.pillcCannelDescriptionJp,
-      AppString.drinkPillAlram: AppString.drinkPillAlramJp,
+      AppString.studyAlram: AppString.studyAlramJp,
       AppString.completeSetting: AppString.completeSettingJp,
       AppString.pillText: AppString.pillTextJp,
-      AppString.timeToDrink: AppString.timeToDrinkJp,
+      AppString.timeToStudy: AppString.timeToStudyJp,
       AppString.theme: AppString.themeJp,
       AppString.darkMode: AppString.darkModeJp,
       AppString.lightMode: AppString.lightModeJp,
@@ -92,11 +94,13 @@ class AppTranslations extends Translations {
       AppString.plzInputMore: AppString.plzInputMoreKr,
       AppString.plzInputLess: AppString.plzInputLessKr,
       AppString.correctRate: AppString.correctRateKr,
+      AppString.welcome: AppString.welcomeKr,
       AppString.beforeStart: AppString.beforeStartKr,
       AppString.plzSetting: AppString.plzSettingKr,
       AppString.back: AppString.backKr,
       AppString.selectGoalLevel: AppString.selectGoalLevelKr,
       AppString.doYouWantToAlert: AppString.doYouWantToAlertKr,
+      AppString.doYouWantToAlert2: AppString.doYouWantToAlert2Kr,
       AppString.cancelBtnText: AppString.cancelBtnTextKr,
       AppString.plzAlarmTime: AppString.plzAlarmTimeKr,
       AppString.plzInputCollectTime: AppString.plzInputCollectTimeKr,
@@ -114,10 +118,10 @@ class AppTranslations extends Translations {
       AppString.saturday: AppString.saturdayKr,
       AppString.sunday: AppString.sundayKr,
       AppString.pillcCannelDescription: AppString.pillcCannelDescriptionKr,
-      AppString.drinkPillAlram: AppString.drinkPillAlramKr,
+      AppString.studyAlram: AppString.studyAlramKr,
       AppString.completeSetting: AppString.completeSettingKr,
       AppString.pillText: AppString.pillTextKr,
-      AppString.timeToDrink: AppString.timeToDrinkKr,
+      AppString.timeToStudy: AppString.timeToStudyKr,
       AppString.theme: AppString.themeKr,
       AppString.darkMode: AppString.darkModeKr,
       AppString.lightMode: AppString.lightModeKr,
@@ -228,6 +232,10 @@ class AppString {
   static String correctRateJp = "正答率";
   static String correctRateEn = "";
 
+  static String welcome = "welcomeTr";
+  static String welcomeKr = "에 오신것을 환영합니다\n\n";
+  static String welcomeJp = 'にようこそ\n\n';
+
   static String beforeStart = "beforeStartTr";
   static String beforeStartKr = "를 시작하기 전에\n";
   static String beforeStartJp = 'を始める前に\n';
@@ -241,12 +249,15 @@ class AppString {
   static String backJp = '前へ';
 
   static String selectGoalLevel = "selectGoalLevelTr";
-  static String selectGoalLevelKr = "목표 하고 있는 TOPIK 레벨을 선택해주세요";
-  static String selectGoalLevelJp = '前へ';
+  static String selectGoalLevelKr = "어느 레벨을 목표로 하고 계신가요?";
+  static String selectGoalLevelJp = 'どのレベル目指していますか？';
 
   static String doYouWantToAlert = "doYouWantToAlertTr";
-  static String doYouWantToAlertKr = "알람 설정을 하시겠습니까 ?";
+  static String doYouWantToAlertKr = "학습 알람을 받으시겠습니까?";
   static String doYouWantToAlertJp = '前へ';
+  static String doYouWantToAlert2 = "doYouWantToAlert2Tr";
+  static String doYouWantToAlert2Kr = "목표의 레벨의 기출 단어를 랜덤으로 학습 할 수 있습니다.";
+  static String doYouWantToAlert2Jp = '目標のレベルの単語をランダムで学習することができます。';
 
   // pickTime
   static String cancelBtnText = "cancelBtnTextTr";
@@ -335,10 +346,10 @@ class AppString {
   static String pillcCannelDescriptionEn =
       "An alarm goes off every week on a particular day of the week and on a particular time";
 
-  static String drinkPillAlram = "drinkPillAlramtr";
-  static String drinkPillAlramKr = '약 복용 시간';
-  static String drinkPillAlramJp = '薬の服用の時間';
-  static String drinkPillAlramEn = "Time for medication";
+  static String studyAlram = "drinkPillAlramtr";
+  static String studyAlramKr = '한국어 공부';
+  static String studyAlramJp = '韓国語の勉強';
+  static String studyAlramEn = "Time for medication";
 
   static String completeSetting = "completeSettingTr";
   static String completeSettingKr = '설정이 완료되었습니다.\n설정 페이지에서 변경하실 수 있습니다.';
@@ -351,10 +362,10 @@ class AppString {
   static String pillTextJp = '薬';
   static String pillTextEn = " Medicine";
 
-  static String timeToDrink = "timeToDrinktr";
-  static String timeToDrinkKr = '약 먹을 시간입니다!';
-  static String timeToDrinkJp = '薬を飲む時間です！';
-  static String timeToDrinkEn = "It's time to take the medicine!";
+  static String timeToStudy = "timeToStudyTr";
+  static String timeToStudyKr = '공부할 시간입니다!';
+  static String timeToStudyJp = '勉強のお時間です！';
+  static String timeToStudyEn = "It's time to take the medicine!";
 
   //
 

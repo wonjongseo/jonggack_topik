@@ -18,7 +18,7 @@ class RandomQuizScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               QuizStartButton(
-                label: '1/2급 QUIZ START',
+                label: '1・2級 ランダムQUIZ',
                 backgroundColor: Color(0xFFF51720),
                 onTap: () {
                   List<Word> words =
@@ -33,7 +33,7 @@ class RandomQuizScreen extends StatelessWidget {
               ),
               SizedBox(height: 20),
               QuizStartButton(
-                label: '3/4급 QUIZ START',
+                label: '3・4級 ランダムQUIZ',
                 backgroundColor: Color(0xFF00479F),
                 onTap: () {
                   List<Word> words =
@@ -41,7 +41,10 @@ class RandomQuizScreen extends StatelessWidget {
                         subjectIndex: 1,
                       );
                   Get.to(
-                    () => QuizScreen(),
+                    () => Scaffold(
+                      appBar: AppBar(leading: null, title: Text('data')),
+                      body: QuizScreen(),
+                    ),
                     binding: BindingsBuilder.put(
                       () => Get.put(QuizController(words)),
                     ),
@@ -50,7 +53,7 @@ class RandomQuizScreen extends StatelessWidget {
               ),
               SizedBox(height: 20),
               QuizStartButton(
-                label: '5/6급 QUIZ START',
+                label: '5・6級 ランダムQUIZ',
                 backgroundColor: Colors.black,
                 onTap: () {
                   List<Word> words =
@@ -93,8 +96,7 @@ class QuizStartButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 320,
-        padding: EdgeInsets.all(30),
+        padding: EdgeInsets.symmetric(vertical: 30, horizontal: 60),
         decoration: BoxDecoration(
           color: backgroundColor,
           borderRadius: BorderRadius.circular(20),

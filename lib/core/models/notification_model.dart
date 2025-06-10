@@ -5,7 +5,8 @@ import 'package:uuid/uuid.dart';
 part 'notification_model.g.dart';
 
 @HiveType(typeId: HK.notificationModelHiveId)
-class NotificationModel {
+class NotificationModel extends HiveObject {
+  static const String boxKey = HK.notificationModelBoxKey;
   @HiveField(0)
   final DateTime notiDateTime;
   @HiveField(1)
@@ -22,7 +23,7 @@ class NotificationModel {
 
   @override
   String toString() {
-    return 'NotificationModel(dateTime: $notiDateTime, alermId: $alermId, id: $id, createdAt: $createdAt)';
+    return 'Notification(dateTime: $notiDateTime, alermId: $alermId, id: $id, createdAt: $createdAt)';
   }
 
   @override

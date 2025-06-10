@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/admob/banner_ad/global_banner_admob.dart';
+import 'package:jonggack_topik/core/widgets/custom_button.dart';
 import 'package:jonggack_topik/features/auth/controllers/user_controller.dart';
 import 'package:jonggack_topik/features/category/screen/widgets/search_form.dart';
 import 'package:jonggack_topik/features/setting/screen/setting_screen.dart';
@@ -16,7 +17,6 @@ class SubjectScreen extends GetView<SubjectController> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(title: Text(controller.categoryTitle)),
       body: SafeArea(
@@ -28,8 +28,7 @@ class SubjectScreen extends GetView<SubjectController> {
               SizedBox(height: 32),
               _subjecttSelectorRow(),
               SizedBox(height: 12),
-              SizedBox(
-                height: size.height * .525,
+              Expanded(
                 child: Obx(
                   () => CarouselSlider(
                     carouselController: controller.carouselController,
@@ -53,14 +52,14 @@ class SubjectScreen extends GetView<SubjectController> {
                     ),
                     options: CarouselOptions(
                       disableCenter: true,
-                      viewportFraction: 0.7,
+                      viewportFraction: 0.65,
                       enableInfiniteScroll: false,
                       enlargeCenterPage: true,
                     ),
                   ),
                 ),
               ),
-              Spacer(),
+              SizedBox(height: 16),
             ],
           ),
         ),

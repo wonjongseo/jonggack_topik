@@ -1,11 +1,15 @@
+import 'package:jonggack_topik/core/utils/snackbar_helper.dart';
+import 'package:timezone/timezone.dart' as tz;
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/repositories/setting_repository.dart';
+import 'package:jonggack_topik/core/services/notification_service.dart';
 import 'package:jonggack_topik/core/utils/app_constant.dart';
 import 'package:jonggack_topik/core/utils/app_dialog.dart';
+import 'package:jonggack_topik/core/utils/app_function.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/features/setting/enum/enums.dart';
 
@@ -16,23 +20,28 @@ class SettingController extends GetxController {
 
   @override
   void onInit() {
-    getTtsValue();
-    getQuizValue();
-    _isDarkMode.value =
-        SettingRepository.getBool(AppConstant.isDarkModeKey) ??
-        ThemeMode.system == ThemeMode.dark;
+    getDatas();
     super.onInit();
   }
 
-  void changeTheme(int index) {
-    if (index == 0) {
-      _isDarkMode.value = true;
-      SettingRepository.setBool(AppConstant.isDarkModeKey, true);
-      Get.changeThemeMode(ThemeMode.dark);
-    } else {
+  void getDatas() {
+    _isDarkMode.value =
+        SettingRepository.getBool(AppConstant.isDarkModeKey) ??
+        ThemeMode.system == ThemeMode.dark;
+    getTtsValue();
+    getQuizValue();
+    getNotificationTime();
+  }
+
+  void changeTheme() {
+    if (_isDarkMode.value) {
       _isDarkMode.value = false;
       SettingRepository.setBool(AppConstant.isDarkModeKey, false);
       Get.changeThemeMode(ThemeMode.light);
+    } else {
+      _isDarkMode.value = true;
+      SettingRepository.setBool(AppConstant.isDarkModeKey, true);
+      Get.changeThemeMode(ThemeMode.dark);
     }
   }
 
@@ -166,5 +175,82 @@ class SettingController extends GetxController {
         SettingRepository.setInt(AppConstant.correctDurationKey, newValue);
         break;
     }
+  }
+
+  // Notification
+  RxnString _notificationTime = RxnString();
+  String? get notiTime => _notificationTime.value;
+  // List<int> _notificationIds = [];
+  void getNotificationTime() {
+    _notificationTime.value = SettingRepository.getString(
+      AppConstant.notificationTimeKey,
+    );
+    // _notificationIds = List<int>.from(
+    //   SettingRepository.getList(AppConstant.notificationsIdsKey),
+    // );
+  }
+
+  void onTapNotificationIcon() async {
+    if (_notificationTime.value == null) {
+      if (await changeNotificationTime()) {
+        SnackBarHelper.showSuccessSnackBar(
+          "${AppFunction.formatTime(_notificationTime.value!)}に通知が設定されました",
+        );
+      }
+    } else {
+      await deleteAllNotification();
+      SnackBarHelper.showSuccessSnackBar("通知が設定が解除されました");
+    }
+  }
+
+  Future<bool> changeNotificationTime() async {
+    TimeOfDay? initialTime;
+    if (_notificationTime.value != null) {
+      String hourAndMinute = _notificationTime.value!;
+      String hour = hourAndMinute.split(':')[0];
+      String minute = hourAndMinute.split(':')[1];
+      initialTime = TimeOfDay(hour: int.parse(hour), minute: int.parse(minute));
+    }
+    TimeOfDay? settedTimeOfDay = await AppFunction.pickTime(
+      Get.context!,
+      initialTime: initialTime,
+    );
+    if (settedTimeOfDay == null) return false;
+
+    await deleteAllNotification();
+
+    _notificationTime.value =
+        '${settedTimeOfDay.hour}:${settedTimeOfDay.minute}';
+
+    List<int> days = List.generate(7, (index) => index + 1);
+
+    for (int day in days) {
+      int hour = settedTimeOfDay.hour;
+      int minute = settedTimeOfDay.minute;
+      int id = AppFunction.createIdByDay(day, hour, minute);
+
+      String message =
+          '${AppFunction.formatTime(_notificationTime.value!)} ${AppString.timeToStudy.tr}';
+
+      await NotificationService().scheduleWeeklyNotification(
+        title: '📖  ${AppString.studyAlram.tr}',
+        message: message,
+        id: id,
+        weekday: day,
+        hour: hour,
+        minute: minute,
+      );
+
+      // _notificationIds.add(id);
+    }
+    return true;
+  }
+
+  Future<void> deleteAllNotification() async {
+    SettingRepository.delete(AppConstant.notificationTimeKey);
+    // SettingRepository.delete(AppConstant.notificationsIdsKey);
+    await NotificationService().cancelAllNotifications();
+
+    getNotificationTime();
   }
 }

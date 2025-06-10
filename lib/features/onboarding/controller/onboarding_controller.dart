@@ -1,21 +1,18 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:jonggack_topik/core/logger/logger_service.dart';
 import 'package:jonggack_topik/core/models/day_period_type.dart';
-import 'package:jonggack_topik/core/models/notification_model.dart';
-import 'package:jonggack_topik/core/models/task_model.dart';
 import 'package:jonggack_topik/core/models/week_day_type.dart';
 import 'package:jonggack_topik/core/repositories/hive_repository.dart';
+import 'package:jonggack_topik/core/repositories/setting_repository.dart';
 import 'package:jonggack_topik/core/services/notification_service.dart';
 import 'package:jonggack_topik/core/services/permission_service.dart';
 import 'package:jonggack_topik/core/utils/app_constant.dart';
 import 'package:jonggack_topik/core/utils/app_function.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/core/utils/snackbar_helper.dart';
-import 'package:jonggack_topik/features/auth/controllers/user_controller.dart';
 import 'package:jonggack_topik/features/auth/models/user.dart';
 import 'package:jonggack_topik/features/main/screens/main_screen.dart';
 import 'package:jonggack_topik/features/onboarding/screen/widgets/onboarding1.dart';
@@ -24,8 +21,6 @@ import 'package:jonggack_topik/features/onboarding/screen/widgets/onboarding3.da
 import 'package:timezone/timezone.dart' as tz;
 
 class OnboardingController extends GetxController {
-  // page
-
   @override
   void onInit() {
     pageController = PageController(initialPage: _pageIndex);
@@ -41,14 +36,13 @@ class OnboardingController extends GetxController {
     update();
   }
 
-  void forwardPage() {
+  void forwardPage() async {
     if (_pageIndex + 1 == onboardingCnt) {
-      goToMainScreenAndSaveUserData();
+      await goToMainScreenAndSaveUserData();
       return;
     }
     _pageIndex++;
     pageController.jumpToPage(_pageIndex);
-    // update();
   }
 
   void backToPage() {
@@ -57,7 +51,6 @@ class OnboardingController extends GetxController {
     }
     _pageIndex--;
     pageController.jumpToPage(_pageIndex);
-    // update();
   }
 
   int _pageIndex = 0;
@@ -71,7 +64,6 @@ class OnboardingController extends GetxController {
     FadeInRight(child: Onboarding3()),
   ];
 
-  // Onboarding2
   int selectedLevel = 0;
 
   void changeLevel(int level) {
@@ -79,10 +71,9 @@ class OnboardingController extends GetxController {
     update();
   }
 
-  // 높낮이 , 상의, 곤두박질
   // Onboarding3
-  List<DayPeriodType> pillTimeDayPeriod =
-      DayPeriodType.values.toList(); // 0:아침, 1:점심, 2: 저녁
+  List<DayPeriodType> notificationPeriod = [DayPeriodType.afternoon];
+  // DayPeriodType.values.toList(); // 0:아침, 1:점심, 2: 저녁
   List<WeekDayType> selectedWeekDays = WeekDayType.values.toList(); // 0:월, 1: 화
 
   bool isAlermEnable = false;
@@ -115,7 +106,10 @@ class OnboardingController extends GetxController {
     }
   }
 
-  void changePillTime(DayPeriodType dayPeriodType, BuildContext context) async {
+  void changeNotifcationTime(
+    DayPeriodType dayPeriodType,
+    BuildContext context,
+  ) async {
     String pillTime = getAlramTimeDayPeriod(dayPeriodType);
     int hour = int.tryParse(pillTime.split(':')[0]) ?? 0;
     int minute = int.tryParse(pillTime.split(':')[1]) ?? 0;
@@ -143,8 +137,6 @@ class OnboardingController extends GetxController {
     update();
   }
 
-  // */
-
   Future<void> _saveTopikLevel() async {
     String selectedSubject = "1・2級";
     switch (selectedLevel) {
@@ -166,21 +158,17 @@ class OnboardingController extends GetxController {
     } else {
       box = Hive.box(AppConstant.settingModelBox);
     }
-    String key =
-        '$selectedSubject-${AppConstant.defaultCategory}-${AppConstant.selectedCategoryIdx}';
 
-    LogManager.info('목표 레벨 Key: $key');
+    LogManager.info('목표 레벨 Key: $selectedSubject');
 
-    box.put(AppConstant.lastSelected, key);
+    box.put(AppConstant.goalLevel, selectedSubject);
   }
 
-  void goToMainScreenAndSaveUserData() async {
+  Future<void> goToMainScreenAndSaveUserData() async {
     //
     await _saveTopikLevel();
-    UserController userController = Get.put(UserController(), permanent: true);
 
-    List<TaskModel> tasks = [];
-
+    List<int> notificationIds = [];
     selectedWeekDays.sort((a, b) => a.index.compareTo(b.index));
 
     List<int> days = List.generate(
@@ -189,7 +177,7 @@ class OnboardingController extends GetxController {
     );
 
     for (int day in days) {
-      for (DayPeriodType pillTime in pillTimeDayPeriod) {
+      for (DayPeriodType pillTime in notificationPeriod) {
         int hour = int.parse(getAlramTimeDayPeriod(pillTime).split(':')[0]);
         int minute = int.parse(getAlramTimeDayPeriod(pillTime).split(':')[1]);
         int id = AppFunction.createIdByDay(day, hour, minute);
@@ -206,10 +194,10 @@ class OnboardingController extends GetxController {
 
         if (isAlermEnable && notificationService != null) {
           String message =
-              '$hour${AppString.hour.tr} $minute${AppString.minute.tr} ${AppString.timeToDrink.tr}';
+              '$hour${AppString.hour.tr} $minute${AppString.minute.tr} ${AppString.timeToStudy.tr}';
 
           taskTime = await notificationService!.scheduleWeeklyNotification(
-            title: '💊  ${AppString.drinkPillAlram.tr}',
+            title: '📖  ${AppString.studyAlram.tr}',
             message: message,
             id: id,
             weekday: day,
@@ -221,31 +209,17 @@ class OnboardingController extends GetxController {
         if (taskTime == null) {
           break;
         }
-
-        tasks.add(
-          TaskModel(
-            taskName: '${pillTime.label}${AppString.pillText.tr}',
-            taskDate: taskTime,
-            notifications: [
-              NotificationModel(notiDateTime: taskTime, alermId: id),
-            ],
-            isRegular: true,
-          ),
-        );
+        notificationIds.add(id);
       }
     }
 
     User user = User();
-    // User userModel = User(
-    //   tasks: tasks,
-    //   dayPeriodTypes: pillTimeDayPeriod,
-    // );
-
     final userRepo = Get.find<HiveRepository<User>>();
-    userRepo.put(user.userId, user);
-    // userController.saveUser(userModel);
 
-    // Get.off(() => const MainScreen());
+    userRepo.put(user.userId, user);
+
+    // SettingRepository.setList(AppConstant.notificationsIdsKey, notificationIds);
+    SettingRepository.setString(AppConstant.notificationTimeKey, lunchTime);
 
     Get.offAllNamed(MainScreen.name);
     SnackBarHelper.showSuccessSnackBar(AppString.completeSetting.tr);

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/utils/app_color.dart';
 import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
+import 'package:jonggack_topik/theme.dart';
 
 class SettingListtile extends GetView<SettingController> {
   const SettingListtile({
@@ -26,6 +27,7 @@ class SettingListtile extends GetView<SettingController> {
         fontWeight: FontWeight.w500,
         fontSize: SettingController.to.baseFS - 2,
         color: controller.isDarkMode ? AppColors.white : AppColors.black,
+        fontFamily: AppFonts.zenMaruGothic,
       ),
       subtitleTextStyle: TextStyle(
         fontWeight: FontWeight.w400,
@@ -38,6 +40,7 @@ class SettingListtile extends GetView<SettingController> {
           Icon(
             iconData ?? Icons.keyboard_arrow_right,
             color: controller.isDarkMode ? AppColors.white : AppColors.black,
+            size: 20,
           ),
       subtitle: subTitle == null ? null : Text(subTitle!, maxLines: 1),
       onTap: onTap,

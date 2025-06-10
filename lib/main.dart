@@ -150,8 +150,11 @@ class InitBinding extends Bindings {
     Get.put(BookController());
     Get.lazyPut(() => DataRepositry());
     Get.lazyPut(() => CategoryController(Get.find()));
-    Get.lazyPut(() => ChartController());
+    Get.lazyPut(() => ChartController(), fenix: true);
     Get.lazyPut(() => MissedWordController(), fenix: true);
   }
 }
+
+// flutter pub run change_app_package_name:main com.wonjongseo.numberone-topik
+
 // flutter pub run build_runner build --delete-conflicting-outputs

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_utils/get_utils.dart';
 import 'package:jonggack_topik/core/models/day_period_type.dart';
 import 'package:jonggack_topik/core/utils/app_color.dart';
+import 'package:jonggack_topik/core/utils/app_function.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/features/onboarding/controller/onboarding_controller.dart';
 
@@ -13,7 +13,15 @@ class Onboarding3 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(AppString.doYouWantToAlert.tr),
+        Text(
+          AppString.doYouWantToAlert.tr,
+          style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
+        ),
+        Text(
+          AppString.doYouWantToAlert2.tr,
+          style: TextStyle(fontWeight: FontWeight.w400, fontSize: 14),
+        ),
+
         SizedBox(height: 16),
         GetBuilder<OnboardingController>(
           builder: (conroller) {
@@ -29,21 +37,21 @@ class Onboarding3 extends StatelessWidget {
                 ),
                 SizedBox(height: 32),
                 Column(
-                  children: List.generate(conroller.pillTimeDayPeriod.length, (
+                  children: List.generate(conroller.notificationPeriod.length, (
                     index,
                   ) {
                     return GestureDetector(
                       onTap:
                           !conroller.isAlermEnable
                               ? null
-                              : () => conroller.changePillTime(
-                                conroller.pillTimeDayPeriod[index],
+                              : () => conroller.changeNotifcationTime(
+                                conroller.notificationPeriod[index],
                                 context,
                               ),
                       child: AppointPillTime(
-                        title: conroller.pillTimeDayPeriod[index].label,
+                        title: conroller.notificationPeriod[index].label,
                         time: conroller.getAlramTimeDayPeriod(
-                          conroller.pillTimeDayPeriod[index],
+                          conroller.notificationPeriod[index],
                         ),
                         isAlermEnable: conroller.isAlermEnable,
                       ),
@@ -125,7 +133,7 @@ class AppointPillTime extends StatelessWidget {
               Icon(Icons.timer, color: isAlermEnable ? null : Colors.grey),
               const SizedBox(width: 10),
               Text(
-                title,
+                '', // title,
                 style: TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 20,
@@ -148,7 +156,7 @@ class AppointPillTime extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  time,
+                  AppFunction.formatTime(time),
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     color: isAlermEnable ? null : Colors.grey,

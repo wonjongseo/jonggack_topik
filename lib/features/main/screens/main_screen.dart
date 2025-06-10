@@ -46,10 +46,10 @@ class MainScreen extends GetView<MainController> {
 
           PersistentBottomNavBarItem(
             icon: Icon(FontAwesomeIcons.question),
-            iconSize: 20,
+            // iconSize: 20,
             // title: "Random Quiz",
-            activeColorPrimary: AppColors.accentColor,
-            activeColorSecondary: AppColors.white,
+            activeColorPrimary: AppColors.primaryColor,
+            activeColorSecondary: AppColors.primaryColor,
             inactiveColorPrimary: Colors.grey,
           ),
           PersistentBottomNavBarItem(
@@ -70,7 +70,7 @@ class MainScreen extends GetView<MainController> {
           ),
         ],
 
-        navBarStyle: NavBarStyle.style16,
+        navBarStyle: NavBarStyle.style6,
         // navBarStyle: NavBarStyle.style10,
       );
     });

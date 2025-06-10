@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/utils.dart';
-import 'package:jonggack_topik/core/utils/app_color.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/core/utils/snackbar_helper.dart';
 import 'package:jonggack_topik/features/category/controller/category_controller.dart';
@@ -27,6 +26,24 @@ class AppFunction {
     }
   }
 
+  static String formatTime(String sTime) {
+    if (!sTime.contains(':')) {
+      return '';
+    }
+
+    final splited = sTime.split(':');
+
+    if (splited.length != 2) return '';
+
+    String hour = splited[0];
+    String minute = splited[1];
+
+    String hourAndTime =
+        "$hour${AppString.hour.tr} $minute${AppString.minute.tr}";
+
+    return hourAndTime;
+  }
+
   static void scrollGoToTop(ScrollController scrollController) {
     scrollController.animateTo(
       0,
@@ -42,7 +59,7 @@ class AppFunction {
     TimeOfDay? initialTime,
   }) async {
     return await showTimePicker(
-      cancelText: AppString.cancelBtnTextTr.tr,
+      cancelText: AppString.cancelBtnText.tr,
       helpText: helpText ?? AppString.plzAlarmTime.tr,
       errorInvalidText: errorInvalidText ?? AppString.plzInputCollectTime.tr,
       hourLabelText: AppString.hour.tr,

@@ -9,6 +9,7 @@ class AppConstant {
 
   static const String selectedCategoryIdx = 'selectedCategoryIdx';
   static const String lastSelected = 'lastSelected';
+  static const String goalLevel = 'goalLevel';
 
   // Base font size
   static const String fontSizeKey = 'fontSizeKey';
@@ -20,6 +21,10 @@ class AppConstant {
   // Quiz
   static const String incorrectDurationKey = 'incorrectDurationKey';
   static const String correctDurationKey = 'correctDurationKey';
+
+  // Notification
+  // static const String notificationsIdsKey = 'notificationsIdsKey';
+  static const String notificationTimeKey = 'notificationTimeKey';
 
   static const defaultCategory = "韓国語能力試験";
 

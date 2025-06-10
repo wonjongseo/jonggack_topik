@@ -92,4 +92,10 @@ class SettingRepository {
 
     return box.get(key) as double?;
   }
+
+  static void delete(String key) {
+    final box = _box ?? Hive.box(AppConstant.settingModelBox);
+    LogManager.info('[삭제] 키: $key');
+    box.delete(key);
+  }
 }

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/services/notification_service.dart';
@@ -60,26 +61,29 @@ class OnboardingScreen extends GetView<OnboardingController> {
               ),
             ),
           ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              DateTime dateTime = DateTime.now();
+          floatingActionButton:
+              kDebugMode
+                  ? FloatingActionButton(
+                    onPressed: () {
+                      DateTime dateTime = DateTime.now();
 
-              String title =
-                  '${dateTime.hour}-${dateTime.minute}-${dateTime.second}';
-              NotificationService().scheduleSpecificDateNotification(
-                id: 0,
-                title: title,
-                message: 'message',
-                channelDescription: 'channelDescription',
-                year: dateTime.year,
-                month: dateTime.month,
-                day: dateTime.day,
-                hour: dateTime.hour,
-                minute: dateTime.minute,
-                second: dateTime.second + 10,
-              );
-            },
-          ),
+                      String title =
+                          '${dateTime.hour}-${dateTime.minute}-${dateTime.second}';
+                      NotificationService().scheduleSpecificDateNotification(
+                        id: 0,
+                        title: title,
+                        message: 'message',
+                        channelDescription: 'channelDescription',
+                        year: dateTime.year,
+                        month: dateTime.month,
+                        day: dateTime.day,
+                        hour: dateTime.hour,
+                        minute: dateTime.minute,
+                        second: dateTime.second + 10,
+                      );
+                    },
+                  )
+                  : null,
           bottomNavigationBar: SafeArea(
             child: BottomBtn(
               label: "NEXT",

@@ -13,7 +13,10 @@ class Onboarding2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(AppString.selectGoalLevel.tr),
+        Text(
+          AppString.selectGoalLevel.tr,
+          style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
+        ),
         SizedBox(height: 32),
         GetBuilder<OnboardingController>(
           builder: (controller) {
@@ -63,24 +66,17 @@ class LevelSelector extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: 280,
-        padding: EdgeInsets.symmetric(vertical: 16, horizontal: 64),
+        padding: EdgeInsets.symmetric(vertical: 16, horizontal: 48),
         decoration: BoxDecoration(
           border: Border.all(
             color: isSelected ? AppColors.primaryColor : Colors.grey,
           ),
           boxShadow:
               isSelected
-                  ? [
-                    BoxShadow(
-                      color: Colors.lightBlue,
-                      blurRadius: .5,
-                      // spreadRadius: 1,
-                      // offset: Offset(1, 1),
-                    ),
-                  ]
+                  ? [BoxShadow(color: Colors.lightBlue, blurRadius: .2)]
                   : null,
           color: isSelected ? AppColors.primaryColor : null,
-          borderRadius: BorderRadius.circular(25),
+          borderRadius: BorderRadius.circular(15),
         ),
         child: Center(
           child: Text(
@@ -88,8 +84,8 @@ class LevelSelector extends StatelessWidget {
             style: TextStyle(
               fontFamily: AppFonts.zenMaruGothic,
               fontSize: 22,
-              letterSpacing: 2,
-              color: isSelected ? Colors.white : Colors.grey,
+              letterSpacing: 1.8,
+              color: isSelected ? Colors.black : Colors.grey,
             ),
           ),
         ),

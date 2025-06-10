@@ -11,6 +11,7 @@ import 'package:jonggack_topik/core/models/category_hive.dart';
 import 'package:jonggack_topik/core/models/chapter_hive.dart';
 import 'package:jonggack_topik/core/models/step_model.dart';
 import 'package:jonggack_topik/core/models/subject_hive.dart';
+import 'package:jonggack_topik/features/auth/controllers/user_controller.dart';
 
 class RandomWordService {
   static const _prefKey = 'lastShownDate'; // 마지막으로 단어를 보여준 날짜 (YYYY-MM-DD 형식)
@@ -20,10 +21,7 @@ class RandomWordService {
         SettingRepository.getString(AppConstant.lastSelected) ??
         "1・2級-${AppConstant.defaultCategory}";
 
-    print('lastSelected : ${lastSelected}');
-
     String level = lastSelected.split('-${AppConstant.defaultCategory}')[0];
-    print('level : ${level}');
 
     int subjectIndex = 0;
     switch (level) {
@@ -58,12 +56,22 @@ class RandomWordService {
 
     final subject =
         category!.subjects[subjectIndex ?? _getSubjectIndexFromLastSelected()];
+
     List<Word> randomWord = [];
     for (int i = 0; i < quizNumber; i++) {
-      int randomInt = random.nextInt(subject.chapters.length);
-      ChapterHive chapterHive = subject.chapters[randomInt];
+      int randomChapterIdx = 0;
+      // 무료 버전 제한
+      if (subjectIndex == 2 && !UserController.to.user.isPremieum) {
+        randomChapterIdx = random.nextInt(
+          subject.chapters.length > 3 ? 3 : subject.chapters.length,
+        );
+      } else {
+        randomChapterIdx = random.nextInt(subject.chapters.length);
+      }
 
-      randomInt = random.nextInt(chapterHive.stepKeys.length);
+      ChapterHive chapterHive = subject.chapters[randomChapterIdx];
+
+      int randomInt = random.nextInt(chapterHive.stepKeys.length);
       String stepKey = chapterHive.stepKeys[randomInt];
       StepModel stepModel = stepRepo.get(stepKey)!;
 
@@ -72,6 +80,10 @@ class RandomWordService {
     }
 
     return randomWord;
+  }
+
+  static int aa(int chpatersI) {
+    return 0;
   }
 
   static List<Word> createDefaultRandomWords() {

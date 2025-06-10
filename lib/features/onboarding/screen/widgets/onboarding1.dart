@@ -9,24 +9,24 @@ class Onboarding1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        // Text(
+        //   '${AppString.appName.tr}${AppString.welcome.tr}',
+        //   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+        // ),
         Text.rich(
           textAlign: TextAlign.center,
-          style: TextStyle(
-            height: 1.8,
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
-          ),
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           TextSpan(
-            text: '${AppString.appName.tr}${AppString.beforeStart.tr}',
+            text: '${AppString.appName.tr}${AppString.welcome.tr}',
             children: [
               TextSpan(
-                text: AppString.plzSetting.tr,
+                text:
+                    '${AppString.appName.tr}${AppString.beforeStart.tr}${AppString.plzSetting.tr}',
                 style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
               ),
             ],
           ),
         ),
-        SizedBox(height: 20),
       ],
     );
   }

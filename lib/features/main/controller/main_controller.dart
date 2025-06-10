@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/admob/banner_ad/global_banner_admob.dart';
+import 'package:jonggack_topik/core/models/word.dart';
+import 'package:jonggack_topik/core/services/random_word_service.dart';
 import 'package:jonggack_topik/features/book/controller/book_controller.dart';
 import 'package:jonggack_topik/features/category/screen/category_screen.dart';
 import 'package:jonggack_topik/features/chart/controller/chart_controller.dart';
 import 'package:jonggack_topik/features/chart/screen/chart_screen.dart';
+import 'package:jonggack_topik/features/quiz/controller/quiz_controller.dart';
+import 'package:jonggack_topik/features/quiz/screen/quiz_screen.dart';
 import 'package:jonggack_topik/features/random_quiz/screen/random_quiz_screen.dart';
+import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
 import 'package:jonggack_topik/features/setting/screen/setting_screen.dart';
 import 'package:jonggack_topik/features/user/screen/user_screen.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
@@ -17,7 +22,6 @@ class MainController extends GetxController {
   @override
   void onInit() {
     initialIndex = 0;
-
     tabController = PersistentTabController(initialIndex: initialIndex);
 
     super.onInit();
@@ -32,11 +36,25 @@ class MainController extends GetxController {
   ];
 
   void onPageSelected(int index) {
-    if (index == 1) {
-      BookController.to.getDatas();
-    }
-    if (index == 3) {
-      ChartController.to.getAllData();
+    switch (index) {
+      case 0:
+        break;
+      case 1:
+        BookController.to.getDatas();
+        break;
+      case 2:
+      // List<Word> words = RandomWordService.createRandomWordBySubject();
+      // Get.to(
+      //   () => QuizScreen(),
+      //   binding: BindingsBuilder.put(() => Get.put(QuizController(words))),
+      // );
+      // break;
+      case 3:
+        ChartController.to.getAllData();
+        break;
+      case 4:
+        SettingController.to.getDatas();
+        break;
     }
   }
 }
