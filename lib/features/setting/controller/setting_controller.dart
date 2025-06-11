@@ -1,7 +1,8 @@
-import 'package:jonggack_topik/core/services/permission_service.dart';
+import 'package:jonggack_topik/core/logger/logger_service.dart';
 import 'package:jonggack_topik/core/utils/snackbar_helper.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'dart:io';
+import 'package:flutter_debouncer/flutter_debouncer.dart' as FB;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -16,11 +17,19 @@ import 'package:jonggack_topik/features/setting/enum/enums.dart';
 
 class SettingController extends GetxController {
   static SettingController get to => Get.find<SettingController>();
+
+  late final FB.Debouncer debouncer;
+  final debouncerDuration = Duration(milliseconds: 500);
+
   final _isDarkMode = false.obs;
   bool get isDarkMode => _isDarkMode.value;
+
   set isDarkMode(bool isDarkMode) {
     _isDarkMode.value = isDarkMode;
   }
+
+  final _countOfGoal = 1.obs;
+  int get countOfGoal => _countOfGoal.value;
 
   SettingController(bool isDarkMode) {
     _isDarkMode.value = isDarkMode;
@@ -29,17 +38,51 @@ class SettingController extends GetxController {
 
   @override
   void onInit() {
+    debouncer = FB.Debouncer();
     getDatas();
     super.onInit();
   }
 
   void getDatas() {
-    // _isDarkModeub.value =
-    //     SettingRepository.getBool(AppConstant.isDarkModeKey) ??
-    //     ThemeMode.system == ThemeMode.dark;
+    getBaseFontSize();
+    getCountOfGoal();
     getTtsValue();
     getQuizValue();
     getNotificationTime();
+  }
+
+  late TextEditingController teCtl = TextEditingController();
+  void changeCountOfStudy(bool isIncrease) {
+    String sCount = teCtl.text.trim();
+    int count = int.tryParse(sCount) ?? 1;
+
+    if (isIncrease) {
+      count++;
+    } else {
+      count--;
+    }
+    if (count < 1) {
+      return;
+    }
+    teCtl.text = '$count';
+
+    debouncer.debounce(
+      duration: debouncerDuration,
+      onDebounce: () {
+        print('debouncer');
+        SettingRepository.setInt(AppConstant.countOfGoal, count);
+      },
+    );
+  }
+
+  void getCountOfGoal() {
+    try {
+      _countOfGoal.value =
+          SettingRepository.getInt(AppConstant.countOfGoal) ?? 1;
+      teCtl.text = '${_countOfGoal.value}';
+    } catch (e) {
+      LogManager.error('$e');
+    }
   }
 
   void changeTheme() {
@@ -77,6 +120,7 @@ class SettingController extends GetxController {
 
   void getBaseFontSize() {
     _baseFS.value = SettingRepository.getDouble(AppConstant.fontSizeKey) ?? 16;
+    print('_baseFS.value : ${_baseFS.value}');
   }
 
   void updateBaseFontSize({bool isIncrease = true, double? fontSize}) {
@@ -87,6 +131,14 @@ class SettingController extends GetxController {
 
     if (newValue > 25 || newValue < 16) return;
     _baseFS.value = newValue;
+
+    debouncer.debounce(
+      duration: debouncerDuration,
+      onDebounce: () {
+        print('debouncer');
+        SettingRepository.setDouble(AppConstant.fontSizeKey, newValue);
+      },
+    );
   }
 
   // Tts
@@ -260,5 +312,12 @@ class SettingController extends GetxController {
     await NotificationService().cancelAllNotifications();
 
     getNotificationTime();
+  }
+
+  @override
+  void onClose() {
+    debouncer.cancel();
+    teCtl.dispose();
+    super.onClose();
   }
 }

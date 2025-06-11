@@ -201,6 +201,56 @@ class SettingScreen extends GetView<SettingController> {
           ExpansionTile(
             shape: Border.all(color: Colors.transparent),
             title: Text(
+              AppString.goalCountPerDay.tr,
+              style: TextStyle(
+                fontWeight: FontWeight.w400,
+                fontSize: SettingController.to.baseFS - 2,
+              ),
+            ),
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  IconButton(
+                    onPressed: () => controller.changeCountOfStudy(true),
+                    icon: Icon(FontAwesomeIcons.add),
+                    style: IconButton.styleFrom(iconSize: controller.baseFS),
+                  ),
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 15),
+                    padding: EdgeInsets.all(12),
+                    width: 70,
+                    height: 70,
+
+                    child: Center(
+                      child: TextField(
+                        showCursor: false,
+                        controller: controller.teCtl,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: controller.baseFS + 4),
+                        maxLength: 3,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          counterText: "",
+                        ),
+                        keyboardType: TextInputType.numberWithOptions(),
+                      ),
+                    ),
+                  ),
+
+                  IconButton(
+                    onPressed: () => controller.changeCountOfStudy(false),
+                    icon: Icon(FontAwesomeIcons.minus),
+                    style: IconButton.styleFrom(iconSize: controller.baseFS),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          ExpansionTile(
+            shape: Border.all(color: Colors.transparent),
+            title: Text(
               AppString.proun.tr,
               style: TextStyle(
                 fontWeight: FontWeight.w400,

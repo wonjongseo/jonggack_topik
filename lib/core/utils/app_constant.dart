@@ -1,5 +1,3 @@
-import 'package:get/get.dart';
-
 const double appBarHeight = 35;
 const double appBarTextSize = 18;
 
@@ -10,6 +8,7 @@ class AppConstant {
   static const String selectedCategoryIdx = 'selectedCategoryIdx';
   static const String lastSelected = 'lastSelected';
   static const String goalLevel = 'goalLevel';
+  static const String countOfGoal = 'countOfGoalStudy';
 
   // Base font size
   static const String fontSizeKey = 'fontSizeKey';

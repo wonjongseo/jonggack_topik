@@ -5,6 +5,7 @@ class AppTranslations extends Translations {
   // TODO: implement keys
   Map<String, Map<String, String>> get keys => {
     'ja_JP': {
+      AppString.goalCountPerDay: AppString.goalCountPerDayJp,
       AppString.random: AppString.randomJp,
       AppString.addWord: AppString.addWordJp,
       AppString.hideMean: AppString.hideMeanJp,
@@ -37,6 +38,7 @@ class AppTranslations extends Translations {
       AppString.plzSetting: AppString.plzSettingJp,
       AppString.back: AppString.backJp,
       AppString.selectGoalLevel: AppString.selectGoalLevelJp,
+      AppString.selectCountOfStudy: AppString.selectCountOfStudyJp,
       AppString.doYouWantToAlert: AppString.doYouWantToAlertJp,
       AppString.doYouWantToAlert2: AppString.doYouWantToAlert2Jp,
       AppString.cancelBtnText: AppString.cancelBtnTextJp,
@@ -102,6 +104,7 @@ class AppTranslations extends Translations {
       AppString.almostPass: AppString.almostPassJp,
     },
     'ko_KR': {
+      AppString.goalCountPerDay: AppString.goalCountPerDayKr,
       AppString.random: AppString.randomKr,
       AppString.addWord: AppString.addWordKr,
       AppString.hideMean: AppString.hideMeanKr,
@@ -134,6 +137,7 @@ class AppTranslations extends Translations {
       AppString.plzSetting: AppString.plzSettingKr,
       AppString.back: AppString.backKr,
       AppString.selectGoalLevel: AppString.selectGoalLevelKr,
+      AppString.selectCountOfStudy: AppString.selectCountOfStudyKr,
       AppString.doYouWantToAlert: AppString.doYouWantToAlertKr,
       AppString.doYouWantToAlert2: AppString.doYouWantToAlert2Kr,
       AppString.cancelBtnText: AppString.cancelBtnTextKr,
@@ -323,6 +327,10 @@ class AppString {
   static String selectGoalLevel = "selectGoalLevelTr";
   static String selectGoalLevelKr = "어느 레벨을 목표로 하고 계신가요?";
   static String selectGoalLevelJp = 'どのレベル目指していますか？';
+
+  static String selectCountOfStudy = "selectCountOfStudyTr";
+  static String selectCountOfStudyKr = "하루에 몇개 외우는 것을 목표로 하고 계신가요?";
+  static String selectCountOfStudyJp = '1日に何個覚えるのを目指していますか？';
 
   static String doYouWantToAlert = "doYouWantToAlertTr";
   static String doYouWantToAlertKr = "학습 알람을 받으시겠습니까?";
@@ -721,4 +729,9 @@ Would you like to copy the email [visionwill3322@gmail.com]?
   static String randomKr = '랜덤';
   static String randomJp = 'ランダム';
   static String randomEn = "";
+
+  static String goalCountPerDay = "goalCountPerDayTr";
+  static String goalCountPerDayKr = '하루 목표 학습 단어 수 ';
+  static String goalCountPerDayJp = '一日目標の学習数';
+  static String goalCountPerDayEn = "";
 }

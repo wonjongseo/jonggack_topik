@@ -42,7 +42,8 @@ class SplashController extends GetxController {
     super.onReady();
     final hasUser = userRepo.getAll();
 
-    if (hasUser.isEmpty || kDebugMode) {
+    if (hasUser.isEmpty) {
+      //|| kDebugMode
       Get.offAllNamed(OnboardingScreen.name);
     } else {
       Get.offAllNamed(MainScreen.name);

@@ -8,7 +8,6 @@ import 'package:jonggack_topik/core/models/week_day_type.dart';
 import 'package:jonggack_topik/core/repositories/hive_repository.dart';
 import 'package:jonggack_topik/core/repositories/setting_repository.dart';
 import 'package:jonggack_topik/core/services/notification_service.dart';
-import 'package:jonggack_topik/core/services/permission_service.dart';
 import 'package:jonggack_topik/core/utils/app_constant.dart';
 import 'package:jonggack_topik/core/utils/app_function.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
@@ -18,6 +17,8 @@ import 'package:jonggack_topik/features/main/screens/main_screen.dart';
 import 'package:jonggack_topik/features/onboarding/screen/widgets/onboarding1.dart';
 import 'package:jonggack_topik/features/onboarding/screen/widgets/onboarding2.dart';
 import 'package:jonggack_topik/features/onboarding/screen/widgets/onboarding3.dart';
+import 'package:jonggack_topik/features/onboarding/screen/widgets/onboarding4.dart';
+import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 class OnboardingController extends GetxController {
@@ -61,6 +62,7 @@ class OnboardingController extends GetxController {
   final _onboardings = [
     Onboarding1(),
     FadeInRight(child: Onboarding2()),
+    FadeInRight(child: Onboarding4()),
     FadeInRight(child: Onboarding3()),
   ];
 
@@ -69,6 +71,34 @@ class OnboardingController extends GetxController {
   void changeLevel(int level) {
     selectedLevel = level;
     update();
+  }
+
+  // Onboarding4
+  TextEditingController teCtl = TextEditingController(text: '30');
+  void changeCountOfStudy(bool isIncrease) {
+    String sCount = teCtl.text.trim();
+    int count = int.tryParse(sCount) ?? 1;
+
+    if (isIncrease) {
+      count++;
+    } else {
+      count--;
+    }
+    if (count < 1) {
+      return;
+    }
+    teCtl.text = '$count';
+  }
+
+  Future<void> _saveCountOfGoalStudy() async {
+    String sCount = teCtl.text.trim();
+    int count = int.tryParse(sCount) ?? 1;
+    try {
+      SettingRepository.setInt(AppConstant.countOfGoal, count);
+      LogManager.info('키 : ${AppConstant.countOfGoal}, 값: $count');
+    } catch (e) {
+      LogManager.error('$e');
+    }
   }
 
   // Onboarding3
@@ -212,7 +242,7 @@ class OnboardingController extends GetxController {
   Future<void> goToMainScreenAndSaveUserData() async {
     //
     await _saveTopikLevel();
-
+    await _saveCountOfGoalStudy();
     _setNotification();
     if (isNotifiEnable) {
       _setNotification();
@@ -227,5 +257,11 @@ class OnboardingController extends GetxController {
 
     Get.offAllNamed(MainScreen.name);
     SnackBarHelper.showSuccessSnackBar(AppString.completeSetting.tr);
+  }
+
+  @override
+  void onClose() {
+    teCtl.dispose();
+    super.onClose();
   }
 }

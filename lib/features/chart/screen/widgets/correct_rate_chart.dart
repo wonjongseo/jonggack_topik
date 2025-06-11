@@ -49,7 +49,8 @@ class CorrectRateChart extends StatelessWidget {
                       final correct = controller.correctCounts[groupIndex];
                       final incorrect = controller.incorrectCounts[groupIndex];
                       return BarTooltipItem(
-                        '${AppString.correct.tr}: $correct${AppString.unit.tr}\n${AppString.wrong.tr}: $incorrect${AppString.unit.tr}\n${AppString.correctRate.tr}: $percent%',
+                        '$correct/${correct + incorrect}\n${AppString.correctRate.tr}: $percent%',
+                        // '${AppString.correct.tr}: $correct${AppString.unit.tr}\n${AppString.wrong.tr}: $incorrect${AppString.unit.tr}\n${AppString.correctRate.tr}: $percent%',
                         TextStyle(),
                       );
                     },
