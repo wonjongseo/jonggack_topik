@@ -1,6 +1,10 @@
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:jonggack_topik/core/admob/banner_ad/global_banner_admob.dart';
+import 'package:jonggack_topik/core/utils/app_string.dart';
+import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
 
 class VeryGoodScreen extends StatelessWidget {
   static const String name = '/very-good';
@@ -60,32 +64,32 @@ class _CelebrationScreenState extends State<CelebrationScreen> {
                 Colors.yellow,
               ],
             ),
-            RichText(
-              textAlign: TextAlign.center,
-              text: TextSpan(
-                text: '축하합니다!\n',
-                children: [
-                  TextSpan(
-                    text: '100점',
-                    style: TextStyle(
-                      fontSize: 30 * 1.5,
-                      color: Colors.redAccent,
+            Obx(
+              () => RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                  text: AppString.congrautation.tr,
+                  children: [
+                    TextSpan(
+                      text: AppString.perfectScore.tr,
+                      style: TextStyle(
+                        fontSize: SettingController.to.baseFS + 24,
+                        color: Colors.redAccent,
+                      ),
                     ),
-                  ),
-                  const TextSpan(text: '입니다!!\n\n'),
-                  TextSpan(
-                    text: 'JLPT합격까지 한 발자국 나아가셨습니다.\n조금만 더 화이팅합시다~',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                    TextSpan(text: AppString.thereIs.tr),
+                    TextSpan(
+                      text: AppString.almostPass.tr,
+                      style: TextStyle(
+                        fontSize: SettingController.to.baseFS + 2,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
+                  ],
+                  style: TextStyle(
+                    fontSize: SettingController.to.baseFS + 14,
+                    fontWeight: FontWeight.bold,
                   ),
-                ],
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
                 ),
               ),
             ),
@@ -116,7 +120,7 @@ class JonggackAvator extends StatelessWidget {
         shape: BoxShape.circle,
         image: DecorationImage(
           fit: BoxFit.fill,
-          image: AssetImage('assets/images/my_avator.jpeg'),
+          image: AssetImage('assets/images/cirlce_me.png'),
         ),
       ),
     );

@@ -18,7 +18,7 @@ class RandomQuizScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               QuizStartButton(
-                label: '1・2級 ランダムQUIZ',
+                label: '1・2級 RANDOM QUIZ',
                 backgroundColor: Color(0xFFF51720),
                 onTap: () {
                   List<Word> words =
@@ -33,7 +33,7 @@ class RandomQuizScreen extends StatelessWidget {
               ),
               SizedBox(height: 20),
               QuizStartButton(
-                label: '3・4級 ランダムQUIZ',
+                label: '3・4級 RANDOM QUIZ',
                 backgroundColor: Color(0xFF00479F),
                 onTap: () {
                   List<Word> words =
@@ -41,10 +41,7 @@ class RandomQuizScreen extends StatelessWidget {
                         subjectIndex: 1,
                       );
                   Get.to(
-                    () => Scaffold(
-                      appBar: AppBar(leading: null, title: Text('data')),
-                      body: QuizScreen(),
-                    ),
+                    () => QuizScreen(),
                     binding: BindingsBuilder.put(
                       () => Get.put(QuizController(words)),
                     ),
@@ -53,7 +50,7 @@ class RandomQuizScreen extends StatelessWidget {
               ),
               SizedBox(height: 20),
               QuizStartButton(
-                label: '5・6級 ランダムQUIZ',
+                label: '5・6級 RANDOM QUIZ',
                 backgroundColor: Colors.black,
                 onTap: () {
                   List<Word> words =

@@ -20,15 +20,18 @@ class Book extends HiveObject {
   @HiveField(1)
   final String title;
   @HiveField(2)
-  final int bookNum;
+  final String description;
   @HiveField(3)
-  final String createdAt;
+  final int bookNum;
   @HiveField(4)
+  final String createdAt;
+  @HiveField(5)
   List<String> wordIds;
   Book({
     String? id,
     String? createdAt,
     required this.title,
+    required this.description,
     required this.bookNum,
     List<String>? wordIds,
   }) : id = id ?? '${DateTime.now().microsecondsSinceEpoch}',
@@ -51,6 +54,7 @@ class Book extends HiveObject {
     return Book(
       id: map['id'] ?? '',
       title: map['title'] ?? '',
+      description: map['description'] ?? '',
       bookNum: map['bookNum']?.toInt() ?? 0,
       createdAt: map['createdAt'] ?? '',
       wordIds: List<String>.from(map['wordIds']),
@@ -68,6 +72,7 @@ class Book extends HiveObject {
     return other is Book &&
         other.id == id &&
         other.title == title &&
+        other.description == description &&
         other.bookNum == bookNum &&
         other.createdAt == createdAt &&
         listEquals(other.wordIds, wordIds);
@@ -77,6 +82,7 @@ class Book extends HiveObject {
   int get hashCode {
     return id.hashCode ^
         title.hashCode ^
+        description.hashCode ^
         bookNum.hashCode ^
         createdAt.hashCode ^
         wordIds.hashCode;

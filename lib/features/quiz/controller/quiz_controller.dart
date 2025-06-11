@@ -63,7 +63,6 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
 
   void skipQuestion() {
     isDisTouchable = false;
-    // update();
     isAnswered = true;
 
     animationController.stop();
@@ -77,8 +76,6 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
   void updateTheQnNum(int index) {
     questionNumber.value = index + 1;
   }
-
-  // late Word correctQuestion;
 
   @override
   void onInit() {
@@ -107,8 +104,6 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
     selectedAns = selectedIndex;
     isAnswered = true;
 
-    //correctQuestion = question.options[correctAns];
-
     animationController.stop();
     update();
     if (correctAns == selectedAns) {
@@ -126,19 +121,13 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
 
     skipColor = Colors.blue;
     nextOrSkipText = 'next';
-    if (isMyWordTest) {
-      // 나만의 단어 알고 있음으로 변경.
-      //   myVocaController!.updateWord(correctQuestion.word, true);
-    }
+
     Future.delayed(Duration(milliseconds: correctDurationTime), () {
       nextQuestion();
     });
   }
 
   textWrong() {
-    if (isMyWordTest) {
-      // myVocaController!.updateWord(correctQuestion.word, false);
-    }
     saveWrongQuestion();
     isWrong = true;
     skipColor = Colors.pink;
@@ -207,22 +196,17 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
     // 테스트를 다 풀 었으면
     else {
       DateTime date = DateTime.now();
-      // Random random = Random();
-      // int ranNum = random.nextInt(5);
-      // date = date.subtract(Duration(days: ranNum));
       QuizHistoryRepository.saveOrUpdate(
-        // date: date.add(Duration(days: 1)),
         date: date,
+        // date: kDebugMode ? date.add(Duration(days: random.nextInt(3))) : date,
         newCorrectIds: correctQuestions.map((word) => word.id).toSet().toList(),
         newIncorrectIds: wrongQuestions.map((word) => word.id).toSet().toList(),
       );
-      //
+
       await registerMiss(wrongQuestions);
 
-      //
-
-      bool isTryAgain = false;
       if (!isMyWordTest) {
+        // 내 단어 퀴즈 가 아니면
         final stepRepo = Get.find<HiveRepository<StepModel>>(
           tag: StepModel.boxKey,
         );
@@ -234,11 +218,11 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
         if (stepModel == null) {
           return;
         }
-        isTryAgain = stepModel.lastQuizTime != null;
 
         stepModel = stepModel.copyWith(
           wrongWordIds:
-              stepModel.isAllCorrect
+              stepModel
+                      .isAllCorrect // 이전에 점수를 100점 맞았으면 , 더 이상 점수에 관여하지 않음, wrong word도 채워지지 않음
                   ? null
                   : wrongQuestions.map((word) => word.id).toList(),
           lastQuizTime: DateTime.now(),
@@ -247,35 +231,25 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
         await stepRepo.put(key, stepModel);
         SubjectController.to.setTotalAndScores();
         CategoryController.to.setTotalAndScores();
-      } else {
-        // 뭐야 이거
-        // print('Get.back()');
-        // Get.back();
       }
 
       if (numOfCorrectAns == questions.length) {
         if (!isMyWordTest) {
-          if (!isTryAgain) {
-            ChapterController.to.quizAllCorrect();
-          }
-          print('3');
-          // Get.off(() => const VeryGoodScreen());
-          Get.offAndToNamed(VeryGoodScreen.name);
-        } else {
-          print('2');
-          Get.offAndToNamed(VeryGoodScreen.name);
+          // if (!isTryAgain) {
+          ChapterController.to.moveStepSelector();
+          // }
         }
+
+        Get.offAndToNamed(VeryGoodScreen.name);
         return;
       }
-      print('여기야');
-      print('isMyWordTest : ${isMyWordTest}');
       Get.offAndToNamed(ScoreScreen.name);
     }
   }
 
+  Random random = Random();
   void setQuestions() {
     List<Word> baseWords = List.from(words);
-    Random random = Random();
 
     int needed = baseWords.length - 4;
     List<Word> extraWords = [];

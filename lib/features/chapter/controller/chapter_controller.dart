@@ -7,7 +7,6 @@ import 'package:jonggack_topik/core/repositories/hive_repository.dart';
 import 'package:jonggack_topik/core/repositories/setting_repository.dart';
 import 'package:jonggack_topik/core/utils/app_dialog.dart';
 import 'package:jonggack_topik/core/utils/app_constant.dart';
-import 'package:jonggack_topik/core/utils/app_dialog.dart';
 import 'package:jonggack_topik/core/utils/app_function.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/features/category/controller/category_controller.dart';
@@ -39,22 +38,17 @@ class ChapterController extends GetxController {
 
   final stepRepo = Get.find<HiveRepository<StepModel>>(tag: StepModel.boxKey);
 
-  final _isHidenMean = false.obs;
-  bool get isHidenMean => _isHidenMean.value;
-  final _isSeeYomikata = false.obs;
-  bool get isSeeYomikata => _isSeeYomikata.value;
+  final _isHidenAllMean = false.obs;
+  bool get isHidenAllMean => _isHidenAllMean.value;
   final RxBool _isAllSaved = false.obs;
   bool get isAllSaved => _isAllSaved.value;
 
   void toggleSeeMean(bool value) {
-    _isHidenMean.value = !_isHidenMean.value;
-  }
-
-  void toggleSeeYomikata(bool value) {
-    _isSeeYomikata.value = !_isSeeYomikata.value;
+    _isHidenAllMean.value = !_isHidenAllMean.value;
   }
 
   bool _computeAllSaved() {
+    print('_computeAllSaved');
     if (!Get.isRegistered<StepController>()) return false;
     for (String wordId in step.words) {
       if (!stepController.isSavedWord(wordId)) {
@@ -96,7 +90,7 @@ class ChapterController extends GetxController {
     super.onInit();
   }
 
-  void quizAllCorrect() {
+  void moveStepSelector() {
     if (_chapter.stepKeys.length == _selectedStepIdx.value + 1) {
       return;
     }
@@ -124,13 +118,14 @@ class ChapterController extends GetxController {
     super.onReady();
   }
 
-  onTapStepSelector(int index) {
+  void onTapStepSelector(int index) {
     _selectedStepIdx.value = index;
 
     SettingRepository.setInt(_getKey(), _selectedStepIdx.value);
 
     stepController.setStepModel(step);
     AppFunction.scrollGoToTop(scrollController);
+    _isAllSaved.value = _computeAllSaved();
   }
 
   final wordRepo = Get.find<HiveRepository<Word>>(tag: Word.boxKey);
@@ -139,13 +134,13 @@ class ChapterController extends GetxController {
     bool isTryAgain = false;
     if (step.wrongWords.isNotEmpty) {
       isTryAgain = await AppDialog.showMyDialog(
-        title: AppString.youHavePreQuizData,
+        title: AppString.youHavePreQuizData.tr,
         bodyText: '틀린 ${step.wrongWords.length} 문제를 다시 보시겠습니까?',
         onConfirm: () {},
         onCancel: () {},
       );
     }
-    Get.to(
+    await Get.to(
       () => QuizScreen(),
       binding: BindingsBuilder.put(
         () => Get.put(
@@ -153,11 +148,11 @@ class ChapterController extends GetxController {
             isTryAgain
                 ? step.wrongWords.map((id) => wordRepo.get(id)!).toList()
                 : step.words.map((id) => wordRepo.get(id)!).toList(),
-            // : step.words,
           ),
         ),
       ),
     );
+    _getSteps();
   }
 
   @override

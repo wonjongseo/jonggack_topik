@@ -48,15 +48,12 @@ class NotificationService {
       onDidReceiveNotificationResponse: (response) async {
         List<Word> randomWord = RandomWordService.createRandomWordBySubject();
 
-        // if (response.payload?.isNotEmpty == true) {
-        // Get.toNamed(response.payload!);
         Get.to(
           () => QuizScreen(),
           binding: BindingsBuilder.put(
             () => Get.put(QuizController(randomWord)),
           ),
         );
-        // }
       },
 
       /// ③ background 콜백은 반드시 top-level/static 함수

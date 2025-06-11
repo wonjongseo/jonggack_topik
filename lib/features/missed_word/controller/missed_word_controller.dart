@@ -8,7 +8,7 @@ import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/core/repositories/hive_repository.dart';
 import 'package:jonggack_topik/core/utils/app_function.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
-import 'package:jonggack_topik/features/missed_word/screen/widgets/quiz_opation_bottomsheet.dart';
+import 'package:jonggack_topik/features/missed_word/screen/widgets/missed_word_quiz_option_bottomsheet.dart';
 import 'package:jonggack_topik/features/quiz/controller/quiz_controller.dart';
 import 'package:jonggack_topik/features/quiz/screen/quiz_screen.dart';
 import 'package:jonggack_topik/features/word/controller/word_controller.dart';
@@ -60,9 +60,9 @@ class MissedWordController extends GetxController {
     doQuizAll.toggle();
   }
 
-  final selectedQuizTyp = QuizType.all.obs;
+  final selectedQuizTyp = MissedWordQuizType.all.obs;
 
-  changeQUizType(QuizType qType) {
+  changeQUizType(MissedWordQuizType qType) {
     selectedQuizTyp.value = qType;
   }
 
@@ -73,7 +73,7 @@ class MissedWordController extends GetxController {
 
     AppFunction.showBottomSheet(
       context: context,
-      child: QuizOpationBottomsheet(),
+      child: MissedWordQuizOptionBottomsheet(),
     );
   }
 
@@ -82,15 +82,15 @@ class MissedWordController extends GetxController {
     List<Word> quizWords =[ ];
 
     switch (selectedQuizTyp.value) {
-      case QuizType.all:
+      case MissedWordQuizType.all:
         quizWords = List.from(words);
-      case QuizType.onlyTop:
+      case MissedWordQuizType.onlyTop:
         int splitNum = words.length > 15 ? 15 : words.length;
         quizWords = List.from(words.sublist(0, splitNum));
 
-      case QuizType.random:
-        if (randomSize < 0) {
-          isInValidMessage.value = "０${AppString.plzInputMore.tr}";
+      case MissedWordQuizType.random:
+        if (randomSize < 1) {
+          isInValidMessage.value = "１${AppString.plzInputMore.tr}";
 
           return;
         } else if (randomSize > words.length) {
@@ -118,4 +118,4 @@ class MissedWordController extends GetxController {
   }
 }
 
-enum QuizType { all, onlyTop, random }
+enum MissedWordQuizType { all, onlyTop, random }

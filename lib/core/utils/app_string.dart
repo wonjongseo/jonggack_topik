@@ -5,9 +5,18 @@ class AppTranslations extends Translations {
   // TODO: implement keys
   Map<String, Map<String, String>> get keys => {
     'ja_JP': {
+      AppString.random: AppString.randomJp,
+      AppString.addWord: AppString.addWordJp,
+      AppString.hideMean: AppString.hideMeanJp,
+      AppString.saveAllWords: AppString.saveAllWordsJp,
+      AppString.noTurningBack: AppString.noTurningBackJp,
+      AppString.sureDelete: AppString.sureDeleteJp,
+      AppString.dicationary: AppString.dicationaryJp,
+      AppString.deleteAll: AppString.deleteAllJp,
       AppString.appName: AppString.appNameJp,
       AppString.youHavePreQuizData: AppString.youHavePreQuizDataJp,
       AppString.bookCtlHint: AppString.bookCtlHintJp,
+      AppString.bookDescCtlHint: AppString.bookDescCtlHintJp,
       AppString.isCreated: AppString.isCreatedJp,
       AppString.isDeleted: AppString.isDeletedJp,
       AppString.savedWordText: AppString.savedWordTextJp,
@@ -15,8 +24,10 @@ class AppTranslations extends Translations {
       AppString.word: AppString.wordJp,
       AppString.mean: AppString.meanJp,
       AppString.yomikata: AppString.yomikataJp,
+      AppString.noSavedWord: AppString.noSavedWordJp,
       AppString.noRecordedData: AppString.noRecordedDataJp,
       AppString.doQuizAllMissedWords: AppString.doQuizAllMissedWordsJp,
+      AppString.plzInput: AppString.plzInputJp,
       AppString.plzInputMore: AppString.plzInputMoreJp,
       AppString.plzInputLess: AppString.plzInputLessJp,
       AppString.correctRate: AppString.correctRateJp,
@@ -82,11 +93,27 @@ class AppTranslations extends Translations {
       AppString.notifiUnSetted: AppString.notifiUnSettedJp,
       AppString.goToRandomQuiz: AppString.goToRandomQuizJp,
       AppString.goToQuiz: AppString.goToQuizJp,
+      AppString.score: AppString.scoreJp,
+      AppString.wrong: AppString.wrongJp,
+      AppString.correct: AppString.correctJp,
+      AppString.congrautation: AppString.congrautationJp,
+      AppString.perfectScore: AppString.perfectScoreJp,
+      AppString.thereIs: AppString.thereIsJp,
+      AppString.almostPass: AppString.almostPassJp,
     },
     'ko_KR': {
+      AppString.random: AppString.randomKr,
+      AppString.addWord: AppString.addWordKr,
+      AppString.hideMean: AppString.hideMeanKr,
+      AppString.saveAllWords: AppString.saveAllWordsKr,
+      AppString.noTurningBack: AppString.noTurningBackKr,
+      AppString.sureDelete: AppString.sureDeleteKr,
+      AppString.dicationary: AppString.dicationaryKr,
+      AppString.deleteAll: AppString.deleteAllKr,
       AppString.appName: AppString.appNameKr,
       AppString.youHavePreQuizData: AppString.youHavePreQuizDataKr,
       AppString.bookCtlHint: AppString.bookCtlHintKr,
+      AppString.bookDescCtlHint: AppString.bookDescCtlHintKr,
       AppString.isCreated: AppString.isCreatedKr,
       AppString.isDeleted: AppString.isDeletedKr,
       AppString.savedWordText: AppString.savedWordTextKr,
@@ -94,8 +121,10 @@ class AppTranslations extends Translations {
       AppString.word: AppString.wordKr,
       AppString.mean: AppString.meanKr,
       AppString.yomikata: AppString.yomikataKr,
+      AppString.noSavedWord: AppString.noSavedWordKr,
       AppString.noRecordedData: AppString.noRecordedDataKr,
       AppString.doQuizAllMissedWords: AppString.doQuizAllMissedWordsKr,
+      AppString.plzInput: AppString.plzInputKr,
       AppString.plzInputMore: AppString.plzInputMoreKr,
       AppString.plzInputLess: AppString.plzInputLessKr,
       AppString.correctRate: AppString.correctRateKr,
@@ -161,6 +190,14 @@ class AppTranslations extends Translations {
       AppString.notifiUnSetted: AppString.notifiUnSettedKr,
       AppString.goToRandomQuiz: AppString.goToRandomQuizKr,
       AppString.goToQuiz: AppString.goToQuizKr,
+      AppString.score: AppString.scoreKr,
+      AppString.wrong: AppString.wrongKr,
+      AppString.correct: AppString.correctKr,
+
+      AppString.congrautation: AppString.congrautationKr,
+      AppString.perfectScore: AppString.perfectScoreKr,
+      AppString.thereIs: AppString.thereIsKr,
+      AppString.almostPass: AppString.almostPassKr,
     },
   };
 }
@@ -181,6 +218,11 @@ class AppString {
   static String bookCtlHintKr = '단어장 명';
   static String bookCtlHintJp = '単語帳名';
   static String bookCtlHintEn = "";
+
+  static String bookDescCtlHint = "bookDescCtlHintTr";
+  static String bookDescCtlHintKr = '단어장 설명';
+  static String bookDescCtlHintJp = '単語帳の説明';
+  static String bookDescCtlHintEn = "";
 
   static String isCreated = "isCreatedTr";
   static String isCreatedKr = '가 생성되었습니다.';
@@ -217,6 +259,11 @@ class AppString {
   static String yomikataJp = "発音";
   static String yomikataEn = "";
 
+  static String noSavedWord = "noSavedWordTr";
+  static String noSavedWordKr = '에 저장된 단어가 없습니다.';
+  static String noSavedWordJp = "に保存された単語がありません。";
+  static String noSavedWordEn = "";
+
   static String noRecordedData = "noRecordedDataTr";
   static String noRecordedDataKr = '기록된 데이터가 없습니다.';
   static String noRecordedDataJp = "記録データがありません";
@@ -227,6 +274,11 @@ class AppString {
   static String doQuizAllMissedWordsJp = "すべての単語でQUIZ";
   static String doQuizAllMissedWordsEn = "";
 
+  static String plzInput = "plzInputTr";
+  static String plzInputKr = '을 입력해주세요';
+  static String plzInputJp = "を入力してください。";
+  static String plzInputEn = "";
+
   static String plzInputMore = "plzInputMoreTr";
   static String plzInputMoreKr = '이상을 입력해주세요';
   static String plzInputMoreJp = "の以上を入力してください。";
@@ -236,6 +288,11 @@ class AppString {
   static String plzInputLessKr = '이하를 립력해주세요';
   static String plzInputLessJp = "の以下を入力してください。";
   static String plzInputLessEn = "";
+
+  static String correct = "correctTr";
+  static String correctKr = '정답';
+  static String correctJp = "正答";
+  static String correctEn = "";
 
   static String correctRate = "correctRateTr";
   static String correctRateKr = '정답률';
@@ -595,7 +652,6 @@ Would you like to copy the email [visionwill3322@gmail.com]?
   static String goToQuizKr = '퀴즈 풀러 가기!';
   static String goToQuizJp = 'QUIZを解けにいく！';
   static String goToQuizEn = "";
-  //
   static String score = "scoreTr";
   static String scoreKr = '점수';
   static String scoreJp = '点数';
@@ -605,4 +661,64 @@ Would you like to copy the email [visionwill3322@gmail.com]?
   static String wrongKr = '오답';
   static String wrongJp = '誤答';
   static String wrongEn = "";
+
+  static String congrautation = "congrautationTr";
+  static String congrautationKr = '축하합니다\n';
+  static String congrautationJp = '';
+  static String congrautationEn = "";
+
+  static String perfectScore = "perfectScoreTr";
+  static String perfectScoreKr = '100점';
+  static String perfectScoreJp = '100点';
+  static String perfectScoreEn = "";
+
+  static String thereIs = "thereIsTr";
+  static String thereIsKr = '입니다!!\n\n';
+  static String thereIsJp = 'です！！\n\n';
+  static String thereIsEn = "";
+
+  static String almostPass = "almostPassTr";
+  static String almostPassKr = 'Topik 합격까지 한 발자국 나아가셨습니다.\n조금만 더 화이팅합시다~';
+  static String almostPassJp = 'TOPIK合格まで一歩近づきました。\nあともう少し、頑張りましょう～！';
+  static String almostPassEn = "";
+
+  static String deleteAll = "deleteAllTr";
+  static String deleteAllKr = '전체 삭제';
+  static String deleteAllJp = '全部削除';
+  static String deleteAllEn = "";
+
+  static String dicationary = "dicationaryTr";
+  static String dicationaryKr = '단어장';
+  static String dicationaryJp = '単語帳';
+  static String dicationaryEn = "";
+
+  static String noTurningBack = "noTurningBackTr";
+  static String noTurningBackKr = '되돌릴 수 없습니다.';
+  static String noTurningBackJp = '戻せません。';
+  static String noTurningBackEn = "";
+
+  static String sureDelete = "sureDeleteTr";
+  static String sureDeleteKr = '개의 단어를 삭제하시겠습니까?';
+  static String sureDeleteJp = '個の単語を削除しますか？';
+  static String sureDeleteEn = "";
+
+  static String hideMean = "hideMeanTr";
+  static String hideMeanKr = '의미 가리기';
+  static String hideMeanJp = '意味隠す';
+  static String hideMeanEn = "";
+
+  static String saveAllWords = "saveAllWordsTr";
+  static String saveAllWordsKr = '의미 가리기';
+  static String saveAllWordsJp = '意味隠す';
+  static String saveAllWordsEn = "";
+
+  static String addWord = "addWordTr";
+  static String addWordKr = '단어 추가';
+  static String addWordJp = '単語追加';
+  static String addWordEn = "";
+
+  static String random = "randomTr";
+  static String randomKr = '랜덤';
+  static String randomJp = 'ランダム';
+  static String randomEn = "";
 }

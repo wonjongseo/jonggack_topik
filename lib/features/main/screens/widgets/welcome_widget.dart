@@ -41,6 +41,7 @@ class WelcomeWidget extends GetView<SettingController> {
                     style: TextStyle(
                       fontSize: controller.baseFS + 4,
                       fontWeight: FontWeight.w900,
+                      color: AppColors.red,
                     ),
                   );
                 },

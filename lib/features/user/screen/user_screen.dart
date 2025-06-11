@@ -50,13 +50,13 @@ class UserScreen extends GetView<BookController> {
                             child: BookCard(
                               book: controller.books[index],
                               deleteBook: (book) => controller.deleteBook(book),
-                              updateBook: (book) => controller.updateBook(book),
                               teCtl: index == 0 ? controller.bookNameCtl : null,
                             ),
                           );
                         }),
                         AddBookCard(
                           tECtl: controller.bookNameCtl,
+                          tECtl2: controller.bookDescriptionCtl,
                           onTap: () => controller.createBook(),
                         ),
                       ],

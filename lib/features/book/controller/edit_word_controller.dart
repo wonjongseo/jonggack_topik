@@ -4,8 +4,10 @@ import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:jonggack_topik/core/logger/logger_service.dart';
 import 'package:jonggack_topik/core/models/book.dart';
+import 'package:jonggack_topik/core/models/example.dart';
 import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/core/repositories/hive_repository.dart';
+import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/core/utils/snackbar_helper.dart';
 import 'package:jonggack_topik/features/book/controller/book_controller.dart';
 import 'package:jonggack_topik/features/book/controller/book_study_controller.dart';
@@ -18,11 +20,29 @@ class EditWordController extends GetxController {
   EditWordController({this.word});
 
   late TextEditingController wordCtl;
+  late FocusNode wordNode = FocusNode();
   late TextEditingController yomikataCtl;
   late TextEditingController meanCtl;
 
   late Book book;
   void onCreateBtn() {
+    String sWord = wordCtl.text.trim();
+    String sYomikata = yomikataCtl.text.trim();
+    String sMean = meanCtl.text.trim();
+
+    if (sWord.isEmpty) {
+      SnackBarHelper.showErrorSnackBar(
+        '${AppString.word.tr}${AppString.plzInput.tr}',
+      );
+      return;
+    }
+    if (sMean.isEmpty) {
+      SnackBarHelper.showErrorSnackBar(
+        '${AppString.mean.tr}${AppString.plzInput.tr}',
+      );
+      return;
+    }
+
     Word word = Word(
       id: DateTime.now().toIso8601String(),
       headTitle: "",
@@ -42,6 +62,7 @@ class EditWordController extends GetxController {
       LogManager.error('$e');
       SnackBarHelper.showErrorSnackBar('$e');
     } finally {
+      wordNode.requestFocus();
       SnackBarHelper.showSuccessSnackBar('${word.word}가 생성되었습니다.');
       wordCtl.clear();
       yomikataCtl.clear();
@@ -52,23 +73,47 @@ class EditWordController extends GetxController {
   @override
   void onInit() {
     book = BookStudyController.to.book;
-    wordCtl = TextEditingController(
-      text: !kReleaseMode ? DateTime.now().toIso8601String() : '',
-    );
-    yomikataCtl = TextEditingController(
-      text: !kReleaseMode ? DateTime.now().toIso8601String() : '',
-    );
-    meanCtl = TextEditingController(
-      text: !kReleaseMode ? DateTime.now().toIso8601String() : '',
-    );
+    wordCtl = TextEditingController();
+    yomikataCtl = TextEditingController();
+    meanCtl = TextEditingController();
+    exWordCtl = TextEditingController();
+    exMeanCtl = TextEditingController();
     super.onInit();
   }
 
   @override
   void onClose() {
     wordCtl.dispose();
+    wordNode.dispose();
     yomikataCtl.dispose();
     meanCtl.dispose();
+
+    exWordCtl.dispose();
+    exMeanCtl.dispose();
     super.onClose();
+  }
+
+  late TextEditingController exWordCtl;
+  late TextEditingController exMeanCtl;
+  List<Example> examples = [];
+
+  void addExample() {
+    String exWord = exWordCtl.text;
+    String exMean = exMeanCtl.text;
+
+    if (exWord.isEmpty) {
+      return;
+    }
+    if (exMean.isEmpty) {
+      return;
+    }
+    Example tempEx = Example(word: exWord, mean: exMean, yomikata: exMean);
+
+    examples.insert(0, tempEx);
+
+    exWordCtl.clear();
+    exMeanCtl.clear();
+
+    update();
   }
 }

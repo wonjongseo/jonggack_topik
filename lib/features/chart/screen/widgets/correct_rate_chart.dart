@@ -19,18 +19,38 @@ class CorrectRateChart extends StatelessWidget {
           child: AspectRatio(
             aspectRatio: 2 / 1,
             child: BarChart(
+              // BarChartData(
+              //   minY: 0,
+              //   maxY: 100,
+              //   barTouchData: BarTouchData(
+              //     enabled: true,
+              //     touchTooltipData: BarTouchTooltipData(
+              //       tooltipPadding: EdgeInsets.all(8),
+              //       getTooltipItem: (group, groupIndex, rod, rodIndex) {
+              //         final value = rod.toY;
+
+              //         return BarTooltipItem(
+              //           '${AppString.correctRate.tr} ${value.toInt()}%',
+              //           TextStyle(fontWeight: FontWeight.bold),
+              //         );
+              //       },
+              //     ),
+              //   ),
               BarChartData(
-                minY: 0,
-                maxY: 100,
                 barTouchData: BarTouchData(
                   enabled: true,
+                  touchCallback: (_, __) {},
                   touchTooltipData: BarTouchTooltipData(
-                    tooltipPadding: EdgeInsets.all(8),
+                    tooltipPadding: EdgeInsets.all(4),
+                    fitInsideHorizontally: true,
+                    fitInsideVertically: true,
                     getTooltipItem: (group, groupIndex, rod, rodIndex) {
-                      final value = rod.toY;
+                      final percent = rod.toY.toInt();
+                      final correct = controller.correctCounts[groupIndex];
+                      final incorrect = controller.incorrectCounts[groupIndex];
                       return BarTooltipItem(
-                        '${AppString.correctRate.tr} ${value.toInt()}%',
-                        TextStyle(fontWeight: FontWeight.bold),
+                        '${AppString.correct.tr}: $correct${AppString.unit.tr}\n${AppString.wrong.tr}: $incorrect${AppString.unit.tr}\n${AppString.correctRate.tr}: $percent%',
+                        TextStyle(),
                       );
                     },
                   ),

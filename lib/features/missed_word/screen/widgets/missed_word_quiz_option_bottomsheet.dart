@@ -4,8 +4,8 @@ import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/core/widgets/custom_button.dart';
 import 'package:jonggack_topik/features/missed_word/controller/missed_word_controller.dart';
 
-class QuizOpationBottomsheet extends GetView<MissedWordController> {
-  const QuizOpationBottomsheet({super.key});
+class MissedWordQuizOptionBottomsheet extends GetView<MissedWordController> {
+  const MissedWordQuizOptionBottomsheet({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class QuizOpationBottomsheet extends GetView<MissedWordController> {
           ListTile(
             title: Text(AppString.doQuizAllMissedWords.tr),
             trailing: Radio(
-              value: QuizType.all,
+              value: MissedWordQuizType.all,
               groupValue: controller.selectedQuizTyp.value,
               onChanged: (v) {
                 controller.changeQUizType(v!);
@@ -31,7 +31,7 @@ class QuizOpationBottomsheet extends GetView<MissedWordController> {
               'よく間違えるTOP${totalMissedWordCount > 15 ? 15 : totalMissedWordCount}個',
             ),
             trailing: Radio(
-              value: QuizType.onlyTop,
+              value: MissedWordQuizType.onlyTop,
               groupValue: controller.selectedQuizTyp.value,
               onChanged: (v) {
                 controller.changeQUizType(v!);
@@ -48,7 +48,7 @@ class QuizOpationBottomsheet extends GetView<MissedWordController> {
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('ランダム'),
+                Text(AppString.random.tr),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -60,7 +60,8 @@ class QuizOpationBottomsheet extends GetView<MissedWordController> {
                         maxLength: controller.words.length.toString().length,
                         controller: tECtl,
                         readOnly:
-                            controller.selectedQuizTyp.value != QuizType.random,
+                            controller.selectedQuizTyp.value !=
+                            MissedWordQuizType.random,
                         decoration: InputDecoration(counterText: ""),
                         keyboardType: TextInputType.numberWithOptions(),
                       ),
@@ -70,7 +71,7 @@ class QuizOpationBottomsheet extends GetView<MissedWordController> {
               ],
             ),
             trailing: Radio(
-              value: QuizType.random,
+              value: MissedWordQuizType.random,
               groupValue: controller.selectedQuizTyp.value,
               onChanged: (v) {
                 controller.changeQUizType(v!);

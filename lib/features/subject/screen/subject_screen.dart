@@ -2,7 +2,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/admob/banner_ad/global_banner_admob.dart';
-import 'package:jonggack_topik/core/widgets/custom_button.dart';
 import 'package:jonggack_topik/features/auth/controllers/user_controller.dart';
 import 'package:jonggack_topik/features/category/screen/widgets/search_form.dart';
 import 'package:jonggack_topik/features/setting/screen/setting_screen.dart';
@@ -59,7 +58,7 @@ class SubjectScreen extends GetView<SubjectController> {
                   ),
                 ),
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 32),
             ],
           ),
         ),

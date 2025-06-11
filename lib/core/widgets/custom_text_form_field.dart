@@ -14,8 +14,10 @@ class CustomTextFormField extends StatelessWidget {
     this.hintStyle,
     this.onFieldSubmitted,
     this.maxLength,
+    this.focusNode,
   });
 
+  final FocusNode? focusNode;
   final String? hintText;
   final Widget? widget;
   final int? maxLines;
@@ -42,6 +44,7 @@ class CustomTextFormField extends StatelessWidget {
               keyboardType: keyboardType,
               onFieldSubmitted: onFieldSubmitted,
               onTap: onTap,
+              focusNode: focusNode,
               readOnly: readOnly ?? false,
               style: const TextStyle(fontSize: 12),
               maxLines: maxLines ?? 1,

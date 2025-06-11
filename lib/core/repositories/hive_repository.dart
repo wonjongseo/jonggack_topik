@@ -138,9 +138,9 @@ class HiveRepository<T extends HiveObject> {
       Hive.registerAdapter(MissedWordAdapter());
     }
 
-    if (!Hive.isAdapterRegistered(NotificationModelAdapter().typeId)) {
-      Hive.registerAdapter(NotificationModelAdapter());
-    }
+    // if (!Hive.isAdapterRegistered(NotificationModelAdapter().typeId)) {
+    //   Hive.registerAdapter(NotificationModelAdapter());
+    // }
   }
 
   static Future<void> _initOpenBoxs() async {
@@ -195,9 +195,9 @@ class HiveRepository<T extends HiveObject> {
     if (!Hive.isBoxOpen(MissedWord.boxKey)) {
       await Hive.openBox<MissedWord>(MissedWord.boxKey);
     }
-    if (!Hive.isBoxOpen(NotificationModel.boxKey)) {
-      await Hive.openBox<NotificationModel>(NotificationModel.boxKey);
-    }
+    // if (!Hive.isBoxOpen(NotificationModel.boxKey)) {
+    //   await Hive.openBox<NotificationModel>(NotificationModel.boxKey);
+    // }
   }
 
   static Future<void> init() async {
@@ -261,7 +261,11 @@ class HiveRepository<T extends HiveObject> {
       if (books.isEmpty) {
         // Create Book
         String title = '${AppString.appNameJp}単語帳';
-        Book book = Book(title: title, bookNum: 0);
+        Book book = Book(
+          title: title,
+          description: 'いちばんTopikが提供する単語帳',
+          bookNum: 0,
+        );
 
         LogManager.info('$title 저장중...');
         bookRepo.put(book.id, book);
@@ -322,7 +326,7 @@ class HiveRepository<T extends HiveObject> {
     await bookRepo.initBox();
     Get.put<HiveRepository<Book>>(bookRepo, tag: Book.boxKey);
 
-    await HiveRepository<NotificationModel>(NotificationModel.boxKey).initBox();
+    // await HiveRepository<NotificationModel>(NotificationModel.boxKey).initBox();
   }
 
   // static Future<void> saveCategory(Category category) async {

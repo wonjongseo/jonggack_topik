@@ -4,7 +4,6 @@ import 'package:get/get_utils/get_utils.dart';
 import 'package:jonggack_topik/core/models/book.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
-import 'package:jonggack_topik/theme.dart';
 
 class BookCard extends StatelessWidget {
   const BookCard({
@@ -12,12 +11,10 @@ class BookCard extends StatelessWidget {
     this.teCtl,
     required this.book,
     required this.deleteBook,
-    required this.updateBook,
   });
 
   final Book book;
   final Function(Book) deleteBook;
-  final Function(Book) updateBook;
   final TextEditingController? teCtl;
 
   @override
@@ -41,29 +38,26 @@ class BookCard extends StatelessWidget {
                   ),
                 ),
                 if (book.bookNum != 0)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                        onPressed: () => deleteBook(book),
-                        icon: Icon(FontAwesomeIcons.trash, size: 18),
-                      ),
-                      SizedBox(width: 10),
-
-                      IconButton(
-                        onPressed: () => updateBook(book),
-                        icon: Icon(FontAwesomeIcons.pen, size: 18),
-                      ),
-                    ],
+                  IconButton(
+                    onPressed: () => deleteBook(book),
+                    icon: Icon(FontAwesomeIcons.trash, size: 18),
                   ),
               ],
             ),
 
             Divider(),
             SizedBox(height: 10),
-            Text(
-              '${AppString.savedWordText.tr}${book.wordIds.length}${AppString.unit.tr}',
-              style: TextStyle(fontFamily: AppFonts.zenMaruGothic),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    '${AppString.savedWordText.tr}${book.wordIds.length}${AppString.unit.tr}',
+                  ),
+                  Text(book.description, style: TextStyle(color: Colors.grey)),
+                ],
+              ),
             ),
           ],
         ),

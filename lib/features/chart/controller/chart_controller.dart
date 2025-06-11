@@ -1,53 +1,16 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
 import 'package:jonggack_topik/core/logger/logger_service.dart';
-import 'package:jonggack_topik/core/models/missed_word.dart';
 import 'package:jonggack_topik/core/models/quiz_history.dart';
 import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/core/utils/snackbar_helper.dart';
 import 'package:jonggack_topik/features/book/controller/book_controller.dart';
 import 'package:jonggack_topik/features/missed_word/controller/missed_word_controller.dart';
-import 'package:jonggack_topik/features/quiz/controller/quiz_controller.dart';
-import 'package:jonggack_topik/features/quiz/screen/quiz_screen.dart';
 import 'package:jonggack_topik/features/user/repository/quiz_history_repository.dart';
-import 'package:jonggack_topik/features/word/controller/word_controller.dart';
-import 'package:jonggack_topik/features/word/screen/word_screen.dart';
 
 class ChartController extends GetxController {
   static ChartController get to => Get.find<ChartController>();
-
-  // MissedWord
-  // final _missedWords = <MissedWord>[].obs;
-  // bool isWordLoading = false;
-  // List<MissedWord> get missedWords => _missedWords.value;
-  // List<Word> get words => missedWords.map((missed) => missed.word).toList();
-
-  // void getMissedWords() {
-  //   final Box<MissedWord> box = Hive.box<MissedWord>(MissedWord.boxKey);
-
-  //   final missedWords = box.values.toList();
-
-  //   missedWords.sort((b, a) => a.missCount.compareTo(b.missCount));
-  //   _missedWords.assignAll(missedWords);
-  // }
-
-  // void goToWordScreen(int index) {
-  //   Get.to(
-  //     () => WordScreen(),
-  //     binding: BindingsBuilder.put(() => WordController(true, words, index)),
-  //   );
-  // }
-
-  // void goToQuizPage() {
-  //   Get.to(
-  //     () => QuizScreen(),
-  //     binding: BindingsBuilder.put(() => Get.put(QuizController(words))),
-  //   );
-  // }
-
-  // Corract Rate - Graph
 
   bool isGraphWidget = true;
 
@@ -118,27 +81,29 @@ class ChartController extends GetxController {
     switch (showGraphType) {
       case ShowGraphType.year:
         xDate = List.generate(maxX, (i) {
-          int offsetYear = i - (maxX ~/ 2);
+          int offsetYear = i - maxX + 1; // (maxX ~/ 2);
           return DateTime(selectedDay.year + offsetYear, 1, 1);
         });
         break;
 
       case ShowGraphType.month:
         xDate = List.generate(maxX, (i) {
-          int offsetMonth = i - (maxX ~/ 2);
+          int offsetMonth = i - maxX + 1; // (maxX ~/ 2);
           return addMonths(selectedDay, offsetMonth);
         });
         break;
 
       case ShowGraphType.day:
         xDate = List.generate(maxX, (i) {
-          int offsetDay = i - (maxX ~/ 2);
+          int offsetDay = i - maxX + 1; // (maxX ~/ 2);
           return selectedDay.add(Duration(days: offsetDay));
         });
         break;
     }
   }
 
+  List<int> correctCounts = [];
+  List<int> incorrectCounts = [];
   void generateXLabels() {
     xLabels =
         xDate
@@ -146,28 +111,73 @@ class ChartController extends GetxController {
             .toList();
   }
 
+  // void generateLineGraph() {
+  //   // key: “YYYY-MM-DD” 또는 “YYYY” 또는 “MM” 형식(String) → value: 발생 건수(int)
+  //   Map<String, int> grouped = {};
+  //   for (var date in xDate) {
+  //     final key = DateFormat(showGraphType.dateFormat).format(date);
+  //     grouped[key] = 0;
+  //   }
+
+  //   // 실제 데이터(contract) → 계약 생성일(createdAt)로 개수 누적
+  //   for (var history in allHistory) {
+  //     final key = DateFormat(showGraphType.dateFormat).format(history.date);
+
+  //     int percentage =
+  //         ((history.correctWordIds.length / history.totalCnt) * 100).toInt();
+
+  //     if (grouped[key] == null) {
+  //       grouped[key] = 0;
+  //     }
+
+  //     grouped[key] = grouped[key]! + percentage;
+  //   }
+
+  //   // FlSpot 리스트 생성: index는 0부터 시작, y는 누적 개수
+  //   salesQuantity = List.generate(xDate.length, (i) {
+  //     final key = DateFormat(showGraphType.dateFormat).format(xDate[i]);
+  //     return FlSpot(i.toDouble(), (grouped[key] ?? 0).toDouble());
+  //   });
+  // }
+
   void generateLineGraph() {
-    // key: “YYYY-MM-DD” 또는 “YYYY” 또는 “MM” 형식(String) → value: 발생 건수(int)
-    Map<String, int> grouped = {};
+    // key: “yyyy-MM-dd” or “yyyy-MM” or “d”
+    Map<String, int> sumPercent = {};
+    Map<String, int> sumCorrect = {};
+    Map<String, int> sumIncorrect = {};
+
     for (var date in xDate) {
       final key = DateFormat(showGraphType.dateFormat).format(date);
-      grouped[key] = 0;
+      sumPercent[key] = 0;
+      sumCorrect[key] = 0;
+      sumIncorrect[key] = 0;
     }
 
-    // 실제 데이터(contract) → 계약 생성일(createdAt)로 개수 누적
     for (var history in allHistory) {
       final key = DateFormat(showGraphType.dateFormat).format(history.date);
+      final correct = history.correctWordIds.length;
+      final incorrect = history.incorrectWordIds.length;
+      final percent = ((correct / history.totalCnt) * 100).toInt();
 
-      int percentage =
-          ((history.correctWordIds.length / history.totalCnt) * 100).toInt();
-
-      grouped[key] = grouped[key]! + percentage;
+      sumPercent[key] = (sumPercent[key] ?? 0) + percent;
+      sumCorrect[key] = (sumCorrect[key] ?? 0) + correct;
+      sumIncorrect[key] = (sumIncorrect[key] ?? 0) + incorrect;
     }
 
-    // FlSpot 리스트 생성: index는 0부터 시작, y는 누적 개수
+    // FlSpot 리스트 생성
     salesQuantity = List.generate(xDate.length, (i) {
       final key = DateFormat(showGraphType.dateFormat).format(xDate[i]);
-      return FlSpot(i.toDouble(), (grouped[key] ?? 0).toDouble());
+      return FlSpot(i.toDouble(), (sumPercent[key] ?? 0).toDouble());
+    });
+
+    // 추가: 인덱스별 정답/오답 리스트 갱신
+    correctCounts = List.generate(xDate.length, (i) {
+      final key = DateFormat(showGraphType.dateFormat).format(xDate[i]);
+      return sumCorrect[key] ?? 0;
+    });
+    incorrectCounts = List.generate(xDate.length, (i) {
+      final key = DateFormat(showGraphType.dateFormat).format(xDate[i]);
+      return sumIncorrect[key] ?? 0;
     });
   }
 
@@ -212,18 +222,3 @@ enum ShowGraphType {
     }
   }
 }
-
-
-// List<Word> todayWords = [];
-  //  getTodayWords() {
-  // try {
-  //   isWordLoading = true;
-  //   todayWords.assignAll(await RandomWordService.createRandomWords());
-  // } catch (e) {
-  //   LogManager.error('$e');
-  //   SnackBarHelper.showErrorSnackBar('$e');
-  // } finally {
-  //   isWordLoading = false;
-  //   update();
-  //  }
-  //   }

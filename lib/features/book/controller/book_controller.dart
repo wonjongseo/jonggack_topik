@@ -23,6 +23,7 @@ class BookController extends GetxController {
 
   final carouselSliderController = CarouselSliderController();
   final bookNameCtl = TextEditingController();
+  final bookDescriptionCtl = TextEditingController();
 
   @override
   void onInit() {
@@ -56,13 +57,21 @@ class BookController extends GetxController {
   }
 
   void createBook() async {
-    if (bookNameCtl.text.isEmpty && bookNameCtl.text.length < 5) {
-      SnackBarHelper.showErrorSnackBar('5${AppString.plzInputMore.tr}');
+    String bookName = bookNameCtl.text.trim();
+    if (bookName.isEmpty) {
+      SnackBarHelper.showErrorSnackBar('1${AppString.plzInputMore.tr}');
       return;
     }
-
-    String bookName = bookNameCtl.text;
-    Book newBook = Book(title: bookName, bookNum: _allBooks.length + 1);
+    String description = bookDescriptionCtl.text.trim();
+    if (description.length > 100) {
+      SnackBarHelper.showErrorSnackBar('100${AppString.plzInputLess.tr}');
+      return;
+    }
+    Book newBook = Book(
+      title: bookName,
+      description: description,
+      bookNum: _allBooks.length + 1,
+    );
     try {
       await _bookBox.put(newBook.id, newBook);
     } catch (e) {
@@ -70,6 +79,7 @@ class BookController extends GetxController {
       SnackBarHelper.showErrorSnackBar('$e');
     }
     bookNameCtl.clear();
+    bookDescriptionCtl.clear();
     getAllBooks();
     SnackBarHelper.showSuccessSnackBar('$bookName${AppString.isCreated.tr}');
 
@@ -116,6 +126,7 @@ class BookController extends GetxController {
   @override
   void dispose() {
     bookNameCtl.dispose();
+    bookDescriptionCtl.dispose();
     super.dispose();
   }
 

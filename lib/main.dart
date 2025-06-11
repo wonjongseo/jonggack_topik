@@ -50,9 +50,13 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   ThemeMode themeMode = ThemeMode.system;
   late bool isDarkMode;
-  String? systemLanguage;
+  late String systemLanguage;
 
   void getUsresSetting() {
+    systemLanguage =
+        SettingRepository.getString(AppConstant.settingLanguageKey) ??
+        Get.deviceLocale.toString();
+
     isDarkMode =
         SettingRepository.getBool(AppConstant.isDarkModeKey) ??
         ThemeMode.system == ThemeMode.dark;
@@ -78,7 +82,8 @@ class _AppState extends State<App> {
             initialRoute: SplashScreen.name,
             getPages: AppRoutes.getPages,
             fallbackLocale: const Locale('ja', 'JP'),
-            locale: Get.deviceLocale,
+            // locale: Get.deviceLocale,
+            locale: Locale(systemLanguage),
             themeMode: themeMode,
             theme: AppThemings.lightTheme,
             darkTheme: AppThemings.darkTheme,

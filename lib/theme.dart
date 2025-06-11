@@ -9,6 +9,7 @@ class AppFonts {
   static const descriptionFont = japaneseFont;
   static const gMaretFont = 'GMarket';
   static const zenMaruGothic = 'ZenMaruGothic';
+  static const cookieRun = 'CookieRunFont';
 }
 
 class AppThemings {

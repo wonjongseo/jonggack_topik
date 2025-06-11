@@ -19,6 +19,8 @@ class CategorySelector extends StatelessWidget {
   final Function() onTap;
   @override
   Widget build(BuildContext context) {
+    print('totalAndScores : ${totalAndScores}');
+
     return Card(
       child: InkWell(
         onTap: onTap,

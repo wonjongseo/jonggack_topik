@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/admob/banner_ad/global_banner_admob.dart';
+import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/core/widgets/custom_button.dart';
 import 'package:jonggack_topik/core/widgets/custom_toggle_button.dart';
 import 'package:jonggack_topik/features/chapter/controller/chapter_controller.dart';
@@ -51,11 +52,11 @@ class ChapterScreen extends GetView<ChapterController> {
                 ),
               ),
               Expanded(
-                child: Container(
-                  color: dfBackground,
-                  margin: const EdgeInsets.only(top: 8),
-                  child: Obx(
-                    () => StepBody(isHidenMean: controller.isHidenMean),
+                child: Obx(
+                  () => Container(
+                    color: dfBackground,
+                    margin: const EdgeInsets.only(top: 8),
+                    child: StepBody(isHidenMean: controller.isHidenAllMean),
                   ),
                 ),
               ),
@@ -77,7 +78,7 @@ class ChapterScreen extends GetView<ChapterController> {
       onPressed: () {
         Get.bottomSheet(
           Container(
-            color: Colors.white,
+            color: dfBackground,
             child: Obx(() {
               return Column(
                 mainAxisSize: MainAxisSize.min,
@@ -92,18 +93,14 @@ class ChapterScreen extends GetView<ChapterController> {
                     ),
                   ),
                   CustomToggleListTile(
-                    label: '의미 가리기',
+                    label: AppString.hideMean.tr,
                     toggle: controller.toggleSeeMean,
-                    value: controller.isHidenMean,
+                    value: controller.isHidenAllMean,
                   ),
                   const SizedBox(height: 10),
-                  CustomToggleListTile(
-                    label: '읽는 법 가리기',
-                    toggle: controller.toggleSeeYomikata,
-                    value: controller.isSeeYomikata,
-                  ),
+
                   CheckRowBtn(
-                    label: '단어 전체 저장',
+                    label: AppString.saveAllWords.tr,
                     value: controller.isAllSaved,
                     onChanged: (_) => controller.toggleAllSave(),
                   ),
