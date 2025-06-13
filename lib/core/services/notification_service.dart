@@ -3,9 +3,7 @@ import 'dart:io';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/models/word.dart';
-import 'package:jonggack_topik/core/repositories/setting_repository.dart';
 import 'package:jonggack_topik/core/services/random_word_service.dart';
-import 'package:jonggack_topik/core/utils/app_constant.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/features/quiz/controller/quiz_controller.dart';
 import 'package:jonggack_topik/features/quiz/screen/quiz_screen.dart';
@@ -14,8 +12,6 @@ import 'package:timezone/timezone.dart' as tz;
 /// ① Top-level 함수로 선언하고 Entry-Point 어노테이션 추가
 @pragma('vm:entry-point')
 void notificationTapBackground(NotificationResponse response) {
-  print('response : ${response}');
-
   if (response.payload?.isNotEmpty == true) {
     Get.toNamed(response.payload!);
   }

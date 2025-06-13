@@ -89,6 +89,10 @@ class _CelebrationScreenState extends State<CelebrationScreen> {
                   style: TextStyle(
                     fontSize: SettingController.to.baseFS + 14,
                     fontWeight: FontWeight.bold,
+                    color:
+                        SettingController.to.isDarkMode
+                            ? Colors.white
+                            : Colors.black,
                   ),
                 ),
               ),

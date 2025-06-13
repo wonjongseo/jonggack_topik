@@ -9,6 +9,8 @@ import 'package:jonggack_topik/core/utils/app_constant.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/features/quiz/controller/quiz_controller.dart';
 import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
+import 'package:jonggack_topik/features/word/screen/widgets/word_cart.dart';
+import 'package:jonggack_topik/features/word/screen/word_screen.dart';
 import 'package:jonggack_topik/theme.dart';
 
 class ScoreScreen extends StatefulWidget {
@@ -20,7 +22,7 @@ class ScoreScreen extends StatefulWidget {
 }
 
 class _ScoreScreenState extends State<ScoreScreen> {
-  QuizController jlptController = Get.find<QuizController>();
+  QuizController quizControlelr = Get.find<QuizController>();
 
   @override
   void initState() {
@@ -66,12 +68,12 @@ class _ScoreScreenState extends State<ScoreScreen> {
         preferredSize: const Size.fromHeight(appBarHeight),
         child: AppBar(
           title: Text(
-            "${AppString.score.tr} ${jlptController.scoreResult}",
+            "${AppString.score.tr} ${quizControlelr.scoreResult}",
             style: TextStyle(fontSize: appBarTextSize),
           ),
         ),
       ),
-      body: _body(jlptController, size),
+      body: _body(quizControlelr, size),
       bottomNavigationBar: const GlobalBannerAdmob(),
     );
   }
@@ -103,10 +105,13 @@ class _ScoreScreenState extends State<ScoreScreen> {
                   String meanAndYomikata = qnController.wrongMean(index);
 
                   String yomikata = meanAndYomikata.split('\n')[1];
+
                   String mean = meanAndYomikata.split('\n')[0];
+                  print(
+                    'qnController.wrongQuestions[index] : ${qnController.wrongQuestions[index]}',
+                  );
 
                   return InkWell(
-                    // onTap: () => qnController.manualSaveToMyVoca(index),
                     child: Container(
                       decoration: BoxDecoration(border: Border.all(width: 0.3)),
                       child: ListTile(

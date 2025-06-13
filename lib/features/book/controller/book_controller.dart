@@ -61,10 +61,18 @@ class BookController extends GetxController {
     if (bookName.isEmpty) {
       SnackBarHelper.showErrorSnackBar('1${AppString.plzInputMore.tr}');
       return;
+    } else if (bookName.length > 20) {
+      SnackBarHelper.showErrorSnackBar(
+        '${AppString.bookCtlHint.tr}${AppString.isText.tr}20${AppString.plzInputLess.tr}',
+      );
+      return;
     }
+
     String description = bookDescriptionCtl.text.trim();
     if (description.length > 100) {
-      SnackBarHelper.showErrorSnackBar('100${AppString.plzInputLess.tr}');
+      SnackBarHelper.showErrorSnackBar(
+        '${AppString.bookDescCtlHint.tr}${AppString.isText.tr}100${AppString.plzInputLess.tr}',
+      );
       return;
     }
     Book newBook = Book(

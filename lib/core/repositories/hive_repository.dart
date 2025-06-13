@@ -19,6 +19,7 @@ import 'package:jonggack_topik/core/models/subject_hive.dart';
 import 'package:jonggack_topik/core/models/synonym.dart';
 import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/core/repositories/setting_repository.dart';
+import 'package:jonggack_topik/core/services/last.dart';
 import 'package:jonggack_topik/core/utils/app_constant.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/features/auth/models/user.dart';
@@ -216,8 +217,23 @@ class HiveRepository<T extends HiveObject> {
 
   static DataRepositry dataRepositry = DataRepositry();
 
+  static Future<void> _saveAllWords() async {
+    print('Start _saveAllWords');
+    final wordBox = Hive.box<Word>(Word.boxKey);
+    // if (wordBox.keys.isEmpty) {
+    List<Word> allwords = await dataRepositry.getAllWords("global_words");
+
+    for (var word in allwords) {
+      // if (!wordBox.containsKey(word.id)) {
+      await wordBox.put(word.id, word);
+      // }
+    }
+    // }
+  }
+
   static Future<void> _initDatas() async {
     try {
+      // 맨 처음어로 앱을 킨 시간
       String? firstDay = SettingRepository.getString(AppConstant.firstDay);
 
       if (firstDay == null) {
@@ -227,23 +243,15 @@ class HiveRepository<T extends HiveObject> {
         );
       }
 
-      final categoryHiveRepo = Get.find<HiveRepository<CategoryHive>>(
-        tag: CategoryHive.boxKey,
-      );
-
-      // Save All Words
-      final wordBox = Hive.box<Word>(Word.boxKey);
-      if (wordBox.keys.isEmpty) {
-        List<Word> _allwords = await dataRepositry.getAllWords("global_words");
-
-        for (var word in _allwords) {
-          if (!wordBox.containsKey(word.id)) {
-            await wordBox.put(word.id, word);
-          }
-        }
+      // 모든 단어 저장
+      if (RunMonthlyTaskService.checkAndRunMonthlyTask()) {
+        _saveAllWords();
       }
 
       List<Category> categories = [];
+      final categoryHiveRepo = Get.find<HiveRepository<CategoryHive>>(
+        tag: CategoryHive.boxKey,
+      );
 
       for (var categoryName in categoryNames) {
         if (categoryHiveRepo.get(categoryName) == null) {

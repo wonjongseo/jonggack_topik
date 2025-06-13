@@ -44,69 +44,70 @@ class EditWordScreen extends GetView<EditWordController> {
                   hintText: AppString.yomikata.tr,
                   controller: controller.yomikataCtl,
                 ),
-                Divider(),
-                SizedBox(height: 16),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('예제'),
-                    SizedBox(height: 8),
+                // Divider(),
+                // SizedBox(height: 16),
 
-                    GetBuilder<EditWordController>(
-                      builder: (controller) {
-                        return ListView.builder(
-                          shrinkWrap: true,
-                          reverse: true,
-                          itemCount: controller.examples.length,
-                          itemBuilder: (context, index) {
-                            return Text('data');
-                          },
-                        );
-                        return Column(
-                          children: List.generate(
-                            controller.examples.length + 1,
-                            (index) {
-                              if (index == 0) {
-                                return Column(
-                                  children: [
-                                    CustomTextFormField(
-                                      controller: controller.exWordCtl,
-                                      hintText: '예제',
-                                    ),
-                                    SizedBox(height: 8),
-                                    CustomTextFormField(
-                                      controller: controller.exMeanCtl,
-                                      hintText: '뜻',
-                                    ),
-                                  ],
-                                );
-                              }
-                              return Column(
-                                children: [
-                                  CustomTextFormField(
-                                    hintText:
-                                        controller.examples[index - 1].word,
-                                  ),
-                                  SizedBox(height: 8),
-                                  CustomTextFormField(
-                                    hintText:
-                                        controller.examples[index - 1].mean,
-                                  ),
-                                ],
-                              );
-                            },
-                          ),
-                        );
-                      },
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        controller.addExample();
-                      },
-                      icon: Icon(Icons.add),
-                    ),
-                  ],
-                ),
+                // Column(
+                //   crossAxisAlignment: CrossAxisAlignment.start,
+                //   children: [
+                //     Text('예제'),
+                //     SizedBox(height: 8),
+
+                //     GetBuilder<EditWordController>(
+                //       builder: (controller) {
+                //         return ListView.builder(
+                //           shrinkWrap: true,
+                //           reverse: true,
+                //           itemCount: controller.examples.length,
+                //           itemBuilder: (context, index) {
+                //             return Text('data');
+                //           },
+                //         );
+                //         return Column(
+                //           children: List.generate(
+                //             controller.examples.length + 1,
+                //             (index) {
+                //               if (index == 0) {
+                //                 return Column(
+                //                   children: [
+                //                     CustomTextFormField(
+                //                       controller: controller.exWordCtl,
+                //                       hintText: '예제',
+                //                     ),
+                //                     SizedBox(height: 8),
+                //                     CustomTextFormField(
+                //                       controller: controller.exMeanCtl,
+                //                       hintText: '뜻',
+                //                     ),
+                //                   ],
+                //                 );
+                //               }
+                //               return Column(
+                //                 children: [
+                //                   CustomTextFormField(
+                //                     hintText:
+                //                         controller.examples[index - 1].word,
+                //                   ),
+                //                   SizedBox(height: 8),
+                //                   CustomTextFormField(
+                //                     hintText:
+                //                         controller.examples[index - 1].mean,
+                //                   ),
+                //                 ],
+                //               );
+                //             },
+                //           ),
+                //         );
+                //       },
+                //     ),
+                //     IconButton(
+                //       onPressed: () {
+                //         controller.addExample();
+                //       },
+                //       icon: Icon(Icons.add),
+                //     ),
+                //   ],
+                // ),
               ],
             ),
           ),

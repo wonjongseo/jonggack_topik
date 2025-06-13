@@ -19,7 +19,7 @@ class BookStudyScreen extends GetView<BookStudyController> {
     return Scaffold(
       appBar: AppBar(
         title: Text(controller.book.title),
-        actions: [_bottomSheet()],
+        actions: [if (controller.words.isNotEmpty) _bottomSheet()],
       ),
       body: _body(),
       bottomNavigationBar: Obx(
@@ -91,22 +91,20 @@ class BookStudyScreen extends GetView<BookStudyController> {
                     value: controller.isHidenAllMean,
                   ),
 
-                  if (controller.words.isNotEmpty) ...[
-                    const SizedBox(height: 10),
-                    ListTile(
-                      trailing: TextButton(
-                        onPressed: () => controller.deleteAll(),
-                        child: Text(
-                          AppString.deleteAll.tr,
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.red,
-                          ),
+                  const SizedBox(height: 10),
+                  ListTile(
+                    trailing: TextButton(
+                      onPressed: () => controller.deleteAll(),
+                      child: Text(
+                        AppString.deleteAll.tr,
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.red,
                         ),
                       ),
                     ),
-                  ],
+                  ),
 
                   const SizedBox(height: 40),
                 ],

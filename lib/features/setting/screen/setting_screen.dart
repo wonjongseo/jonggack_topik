@@ -1,4 +1,6 @@
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -12,6 +14,8 @@ import 'package:jonggack_topik/features/setting/controller/setting_controller.da
 import 'package:jonggack_topik/features/setting/enum/enums.dart';
 import 'package:jonggack_topik/features/setting/screen/widgets/setting_listtile.dart';
 import 'package:jonggack_topik/features/setting/screen/widgets/sound_setting_slider.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 enum TopikLevel {
   ot("1・2級"),
@@ -58,18 +62,51 @@ class SettingScreen extends GetView<SettingController> {
       subTitle: AppString.tipOffMessage.tr,
       iconData: Icons.mail,
       onTap: () async {
+        final pkg = await PackageInfo.fromPlatform();
+        final appInfo = '앱 버전: ${pkg.version} (build ${pkg.buildNumber})';
+
+        // 2) 디바이스 정보 가져오기
+        final di = DeviceInfoPlugin();
+        String deviceInfo;
+        if (GetPlatform.isAndroid) {
+          final info = await di.androidInfo;
+          deviceInfo =
+              '기기: ${info.manufacturer} ${info.model}\nOS: Android ${info.version.release}';
+        } else {
+          final info = await di.iosInfo;
+          deviceInfo =
+              '기기: ${info.name} ${info.model}\nOS: iOS ${info.systemVersion}';
+        }
+        print('appInfo : ${appInfo}');
+        print('deviceInfo : ${deviceInfo}');
+
         final Email email = Email(
-          body: AppString.reportMsgContect.tr,
+          body: ''' 
+
+${AppString.reportMsgContect.tr}
+
+---
+
+$appInfo
+$deviceInfo
+''',
           subject: '[${AppString.appName.tr}] ${AppString.fnOrErorreport.tr}',
           recipients: ['visionwill3322@gmail.com'],
           isHTML: false,
         );
         try {
           await FlutterEmailSender.send(email);
-        } catch (e) {
-          bool result = await AppDialog.errorNoEnrolledEmail();
-          if (result) {
-            AppFunction.copyWord('visionwill3322@gmail.com');
+        } on PlatformException catch (e) {
+          if (e.code == 'not_available') {
+            // 사용 가능한 이메일 앱이 없을 때
+            // url_launcher로 mailto: 열기 시도하거나
+            // 사용자에게 “메일 앱을 설치해주세요” 안내
+            _launchMailtoFallback();
+          } else {
+            bool result = await AppDialog.errorNoEnrolledEmail();
+            if (result) {
+              AppFunction.copyWord('visionwill3322@gmail.com');
+            }
           }
         }
       },
@@ -106,9 +143,39 @@ class SettingScreen extends GetView<SettingController> {
     );
   }
 
+  Future<void> _launchMailtoFallback() async {
+    final uri = Uri(
+      scheme: 'mailto',
+      path: 'visionwill3322@gmail.com',
+      queryParameters: {'subject': '버그 제보', 'body': '앱 정보 및 기기 정보…'},
+    );
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    } else {
+      showDialog(
+        context: Get.context!,
+        builder:
+            (_) => AlertDialog(
+              title: Text('메일 앱 없음'),
+              content: Text('메일 앱이 설치되어 있지 않아, 주소를 복사합니다.'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Clipboard.setData(ClipboardData(text: uri.toString()));
+                    Get.back();
+                  },
+                  child: Text('복사'),
+                ),
+              ],
+            ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(),
       body: Obx(
         () => SafeArea(
@@ -198,56 +265,7 @@ class SettingScreen extends GetView<SettingController> {
             padding: const EdgeInsets.all(8.0),
             child: Text(AppString.appSetting.tr, style: headingstyle()),
           ),
-          ExpansionTile(
-            shape: Border.all(color: Colors.transparent),
-            title: Text(
-              AppString.goalCountPerDay.tr,
-              style: TextStyle(
-                fontWeight: FontWeight.w400,
-                fontSize: SettingController.to.baseFS - 2,
-              ),
-            ),
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  IconButton(
-                    onPressed: () => controller.changeCountOfStudy(true),
-                    icon: Icon(FontAwesomeIcons.add),
-                    style: IconButton.styleFrom(iconSize: controller.baseFS),
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 15),
-                    padding: EdgeInsets.all(12),
-                    width: 70,
-                    height: 70,
-
-                    child: Center(
-                      child: TextField(
-                        showCursor: false,
-                        controller: controller.teCtl,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: controller.baseFS + 4),
-                        maxLength: 3,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          counterText: "",
-                        ),
-                        keyboardType: TextInputType.numberWithOptions(),
-                      ),
-                    ),
-                  ),
-
-                  IconButton(
-                    onPressed: () => controller.changeCountOfStudy(false),
-                    icon: Icon(FontAwesomeIcons.minus),
-                    style: IconButton.styleFrom(iconSize: controller.baseFS),
-                  ),
-                ],
-              ),
-            ],
-          ),
+          // _diaryGoal(),
           ExpansionTile(
             shape: Border.all(color: Colors.transparent),
             title: Text(
@@ -346,7 +364,7 @@ class SettingScreen extends GetView<SettingController> {
                   ),
                   TextButton(
                     onPressed:
-                        () => controller.updateBaseFontSize(fontSize: 18),
+                        () => controller.updateBaseFontSize(fontSize: 16),
                     child: Text(AppString.init.tr),
                   ),
                 ],
@@ -355,6 +373,59 @@ class SettingScreen extends GetView<SettingController> {
           ),
         ],
       ),
+    );
+  }
+
+  ExpansionTile _diaryGoal() {
+    return ExpansionTile(
+      shape: Border.all(color: Colors.transparent),
+      title: Text(
+        AppString.goalCountPerDay.tr,
+        style: TextStyle(
+          fontWeight: FontWeight.w400,
+          fontSize: SettingController.to.baseFS - 2,
+        ),
+      ),
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            IconButton(
+              onPressed: () => controller.changeCountOfStudy(true),
+              icon: Icon(FontAwesomeIcons.add),
+              style: IconButton.styleFrom(iconSize: controller.baseFS),
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 15),
+              padding: EdgeInsets.all(12),
+              width: 70,
+              height: 70,
+
+              child: Center(
+                child: TextField(
+                  showCursor: false,
+                  controller: controller.teCtl,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: controller.baseFS + 4),
+                  maxLength: 3,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    counterText: "",
+                  ),
+                  keyboardType: TextInputType.numberWithOptions(),
+                ),
+              ),
+            ),
+
+            IconButton(
+              onPressed: () => controller.changeCountOfStudy(false),
+              icon: Icon(FontAwesomeIcons.minus),
+              style: IconButton.styleFrom(iconSize: controller.baseFS),
+            ),
+          ],
+        ),
+      ],
     );
   }
 

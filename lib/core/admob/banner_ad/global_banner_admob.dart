@@ -68,7 +68,7 @@ class _GlobalBannerAdmobState extends State<GlobalBannerAdmob> {
             ...widget.widgets!,
             SizedBox(height: 10),
           ],
-          if (_bannerAd == null) // || !kReleaseMode)
+          if (_bannerAd == null || !kReleaseMode) //
             Container(height: 0)
           else
             _bannerReady

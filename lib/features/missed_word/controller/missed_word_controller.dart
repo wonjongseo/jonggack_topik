@@ -68,16 +68,16 @@ class MissedWordController extends GetxController {
 
   final isInValidMessage = "".obs;
 
-  void openBottomSheet(BuildContext context) {
+  void openBottomSheet(BuildContext context, {bool isLastIndex = false}) async {
     isInValidMessage.value = "";
 
     AppFunction.showBottomSheet(
       context: context,
-      child: MissedWordQuizOptionBottomsheet(),
+      child: MissedWordQuizOptionBottomsheet(isLastIndex: isLastIndex),
     );
   }
 
-  void goToQuizPage(int randomSize) {
+  void goToQuizPage(int randomSize, {bool isLastIndex = false}) {
     isInValidMessage.value = "";
     List<Word> quizWords =[ ];
 
@@ -105,6 +105,9 @@ class MissedWordController extends GetxController {
     }
 
     Get.back();
+    if (isLastIndex) {
+      Get.back();
+    }
     Get.to(
       () => QuizScreen(),
       binding: BindingsBuilder.put(() => Get.put(QuizController(quizWords))),

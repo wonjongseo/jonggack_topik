@@ -1,5 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:jonggack_topik/core/controllers/font_controller.dart';
+
 import 'package:jonggack_topik/core/models/category_hive.dart';
 import 'package:jonggack_topik/core/models/subject_hive.dart';
 import 'package:jonggack_topik/features/category/controller/category_controller.dart';
@@ -19,8 +20,6 @@ class CategorySelector extends StatelessWidget {
   final Function() onTap;
   @override
   Widget build(BuildContext context) {
-    print('totalAndScores : ${totalAndScores}');
-
     return Card(
       child: InkWell(
         onTap: onTap,
@@ -46,9 +45,21 @@ class CategorySelector extends StatelessWidget {
                       SubjectHive subject = category.subjects[index];
                       TotalAndScore totalAndScore = totalAndScores[index];
 
+                      int curCnt = 0;
+                      switch (index) {
+                        case 0:
+                          curCnt = 2100;
+                          break;
+                        case 1:
+                          curCnt = 1120;
+                          break;
+                        case 2:
+                          curCnt = 512;
+                          break;
+                      }
                       return CateogryProgress(
                         caregory: subject.title,
-                        curCnt: totalAndScore.score,
+                        curCnt: kDebugMode ? curCnt : totalAndScore.score,
                         totalCnt: totalAndScore.total,
                       );
                     }),

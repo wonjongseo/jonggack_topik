@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/admob/banner_ad/global_banner_admob.dart';
@@ -29,28 +27,30 @@ class MissedWordsScreen extends GetView<MissedWordController> {
     );
   }
 
-  SafeArea _body() {
-    return SafeArea(
-      child: Center(
-        child: Container(
-          color:
-              Get.isDarkMode ? AppColors.scaffoldBackground : AppColors.white,
-          margin: const EdgeInsets.only(top: 8),
-          child: ListView.separated(
-            itemBuilder: (context, index) {
-              return MissedWordListTIle(
-                word: controller.words[index],
-                missedWord: controller.missedWords[index],
-                onTap: () => controller.goToWordScreen(index),
-                isHidenMean: false,
-                onTrailingTap:
-                    () => controller.deleteMissedWord(
-                      controller.missedWords[index],
-                    ),
-              );
-            },
-            separatorBuilder: (context, index) => Divider(),
-            itemCount: controller.words.length,
+  Widget _body() {
+    return Obx(
+      () => SafeArea(
+        child: Center(
+          child: Container(
+            color:
+                Get.isDarkMode ? AppColors.scaffoldBackground : AppColors.white,
+            margin: const EdgeInsets.only(top: 8),
+            child: ListView.separated(
+              itemBuilder: (context, index) {
+                return MissedWordListTIle(
+                  word: controller.words[index],
+                  missedWord: controller.missedWords[index],
+                  onTap: () => controller.goToWordScreen(index),
+                  isHidenMean: false,
+                  onTrailingTap:
+                      () => controller.deleteMissedWord(
+                        controller.missedWords[index],
+                      ),
+                );
+              },
+              separatorBuilder: (context, index) => Divider(),
+              itemCount: controller.words.length,
+            ),
           ),
         ),
       ),

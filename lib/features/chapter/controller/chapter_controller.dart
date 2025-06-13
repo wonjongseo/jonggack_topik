@@ -130,7 +130,7 @@ class ChapterController extends GetxController {
 
   final wordRepo = Get.find<HiveRepository<Word>>(tag: Word.boxKey);
 
-  Future<void> goToQuizPage() async {
+  Future<void> goToQuizPage({bool index16 = false}) async {
     bool isTryAgain = false;
     if (step.wrongWords.isNotEmpty) {
       isTryAgain = await AppDialog.showMyDialog(
@@ -139,6 +139,9 @@ class ChapterController extends GetxController {
         onConfirm: () {},
         onCancel: () {},
       );
+    }
+    if (index16) {
+      Get.back();
     }
     await Get.to(
       () => QuizScreen(),

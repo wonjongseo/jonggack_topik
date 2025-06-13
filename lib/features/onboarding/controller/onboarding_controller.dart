@@ -62,7 +62,7 @@ class OnboardingController extends GetxController {
   final _onboardings = [
     Onboarding1(),
     FadeInRight(child: Onboarding2()),
-    FadeInRight(child: Onboarding4()),
+    // FadeInRight(child: Onboarding4()),
     FadeInRight(child: Onboarding3()),
   ];
 
@@ -243,7 +243,6 @@ class OnboardingController extends GetxController {
     //
     await _saveTopikLevel();
     await _saveCountOfGoalStudy();
-    _setNotification();
     if (isNotifiEnable) {
       _setNotification();
       // SettingRepository.setList(AppConstant.notificationsIdsKey, notificationIds);

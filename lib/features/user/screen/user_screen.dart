@@ -18,60 +18,59 @@ class UserScreen extends GetView<BookController> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
         child: SafeArea(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(height: 100, child: const WelcomeWidget()),
-                SizedBox(height: size.height * .15, child: SeacrhForm()),
-                Expanded(
-                  child: Obx(() {
-                    if (controller.isLoading.value) {
-                      return CircularProgressIndicator();
-                    }
-                    return CarouselSlider(
-                      carouselController: controller.carouselSliderController,
-                      items: [
-                        ...List.generate(controller.books.length, (index) {
-                          return InkWell(
-                            onTap: () {
-                              Get.to(
-                                () => BookStudyScreen(),
-                                binding: BindingsBuilder.put(
-                                  () => BookStudyController(
-                                    controller.books[index],
-                                  ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(height: 100, child: const WelcomeWidget()),
+              SizedBox(height: size.height * .15, child: SeacrhForm()),
+              Expanded(
+                child: Obx(() {
+                  if (controller.isLoading.value) {
+                    return CircularProgressIndicator();
+                  }
+                  return CarouselSlider(
+                    carouselController: controller.carouselSliderController,
+                    items: [
+                      ...List.generate(controller.books.length, (index) {
+                        return InkWell(
+                          onTap: () {
+                            Get.to(
+                              () => BookStudyScreen(),
+                              binding: BindingsBuilder.put(
+                                () => BookStudyController(
+                                  controller.books[index],
                                 ),
-                              );
-                            },
-                            child: BookCard(
-                              book: controller.books[index],
-                              deleteBook: (book) => controller.deleteBook(book),
-                              teCtl: index == 0 ? controller.bookNameCtl : null,
-                            ),
-                          );
-                        }),
-                        AddBookCard(
-                          tECtl: controller.bookNameCtl,
-                          tECtl2: controller.bookDescriptionCtl,
-                          onTap: () => controller.createBook(),
-                        ),
-                      ],
-                      options: CarouselOptions(
-                        disableCenter: true,
-                        viewportFraction: 0.65,
-                        enableInfiniteScroll: false,
-                        enlargeCenterPage: true,
+                              ),
+                            );
+                          },
+                          child: BookCard(
+                            book: controller.books[index],
+                            deleteBook: (book) => controller.deleteBook(book),
+                            teCtl: index == 0 ? controller.bookNameCtl : null,
+                          ),
+                        );
+                      }),
+                      AddBookCard(
+                        tECtl: controller.bookNameCtl,
+                        tECtl2: controller.bookDescriptionCtl,
+                        onTap: () => controller.createBook(),
                       ),
-                    );
-                  }),
-                ),
-                SizedBox(height: 16),
-              ],
-            ),
+                    ],
+                    options: CarouselOptions(
+                      disableCenter: true,
+                      viewportFraction: 0.65,
+                      enableInfiniteScroll: false,
+                      enlargeCenterPage: true,
+                    ),
+                  );
+                }),
+              ),
+              SizedBox(height: 16),
+            ],
           ),
         ),
       ),

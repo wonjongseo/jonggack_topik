@@ -60,15 +60,16 @@ class MissWordList extends GetView<MissedWordController> {
                     separatorBuilder: (context, index) => Divider(),
                   ),
                 ),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                    onPressed: () {
-                      Get.to(() => MissedWordsScreen());
-                    },
-                    child: Text("See More..."),
+                if (controller.missedWords.length > 10)
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      onPressed: () {
+                        Get.to(() => MissedWordsScreen());
+                      },
+                      child: Text("See More..."),
+                    ),
                   ),
-                ),
               ],
             );
           }),

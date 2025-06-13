@@ -45,7 +45,6 @@ class HiveHelper {
             stepKeys: stepKeys,
           );
           if (!chapterBox.containsKey(chapKey)) {
-            print('chapKey : ${chapKey}');
             //韓国語能力試験-1・2級-Chapter 1
             //人-生理現象-Chapter 1
             await chapterBox.put(chapKey, hiveChapter);

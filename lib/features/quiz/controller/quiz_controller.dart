@@ -47,9 +47,19 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
 
   // int correctDurationTime = 1200; // 맞출 시 다음 문제로 넘어갈 Duratiojn
   int correctDurationTime =
-      SettingController.to.correctDuration.value; // 맞출 시 다음 문제로 넘어갈 Duratiojn
+      kDebugMode
+          ? 100
+          : SettingController
+              .to
+              .correctDuration
+              .value; // 맞출 시 다음 문제로 넘어갈 Duratiojn
   int incorrectDurationTime =
-      SettingController.to.incorrectDuration.value; // 맞출 시 다음 문제로 넘어갈 Duratiojn
+      kDebugMode
+          ? 100
+          : SettingController
+              .to
+              .incorrectDuration
+              .value; // 맞출 시 다음 문제로 넘어갈 Duratiojn
   int skipDurationTime = 250; // 맞출 시 다음 문제로 넘어갈 Duratiojn
 
   late bool isMyWordTest;
@@ -196,8 +206,9 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
     // 테스트를 다 풀 었으면
     else {
       DateTime date = DateTime.now();
+      DateTime test = DateTime(date.year, date.month, 7);
       QuizHistoryRepository.saveOrUpdate(
-        date: date,
+        date: kDebugMode ? test : date,
         // date: kDebugMode ? date.add(Duration(days: random.nextInt(3))) : date,
         newCorrectIds: correctQuestions.map((word) => word.id).toSet().toList(),
         newIncorrectIds: wrongQuestions.map((word) => word.id).toSet().toList(),

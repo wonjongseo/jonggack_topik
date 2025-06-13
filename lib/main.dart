@@ -1,3 +1,4 @@
+import 'package:jonggack_topik/features/home/screen/home_screen.dart';
 import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,13 +25,6 @@ import 'package:jonggack_topik/theme.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
-
-Future<void> _initializeTimeZone() async {
-  tz.initializeTimeZones();
-  final String currentTimeZone = await FlutterTimezone.getLocalTimezone();
-  LogManager.info("📌 Timezone: $currentTimeZone");
-  tz.setLocalLocation(tz.getLocation(currentTimeZone));
-}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -105,7 +99,7 @@ class _AppState extends State<App> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'データを読み込んでいます。',
+                'Loading Data...',
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   fontFamily: AppFonts.zenMaruGothic,
                 ),
@@ -149,6 +143,7 @@ class InitBinding extends Bindings {
 
     Get.lazyPut(() => UserController(), fenix: true);
     Get.lazyPut(() => MainController(), fenix: true);
+    Get.lazyPut(() => HomeController(), fenix: true);
     Get.lazyPut(() => SearchGetController());
     // Get.lazyPut(() => CategoryController());
     // Get.lazyPut(() => BookController());
@@ -160,6 +155,12 @@ class InitBinding extends Bindings {
   }
 }
 
-// flutter pub run change_app_package_name:main com.wonjongseo.numberone-topik
+// flutter pub run change_app_package_name:main com.wonjongseo.numberone_topik
 
 // flutter pub run build_runner build --delete-conflicting-outputs
+Future<void> _initializeTimeZone() async {
+  tz.initializeTimeZones();
+  final String currentTimeZone = await FlutterTimezone.getLocalTimezone();
+  LogManager.info("📌 Timezone: $currentTimeZone");
+  tz.setLocalLocation(tz.getLocation(currentTimeZone));
+}

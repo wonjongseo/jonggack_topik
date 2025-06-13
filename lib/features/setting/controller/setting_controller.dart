@@ -28,8 +28,7 @@ class SettingController extends GetxController {
     _isDarkMode.value = isDarkMode;
   }
 
-  final _countOfGoal = 1.obs;
-  int get countOfGoal => _countOfGoal.value;
+  final dailyGoal = 1.obs;
 
   SettingController(bool isDarkMode) {
     _isDarkMode.value = isDarkMode;
@@ -65,11 +64,10 @@ class SettingController extends GetxController {
       return;
     }
     teCtl.text = '$count';
-
+    dailyGoal.value = count;
     debouncer.debounce(
       duration: debouncerDuration,
       onDebounce: () {
-        print('debouncer');
         SettingRepository.setInt(AppConstant.countOfGoal, count);
       },
     );
@@ -77,9 +75,8 @@ class SettingController extends GetxController {
 
   void getCountOfGoal() {
     try {
-      _countOfGoal.value =
-          SettingRepository.getInt(AppConstant.countOfGoal) ?? 1;
-      teCtl.text = '${_countOfGoal.value}';
+      dailyGoal.value = SettingRepository.getInt(AppConstant.countOfGoal) ?? 1;
+      teCtl.text = '${dailyGoal.value}';
     } catch (e) {
       LogManager.error('$e');
     }
@@ -120,7 +117,6 @@ class SettingController extends GetxController {
 
   void getBaseFontSize() {
     _baseFS.value = SettingRepository.getDouble(AppConstant.fontSizeKey) ?? 16;
-    print('_baseFS.value : ${_baseFS.value}');
   }
 
   void updateBaseFontSize({bool isIncrease = true, double? fontSize}) {
@@ -135,7 +131,6 @@ class SettingController extends GetxController {
     debouncer.debounce(
       duration: debouncerDuration,
       onDebounce: () {
-        print('debouncer');
         SettingRepository.setDouble(AppConstant.fontSizeKey, newValue);
       },
     );
@@ -255,12 +250,12 @@ class SettingController extends GetxController {
     if (_notificationTime.value == null) {
       if (await changeNotificationTime()) {
         SnackBarHelper.showSuccessSnackBar(
-          "${AppFunction.formatTime(_notificationTime.value!)}",
+          '${AppFunction.formatTime(_notificationTime.value!)}${AppString.notifiSetted.tr}',
         );
       }
     } else {
       await deleteAllNotification();
-      SnackBarHelper.showSuccessSnackBar("");
+      SnackBarHelper.showSuccessSnackBar(AppString.notifiUnSetted.tr);
     }
   }
 

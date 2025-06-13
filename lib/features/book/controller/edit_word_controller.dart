@@ -46,9 +46,9 @@ class EditWordController extends GetxController {
     Word word = Word(
       id: DateTime.now().toIso8601String(),
       headTitle: "",
-      word: wordCtl.text,
-      yomikata: yomikataCtl.text,
-      mean: meanCtl.text,
+      word: sWord,
+      yomikata: sYomikata,
+      mean: sMean,
       dicTypeNuimber: book.bookNum,
     );
     try {
@@ -63,7 +63,9 @@ class EditWordController extends GetxController {
       SnackBarHelper.showErrorSnackBar('$e');
     } finally {
       wordNode.requestFocus();
-      SnackBarHelper.showSuccessSnackBar('${word.word}가 생성되었습니다.');
+      SnackBarHelper.showSuccessSnackBar(
+        '${word.word}${AppString.isCreated.tr}',
+      );
       wordCtl.clear();
       yomikataCtl.clear();
       meanCtl.clear();

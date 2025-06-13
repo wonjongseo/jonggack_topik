@@ -4,6 +4,7 @@ import 'package:jonggack_topik/core/admob/banner_ad/global_banner_admob.dart';
 import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/features/chapter/controller/chapter_controller.dart';
+import 'package:jonggack_topik/features/missed_word/controller/missed_word_controller.dart';
 import 'package:jonggack_topik/features/quiz/controller/quiz_controller.dart';
 import 'package:jonggack_topik/features/quiz/screen/quiz_screen.dart';
 import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
@@ -70,10 +71,12 @@ class GoToQuizWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
       child: InkWell(
         onTap: () {
-          Get.back();
           if (Get.isRegistered<ChapterController>()) {
-            ChapterController.to.goToQuizPage();
+            ChapterController.to.goToQuizPage(index16: true);
+          } else if (Get.isRegistered<MissedWordController>()) {
+            MissedWordController.to.openBottomSheet(context, isLastIndex: true);
           } else {
+            print('3');
             Get.to(
               () => QuizScreen(),
               binding: BindingsBuilder.put(

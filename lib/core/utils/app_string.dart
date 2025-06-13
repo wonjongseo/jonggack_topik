@@ -5,6 +5,8 @@ class AppTranslations extends Translations {
   // TODO: implement keys
   Map<String, Map<String, String>> get keys => {
     'ja_JP': {
+      AppString.isText: AppString.isTextJp,
+      AppString.wo: AppString.woJp,
       AppString.goalCountPerDay: AppString.goalCountPerDayJp,
       AppString.random: AppString.randomJp,
       AppString.addWord: AppString.addWordJp,
@@ -104,6 +106,8 @@ class AppTranslations extends Translations {
       AppString.almostPass: AppString.almostPassJp,
     },
     'ko_KR': {
+      AppString.isText: AppString.isTextKr,
+      AppString.wo: AppString.woKr,
       AppString.goalCountPerDay: AppString.goalCountPerDayKr,
       AppString.random: AppString.randomKr,
       AppString.addWord: AppString.addWordKr,
@@ -209,7 +213,8 @@ class AppTranslations extends Translations {
 class AppString {
   static String appName = "appNameTr";
   static String appNameKr = "종각 TOPIK";
-  static String appNameJp = "いちばんTopik";
+  // static String appNameJp = "いちばんTopik";
+  static String appNameJp = "おたすけTopik";
   static String appNameEn = "종각 TOPIK";
 
   static String youHavePreQuizData = "youHavePreQuizDataTr";
@@ -230,7 +235,7 @@ class AppString {
 
   static String isCreated = "isCreatedTr";
   static String isCreatedKr = '가 생성되었습니다.';
-  static String isCreatedJp = 'が生成されました。';
+  static String isCreatedJp = 'が作られました。';
   static String isCreatedEn = "";
 
   static String isDeleted = "isDeletedTr";
@@ -285,12 +290,12 @@ class AppString {
 
   static String plzInputMore = "plzInputMoreTr";
   static String plzInputMoreKr = '이상을 입력해주세요';
-  static String plzInputMoreJp = "の以上を入力してください。";
+  static String plzInputMoreJp = "以上を入力してください。";
   static String plzInputMoreEn = "";
 
   static String plzInputLess = "plzInputLessTr";
-  static String plzInputLessKr = '이하를 립력해주세요';
-  static String plzInputLessJp = "の以下を入力してください。";
+  static String plzInputLessKr = '이하를 입력주세요';
+  static String plzInputLessJp = "以下を入力してください。";
   static String plzInputLessEn = "";
 
   static String correct = "correctTr";
@@ -333,7 +338,7 @@ class AppString {
   static String selectCountOfStudyJp = '1日に何個覚えるのを目指していますか？';
 
   static String doYouWantToAlert = "doYouWantToAlertTr";
-  static String doYouWantToAlertKr = "학습 알람을 받으시겠습니까?";
+  static String doYouWantToAlertKr = "학습 알림을 받으시겠습니까?";
   static String doYouWantToAlertJp = '学習の通知を受けませんか。';
 
   static String doYouWantToAlert2 = "doYouWantToAlert2Tr";
@@ -498,57 +503,98 @@ class AppString {
 
   static String errorCreateEmail2 = "errorCreateEmail2Tr";
   static String errorCreateEmail2Kr =
-      '핸드폰에 이메일 등록이 되어 있지 않으면 $appNameKr에서 이메일을 작성 할 수 없습니다.\n별도의 이메일 앱에서 문의 해주시면 감사하겠습니다.\n\n이메일 [visionwill3322@gmail.com]을 복사하시겠습니까?';
+      '죄송합니다만, 사용 중인 스마트폰에 이메일 주소가 등록되어 있지 않아 $appNameKr 에서 메일을 작성할 수 없습니다.\n번거로우시겠지만, 다른 메일 앱을 통해 아래 주소로 문의해 주시면 감사하겠습니다.\n\n메일 주소 「visionwill3322@gmail.com」을 복사하시겠습니까?';
+
   static String errorCreateEmail2Jp =
-      "携帯にメールが登録されていなければ、 $appNameJpからメールを作成することができません。\n別途のメールアプリからお問い合わせして頂ければ幸いと存じております。\n\nメール　[visionwill3322@gmail.com]をコピーしますか。";
-  static String errorCreateEmail2En = """
-If your email is not registered on your phone, you will not be able to send an email from $appNameEn.
-We kindly ask that you contact us using another email app.
-Would you like to copy the email [visionwill3322@gmail.com]?
-""";
+      "誠に恐れ入りますが、お使いのスマートフォンにメールアドレスが登録されていないため、、 「$appNameJp」からメールを作成できません。\n大変お手数ですが、別のメールアプリより下記アドレスへお問い合わせいただけますと幸いです。\n\nメール　「visionwill3322@gmail.com」をコピーしますか。";
+  static String errorCreateEmail2En =
+      "Sorry, but there is no email address registered on your device, so you cannot compose an email from “$appNameEn”.\nWe apologize for the inconvenience, but please use another email app to contact us at the address below.\n\nWould you like to copy the email address “visionwill3322@gmail.com”?";
 
   static String reportMsgContect = "reportMsgContectTr";
-  static String reportMsgContectEn = "";
+
   static String reportMsgContectKr = """
+💡 **희망 기능 제안 / 버그·오류 제보**
 
-⭐️ [희망 기능 제보]
+───────────────────────
 
+✨ **[희망 기능 제안]**
+- 원하는 기능이나 개선 아이디어를 상세히 알려주세요!
 
-==========================
+───────────────────────
 
-⭐️ [버그・오류 제보]
+🐞 **[버그・오류 제보]**
+1️⃣ **발생 화면**  
+   예) 캘린더 화면, 비용 입력 화면 등  
+2️⃣ **발생 내용**  
+   예) 일정 추가 시 앱이 강제 종료됩니다.  
+3️⃣ **재현 방법**  
+   1. 캘린더 화면 진입  
+   2. “일정 추가” 버튼 클릭  
+   3. 오류 확인  
 
-🔸 버그・오류 화면 :　  
-   예) 캘린더 화면 Or 비용 화면 
+📎 **첨부 가능 항목**  
+- 스크린샷 또는 동영상 (버그 파악에 큰 도움이 됩니다!)
 
-🔸 버그・오류 내용 :　
-   예) 캘린더 화면에서 일정을 추가하면 에러가 발생.
+───────────────────────
 
-
-==========================
-
-▪️이미지를 함께 첨부해주시면 버그・오류를 수정하는데 큰 도움이 됩니다!!🙇‍♂️▪️
+🙏 **소중한 제보 감사합니다!**  
+빠른 시일 내에 검토하고 개선하도록 하겠습니다.
 """;
   static String reportMsgContectJp = """
+💡 **機能要望・バグ報告フォーム**
 
-⭐️ 「ご要望の機能」 
+───────────────────────
 
-：
+✨ **【機能要望】**
+- ご希望の機能や改善アイデアを詳しくご記入ください。
 
-==========================
+───────────────────────
 
-⭐️ [バグ・エラーの申告]
+🐞 **【バグ・不具合報告】**
+1️⃣ **発生画面**  
+   例）カレンダー画面、費用入力画面 など  
+2️⃣ **発生内容**  
+   例）予定を追加するとアプリが強制終了する  
+3️⃣ **再現手順**  
+   1. カレンダー画面を開く  
+   2. 「予定追加」ボタンをタップ  
+   3. エラー発生を確認  
 
-🔸 バグ・エラーの画面 :　  
-   例）カレンダーの画面　Or 費用の画面
+📎 **添付資料**  
+- スクリーンショットや動画（不具合解決の手助けになります）
 
-🔸 バグ・エラーの内容 :　
-   例）カレンダーの画面から予定を追加したら、エラーが出た。
+───────────────────────
 
+🙏 **ご報告ありがとうございます！**  
+迅速に確認し、改善に努めます。
+""";
+  static String reportMsgContectEn = """
+💡 **Feature Requests / Bug Report Form**
 
-==========================
+───────────────────────
 
-▪️イメージを添付して頂ければ、バグ・エラーを修正するのにとても助かります！🙇‍♂️▪️
+✨ **Feature Request**
+- Please describe the feature or improvement you’d like to see.
+
+───────────────────────
+
+🐞 **Bug Report**
+1️⃣ **Screen / Section**  
+   e.g.) Calendar screen, Expense input screen  
+2️⃣ **Issue Details**  
+   e.g.) App crashes when adding a new event.  
+3️⃣ **Steps to Reproduce**  
+   1. Open the calendar screen  
+   2. Tap “Add Event” button  
+   3. Observe the crash  
+
+📎 **Attachments**  
+- Screenshots or videos (These help us resolve issues faster!)
+
+───────────────────────
+
+🙏 **Thank you for your feedback!**  
+We’ll review your report and work on improvements as soon as possible.
 """;
 
   static String askShutDownMsg = "askShutDownMsgTr";
@@ -642,13 +688,13 @@ Would you like to copy the email [visionwill3322@gmail.com]?
   static String initEn = "";
 
   static String notifiSetted = "notifiSettedTr";
-  static String notifiSettedKr = '에 알람이 설정되었습니다.';
-  static String notifiSettedJp = 'に通知が設定されました';
+  static String notifiSettedKr = '에 알림이 설정되었습니다.';
+  static String notifiSettedJp = 'に通知が設定されました。';
   static String notifiSettedEn = "";
 
   static String notifiUnSetted = "notifiUnSettedTr";
-  static String notifiUnSettedKr = '알람 설정이 해제되었습니다.';
-  static String notifiUnSettedJp = '通知が設定が解除されました';
+  static String notifiUnSettedKr = '알림 설정이 해제되었습니다.';
+  static String notifiUnSettedJp = '通知が設定が解除されました。';
   static String notifiUnSettedEn = "";
 
   static String goToRandomQuiz = "goToRandomQuizTr";
@@ -734,4 +780,14 @@ Would you like to copy the email [visionwill3322@gmail.com]?
   static String goalCountPerDayKr = '하루 목표 학습 단어 수 ';
   static String goalCountPerDayJp = '一日目標の学習数';
   static String goalCountPerDayEn = "";
+
+  static String wo = "woTr";
+  static String woKr = '을 ';
+  static String woJp = 'を';
+  static String woEn = "";
+
+  static String isText = "isTextTr";
+  static String isTextKr = '은 ';
+  static String isTextJp = 'は';
+  static String isTextEn = "";
 }

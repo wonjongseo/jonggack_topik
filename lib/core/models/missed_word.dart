@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+
 import 'package:jonggack_topik/core/constant/hive_keys.dart';
 import 'package:jonggack_topik/core/models/word.dart';
 
@@ -18,4 +19,9 @@ class MissedWord extends HiveObject {
 
   MissedWord({required this.wordId, required this.category, this.missCount = 1})
     : lastMissedDay = DateTime.now().toIso8601String();
+
+  @override
+  String toString() {
+    return 'MissedWord(missCount: $missCount)';
+  }
 }

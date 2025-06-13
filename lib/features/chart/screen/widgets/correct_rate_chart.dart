@@ -37,6 +37,8 @@ class CorrectRateChart extends StatelessWidget {
               //     ),
               //   ),
               BarChartData(
+                minY: 0,
+                maxY: 100,
                 barTouchData: BarTouchData(
                   enabled: true,
                   touchCallback: (_, __) {},

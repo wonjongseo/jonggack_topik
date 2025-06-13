@@ -1,4 +1,4 @@
-package com.wonjongseo.numberone-topik
+package com.wonjongseo.numberone_topik
 
 import io.flutter.embedding.android.FlutterActivity
 

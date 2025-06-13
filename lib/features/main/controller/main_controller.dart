@@ -12,6 +12,7 @@ import 'package:jonggack_topik/features/quiz/screen/quiz_screen.dart';
 import 'package:jonggack_topik/features/random_quiz/screen/random_quiz_screen.dart';
 import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
 import 'package:jonggack_topik/features/setting/screen/setting_screen.dart';
+import 'package:jonggack_topik/features/setting/screen/widgets/bug_report_page.dart';
 import 'package:jonggack_topik/features/user/screen/user_screen.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 
@@ -31,7 +32,8 @@ class MainController extends GetxController {
     CategoryScreen(),
     UserScreen(),
     RandomQuizScreen(),
-    ChartSceen(),
+    // ChartSceen(),
+    BugReportPage(),
     SettingScreen(),
   ];
 

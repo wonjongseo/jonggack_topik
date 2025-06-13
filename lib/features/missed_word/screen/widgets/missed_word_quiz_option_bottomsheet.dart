@@ -5,8 +5,8 @@ import 'package:jonggack_topik/core/widgets/custom_button.dart';
 import 'package:jonggack_topik/features/missed_word/controller/missed_word_controller.dart';
 
 class MissedWordQuizOptionBottomsheet extends GetView<MissedWordController> {
-  const MissedWordQuizOptionBottomsheet({super.key});
-
+  const MissedWordQuizOptionBottomsheet({super.key, this.isLastIndex = false});
+  final bool isLastIndex;
   @override
   Widget build(BuildContext context) {
     int totalCount = controller.missedWords.length;
@@ -82,7 +82,10 @@ class MissedWordQuizOptionBottomsheet extends GetView<MissedWordController> {
           BottomBtn(
             label: "START",
             onTap: () {
-              controller.goToQuizPage(int.parse(tECtl.text));
+              controller.goToQuizPage(
+                int.parse(tECtl.text),
+                isLastIndex: isLastIndex,
+              );
             },
           ),
         ],
