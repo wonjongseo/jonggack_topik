@@ -1,11 +1,9 @@
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/admob/banner_ad/global_banner_admob.dart';
-import 'package:jonggack_topik/core/utils/app_dialog.dart';
+import 'package:jonggack_topik/core/services/report_service.dart';
 import 'package:jonggack_topik/core/utils/app_color.dart';
 import 'package:jonggack_topik/core/utils/app_function.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
@@ -14,8 +12,6 @@ import 'package:jonggack_topik/features/setting/controller/setting_controller.da
 import 'package:jonggack_topik/features/setting/enum/enums.dart';
 import 'package:jonggack_topik/features/setting/screen/widgets/setting_listtile.dart';
 import 'package:jonggack_topik/features/setting/screen/widgets/sound_setting_slider.dart';
-import 'package:package_info_plus/package_info_plus.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 enum TopikLevel {
   ot("1・2級"),
@@ -62,53 +58,7 @@ class SettingScreen extends GetView<SettingController> {
       subTitle: AppString.tipOffMessage.tr,
       iconData: Icons.mail,
       onTap: () async {
-        final pkg = await PackageInfo.fromPlatform();
-        final appInfo = '앱 버전: ${pkg.version} (build ${pkg.buildNumber})';
-
-        // 2) 디바이스 정보 가져오기
-        final di = DeviceInfoPlugin();
-        String deviceInfo;
-        if (GetPlatform.isAndroid) {
-          final info = await di.androidInfo;
-          deviceInfo =
-              '기기: ${info.manufacturer} ${info.model}\nOS: Android ${info.version.release}';
-        } else {
-          final info = await di.iosInfo;
-          deviceInfo =
-              '기기: ${info.name} ${info.model}\nOS: iOS ${info.systemVersion}';
-        }
-        print('appInfo : ${appInfo}');
-        print('deviceInfo : ${deviceInfo}');
-
-        final Email email = Email(
-          body: ''' 
-
-${AppString.reportMsgContect.tr}
-
----
-
-$appInfo
-$deviceInfo
-''',
-          subject: '[${AppString.appName.tr}] ${AppString.fnOrErorreport.tr}',
-          recipients: ['visionwill3322@gmail.com'],
-          isHTML: false,
-        );
-        try {
-          await FlutterEmailSender.send(email);
-        } on PlatformException catch (e) {
-          if (e.code == 'not_available') {
-            // 사용 가능한 이메일 앱이 없을 때
-            // url_launcher로 mailto: 열기 시도하거나
-            // 사용자에게 “메일 앱을 설치해주세요” 안내
-            _launchMailtoFallback();
-          } else {
-            bool result = await AppDialog.errorNoEnrolledEmail();
-            if (result) {
-              AppFunction.copyWord('visionwill3322@gmail.com');
-            }
-          }
-        }
+        await ReportService.report(Get.context!);
       },
     );
   }
@@ -141,35 +91,6 @@ $deviceInfo
         onChanged: controller.changeSystemLanguage,
       ),
     );
-  }
-
-  Future<void> _launchMailtoFallback() async {
-    final uri = Uri(
-      scheme: 'mailto',
-      path: 'visionwill3322@gmail.com',
-      queryParameters: {'subject': '버그 제보', 'body': '앱 정보 및 기기 정보…'},
-    );
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri);
-    } else {
-      showDialog(
-        context: Get.context!,
-        builder:
-            (_) => AlertDialog(
-              title: Text('메일 앱 없음'),
-              content: Text('메일 앱이 설치되어 있지 않아, 주소를 복사합니다.'),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Clipboard.setData(ClipboardData(text: uri.toString()));
-                    Get.back();
-                  },
-                  child: Text('복사'),
-                ),
-              ],
-            ),
-      );
-    }
   }
 
   @override

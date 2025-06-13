@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/utils/app_color.dart';
 import 'package:jonggack_topik/features/category/controller/search_get_controller.dart';
-import 'package:jonggack_topik/features/word/controller/word_controller.dart';
 import 'package:jonggack_topik/theme.dart';
 
 class SeacrhForm extends GetView<SearchGetController> {
@@ -104,7 +103,9 @@ class SeacrhForm extends GetView<SearchGetController> {
                           color: AppColors.primaryColor,
                         ),
                         child: Text(
-                          controller.words[index].word,
+                          controller.isKo.value
+                              ? controller.words[index].word
+                              : controller.words[index].mean,
                           style: TextStyle(color: Colors.white),
                         ),
                       ),

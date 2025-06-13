@@ -18,35 +18,32 @@ class WordAdapter extends TypeAdapter<Word> {
     };
     return Word(
       id: fields[0] as String,
-      headTitle: fields[1] as String,
-      word: fields[2] as String,
-      yomikata: fields[3] as String,
-      mean: fields[4] as String,
-      examples: (fields[5] as List?)?.cast<Example>(),
-      synonyms: (fields[6] as List?)?.cast<Synonym>(),
-      dicTypeNuimber: fields[7] as int,
+      word: fields[1] as String,
+      yomikata: fields[2] as String,
+      mean: fields[3] as String,
+      examples: (fields[4] as List?)?.cast<Example>(),
+      synonyms: (fields[5] as List?)?.cast<Synonym>(),
+      dicTypeNuimber: fields[6] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, Word obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.headTitle)
-      ..writeByte(2)
       ..write(obj.word)
-      ..writeByte(3)
+      ..writeByte(2)
       ..write(obj._yomikata)
-      ..writeByte(4)
+      ..writeByte(3)
       ..write(obj.mean)
-      ..writeByte(5)
+      ..writeByte(4)
       ..write(obj.examples)
-      ..writeByte(6)
+      ..writeByte(5)
       ..write(obj.synonyms)
-      ..writeByte(7)
+      ..writeByte(6)
       ..write(obj.dicTypeNuimber);
   }
 

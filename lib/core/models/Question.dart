@@ -82,7 +82,6 @@ class Question {
         word: vocas[answerIndex[j]].word,
         mean: tempMean,
         yomikata: vocas[answerIndex[j]].yomikata,
-        headTitle: vocas[answerIndex[j]].headTitle,
       );
 
       answerVoca.add(newWord);

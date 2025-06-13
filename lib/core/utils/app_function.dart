@@ -157,3 +157,26 @@ String getKey({
 
   return key;
 }
+
+String detectScript(String input) {
+  // 한글 유니코드 블록: U+AC00–U+D7AF
+  final hangulReg = RegExp(r'[\uAC00-\uD7AF]');
+  // 히라가나: U+3040–U+309F, 카타카나: U+30A0–U+30FF
+  // 한자(CJK Unified): U+4E00–U+9FFF (기본 한중일 한자)
+  final japaneseReg = RegExp(r'[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FFF]');
+
+  int hangulCount = hangulReg.allMatches(input).length;
+  int japaneseCount = japaneseReg.allMatches(input).length;
+
+  if (hangulCount > 0 && japaneseCount == 0) {
+    return 'ko'; // 한글
+  } else if (japaneseCount > 0 && hangulCount == 0) {
+    return 'ja'; // 일본어
+  } else if (hangulCount > japaneseCount) {
+    return 'ko';
+  } else if (japaneseCount > hangulCount) {
+    return 'ja';
+  } else {
+    return 'unknown';
+  }
+}

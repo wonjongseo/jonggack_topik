@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/core/repositories/hive_repository.dart';
 import 'package:flutter_debouncer/flutter_debouncer.dart' as FB;
+import 'package:jonggack_topik/core/utils/app_function.dart';
 import 'package:jonggack_topik/features/word/controller/word_controller.dart';
 
 class SearchGetController extends GetxController {
@@ -50,23 +51,27 @@ class SearchGetController extends GetxController {
 
   void _resetClearTimer() {
     _clearTimer?.cancel();
-    _clearTimer = Timer(Duration(seconds: 30), () {
-      // controller.clear();
-      // _words.clear();
+    _clearTimer = Timer(Duration(seconds: 10), () {
+      controller.clear();
+      _words.clear();
     });
   }
 
+  final isKo = true.obs;
   _queryToHive(String query) {
+    isKo.value = detectScript(query) != 'ja';
     final wordRepo = Get.find<HiveRepository<Word>>(tag: Word.boxKey);
 
     List<Word> words = wordRepo.getAll();
 
     final filteredWord =
-        words
-            .where(
-              (word) => word.word.contains(query) && word.dicTypeNuimber == 0,
-            )
-            .toList();
+        words.where((word) {
+          if (word.dicTypeNuimber != 0) return false;
+
+          return isKo.value
+              ? word.word.contains(query)
+              : word.mean.contains(query);
+        }).toList();
 
     _words.assignAll(filteredWord);
   }

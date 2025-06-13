@@ -36,7 +36,6 @@ android {
 }
 
 dependencies {
-    // 다른 implementation/... 들은 그대로 두시고,
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.2.2")
 }
 

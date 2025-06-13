@@ -15,24 +15,22 @@ class Word extends HiveObject {
   @HiveField(0)
   late String id;
   @HiveField(1)
-  late String headTitle;
-  @HiveField(2)
   late String word;
-  @HiveField(3)
+  @HiveField(2)
   late String _yomikata;
-  @HiveField(4)
+  @HiveField(3)
   late String mean;
 
-  @HiveField(5)
+  @HiveField(4)
   List<Example> examples;
-  @HiveField(6)
+
+  @HiveField(5)
   List<Synonym> synonyms;
 
-  @HiveField(7)
+  @HiveField(6)
   int dicTypeNuimber = 0; // 0은 기본
   Word({
     required this.id,
-    required this.headTitle,
     required this.word,
     required String yomikata,
     required this.mean,
@@ -61,12 +59,11 @@ class Word extends HiveObject {
 
   @override
   String toString() {
-    return "Word( word: $word, mean: $mean, yomikata: $_yomikata, headTitle: $headTitle, examples: $examples)";
+    return "Word( word: $word, mean: $mean, yomikata: $_yomikata,  examples: $examples)";
   }
 
   Word.fromMap(Map<String, dynamic> map)
     : id = map['id'] ?? '',
-      headTitle = map['headTitle'] ?? '',
       word = map['word'] ?? '',
       _yomikata = map['yomikata'] ?? '',
       mean = map['mean'] ?? '',

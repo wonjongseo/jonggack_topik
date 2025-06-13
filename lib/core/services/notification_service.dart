@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/models/word.dart';
@@ -11,10 +9,13 @@ import 'package:timezone/timezone.dart' as tz;
 
 /// ① Top-level 함수로 선언하고 Entry-Point 어노테이션 추가
 @pragma('vm:entry-point')
-void notificationTapBackground(NotificationResponse response) {
-  if (response.payload?.isNotEmpty == true) {
-    Get.toNamed(response.payload!);
-  }
+void notificationTapBackground(NotificationResponse response) async {
+  List<Word> randomWord = RandomWordService.createRandomWordBySubject();
+
+  Get.to(
+    () => QuizScreen(),
+    binding: BindingsBuilder.put(() => Get.put(QuizController(randomWord))),
+  );
 }
 
 class NotificationService {

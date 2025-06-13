@@ -9,6 +9,7 @@ import 'package:jonggack_topik/core/models/missed_word.dart';
 import 'package:jonggack_topik/core/models/step_model.dart';
 import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/core/repositories/hive_repository.dart';
+import 'package:jonggack_topik/core/services/app_review_service.dart';
 import 'package:jonggack_topik/core/utils/app_function.dart';
 import 'package:jonggack_topik/features/category/controller/category_controller.dart';
 import 'package:jonggack_topik/features/chapter/controller/chapter_controller.dart';
@@ -104,7 +105,7 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
     setQuestions();
 
     isMyWordTest = !Get.isRegistered<StepController>();
-
+    AppReviewService.checkReviewRequest();
     super.onInit();
   }
 

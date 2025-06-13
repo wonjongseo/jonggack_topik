@@ -19,7 +19,7 @@ import 'package:jonggack_topik/core/models/subject_hive.dart';
 import 'package:jonggack_topik/core/models/synonym.dart';
 import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/core/repositories/setting_repository.dart';
-import 'package:jonggack_topik/core/services/last.dart';
+import 'package:jonggack_topik/core/services/run_monthly_task_service.dart';
 import 'package:jonggack_topik/core/utils/app_constant.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/features/auth/models/user.dart';

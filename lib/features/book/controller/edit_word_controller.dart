@@ -45,7 +45,6 @@ class EditWordController extends GetxController {
 
     Word word = Word(
       id: DateTime.now().toIso8601String(),
-      headTitle: "",
       word: sWord,
       yomikata: sYomikata,
       mean: sMean,
