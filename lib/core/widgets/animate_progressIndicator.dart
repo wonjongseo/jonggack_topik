@@ -21,7 +21,7 @@ class AnimatedLeanerProgressIndicator extends StatelessWidget {
     }
 
     return SizedBox(
-      height: 17,
+      height: 20,
       child: TweenAnimationBuilder(
         tween: Tween<double>(begin: 0, end: percentage),
         duration: const Duration(milliseconds: 1500),
@@ -32,7 +32,7 @@ class AnimatedLeanerProgressIndicator extends StatelessWidget {
               children: [
                 LinearProgressIndicator(
                   value: value,
-                  color: AppColors.accentColor,
+                  color: AppColors.primaryColor,
                   backgroundColor: Colors.grey.shade300,
                 ),
                 Center(

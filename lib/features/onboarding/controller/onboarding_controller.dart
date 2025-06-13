@@ -19,6 +19,7 @@ import 'package:jonggack_topik/features/onboarding/screen/widgets/onboarding2.da
 import 'package:jonggack_topik/features/onboarding/screen/widgets/onboarding3.dart';
 import 'package:jonggack_topik/features/onboarding/screen/widgets/onboarding4.dart';
 import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
+import 'package:jonggack_topik/features/setting/enum/enums.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 class OnboardingController extends GetxController {
@@ -62,13 +63,13 @@ class OnboardingController extends GetxController {
   final _onboardings = [
     Onboarding1(),
     FadeInRight(child: Onboarding2()),
-    // FadeInRight(child: Onboarding4()),
+    FadeInRight(child: Onboarding4()),
     FadeInRight(child: Onboarding3()),
   ];
 
-  int selectedLevel = 0;
+  TopikLevel selectedLevel = TopikLevel.onwTwo;
 
-  void changeLevel(int level) {
+  void changeLevel(TopikLevel level) {
     selectedLevel = level;
     update();
   }
@@ -168,18 +169,7 @@ class OnboardingController extends GetxController {
   }
 
   Future<void> _saveTopikLevel() async {
-    String selectedSubject = "1・2級";
-    switch (selectedLevel) {
-      case 0:
-        selectedSubject = "1・2級";
-        break;
-      case 1:
-        selectedSubject = "3・4級";
-        break;
-      case 2:
-        selectedSubject = "5・6級";
-        break;
-    }
+    String selectedSubject = selectedLevel.label;
 
     Box box;
     if (!Hive.isBoxOpen(AppConstant.settingModelBox)) {

@@ -10,8 +10,12 @@ class Onboarding4 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('object');
     return GestureDetector(
-      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      onTap: () {
+        print('asdasd');
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
       child: Column(
         children: [
           Text(

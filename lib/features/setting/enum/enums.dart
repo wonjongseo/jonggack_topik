@@ -36,3 +36,18 @@ extension EQuizDuration on QuizDuration {
     }
   }
 }
+
+enum TopikLevel { onwTwo, thrFour, fiveSix }
+
+extension ETopikLevel on TopikLevel {
+  String get label {
+    switch (this) {
+      case TopikLevel.onwTwo:
+        return '1・2級';
+      case TopikLevel.thrFour:
+        return '3・4級';
+      case TopikLevel.fiveSix:
+        return '5・6級';
+    }
+  }
+}

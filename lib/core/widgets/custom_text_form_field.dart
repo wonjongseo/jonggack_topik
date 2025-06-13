@@ -5,6 +5,7 @@ class CustomTextFormField extends StatelessWidget {
     super.key,
     this.hintText,
     this.widget,
+    this.color,
     this.maxLines,
     this.readOnly,
     this.controller,
@@ -19,6 +20,7 @@ class CustomTextFormField extends StatelessWidget {
 
   final FocusNode? focusNode;
   final String? hintText;
+  final Color? color;
   final Widget? widget;
   final int? maxLines;
   final bool? readOnly;
@@ -33,6 +35,7 @@ class CustomTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
+        color: color,
         border: Border.all(color: Colors.grey, width: 1.0),
         borderRadius: BorderRadius.circular(12),
       ),

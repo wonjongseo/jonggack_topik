@@ -19,7 +19,7 @@ class MissWordList extends GetView<MissedWordController> {
         children: [
           Obx(
             () => Text(
-              AppString.frequentlyWrong.tr,
+              AppString.missedWord.tr,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: SettingController.to.baseFS + 6,

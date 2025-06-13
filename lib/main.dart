@@ -1,4 +1,4 @@
-import 'package:jonggack_topik/features/home/screen/home_screen.dart';
+import 'package:jonggack_topik/features/home/controller/home_controller.dart';
 import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -76,7 +76,6 @@ class _AppState extends State<App> {
             initialRoute: SplashScreen.name,
             getPages: AppRoutes.getPages,
             fallbackLocale: const Locale('ja', 'JP'),
-            // locale: Get.deviceLocale,
             locale: Locale(systemLanguage),
             themeMode: themeMode,
             theme: AppThemings.lightTheme,
@@ -144,7 +143,7 @@ class InitBinding extends Bindings {
     Get.lazyPut(() => UserController(), fenix: true);
     Get.lazyPut(() => MainController(), fenix: true);
     Get.lazyPut(() => HomeController(), fenix: true);
-    Get.lazyPut(() => SearchGetController());
+    Get.lazyPut(() => SearchGetController(), fenix: true);
     // Get.lazyPut(() => CategoryController());
     // Get.lazyPut(() => BookController());
     Get.put(BookController());

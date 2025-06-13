@@ -13,15 +13,6 @@ import 'package:jonggack_topik/features/setting/enum/enums.dart';
 import 'package:jonggack_topik/features/setting/screen/widgets/setting_listtile.dart';
 import 'package:jonggack_topik/features/setting/screen/widgets/sound_setting_slider.dart';
 
-enum TopikLevel {
-  ot("1・2級"),
-  tf("3・4級"),
-  fs("5・6級");
-
-  final String label;
-  const TopikLevel(this.label);
-}
-
 class SettingScreen extends GetView<SettingController> {
   const SettingScreen({super.key});
 
@@ -186,7 +177,7 @@ class SettingScreen extends GetView<SettingController> {
             padding: const EdgeInsets.all(8.0),
             child: Text(AppString.appSetting.tr, style: headingstyle()),
           ),
-          // _diaryGoal(),
+          _diaryGoal(),
           ExpansionTile(
             shape: Border.all(color: Colors.transparent),
             title: Text(

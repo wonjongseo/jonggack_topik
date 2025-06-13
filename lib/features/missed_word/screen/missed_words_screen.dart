@@ -14,43 +14,46 @@ class MissedWordsScreen extends GetView<MissedWordController> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(title: Text(AppString.frequentlyWrong.tr)),
+      appBar: AppBar(title: Text(AppString.missedWord.tr)),
       body: _body(),
       bottomNavigationBar: GlobalBannerAdmob(
         widgets: [
-          BottomBtn(
-            label: "QUIZ",
-            onTap: () => controller.openBottomSheet(context),
-          ),
+          if (controller.words.isNotEmpty)
+            BottomBtn(
+              label: "QUIZ",
+              onTap: () => controller.openBottomSheet(context),
+            ),
         ],
       ),
     );
   }
 
   Widget _body() {
-    return Obx(
-      () => SafeArea(
-        child: Center(
-          child: Container(
-            color:
-                Get.isDarkMode ? AppColors.scaffoldBackground : AppColors.white,
-            margin: const EdgeInsets.only(top: 8),
-            child: ListView.separated(
-              itemBuilder: (context, index) {
-                return MissedWordListTIle(
-                  word: controller.words[index],
-                  missedWord: controller.missedWords[index],
-                  onTap: () => controller.goToWordScreen(index),
-                  isHidenMean: false,
-                  onTrailingTap:
-                      () => controller.deleteMissedWord(
-                        controller.missedWords[index],
-                      ),
-                );
-              },
-              separatorBuilder: (context, index) => Divider(),
-              itemCount: controller.words.length,
-            ),
+    return SafeArea(
+      child: Container(
+        color: Get.isDarkMode ? AppColors.scaffoldBackground : AppColors.white,
+        margin: const EdgeInsets.only(top: 8),
+        child: Obx(
+          () => Center(
+            child:
+                controller.words.isEmpty
+                    ? Text(AppString.noRecordedData.tr)
+                    : ListView.separated(
+                      itemBuilder: (context, index) {
+                        return MissedWordListTIle(
+                          word: controller.words[index],
+                          missedWord: controller.missedWords[index],
+                          onTap: () => controller.goToWordScreen(index),
+                          isHidenMean: false,
+                          onTrailingTap:
+                              () => controller.deleteMissedWord(
+                                controller.missedWords[index],
+                              ),
+                        );
+                      },
+                      separatorBuilder: (context, index) => Divider(),
+                      itemCount: controller.words.length,
+                    ),
           ),
         ),
       ),

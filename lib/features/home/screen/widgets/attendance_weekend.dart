@@ -1,0 +1,37 @@
+import 'package:flutter/material.dart';
+import 'package:jonggack_topik/core/utils/app_color.dart';
+
+class AttendanceWeekend extends StatelessWidget {
+  const AttendanceWeekend({
+    super.key,
+    required this.isAttenance,
+    required this.label,
+  });
+  final bool isAttenance;
+  final String label;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 35,
+      height: 35,
+      margin: EdgeInsets.symmetric(horizontal: 6),
+      decoration: BoxDecoration(
+        color: isAttenance ? AppColors.mainBordColor : Colors.grey[400],
+        boxShadow:
+            isAttenance
+                ? [BoxShadow(color: Colors.grey[400]!, blurRadius: 4)]
+                : [],
+        shape: BoxShape.circle,
+      ),
+      child:
+          isAttenance
+              ? Icon(Icons.check, color: Colors.white)
+              : Center(
+                child: Text(
+                  label,
+                  style: TextStyle(color: Colors.grey.shade700),
+                ),
+              ),
+    );
+  }
+}

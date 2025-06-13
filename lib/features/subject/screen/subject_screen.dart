@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:jonggack_topik/core/admob/banner_ad/global_banner_admob.dart';
 import 'package:jonggack_topik/features/auth/controllers/user_controller.dart';
 import 'package:jonggack_topik/features/category/screen/widgets/search_form.dart';
+import 'package:jonggack_topik/features/setting/enum/enums.dart';
 import 'package:jonggack_topik/features/setting/screen/setting_screen.dart';
 import 'package:jonggack_topik/features/subject/controller/subject_controller.dart';
 import 'package:jonggack_topik/features/subject/screen/widgets/chapter_selector.dart';
@@ -38,7 +39,7 @@ class SubjectScreen extends GetView<SubjectController> {
                             index < 3 ||
                             UserController.to.user.isPremieum ||
                             controller.selectedSubject.title !=
-                                TopikLevel.fs.label;
+                                TopikLevel.fiveSix.label;
 
                         return ChapterSelector(
                           label: controller.selectedSubject.title,

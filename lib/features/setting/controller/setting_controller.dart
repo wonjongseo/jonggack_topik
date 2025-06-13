@@ -1,5 +1,7 @@
 import 'package:jonggack_topik/core/logger/logger_service.dart';
+import 'package:jonggack_topik/core/models/week_day_type.dart';
 import 'package:jonggack_topik/core/utils/snackbar_helper.dart';
+import 'package:jonggack_topik/features/attendance/controller/attendance_controller.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'dart:io';
 import 'package:flutter_debouncer/flutter_debouncer.dart' as FB;
@@ -30,6 +32,8 @@ class SettingController extends GetxController {
 
   final dailyGoal = 1.obs;
 
+  late Rx<TopikLevel> goalLevel;
+
   SettingController(bool isDarkMode) {
     _isDarkMode.value = isDarkMode;
     SettingRepository.setBool(AppConstant.isDarkModeKey, _isDarkMode.value);
@@ -43,11 +47,25 @@ class SettingController extends GetxController {
   }
 
   void getDatas() {
+    getGoalLevel();
     getBaseFontSize();
     getCountOfGoal();
     getTtsValue();
     getQuizValue();
     getNotificationTime();
+  }
+
+  void getGoalLevel() {
+    String? sLevel = SettingRepository.getString(AppConstant.goalLevel);
+    goalLevel =
+        (TopikLevel.values.firstWhereOrNull((level) => level.label == sLevel) ??
+                TopikLevel.onwTwo)
+            .obs;
+  }
+
+  void changeGoalLevel(TopikLevel level) {
+    goalLevel.value = level;
+    SettingRepository.setString(AppConstant.goalLevel, goalLevel.value.label);
   }
 
   late TextEditingController teCtl = TextEditingController();

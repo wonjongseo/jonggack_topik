@@ -3,9 +3,7 @@ import 'package:get/get.dart';
 import 'package:jonggack_topik/features/book/controller/book_controller.dart';
 import 'package:jonggack_topik/features/category/screen/category_screen.dart';
 import 'package:jonggack_topik/features/chart/controller/chart_controller.dart';
-import 'package:jonggack_topik/features/chart/screen/chart_screen.dart';
-import 'package:jonggack_topik/features/quiz/screen/quiz_screen.dart';
-import 'package:jonggack_topik/features/random_quiz/screen/random_quiz_screen.dart';
+import 'package:jonggack_topik/features/home/screen/home_screen.dart';
 import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
 import 'package:jonggack_topik/features/setting/screen/setting_screen.dart';
 import 'package:jonggack_topik/features/user/screen/user_screen.dart';
@@ -24,10 +22,11 @@ class MainController extends GetxController {
   }
 
   List<Widget> get buildScreens => [
+    HomeScreen(),
     CategoryScreen(),
     UserScreen(),
-    RandomQuizScreen(),
-    ChartSceen(),
+    // RandomQuizScreen(),
+    //  ChartSceen(),
     SettingScreen(),
   ];
 

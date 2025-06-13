@@ -13,6 +13,8 @@ import 'package:jonggack_topik/core/services/app_review_service.dart';
 import 'package:jonggack_topik/core/utils/app_function.dart';
 import 'package:jonggack_topik/features/category/controller/category_controller.dart';
 import 'package:jonggack_topik/features/chapter/controller/chapter_controller.dart';
+import 'package:jonggack_topik/features/chart/controller/chart_controller.dart';
+import 'package:jonggack_topik/features/home/controller/home_controller.dart';
 import 'package:jonggack_topik/features/missed_word/controller/missed_word_controller.dart';
 import 'package:jonggack_topik/features/quiz/screen/very_good_screen.dart';
 import 'package:jonggack_topik/features/score/screen/score_screen.dart';
@@ -207,15 +209,33 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
     // 테스트를 다 풀 었으면
     else {
       DateTime date = DateTime.now();
-      DateTime test = DateTime(date.year, date.month, 7);
+      // if (kDebugMode) {
+      //   for (var i = 0; i < 7; i++) {
+      //     DateTime test = date.subtract(Duration(days: i + 1));
+
+      //     int randomeNu = random.nextInt(14) + 1;
+      //     int ranum2 = 15 - randomeNu;
+      //     QuizHistoryRepository.saveOrUpdate(
+      //       date: test,
+      //       newCorrectIds: List.generate(randomeNu, (_) => ""),
+      //       newIncorrectIds: List.generate(ranum2, (_) => ""),
+      //     );
+      //   }
+      // }
       QuizHistoryRepository.saveOrUpdate(
-        date: kDebugMode ? test : date,
-        // date: kDebugMode ? date.add(Duration(days: random.nextInt(3))) : date,
+        date: date,
         newCorrectIds: correctQuestions.map((word) => word.id).toSet().toList(),
         newIncorrectIds: wrongQuestions.map((word) => word.id).toSet().toList(),
       );
 
       await registerMiss(wrongQuestions);
+
+      if (Get.isRegistered<ChartController>()) {
+        ChartController.to.getAllData();
+      }
+      if (Get.isRegistered<HomeController>()) {
+        HomeController.to.getAllDatas();
+      }
 
       if (!isMyWordTest) {
         // 내 단어 퀴즈 가 아니면

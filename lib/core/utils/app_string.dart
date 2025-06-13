@@ -5,6 +5,9 @@ class AppTranslations extends Translations {
   // TODO: implement keys
   Map<String, Map<String, String>> get keys => {
     'ja_JP': {
+      AppString.attendance: AppString.attendanceJp,
+      AppString.goalLevel: AppString.goalLevelJp,
+      AppString.todayStudy: AppString.todayStudyJp,
       AppString.isText: AppString.isTextJp,
       AppString.wo: AppString.woJp,
       AppString.goalCountPerDay: AppString.goalCountPerDayJp,
@@ -34,7 +37,7 @@ class AppTranslations extends Translations {
       AppString.plzInputMore: AppString.plzInputMoreJp,
       AppString.plzInputLess: AppString.plzInputLessJp,
       AppString.correctRate: AppString.correctRateJp,
-      AppString.frequentlyWrong: AppString.frequentlyWrongJp,
+      AppString.missedWord: AppString.missedWordJp,
       AppString.welcome: AppString.welcomeJp,
       AppString.beforeStart: AppString.beforeStartJp,
       AppString.plzSetting: AppString.plzSettingJp,
@@ -106,6 +109,9 @@ class AppTranslations extends Translations {
       AppString.almostPass: AppString.almostPassJp,
     },
     'ko_KR': {
+      AppString.attendance: AppString.attendanceKr,
+      AppString.goalLevel: AppString.goalLevelKr,
+      AppString.todayStudy: AppString.todayStudyKr,
       AppString.isText: AppString.isTextKr,
       AppString.wo: AppString.woKr,
       AppString.goalCountPerDay: AppString.goalCountPerDayKr,
@@ -135,7 +141,7 @@ class AppTranslations extends Translations {
       AppString.plzInputMore: AppString.plzInputMoreKr,
       AppString.plzInputLess: AppString.plzInputLessKr,
       AppString.correctRate: AppString.correctRateKr,
-      AppString.frequentlyWrong: AppString.frequentlyWrongKr,
+      AppString.missedWord: AppString.missedWordKr,
       AppString.welcome: AppString.welcomeKr,
       AppString.beforeStart: AppString.beforeStartKr,
       AppString.plzSetting: AppString.plzSettingKr,
@@ -308,10 +314,9 @@ class AppString {
   static String correctRateJp = "正答率";
   static String correctRateEn = "";
 
-  static String frequentlyWrong = "frequentlyWrongTr";
-  static String frequentlyWrongKr = '자주 틀리는 단어';
-  static String frequentlyWrongJp = "よく間違える単語";
-  static String frequentlyWrongEn = "";
+  static String missedWord = "missedWordTr";
+  static String missedWordKr = '틀렸던 단어';
+  static String missedWordJp = "間違えた単語";
 
   static String welcome = "welcomeTr";
   static String welcomeKr = "에 오신것을 환영합니다\n\n";
@@ -790,4 +795,19 @@ We’ll review your report and work on improvements as soon as possible.
   static String isTextKr = '은 ';
   static String isTextJp = 'は';
   static String isTextEn = "";
+
+  static String todayStudy = "todayStudyTr";
+  static String todayStudyKr = '오늘의 학습';
+  static String todayStudyJp = '本日の学習';
+  static String todayStudyEn = "";
+
+  static String goalLevel = "goalLevelTr";
+  static String goalLevelKr = '목표 레벨';
+  static String goalLevelJp = '目標レベル';
+  static String goalLevelEn = "";
+
+  static String attendance = "attendanceTr";
+  static String attendanceKr = '출석';
+  static String attendanceJp = '出席';
+  static String attendanceEn = "";
 }

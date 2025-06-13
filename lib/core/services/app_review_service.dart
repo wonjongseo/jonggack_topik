@@ -21,7 +21,6 @@ class AppReviewService {
 
     bool hasReviewed =
         SettingRepository.getBool(AppConstant.hasReviewedKey) ?? false;
-    print('hasReviewed : ${hasReviewed}');
 
     if (!hasReviewed) {
       if (_shouldRequestReview(usageCount)) {
@@ -31,8 +30,6 @@ class AppReviewService {
   }
 
   static bool _shouldRequestReview(int count) {
-    print('count : ${count}');
-
     int n = 1;
     while (true) {
       int geometricTerm = n * (n + 1) * 5;

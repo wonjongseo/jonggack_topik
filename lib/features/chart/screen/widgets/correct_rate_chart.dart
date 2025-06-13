@@ -13,98 +13,110 @@ class CorrectRateChart extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<ChartController>(
       builder: (controller) {
-        return Container(
-          color: dfBackground,
-          padding: EdgeInsets.symmetric(vertical: 20),
-          child: AspectRatio(
-            aspectRatio: 2 / 1,
-            child: BarChart(
-              // BarChartData(
-              //   minY: 0,
-              //   maxY: 100,
-              //   barTouchData: BarTouchData(
-              //     enabled: true,
-              //     touchTooltipData: BarTouchTooltipData(
-              //       tooltipPadding: EdgeInsets.all(8),
-              //       getTooltipItem: (group, groupIndex, rod, rodIndex) {
-              //         final value = rod.toY;
+        return Stack(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                color: dfBackground,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: homeBoxShadow,
+              ),
+              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 4),
+              child: AspectRatio(
+                aspectRatio: 2.7,
+                child: BarChart(
+                  BarChartData(
+                    minY: 0,
+                    maxY: 100,
+                    barTouchData: BarTouchData(
+                      enabled: true,
+                      touchCallback: (_, __) {},
+                      touchTooltipData: BarTouchTooltipData(
+                        tooltipPadding: EdgeInsets.all(4),
+                        fitInsideHorizontally: true,
+                        fitInsideVertically: true,
+                        getTooltipItem: (group, groupIndex, rod, rodIndex) {
+                          final percent = rod.toY.toInt();
+                          final correct = controller.correctCounts[groupIndex];
+                          final incorrect =
+                              controller.incorrectCounts[groupIndex];
+                          return BarTooltipItem(
+                            '$correct/${correct + incorrect}\n${AppString.correctRate.tr}: $percent%',
+                            // '${AppString.correct.tr}: $correct${AppString.unit.tr}\n${AppString.wrong.tr}: $incorrect${AppString.unit.tr}\n${AppString.correctRate.tr}: $percent%',
+                            TextStyle(),
+                          );
+                        },
+                      ),
+                    ),
+                    barGroups: _makeBarGroups(controller),
+                    titlesData: FlTitlesData(
+                      leftTitles: AxisTitles(
+                        sideTitles: SideTitles(
+                          reservedSize: 40,
+                          showTitles: true,
+                          interval: _computeLeftInterval(controller),
+                          getTitlesWidget: (value, meta) {
+                            return Padding(
+                              padding: const EdgeInsets.only(left: 2),
+                              child: Text(
+                                "${value.toInt()}%",
+                                style: TextStyle(fontSize: 11),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      rightTitles: AxisTitles(
+                        sideTitles: SideTitles(showTitles: false),
+                      ),
+                      topTitles: AxisTitles(
+                        sideTitles: SideTitles(showTitles: false),
+                      ),
+                      bottomTitles: AxisTitles(
+                        sideTitles: SideTitles(
+                          showTitles: true,
+                          interval: 1,
+                          reservedSize: 15,
+                          getTitlesWidget: (double value, TitleMeta meta) {
+                            final idx = value.toInt();
+                            if (idx < 0 || idx >= controller.xLabels.length) {
+                              return const SizedBox.shrink();
+                            }
+                            final label = controller.xLabels[idx];
 
-              //         return BarTooltipItem(
-              //           '${AppString.correctRate.tr} ${value.toInt()}%',
-              //           TextStyle(fontWeight: FontWeight.bold),
-              //         );
-              //       },
-              //     ),
-              //   ),
-              BarChartData(
-                minY: 0,
-                maxY: 100,
-                barTouchData: BarTouchData(
-                  enabled: true,
-                  touchCallback: (_, __) {},
-                  touchTooltipData: BarTouchTooltipData(
-                    tooltipPadding: EdgeInsets.all(4),
-                    fitInsideHorizontally: true,
-                    fitInsideVertically: true,
-                    getTooltipItem: (group, groupIndex, rod, rodIndex) {
-                      final percent = rod.toY.toInt();
-                      final correct = controller.correctCounts[groupIndex];
-                      final incorrect = controller.incorrectCounts[groupIndex];
-                      return BarTooltipItem(
-                        '$correct/${correct + incorrect}\n${AppString.correctRate.tr}: $percent%',
-                        // '${AppString.correct.tr}: $correct${AppString.unit.tr}\n${AppString.wrong.tr}: $incorrect${AppString.unit.tr}\n${AppString.correctRate.tr}: $percent%',
-                        TextStyle(),
-                      );
-                    },
-                  ),
-                ),
-                barGroups: _makeBarGroups(controller),
-                titlesData: FlTitlesData(
-                  leftTitles: AxisTitles(
-                    sideTitles: SideTitles(
-                      reservedSize: 50,
-                      showTitles: true,
-                      interval: _computeLeftInterval(controller),
-                      getTitlesWidget: (value, meta) {
-                        return Text("${value.toInt()}%");
+                            return Text("$label日", textAlign: TextAlign.center);
+                          },
+                        ),
+                      ),
+                    ),
+                    gridData: FlGridData(
+                      show: true,
+                      drawVerticalLine: false,
+                      horizontalInterval: _computeLeftInterval(controller),
+                      getDrawingHorizontalLine: (value) {
+                        return FlLine(
+                          color: Colors.grey.shade300,
+                          strokeWidth: 1,
+                        );
                       },
                     ),
-                  ),
-                  rightTitles: AxisTitles(
-                    sideTitles: SideTitles(showTitles: false),
-                  ),
-                  topTitles: AxisTitles(
-                    sideTitles: SideTitles(showTitles: false),
-                  ),
-                  bottomTitles: AxisTitles(
-                    sideTitles: SideTitles(
-                      showTitles: true,
-                      interval: 1,
-                      reservedSize: 15,
-                      getTitlesWidget: (double value, TitleMeta meta) {
-                        final idx = value.toInt();
-                        if (idx < 0 || idx >= controller.xLabels.length) {
-                          return const SizedBox.shrink();
-                        }
-                        final label = controller.xLabels[idx];
-
-                        return Text("$label日", textAlign: TextAlign.center);
-                      },
-                    ),
+                    borderData: FlBorderData(show: false),
                   ),
                 ),
-                gridData: FlGridData(
-                  show: true,
-                  drawVerticalLine: false,
-                  horizontalInterval: _computeLeftInterval(controller),
-                  getDrawingHorizontalLine: (value) {
-                    return FlLine(color: Colors.grey.shade300, strokeWidth: 1);
-                  },
-                ),
-                borderData: FlBorderData(show: false),
               ),
             ),
-          ),
+
+            Align(
+              alignment: Alignment.topRight,
+              child: Padding(
+                padding: const EdgeInsets.all(6.0),
+                child: Text(
+                  AppString.correctRate.tr,
+                  style: TextStyle(fontSize: 12),
+                ),
+              ),
+            ),
+          ],
         );
       },
     );

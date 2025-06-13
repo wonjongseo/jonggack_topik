@@ -78,6 +78,33 @@ class CategoryController extends GetxController {
     }
   }
 
+  final totalAndScoreListOfCategory = <TotalAndScore>[].obs;
+
+  void setTotalAndScoreListOfCategory() {
+    totalAndScoreListOfCategory.clear();
+
+    final stepRepo = Get.find<HiveRepository<StepModel>>(tag: StepModel.boxKey);
+
+    for (var category in allCategories) {
+      int score = 0;
+      int total = 0;
+
+      for (SubjectHive subject in category.subjects) {
+        for (var chapter in subject.chapters) {
+          for (var stepKey in chapter.stepKeys) {
+            StepModel stepModel = stepRepo.get(stepKey)!;
+            score += stepModel.score;
+            total += stepModel.words.length;
+          }
+        }
+      }
+      totalAndScoreListOfCategory.add(
+        TotalAndScore(total: total, score: score),
+      );
+    }
+    print('totalAndScoreListOfCategory : ${totalAndScoreListOfCategory}');
+  }
+
   @override
   void onReady() async {
     super.onReady();
@@ -102,8 +129,9 @@ class CategoryController extends GetxController {
 
       savedList.sort((a, b) => a.createdAt.compareTo(b.createdAt));
       // _allCategories.assignAll(savedList);
-      _allCategories.assign(savedList[0]);
+      _allCategories.assignAll(savedList);
       setTotalAndScores();
+      setTotalAndScoreListOfCategory();
     } catch (e) {
       LogManager.error('$e');
       SnackBarHelper.showErrorSnackBar("$e");
@@ -143,6 +171,7 @@ class CategoryController extends GetxController {
 
       _allCategories.assignAll(savedList);
       setTotalAndScores();
+      setTotalAndScoreListOfCategory();
     } catch (e) {
       LogManager.error('$e');
       SnackBarHelper.showErrorSnackBar("$e");
@@ -167,10 +196,9 @@ class DataRepositry {
             return Word.fromMap(map);
           }).toList();
 
-      print('allWords.length : ${allWords.length}');
       return allWords;
     } catch (e) {
-      print(e.toString());
+      LogManager.error('$e');
       rethrow;
     }
   }

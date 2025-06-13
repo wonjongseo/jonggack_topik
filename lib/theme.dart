@@ -117,3 +117,7 @@ Color get dfBackground =>
     SettingController.to.isDarkMode
         ? AppColors.scaffoldBackground
         : AppColors.white;
+
+List<BoxShadow> get homeBoxShadow => [
+  BoxShadow(color: Colors.grey[400]!, blurRadius: 10),
+];

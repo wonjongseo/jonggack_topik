@@ -26,7 +26,7 @@ class MainScreen extends GetView<MainController> {
         onItemSelected: controller.onPageSelected,
         items: [
           PersistentBottomNavBarItem(
-            icon: Icon(FontAwesomeIcons.book),
+            icon: Icon(FontAwesomeIcons.home),
             iconSize: 20,
             // title: "Study",
             activeColorPrimary: AppColors.primaryColor,
@@ -34,7 +34,14 @@ class MainScreen extends GetView<MainController> {
             inactiveColorPrimary: Colors.grey,
             textStyle: TextStyle(color: Colors.white),
           ),
-
+          PersistentBottomNavBarItem(
+            icon: Icon(FontAwesomeIcons.book),
+            // iconSize: 20,
+            // title: "Random Quiz",
+            activeColorPrimary: AppColors.primaryColor,
+            activeColorSecondary: AppColors.primaryColor,
+            inactiveColorPrimary: Colors.grey,
+          ),
           PersistentBottomNavBarItem(
             icon: Icon(FontAwesomeIcons.user),
             iconSize: 20,
@@ -44,22 +51,6 @@ class MainScreen extends GetView<MainController> {
             inactiveColorPrimary: Colors.grey,
           ),
 
-          PersistentBottomNavBarItem(
-            icon: Icon(FontAwesomeIcons.question),
-            // iconSize: 20,
-            // title: "Random Quiz",
-            activeColorPrimary: AppColors.primaryColor,
-            activeColorSecondary: AppColors.primaryColor,
-            inactiveColorPrimary: Colors.grey,
-          ),
-          PersistentBottomNavBarItem(
-            icon: Icon(FontAwesomeIcons.lineChart),
-            iconSize: 20,
-            // title: "Chart",
-            activeColorPrimary: AppColors.primaryColor,
-            activeColorSecondary: AppColors.primaryColor,
-            inactiveColorPrimary: Colors.grey,
-          ),
           PersistentBottomNavBarItem(
             icon: Icon(FontAwesomeIcons.gear),
             iconSize: 20,

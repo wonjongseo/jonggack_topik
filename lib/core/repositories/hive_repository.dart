@@ -4,6 +4,8 @@ import 'package:jonggack_topik/core/constant/hive_keys.dart';
 import 'package:jonggack_topik/core/controllers/hive_helper.dart';
 import 'package:jonggack_topik/core/logger/logger_service.dart';
 import 'package:jonggack_topik/core/models/Question.dart';
+import 'package:jonggack_topik/core/models/attendance_date.dart';
+
 import 'package:jonggack_topik/core/models/book.dart';
 import 'package:jonggack_topik/core/models/category.dart';
 import 'package:jonggack_topik/core/models/category_hive.dart';
@@ -138,10 +140,9 @@ class HiveRepository<T extends HiveObject> {
     if (!Hive.isAdapterRegistered(MissedWordAdapter().typeId)) {
       Hive.registerAdapter(MissedWordAdapter());
     }
-
-    // if (!Hive.isAdapterRegistered(NotificationModelAdapter().typeId)) {
-    //   Hive.registerAdapter(NotificationModelAdapter());
-    // }
+    if (!Hive.isAdapterRegistered(AttendanceDateAdapter().typeId)) {
+      Hive.registerAdapter(AttendanceDateAdapter());
+    }
   }
 
   static Future<void> _initOpenBoxs() async {
@@ -196,9 +197,9 @@ class HiveRepository<T extends HiveObject> {
     if (!Hive.isBoxOpen(MissedWord.boxKey)) {
       await Hive.openBox<MissedWord>(MissedWord.boxKey);
     }
-    // if (!Hive.isBoxOpen(NotificationModel.boxKey)) {
-    //   await Hive.openBox<NotificationModel>(NotificationModel.boxKey);
-    // }
+    if (!Hive.isBoxOpen(AttendanceDate.boxKey)) {
+      await Hive.openBox<AttendanceDate>(AttendanceDate.boxKey);
+    }
   }
 
   static Future<void> init() async {
@@ -333,6 +334,12 @@ class HiveRepository<T extends HiveObject> {
     final bookRepo = HiveRepository<Book>(Book.boxKey);
     await bookRepo.initBox();
     Get.put<HiveRepository<Book>>(bookRepo, tag: Book.boxKey);
+
+    final attendanceDateRepo = HiveRepository<AttendanceDate>(
+      AttendanceDate.boxKey,
+    );
+    await attendanceDateRepo.initBox();
+    Get.put<HiveRepository<AttendanceDate>>(attendanceDateRepo);
 
     // await HiveRepository<NotificationModel>(NotificationModel.boxKey).initBox();
   }

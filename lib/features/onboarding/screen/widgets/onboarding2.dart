@@ -4,6 +4,7 @@ import 'package:get/get_utils/get_utils.dart';
 import 'package:jonggack_topik/core/utils/app_color.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/features/onboarding/controller/onboarding_controller.dart';
+import 'package:jonggack_topik/features/setting/enum/enums.dart';
 import 'package:jonggack_topik/theme.dart';
 
 class Onboarding2 extends StatelessWidget {
@@ -22,23 +23,31 @@ class Onboarding2 extends StatelessWidget {
           builder: (controller) {
             return Column(
               children: [
-                LevelSelector(
-                  label: '1・2級',
-                  isSelected: controller.selectedLevel == 0,
-                  onTap: () => controller.changeLevel(0),
-                ),
-                SizedBox(height: 16),
-                LevelSelector(
-                  label: '3・4級',
-                  isSelected: controller.selectedLevel == 1,
-                  onTap: () => controller.changeLevel(1),
-                ),
-                SizedBox(height: 16),
-                LevelSelector(
-                  label: '5・6級',
-                  isSelected: controller.selectedLevel == 2,
-                  onTap: () => controller.changeLevel(2),
-                ),
+                ...List.generate(TopikLevel.values.length, (i) {
+                  final level = TopikLevel.values[i];
+                  return LevelSelector(
+                    label: level,
+                    isSelected: controller.selectedLevel == level,
+                    onTap: () => controller.changeLevel(level),
+                  );
+                }),
+                // LevelSelector(
+                //   label: '1・2級',
+                //   isSelected: controller.selectedLevel == 0,
+                //   onTap: () => controller.changeLevel(0),
+                // ),
+                // SizedBox(height: 16),
+                // LevelSelector(
+                //   label: '3・4級',
+                //   isSelected: controller.selectedLevel == 1,
+                //   onTap: () => controller.changeLevel(1),
+                // ),
+                // SizedBox(height: 16),
+                // LevelSelector(
+                //   label: '5・6級',
+                //   isSelected: controller.selectedLevel == 2,
+                //   onTap: () => controller.changeLevel(2),
+                // ),
               ],
             );
           },
@@ -56,7 +65,7 @@ class LevelSelector extends StatelessWidget {
     required this.onTap,
   });
 
-  final String label;
+  final TopikLevel label;
   final bool isSelected;
   final Function() onTap;
 
@@ -67,6 +76,7 @@ class LevelSelector extends StatelessWidget {
       child: Container(
         width: 280,
         padding: EdgeInsets.symmetric(vertical: 16, horizontal: 48),
+        margin: EdgeInsets.only(bottom: 16),
         decoration: BoxDecoration(
           border: Border.all(
             color: isSelected ? AppColors.primaryColor : Colors.grey,
@@ -80,7 +90,7 @@ class LevelSelector extends StatelessWidget {
         ),
         child: Center(
           child: Text(
-            label,
+            label.label,
             style: TextStyle(
               fontFamily: AppFonts.zenMaruGothic,
               fontSize: 22,

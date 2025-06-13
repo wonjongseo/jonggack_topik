@@ -26,6 +26,7 @@ class CateogryProgress extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(caregory, style: TextStyle(fontWeight: FontWeight.w700)),
+
               TweenAnimationBuilder(
                 tween: Tween<double>(begin: 0, end: curCnt / 100),
                 duration: const Duration(milliseconds: 1500),
@@ -54,7 +55,7 @@ class CateogryProgress extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 4),
+          SizedBox(height: 16),
           AnimatedLeanerProgressIndicator(
             currentProgressCount: curCnt,
             totalProgressCount: totalCnt,

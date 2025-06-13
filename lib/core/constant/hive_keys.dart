@@ -59,4 +59,7 @@ class HK {
 
   static const int notificationModelHiveId = 19;
   static const String notificationModelBoxKey = 'notificationModel-box-key';
+
+  static const int attendanceDateHiveId = 20;
+  static const String attendanceDateBoxKey = 'attendance_date-box-key';
 }

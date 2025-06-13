@@ -43,6 +43,8 @@ class RandomWordService {
     int? subjectIndex,
     int quizNumber = 15,
   }) {
+    print('quizNumber : ${quizNumber}');
+
     final stepRepo = Get.find<HiveRepository<StepModel>>(tag: StepModel.boxKey);
     final wordRepo = Get.find<HiveRepository<Word>>(tag: Word.boxKey);
 
