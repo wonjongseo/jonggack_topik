@@ -166,23 +166,58 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
     }
   }
 
+  // Future<void> registerMiss(List<Word> words) async {
+  //   final Box<MissedWord> box = Hive.box<MissedWord>(MissedWord.boxKey);
+
+  //   for (var word in words) {
+  //     final existing = box.values.toList().firstWhereOrNull(
+  //       (e) => e.wordId == word.id,
+  //     );
+  //     if (existing != null) {
+  //       existing.missCount++;
+  //       await existing.save();
+  //     } else {
+  //       box.add(MissedWord(wordId: word.id, category: ''));
+  //     }
+  //   }
+
+  //   if (Get.isRegistered<MissedWordController>()) {
+  //     MissedWordController.to.getMissedWords();
+  //   }
+  // }
   Future<void> registerMiss(List<Word> words) async {
     final Box<MissedWord> box = Hive.box<MissedWord>(MissedWord.boxKey);
+
+    // 오늘 날짜만 비교할 수 있도록 날짜 단위 문자열 생성 (예: "2025-06-13")
+    final now = DateTime.now();
+    final todayKey = DateTime(now.year, now.month, now.day).toIso8601String();
 
     for (var word in words) {
       final existing = box.values.toList().firstWhereOrNull(
         (e) => e.wordId == word.id,
       );
+
       if (existing != null) {
+        // missCount 는 항상++
         existing.missCount++;
+
+        // 오늘 날짜가 아직 없으면 리스트에 추가
+        if (!existing.missedDays.contains(todayKey)) {
+          existing.missedDays.add(todayKey);
+        }
+
         await existing.save();
       } else {
-        box.add(MissedWord(wordId: word.id, category: ''));
+        // 새로 만들 때는 missCount=1, MissedDays 에 오늘만 넣기
+        box.add(
+          MissedWord(
+            wordId: word.id,
+            category: '',
+            missCount: 1,
+            missedDays: [todayKey],
+          ),
+        );
       }
-    }
-
-    if (Get.isRegistered<MissedWordController>()) {
-      MissedWordController.to.getMissedWords();
     }
   }
 

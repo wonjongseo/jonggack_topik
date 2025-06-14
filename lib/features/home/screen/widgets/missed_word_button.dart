@@ -12,6 +12,8 @@ class MissedWordButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<MissedWordController>(
       builder: (controller) {
+        print('controller.missedWords : ${controller.missedWords}');
+
         return GestureDetector(
           onTap: () => Get.to(() => MissedWordsScreen()),
           child: Container(

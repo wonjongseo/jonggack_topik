@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:get/state_manager.dart';
 import 'package:jonggack_topik/features/attendance/screen/attenance_screen.dart';
 import 'package:jonggack_topik/features/home/controller/home_controller.dart';
 import 'package:jonggack_topik/features/home/screen/widgets/attendance_weekend.dart';

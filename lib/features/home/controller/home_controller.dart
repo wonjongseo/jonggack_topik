@@ -78,15 +78,16 @@ class HomeController extends GetxController {
 
   Map<String, DateTime> getWeekDatesFromToday() {
     final today = DateTime.now();
-    // Dart DateTime.weekday: 월=1, …, 일=7
+    final int currentWeekday = today.weekday;
+
+    // 이번 주 월요일 계산
+    final monday = today.subtract(Duration(days: currentWeekday - 1));
 
     final Map<String, DateTime> weekDates = {};
 
-    for (var targetWeekday = 1; targetWeekday <= 7; targetWeekday++) {
-      // (target - today.weekday + 7) % 7 일 뒤가 해당 요일
-      final offsetDays = (targetWeekday - today.weekday + 7) % 7;
-      final date = today.add(Duration(days: offsetDays));
-      weekDates[WeekDayType.values[targetWeekday - 1].label] = DateTime(
+    for (int i = 0; i < 7; i++) {
+      final date = monday.add(Duration(days: i));
+      weekDates[WeekDayType.values[i].label] = DateTime(
         date.year,
         date.month,
         date.day,

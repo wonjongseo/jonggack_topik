@@ -20,7 +20,8 @@ class MissedWordAdapter extends TypeAdapter<MissedWord> {
       wordId: fields[0] as String,
       category: fields[1] as String,
       missCount: fields[2] as int,
-    )..lastMissedDay = fields[3] as String;
+      missedDays: (fields[3] as List?)?.cast<String>(),
+    );
   }
 
   @override
@@ -34,7 +35,7 @@ class MissedWordAdapter extends TypeAdapter<MissedWord> {
       ..writeByte(2)
       ..write(obj.missCount)
       ..writeByte(3)
-      ..write(obj.lastMissedDay);
+      ..write(obj.missedDays);
   }
 
   @override

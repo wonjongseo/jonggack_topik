@@ -15,13 +15,17 @@ class MissedWord extends HiveObject {
   @HiveField(2)
   int missCount;
   @HiveField(3)
-  String lastMissedDay;
+  List<String> missedDays;
 
-  MissedWord({required this.wordId, required this.category, this.missCount = 1})
-    : lastMissedDay = DateTime.now().toIso8601String();
+  MissedWord({
+    required this.wordId,
+    required this.category,
+    this.missCount = 1,
+    List<String>? missedDays,
+  }) : missedDays = missedDays ?? [];
 
   @override
   String toString() {
-    return 'MissedWord(missCount: $missCount)';
+    return 'MissedWord(wordId: $wordId, missCount: $missCount, missedDays: $missedDays)';
   }
 }
