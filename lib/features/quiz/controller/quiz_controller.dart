@@ -266,9 +266,7 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
 
       if (numOfCorrectAns == questions.length) {
         if (!isMyWordTest) {
-          // if (!isTryAgain) {
           ChapterController.to.moveStepSelector();
-          // }
         }
 
         Get.offAndToNamed(VeryGoodScreen.name);

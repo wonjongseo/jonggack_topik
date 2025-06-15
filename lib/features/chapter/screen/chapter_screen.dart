@@ -24,43 +24,47 @@ class ChapterScreen extends GetView<ChapterController> {
         ),
         actions: [_bottomSheet()],
       ),
-      body: SafeArea(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Obx(
-                  () => Row(
-                    children: List.generate(controller.stepKeys.length, (
-                      index,
-                    ) {
-                      return Padding(
-                        padding: const EdgeInsets.only(left: 8),
-                        child: InkWell(
-                          key: controller.gKeys[index],
-                          onTap: () => controller.onTapStepSelector(index),
-                          child: StepSelector(
-                            isCurrent: index == controller.selectedStepIdx,
-                            isAllCorrect: controller.steps[index].isAllCorrect,
+      body: GestureDetector(
+        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+        child: SafeArea(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Obx(
+                    () => Row(
+                      children: List.generate(controller.stepKeys.length, (
+                        index,
+                      ) {
+                        return Padding(
+                          padding: const EdgeInsets.only(left: 8),
+                          child: InkWell(
+                            key: controller.gKeys[index],
+                            onTap: () => controller.onTapStepSelector(index),
+                            child: StepSelector(
+                              isCurrent: index == controller.selectedStepIdx,
+                              isAllCorrect:
+                                  controller.steps[index].isAllCorrect,
+                            ),
                           ),
-                        ),
-                      );
-                    }),
+                        );
+                      }),
+                    ),
                   ),
                 ),
-              ),
-              Expanded(
-                child: Obx(
-                  () => Container(
-                    color: dfBackground,
-                    margin: const EdgeInsets.only(top: 8),
-                    child: StepBody(isHidenMean: controller.isHidenAllMean),
+                Expanded(
+                  child: Obx(
+                    () => Container(
+                      color: dfBackground,
+                      margin: const EdgeInsets.only(top: 8),
+                      child: StepBody(isHidenMean: controller.isHidenAllMean),
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

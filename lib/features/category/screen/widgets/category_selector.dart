@@ -1,13 +1,9 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_utils/get_utils.dart';
 import 'package:get/state_manager.dart';
 import 'package:intl/intl.dart';
 
 import 'package:jonggack_topik/core/models/category_hive.dart';
-import 'package:jonggack_topik/core/models/subject_hive.dart';
-import 'package:jonggack_topik/core/utils/app_color.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/features/category/controller/category_controller.dart';
 import 'package:jonggack_topik/features/category/screen/widgets/cateogry_progress.dart';
@@ -38,7 +34,7 @@ class CategorySelector extends StatelessWidget {
         ),
 
         padding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-        margin: EdgeInsets.symmetric(horizontal: 8).copyWith(bottom: 15),
+        margin: EdgeInsets.symmetric(horizontal: 8).copyWith(bottom: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
@@ -53,7 +49,7 @@ class CategorySelector extends StatelessWidget {
                 isAccent && category.lastAccessDate != null
                     ? AppString.studying.tr
                     : category.lastAccessDate != null
-                    ? '${AppString.lastStudyDate.tr} ${DateFormat.Hms(Get.locale.toString()).format(category.lastAccessDate!)}'
+                    ? '${AppString.lastStudyDate.tr} ${DateFormat.yMd(Get.locale.toString()).format(category.lastAccessDate!)}'
                     : AppString.beforeStudy.tr,
                 style: TextStyle(fontSize: SettingController.to.baseFS - 5),
               ),

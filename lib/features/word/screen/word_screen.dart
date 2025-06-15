@@ -12,6 +12,7 @@ import 'package:jonggack_topik/features/setting/controller/setting_controller.da
 import 'package:jonggack_topik/features/setting/screen/setting_screen.dart';
 import 'package:jonggack_topik/features/word/controller/word_controller.dart';
 import 'package:jonggack_topik/features/word/screen/widgets/word_cart.dart';
+import 'package:jonggack_topik/theme.dart';
 
 class WordScreen extends GetView<WordController> {
   const WordScreen({super.key});
@@ -77,7 +78,6 @@ class GoToQuizWidget extends StatelessWidget {
           } else if (Get.isRegistered<HistoryController>()) {
             HistoryController.to.openBottomSheet(context, isLastIndex: true);
           } else {
-            print('3');
             Get.to(
               () => QuizScreen(),
               binding: BindingsBuilder.put(
@@ -92,7 +92,7 @@ class GoToQuizWidget extends StatelessWidget {
               AppString.goToQuiz.tr,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                color: Colors.cyan.shade600,
+                color: dfButtonColor,
                 fontSize: SettingController.to.baseFS + 8,
               ),
             ),

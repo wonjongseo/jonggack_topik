@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:jonggack_topik/core/utils/app_color.dart';
+import 'package:jonggack_topik/theme.dart';
 
 class StepSelector extends StatelessWidget {
   const StepSelector({super.key, this.isAllCorrect, required this.isCurrent});
@@ -10,10 +11,13 @@ class StepSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: isCurrent ? AppColors.primaryColor : Colors.cyan.shade200,
+      color:
+          isCurrent
+              ? dfButtonColor
+              : dfButtonColor.withValues(alpha: .5), // Colors.cyan.shade200,
       elevation: isCurrent ? 3 : 0,
       child: Container(
-        width: 85, //
+        width: 85,
         padding: EdgeInsets.all(8),
         child:
             isCurrent

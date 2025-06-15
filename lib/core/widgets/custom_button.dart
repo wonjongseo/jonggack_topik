@@ -17,7 +17,7 @@ class BottomBtn extends StatelessWidget {
         width: double.infinity,
         margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         decoration: BoxDecoration(
-          color: AppColors.primaryColor,
+          color: dfButtonColor,
           borderRadius: BorderRadius.circular(15),
         ),
         child: Center(

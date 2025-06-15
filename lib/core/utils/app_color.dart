@@ -15,4 +15,5 @@ class AppColors {
   static Color white = Colors.white.withOpacity(.95);
   static Color mainBordColor = Colors.cyan.shade700;
   static Color primaryColor = Colors.cyan.shade400;
+  static Color thridColor = Colors.cyan.shade600;
 }

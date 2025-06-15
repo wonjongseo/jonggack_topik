@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jonggack_topik/core/utils/app_color.dart';
+import 'package:jonggack_topik/theme.dart';
 
 class CustomToggleListTile extends StatelessWidget {
   const CustomToggleListTile({
@@ -50,7 +51,7 @@ class CustomToggleButton extends StatelessWidget {
           style: TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.w600,
-            color: AppColors.primaryColor,
+            color: dfCardColor,
           ),
         ),
         Text(
@@ -58,7 +59,7 @@ class CustomToggleButton extends StatelessWidget {
           style: TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.w600,
-            color: AppColors.primaryColor,
+            color: dfCardColor,
           ),
         ),
       ],

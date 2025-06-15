@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jonggack_topik/core/utils/app_color.dart';
+import 'package:jonggack_topik/theme.dart';
 
 class AnimatedLeanerProgressIndicator extends StatelessWidget {
   const AnimatedLeanerProgressIndicator({
@@ -32,7 +33,7 @@ class AnimatedLeanerProgressIndicator extends StatelessWidget {
               children: [
                 LinearProgressIndicator(
                   value: value,
-                  color: AppColors.primaryColor,
+                  color: dfButtonColor,
                   backgroundColor: Colors.grey.shade300,
                 ),
                 Center(
