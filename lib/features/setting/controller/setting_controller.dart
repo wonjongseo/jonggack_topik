@@ -46,12 +46,26 @@ class SettingController extends GetxController {
   }
 
   void getDatas() {
+    getAppColor();
     getGoalLevel();
     getBaseFontSize();
     getCountOfGoal();
     getTtsValue();
     getQuizValue();
     getNotificationTime();
+  }
+
+  final _colorIndex = SettingRepository.getInt(AppConstant.appColorIndex)!.obs;
+  int get colorIndex => _colorIndex.value;
+
+  void getAppColor() {
+    _colorIndex.value =
+        SettingRepository.getInt(AppConstant.appColorIndex) ?? 0;
+  }
+
+  void changeAppyColor(int index) {
+    _colorIndex.value = index;
+    SettingRepository.setInt(AppConstant.appColorIndex, _colorIndex.value);
   }
 
   void getGoalLevel() {

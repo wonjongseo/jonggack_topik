@@ -31,23 +31,6 @@ class Onboarding2 extends StatelessWidget {
                     onTap: () => controller.changeLevel(level),
                   );
                 }),
-                // LevelSelector(
-                //   label: '1・2級',
-                //   isSelected: controller.selectedLevel == 0,
-                //   onTap: () => controller.changeLevel(0),
-                // ),
-                // SizedBox(height: 16),
-                // LevelSelector(
-                //   label: '3・4級',
-                //   isSelected: controller.selectedLevel == 1,
-                //   onTap: () => controller.changeLevel(1),
-                // ),
-                // SizedBox(height: 16),
-                // LevelSelector(
-                //   label: '5・6級',
-                //   isSelected: controller.selectedLevel == 2,
-                //   onTap: () => controller.changeLevel(2),
-                // ),
               ],
             );
           },
@@ -79,13 +62,14 @@ class LevelSelector extends StatelessWidget {
         margin: EdgeInsets.only(bottom: 16),
         decoration: BoxDecoration(
           border: Border.all(
-            color: isSelected ? AppColors.primaryColor : Colors.grey,
+            color:
+                isSelected ? dfButtonColor.withValues(alpha: 2) : Colors.grey,
           ),
           boxShadow:
               isSelected
-                  ? [BoxShadow(color: Colors.lightBlue, blurRadius: .2)]
+                  ? dfBoxShadow //[BoxShadow(color: Colors.lightBlue, blurRadius: .2)]
                   : null,
-          color: isSelected ? AppColors.primaryColor : null,
+          color: isSelected ? dfButtonColor : null,
           borderRadius: BorderRadius.circular(15),
         ),
         child: Center(
@@ -95,7 +79,7 @@ class LevelSelector extends StatelessWidget {
               fontFamily: AppFonts.zenMaruGothic,
               fontSize: 22,
               letterSpacing: 1.8,
-              color: isSelected ? Colors.black : Colors.grey,
+              color: isSelected ? null : Colors.grey,
             ),
           ),
         ),

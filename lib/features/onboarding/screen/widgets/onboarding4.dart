@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:jonggack_topik/core/utils/app_color.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/features/onboarding/controller/onboarding_controller.dart';
+import 'package:jonggack_topik/theme.dart';
 
 class Onboarding4 extends StatelessWidget {
   const Onboarding4({super.key});
@@ -54,12 +55,9 @@ class Onboarding4 extends StatelessWidget {
                             width: 100,
                             decoration: BoxDecoration(
                               border: Border(
-                                top: BorderSide(
-                                  color: AppColors.primaryColor,
-                                  width: 2,
-                                ),
+                                top: BorderSide(color: dfButtonColor, width: 2),
                                 bottom: BorderSide(
-                                  color: AppColors.primaryColor,
+                                  color: dfButtonColor,
                                   width: 2,
                                 ),
                               ),

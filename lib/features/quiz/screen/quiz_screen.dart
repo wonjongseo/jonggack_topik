@@ -47,7 +47,7 @@ class QuizScreen extends GetView<QuizController> {
                                     context,
                                   ).textTheme.headlineMedium!.copyWith(
                                     fontFamily: AppFonts.japaneseFont,
-                                    color: AppColors.mainBordColor,
+                                    color: AppColors.secondaryColor,
                                   ),
                                 ),
                                 TextSpan(

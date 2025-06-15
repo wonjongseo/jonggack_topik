@@ -87,7 +87,7 @@ class _ScoreScreenState extends State<ScoreScreen> {
           child: Text(
             AppString.wrong.tr,
             style: TextStyle(
-              color: AppColors.mainBordColor,
+              color: AppColors.secondaryColor,
               fontWeight: FontWeight.bold,
               fontSize: 20,
             ),

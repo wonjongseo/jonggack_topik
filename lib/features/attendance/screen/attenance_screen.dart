@@ -154,7 +154,7 @@ class _AttenanceScreenState extends State<AttenanceScreen> {
                     return Container(
                       margin: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: AppColors.mainBordColor,
+                        color: AppColors.secondaryColor,
                         shape: BoxShape.circle,
                       ),
                       alignment: Alignment.center,

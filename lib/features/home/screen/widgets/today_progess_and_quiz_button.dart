@@ -48,8 +48,8 @@ class TodayProgessAndQuizButton extends GetView<HomeController> {
                     backgroundColor: Colors.grey.shade200,
                     linearGradient: LinearGradient(
                       colors: [
-                        AppColors.primaryColor.withValues(alpha: .5),
-                        AppColors.primaryColor,
+                        dfButtonColor.withValues(alpha: .5),
+                        dfButtonColor,
                       ],
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
@@ -106,7 +106,7 @@ class TodayProgessAndQuizButton extends GetView<HomeController> {
                           padding: const EdgeInsets.symmetric(horizontal: 8),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
-                            border: Border.all(color: AppColors.primaryColor),
+                            border: Border.all(color: dfButtonColor),
                             color: dfBackground,
                           ),
                           elevation: 2,
@@ -114,7 +114,7 @@ class TodayProgessAndQuizButton extends GetView<HomeController> {
                         iconStyleData: IconStyleData(
                           icon: const Icon(Icons.keyboard_arrow_down),
                           iconSize: 24,
-                          iconEnabledColor: AppColors.primaryColor,
+                          iconEnabledColor: dfButtonColor,
                         ),
                         dropdownStyleData: DropdownStyleData(
                           maxHeight: 200,

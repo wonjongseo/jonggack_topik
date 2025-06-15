@@ -78,7 +78,7 @@ class SearchScreen extends GetView<SearchGetController> {
                               ),
                               color:
                                   controller.isTyping.value
-                                      ? AppColors.mainBordColor
+                                      ? AppColors.secondaryColor
                                       : Colors.grey.shade300,
                               child: InkWell(
                                 onTap: () async {},

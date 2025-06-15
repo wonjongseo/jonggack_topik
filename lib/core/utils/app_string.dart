@@ -5,6 +5,7 @@ class AppTranslations extends Translations {
   // TODO: implement keys
   Map<String, Map<String, String>> get keys => {
     'ja_JP': {
+      AppString.plzInputAppColor: AppString.plzInputAppColorJp,
       AppString.studying: AppString.studyingJp,
       AppString.lastStudyDate: AppString.lastStudyDateJp,
       AppString.beforeStudy: AppString.beforeStudyJp,
@@ -117,6 +118,7 @@ class AppTranslations extends Translations {
       AppString.almostPass: AppString.almostPassJp,
     },
     'ko_KR': {
+      AppString.plzInputAppColor: AppString.plzInputAppColorKr,
       AppString.studying: AppString.studyingKr,
       AppString.lastStudyDate: AppString.lastStudyDateKr,
       AppString.beforeStudy: AppString.beforeStudyKr,
@@ -864,4 +866,9 @@ We’ll review your report and work on improvements as soon as possible.
   static String beforeStudyKr = '학습 전';
   static String beforeStudyJp = '学習前';
   static String beforeStudyEn = "";
+
+  static String plzInputAppColor = 'plzInputAppColortr';
+  static String plzInputAppColorKr = '앱의 테마 색상을 선택해주세요';
+  static String plzInputAppColorJp = 'アプリ内のテーマカラーを選択してください';
+  static String plzInputAppColorEn = "Please select the theme color in the app";
 }

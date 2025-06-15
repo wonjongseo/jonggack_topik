@@ -6,6 +6,7 @@ import 'package:jonggack_topik/core/utils/app_color.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/core/widgets/custom_button.dart';
 import 'package:jonggack_topik/features/onboarding/controller/onboarding_controller.dart';
+import 'package:jonggack_topik/theme.dart';
 
 class OnboardingScreen extends GetView<OnboardingController> {
   static const String name = '/onboarding';
@@ -32,7 +33,7 @@ class OnboardingScreen extends GetView<OnboardingController> {
                             (controller.pageIndex + 1) /
                             10)
                         .toDouble(),
-                color: AppColors.primaryColor,
+                color: dfButtonColor,
               ),
             ),
           ],

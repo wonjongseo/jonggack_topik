@@ -40,7 +40,7 @@ class StepBody extends StatelessWidget {
                     controller.isSavedWord(controller.words[index].id)
                         ? Icon(
                           FontAwesomeIcons.solidBookmark,
-                          color: AppColors.mainBordColor,
+                          color: AppColors.secondaryColor,
                           size: 20,
                         )
                         : Icon(FontAwesomeIcons.bookmark, size: 20),

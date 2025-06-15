@@ -80,7 +80,7 @@ class AppThemings {
       iconTheme: IconThemeData(color: Colors.black),
     ),
     textButtonTheme: TextButtonThemeData(
-      style: TextButton.styleFrom(foregroundColor: AppColors.mainBordColor),
+      style: TextButton.styleFrom(foregroundColor: AppColors.secondaryColor),
     ),
     iconButtonTheme: IconButtonThemeData(
       style: IconButton.styleFrom(
@@ -123,10 +123,15 @@ Color get dfCardColor =>
 
 Color get dfButtonColor =>
     SettingController.to.isDarkMode
-        ? AppColors.mainBordColor
+        ? AppColors.primaryColor
         : AppColors.primaryColor;
 
 List<BoxShadow> get homeBoxShadow =>
     SettingController.to.isDarkMode
         ? [BoxShadow(color: Colors.black54, blurRadius: 10)]
         : [BoxShadow(color: Colors.grey[400]!, blurRadius: 10)];
+
+List<BoxShadow> get dfBoxShadow =>
+    SettingController.to.isDarkMode
+        ? [BoxShadow(color: Colors.grey[800]!, blurRadius: 2)]
+        : [BoxShadow(color: Colors.grey[400]!, blurRadius: 2)];

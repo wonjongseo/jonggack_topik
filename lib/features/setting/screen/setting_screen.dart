@@ -283,8 +283,92 @@ class SettingScreen extends GetView<SettingController> {
               ),
             ],
           ),
+
+          _color(),
         ],
       ),
+    );
+  }
+
+  ExpansionTile _color() {
+    return ExpansionTile(
+      title: Text('Color'),
+      shape: Border.all(color: Colors.transparent),
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            InkWell(
+              borderRadius: BorderRadius.circular(50),
+              onTap: () => controller.changeAppyColor(0),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CircleAvatar(
+                  radius: 10 * 2,
+                  foregroundColor: Colors.white,
+                  backgroundColor: AppColors.priPinkClr,
+                  child:
+                      controller.colorIndex == 0
+                          ? const Icon(Icons.done)
+                          : null,
+                ),
+              ),
+            ),
+            InkWell(
+              borderRadius: BorderRadius.circular(50),
+              onTap: () => controller.changeAppyColor(1),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CircleAvatar(
+                  radius: 10 * 2,
+                  foregroundColor: Colors.white,
+                  backgroundColor: AppColors.priYellowClr,
+                  child: controller.colorIndex == 1 ? Icon(Icons.done) : null,
+                ),
+              ),
+            ),
+            InkWell(
+              borderRadius: BorderRadius.circular(50),
+              onTap: () => controller.changeAppyColor(2),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CircleAvatar(
+                  radius: 10 * 2,
+                  foregroundColor: Colors.white,
+                  backgroundColor: AppColors.priGreenClr,
+                  child: controller.colorIndex == 2 ? Icon(Icons.done) : null,
+                ),
+              ),
+            ),
+            InkWell(
+              borderRadius: BorderRadius.circular(50),
+              onTap: () => controller.changeAppyColor(3),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CircleAvatar(
+                  radius: 10 * 2,
+                  foregroundColor: Colors.white,
+                  backgroundColor: AppColors.priBluishClr,
+                  child: controller.colorIndex == 3 ? Icon(Icons.done) : null,
+                ),
+              ),
+            ),
+            InkWell(
+              borderRadius: BorderRadius.circular(50),
+              onTap: () => controller.changeAppyColor(4),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CircleAvatar(
+                  radius: 10 * 2,
+                  foregroundColor: Colors.white,
+                  backgroundColor: AppColors.priPubbleClr,
+                  child: controller.colorIndex == 4 ? Icon(Icons.done) : null,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 

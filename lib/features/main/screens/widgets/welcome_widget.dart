@@ -30,7 +30,7 @@ class WelcomeWidget extends GetView<SettingController> {
                 AppString.appName.tr,
                 style: TextStyle(
                   fontSize: controller.baseFS + 4,
-                  color: AppColors.mainBordColor,
+                  color: AppColors.secondaryColor,
                   fontWeight: FontWeight.w900,
                 ),
               ),
@@ -87,7 +87,7 @@ class WelcomeWidget2 extends GetView<SettingController> {
                   AppString.appName.tr,
                   style: TextStyle(
                     fontSize: controller.baseFS + 4,
-                    color: AppColors.mainBordColor,
+                    color: AppColors.secondaryColor,
                     fontWeight: FontWeight.w900,
                   ),
                 ),

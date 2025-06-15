@@ -47,7 +47,7 @@ class CateogryProgress extends StatelessWidget {
                       children: [
                         TextSpan(
                           text: '${(value * 100).ceil()}',
-                          style: TextStyle(color: AppColors.mainBordColor),
+                          style: TextStyle(color: AppColors.secondaryColor),
                         ),
                         const TextSpan(text: '/'),
                         TextSpan(text: '${totalAndScore.total}'),

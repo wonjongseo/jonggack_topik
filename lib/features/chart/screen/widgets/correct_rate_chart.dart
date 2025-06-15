@@ -136,7 +136,7 @@ class CorrectRateChart extends StatelessWidget {
               end: Alignment.bottomCenter,
               colors:
                   SettingController.to.isDarkMode
-                      ? [AppColors.mainBordColor, Colors.white]
+                      ? [AppColors.secondaryColor, Colors.white]
                       : [AppColors.primaryColor, Colors.white],
             ),
           ),

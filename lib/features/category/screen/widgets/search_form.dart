@@ -54,7 +54,7 @@ class SeacrhForm2 extends GetView<SearchGetController> {
                           ),
                           color:
                               controller.isTyping.value
-                                  ? AppColors.mainBordColor
+                                  ? AppColors.secondaryColor
                                   : Colors.grey.shade300,
                           child: InkWell(
                             onTap: () async {},
@@ -171,7 +171,7 @@ class SeacrhForm extends GetView<SearchGetController> {
                           ),
                           color:
                               controller.isTyping.value
-                                  ? AppColors.mainBordColor
+                                  ? AppColors.secondaryColor
                                   : Colors.grey.shade300,
                           child: InkWell(
                             onTap: () async {},

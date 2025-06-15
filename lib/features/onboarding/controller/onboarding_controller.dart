@@ -19,6 +19,7 @@ import 'package:jonggack_topik/features/onboarding/screen/widgets/onboarding1.da
 import 'package:jonggack_topik/features/onboarding/screen/widgets/onboarding2.dart';
 import 'package:jonggack_topik/features/onboarding/screen/widgets/onboarding3.dart';
 import 'package:jonggack_topik/features/onboarding/screen/widgets/onboarding4.dart';
+import 'package:jonggack_topik/features/onboarding/screen/widgets/onboarding5.dart';
 import 'package:jonggack_topik/features/setting/enum/enums.dart';
 import 'package:timezone/timezone.dart' as tz;
 
@@ -64,6 +65,7 @@ class OnboardingController extends GetxController {
     Onboarding1(),
     FadeInRight(child: Onboarding2()),
     FadeInRight(child: Onboarding4()),
+    FadeInRight(child: Onboarding5()),
     FadeInRight(child: Onboarding3()),
   ];
 
@@ -141,6 +143,17 @@ class OnboardingController extends GetxController {
       LogManager.error('$e');
     }
   }
+
+  // _saveAppColor() {
+  //   try {
+  //     SettingRepository.setInt(AppConstant.appColorIndex, selectedColorIndex);
+  //     LogManager.info(
+  //       '키 : ${AppConstant.appColorIndex}, 값: $selectedColorIndex',
+  //     );
+  //   } catch (e) {
+  //     LogManager.error('$e');
+  //   }
+  // }
 
   // Onboarding3
   List<DayPeriodType> notificationPeriod = [DayPeriodType.afternoon];
@@ -273,6 +286,8 @@ class OnboardingController extends GetxController {
     //
     await _saveTopikLevel();
     await _saveCountOfGoalStudy();
+    // _saveAppColor();
+
     if (isNotifiEnable) {
       _setNotification();
       // SettingRepository.setList(AppConstant.notificationsIdsKey, notificationIds);
@@ -287,6 +302,16 @@ class OnboardingController extends GetxController {
     Get.offAllNamed(MainScreen.name);
     SnackBarHelper.showSuccessSnackBar(AppString.completeSetting.tr);
   }
+
+  // onBoarding6
+  // // int selectedColorIndex = 0;
+
+  // void onChangeColorIndex(int index) {
+  //   if (index >= 0 && index <= 5) {
+  //     selectedColorIndex = index;
+  //     update();
+  //   }
+  // }
 
   @override
   void onClose() {

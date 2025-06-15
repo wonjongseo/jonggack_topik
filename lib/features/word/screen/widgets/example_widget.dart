@@ -43,7 +43,7 @@ class ExampleWidget extends StatelessWidget {
                     isPlayingThisWord
                         ? FontAwesomeIcons.volumeLow
                         : FontAwesomeIcons.volumeOff,
-                    color: AppColors.mainBordColor,
+                    color: AppColors.secondaryColor,
                     size: 22,
                   ),
                 );

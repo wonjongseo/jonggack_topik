@@ -57,7 +57,7 @@ class WordCard extends GetView<WordController> {
                               controller.isSavedWord(word.id)
                                   ? Icon(
                                     FontAwesomeIcons.solidBookmark,
-                                    color: AppColors.mainBordColor,
+                                    color: AppColors.secondaryColor,
                                     size: 20,
                                   )
                                   : Icon(FontAwesomeIcons.bookmark, size: 20),
@@ -82,7 +82,7 @@ class WordCard extends GetView<WordController> {
                             isPlayingThisWord
                                 ? FontAwesomeIcons.volumeLow
                                 : FontAwesomeIcons.volumeOff,
-                            color: AppColors.mainBordColor,
+                            color: AppColors.secondaryColor,
                             size: 22,
                           ),
                         );
@@ -126,7 +126,7 @@ class WordCard extends GetView<WordController> {
           style: TextStyle(
             fontSize: SettingController.to.baseFS,
             fontWeight: FontWeight.normal,
-            color: AppColors.mainBordColor,
+            color: AppColors.secondaryColor,
           ),
         ),
         SizedBox(height: 20),
@@ -147,7 +147,7 @@ class WordCard extends GetView<WordController> {
                   style: TextStyle(
                     fontSize: SettingController.to.baseFS,
                     fontWeight: FontWeight.w400,
-                    color: AppColors.mainBordColor,
+                    color: AppColors.secondaryColor,
                   ),
                 ),
               ),
@@ -173,7 +173,7 @@ class WordCard extends GetView<WordController> {
           style: TextStyle(
             fontSize: SettingController.to.baseFS,
             fontWeight: FontWeight.normal,
-            color: AppColors.mainBordColor,
+            color: AppColors.secondaryColor,
           ),
         ),
 

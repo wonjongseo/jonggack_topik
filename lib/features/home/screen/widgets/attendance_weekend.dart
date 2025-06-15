@@ -16,7 +16,7 @@ class AttendanceWeekend extends StatelessWidget {
       height: 35,
       margin: EdgeInsets.symmetric(horizontal: 6),
       decoration: BoxDecoration(
-        color: isAttenance ? AppColors.mainBordColor : Colors.grey[400],
+        color: isAttenance ? AppColors.secondaryColor : Colors.grey[400],
         boxShadow:
             isAttenance
                 ? [BoxShadow(color: Colors.grey[400]!, blurRadius: 4)]

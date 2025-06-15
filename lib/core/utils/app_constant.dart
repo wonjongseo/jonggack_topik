@@ -9,6 +9,7 @@ class AppConstant {
   static const String lastSelected = 'lastSelected';
   static const String goalLevel = 'goalLevel';
   static const String countOfGoal = 'countOfGoalStudy';
+  static const String appColorIndex = 'appColorIndex';
 
   // Base font size
   static const String fontSizeKey = 'fontSizeKey';
