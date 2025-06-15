@@ -86,6 +86,7 @@ class SettingScreen extends GetView<SettingController> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(),
@@ -96,7 +97,7 @@ class SettingScreen extends GetView<SettingController> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                _appSetting(),
+                _appSetting(size),
                 SizedBox(height: 10),
                 _systemSetting(),
                 SizedBox(height: 10),
@@ -161,7 +162,7 @@ class SettingScreen extends GetView<SettingController> {
     );
   }
 
-  Widget _appSetting() {
+  Widget _appSetting(size) {
     return Container(
       decoration: BoxDecoration(
         color:
@@ -284,89 +285,38 @@ class SettingScreen extends GetView<SettingController> {
             ],
           ),
 
-          _color(),
+          _color(size),
         ],
       ),
     );
   }
 
-  ExpansionTile _color() {
+  ExpansionTile _color(size) {
     return ExpansionTile(
-      title: Text('Color'),
+      title: Text(
+        AppString.color.tr,
+        style: TextStyle(
+          fontWeight: FontWeight.w400,
+          fontSize: SettingController.to.baseFS - 2,
+        ),
+      ),
+      childrenPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       shape: Border.all(color: Colors.transparent),
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            InkWell(
-              borderRadius: BorderRadius.circular(50),
-              onTap: () => controller.changeAppyColor(0),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: CircleAvatar(
-                  radius: 10 * 2,
-                  foregroundColor: Colors.white,
-                  backgroundColor: AppColors.priPinkClr,
-                  child:
-                      controller.colorIndex == 0
-                          ? const Icon(Icons.done)
-                          : null,
-                ),
+          children: List.generate(AppColors.primaryColors.length, (index) {
+            Color color = AppColors.primaryColors[index];
+            return GestureDetector(
+              onTap: () => controller.changeAppyColor(index),
+              child: CircleAvatar(
+                radius: (size.width / 15),
+                foregroundColor: Colors.white,
+                backgroundColor: color,
+                child: controller.colorIndex == index ? Icon(Icons.done) : null,
               ),
-            ),
-            InkWell(
-              borderRadius: BorderRadius.circular(50),
-              onTap: () => controller.changeAppyColor(1),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: CircleAvatar(
-                  radius: 10 * 2,
-                  foregroundColor: Colors.white,
-                  backgroundColor: AppColors.priYellowClr,
-                  child: controller.colorIndex == 1 ? Icon(Icons.done) : null,
-                ),
-              ),
-            ),
-            InkWell(
-              borderRadius: BorderRadius.circular(50),
-              onTap: () => controller.changeAppyColor(2),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: CircleAvatar(
-                  radius: 10 * 2,
-                  foregroundColor: Colors.white,
-                  backgroundColor: AppColors.priGreenClr,
-                  child: controller.colorIndex == 2 ? Icon(Icons.done) : null,
-                ),
-              ),
-            ),
-            InkWell(
-              borderRadius: BorderRadius.circular(50),
-              onTap: () => controller.changeAppyColor(3),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: CircleAvatar(
-                  radius: 10 * 2,
-                  foregroundColor: Colors.white,
-                  backgroundColor: AppColors.priBluishClr,
-                  child: controller.colorIndex == 3 ? Icon(Icons.done) : null,
-                ),
-              ),
-            ),
-            InkWell(
-              borderRadius: BorderRadius.circular(50),
-              onTap: () => controller.changeAppyColor(4),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: CircleAvatar(
-                  radius: 10 * 2,
-                  foregroundColor: Colors.white,
-                  backgroundColor: AppColors.priPubbleClr,
-                  child: controller.colorIndex == 4 ? Icon(Icons.done) : null,
-                ),
-              ),
-            ),
-          ],
+            );
+          }),
         ),
       ],
     );

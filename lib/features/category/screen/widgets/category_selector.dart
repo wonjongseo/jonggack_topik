@@ -4,6 +4,7 @@ import 'package:get/state_manager.dart';
 import 'package:intl/intl.dart';
 
 import 'package:jonggack_topik/core/models/category_hive.dart';
+import 'package:jonggack_topik/core/utils/app_color.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/features/category/controller/category_controller.dart';
 import 'package:jonggack_topik/features/category/screen/widgets/cateogry_progress.dart';
@@ -30,9 +31,13 @@ class CategorySelector extends StatelessWidget {
         decoration: BoxDecoration(
           color: dfCardColor,
           borderRadius: BorderRadius.circular(10),
-          border: isAccent ? Border.all(color: dfButtonColor, width: 2) : null,
+          gradient: LinearGradient(
+            colors: AppColors.gradientColors,
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+          boxShadow: homeBoxShadow,
         ),
-
         padding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
         margin: EdgeInsets.symmetric(horizontal: 8).copyWith(bottom: 20),
         child: Column(
@@ -42,7 +47,6 @@ class CategorySelector extends StatelessWidget {
               caregory: category.title,
               totalAndScore: totalAndScore,
             ),
-
             SizedBox(height: 6),
             Obx(
               () => Text(
@@ -51,7 +55,10 @@ class CategorySelector extends StatelessWidget {
                     : category.lastAccessDate != null
                     ? '${AppString.lastStudyDate.tr} ${DateFormat.yMd(Get.locale.toString()).format(category.lastAccessDate!)}'
                     : AppString.beforeStudy.tr,
-                style: TextStyle(fontSize: SettingController.to.baseFS - 5),
+                style: TextStyle(
+                  fontSize: SettingController.to.baseFS - 5,
+                  color: Colors.grey[300],
+                ),
               ),
             ),
           ],

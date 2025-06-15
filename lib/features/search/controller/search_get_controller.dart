@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/models/word.dart';
@@ -50,6 +51,7 @@ class SearchGetController extends GetxController {
   }
 
   void _resetClearTimer() {
+    if (kDebugMode) return;
     _clearTimer?.cancel();
     _clearTimer = Timer(Duration(seconds: 10), () {
       teCtl.clear();

@@ -19,61 +19,94 @@ class Onboarding5 extends StatelessWidget {
             children: [
               Text(AppString.plzInputAppColor.tr),
               SizedBox(height: 15),
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GestureDetector(
-                    onTap: () => controller.changeAppyColor(0),
+                children: List.generate(AppColors.primaryColors.length, (
+                  index,
+                ) {
+                  Color color = AppColors.primaryColors[index];
+                  return GestureDetector(
+                    onTap: () => controller.changeAppyColor(index),
                     child: CircleAvatar(
                       radius: (size.width / 10) - 10,
                       foregroundColor: Colors.white,
-                      backgroundColor: AppColors.priPinkClr,
+                      backgroundColor: color,
                       child:
-                          controller.colorIndex == 0 ? Icon(Icons.done) : null,
+                          controller.colorIndex == index
+                              ? Icon(Icons.done)
+                              : null,
                     ),
-                  ),
-                  GestureDetector(
-                    onTap: () => controller.changeAppyColor(1),
-                    child: CircleAvatar(
-                      radius: (size.width / 10) - 10,
-                      foregroundColor: Colors.white,
-                      backgroundColor: AppColors.priYellowClr,
-                      child:
-                          controller.colorIndex == 1 ? Icon(Icons.done) : null,
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () => controller.changeAppyColor(2),
-                    child: CircleAvatar(
-                      radius: (size.width / 10) - 10,
-                      foregroundColor: Colors.white,
-                      backgroundColor: AppColors.priGreenClr,
-                      child:
-                          controller.colorIndex == 2 ? Icon(Icons.done) : null,
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () => controller.changeAppyColor(3),
-                    child: CircleAvatar(
-                      radius: (size.width / 10) - 10,
-                      foregroundColor: Colors.white,
-                      backgroundColor: AppColors.priBluishClr,
-                      child:
-                          controller.colorIndex == 3 ? Icon(Icons.done) : null,
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () => controller.changeAppyColor(4),
-                    child: CircleAvatar(
-                      radius: (size.width / 10) - 10,
-                      foregroundColor: Colors.white,
-                      backgroundColor: AppColors.priPubbleClr,
-                      child:
-                          controller.colorIndex == 4 ? Icon(Icons.done) : null,
-                    ),
-                  ),
-                ],
+                  );
+                }),
               ),
+
+              // else
+              //   Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //     children: [
+              //       GestureDetector(
+              //         onTap: () => controller.changeAppyColor(0),
+              //         child: CircleAvatar(
+              //           radius: (size.width / 10) - 10,
+              //           foregroundColor: Colors.white,
+              //           backgroundColor: AppColors.priPinkClr,
+              //           child:
+              //               controller.colorIndex == 0
+              //                   ? Icon(Icons.done)
+              //                   : null,
+              //         ),
+              //       ),
+              //       GestureDetector(
+              //         onTap: () => controller.changeAppyColor(1),
+              //         child: CircleAvatar(
+              //           radius: (size.width / 10) - 10,
+              //           foregroundColor: Colors.white,
+              //           backgroundColor: AppColors.priYellowClr,
+              //           child:
+              //               controller.colorIndex == 1
+              //                   ? Icon(Icons.done)
+              //                   : null,
+              //         ),
+              //       ),
+              //       GestureDetector(
+              //         onTap: () => controller.changeAppyColor(2),
+              //         child: CircleAvatar(
+              //           radius: (size.width / 10) - 10,
+              //           foregroundColor: Colors.white,
+              //           backgroundColor: AppColors.priGreenClr,
+              //           child:
+              //               controller.colorIndex == 2
+              //                   ? Icon(Icons.done)
+              //                   : null,
+              //         ),
+              //       ),
+              //       GestureDetector(
+              //         onTap: () => controller.changeAppyColor(3),
+              //         child: CircleAvatar(
+              //           radius: (size.width / 10) - 10,
+              //           foregroundColor: Colors.white,
+              //           backgroundColor: AppColors.priBluishClr,
+              //           child:
+              //               controller.colorIndex == 3
+              //                   ? Icon(Icons.done)
+              //                   : null,
+              //         ),
+              //       ),
+              //       GestureDetector(
+              //         onTap: () => controller.changeAppyColor(4),
+              //         child: CircleAvatar(
+              //           radius: (size.width / 10) - 10,
+              //           foregroundColor: Colors.white,
+              //           backgroundColor: AppColors.priPubbleClr,
+              //           child:
+              //               controller.colorIndex == 4
+              //                   ? Icon(Icons.done)
+              //                   : null,
+              //         ),
+              //       ),
+              //     ],
+              //   ),
             ],
           ),
         );

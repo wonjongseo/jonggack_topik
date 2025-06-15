@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jonggack_topik/core/utils/app_color.dart';
+import 'package:jonggack_topik/theme.dart';
 
 class AttendanceWeekend extends StatelessWidget {
   const AttendanceWeekend({
@@ -17,10 +18,7 @@ class AttendanceWeekend extends StatelessWidget {
       margin: EdgeInsets.symmetric(horizontal: 6),
       decoration: BoxDecoration(
         color: isAttenance ? AppColors.secondaryColor : Colors.grey[400],
-        boxShadow:
-            isAttenance
-                ? [BoxShadow(color: Colors.grey[400]!, blurRadius: 4)]
-                : [],
+        boxShadow: isAttenance ? dfBoxShadow : [],
         shape: BoxShape.circle,
       ),
       child:

@@ -4,6 +4,7 @@ import 'package:jonggack_topik/core/utils/app_color.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/features/auth/controllers/user_controller.dart';
 import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
+import 'package:jonggack_topik/theme.dart';
 
 class WelcomeWidget extends GetView<SettingController> {
   const WelcomeWidget({super.key});
@@ -87,7 +88,7 @@ class WelcomeWidget2 extends GetView<SettingController> {
                   AppString.appName.tr,
                   style: TextStyle(
                     fontSize: controller.baseFS + 4,
-                    color: AppColors.secondaryColor,
+                    color: dfButtonColor,
                     fontWeight: FontWeight.w900,
                   ),
                 ),

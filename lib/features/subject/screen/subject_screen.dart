@@ -2,6 +2,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:jonggack_topik/core/admob/banner_ad/global_banner_admob.dart';
 import 'package:jonggack_topik/core/utils/app_color.dart';
 import 'package:jonggack_topik/features/auth/controllers/user_controller.dart';
@@ -32,13 +33,7 @@ class SubjectScreen extends GetView<SubjectController> {
                 SeacrhForm(),
                 SizedBox(height: 32),
 
-                SizedBox(
-                  // padding: const EdgeInsets.symmetric(horizontal: 60),
-                  // aspectRatio: ,
-                  width: size.width * 0.65,
-                  child: _dropdownbutton(),
-                ),
-                // _subjecttSelectorRow(),
+                SizedBox(width: size.width * 0.65, child: _dropdownbutton()),
                 SizedBox(height: 12),
                 Expanded(
                   child: Obx(
@@ -52,7 +47,6 @@ class SubjectScreen extends GetView<SubjectController> {
                               UserController.to.user.isPremieum ||
                               controller.selectedSubject.title !=
                                   TopikLevel.fiveSix.label;
-
                           return ChapterSelector(
                             label: controller.selectedSubject.title,
                             chapter: controller.selectedSubject.chapters[index],
@@ -97,7 +91,12 @@ class SubjectScreen extends GetView<SubjectController> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
             border: Border.all(color: AppColors.primaryColor),
-            color: dfBackground,
+            // color: dfBackground,
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: AppColors.gradientColors,
+            ),
           ),
           elevation: 2,
         ),
@@ -107,11 +106,16 @@ class SubjectScreen extends GetView<SubjectController> {
           iconEnabledColor: AppColors.primaryColor,
         ),
         dropdownStyleData: DropdownStyleData(
-          // maxHeight: 200,
+          maxHeight: 350,
           // padding: null,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
             color: dfCardColor,
+            gradient: LinearGradient(
+              begin: Alignment.centerRight,
+              end: Alignment.centerLeft,
+              colors: AppColors.gradientColors,
+            ),
           ),
           elevation: 4,
           offset: const Offset(0, 8),

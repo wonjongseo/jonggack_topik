@@ -8,14 +8,10 @@ import 'package:jonggack_topik/features/setting/controller/setting_controller.da
 class CateogryProgress extends StatelessWidget {
   final String caregory;
   final TotalAndScore totalAndScore;
-  // final int curCnt;
-  // final int totalCnt;
   const CateogryProgress({
     super.key,
     required this.caregory,
     required this.totalAndScore,
-    // required this.curCnt,
-    // required this.totalCnt,
   });
 
   @override
@@ -28,7 +24,13 @@ class CateogryProgress extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(caregory, style: TextStyle(fontWeight: FontWeight.w700)),
+              Text(
+                caregory,
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: SettingController.to.baseFS + 1,
+                ),
+              ),
 
               TweenAnimationBuilder(
                 tween: Tween<double>(begin: 0, end: totalAndScore.score / 100),
@@ -37,7 +39,7 @@ class CateogryProgress extends StatelessWidget {
                   return RichText(
                     text: TextSpan(
                       style: TextStyle(
-                        fontSize: 12,
+                        fontSize: SettingController.to.baseFS - 4,
                         letterSpacing: 2,
                         color:
                             SettingController.to.isDarkMode

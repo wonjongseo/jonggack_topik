@@ -135,3 +135,6 @@ List<BoxShadow> get dfBoxShadow =>
     SettingController.to.isDarkMode
         ? [BoxShadow(color: Colors.grey[800]!, blurRadius: 2)]
         : [BoxShadow(color: Colors.grey[400]!, blurRadius: 2)];
+
+Color get gray =>
+    SettingController.to.isDarkMode ? AppColors.greyLight : AppColors.greyDark;

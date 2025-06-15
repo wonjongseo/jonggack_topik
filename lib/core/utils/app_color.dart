@@ -23,10 +23,7 @@ import 'package:jonggack_topik/features/setting/controller/setting_controller.da
 
 class AppColors {
   static const Color black = Color(0xFF303943);
-  static const Color darkGrey = Color(0xFF303943);
   static const Color whiteGrey = Color(0xFFFDFDFD);
-  static const Color lightGreen = Color(0xFF78C850);
-  static const Color lightGrey = Color(0xFFF5F5F5);
   static const Color correctColor = Color(0XFFC7FFD8);
 
   static const Color scaffoldBackground = Color(0xFF212A3E);
@@ -36,120 +33,127 @@ class AppColors {
   static Color white = Colors.white.withOpacity(.95);
   // static Color secondaryColor = Colors.cyan.shade700;
   // static Color primaryColor = Colors.cyan.shade400;
-  static Color thridColor = Colors.cyan.shade600;
 
   AppColors._();
 
   static Color get primaryColor {
-    int selectedColorIndex = 0;
-    Color color = AppColors.priDarkBluishClr;
-    if (Get.isRegistered<SettingController>()) {
-      selectedColorIndex = SettingController.to.colorIndex;
-    }
-
-    if (Get.isDarkMode) {
-      switch (selectedColorIndex) {
-        case 0:
-          color = priDarkPinkClr;
-        case 1:
-          color = priDarkYellowClr;
-        case 2:
-          color = priDarkGreenClr;
-        case 3:
-          color = priDarkBluishClr;
-        case 4:
-          color = priDarkPubbleClr;
-      }
-    } else {
-      switch (selectedColorIndex) {
-        case 0:
-          color = priPinkClr;
-        case 1:
-          color = priYellowClr;
-        case 2:
-          color = priGreenClr;
-        case 3:
-          color = priBluishClr;
-
-        case 4:
-          color = priPubbleClr;
-      }
-    }
-    print('color : ${color == priPinkClr}');
+    int colorIndex =
+        Get.isRegistered<SettingController>()
+            ? SettingController.to.colorIndex
+            : 0;
+    Color color = AppColors.primaryColors[colorIndex];
 
     return color;
   }
 
   static Color get secondaryColor {
-    int selectedColorIndex = 0;
-    if (Get.isRegistered<SettingController>()) {
-      selectedColorIndex = SettingController.to.colorIndex;
-    }
+    int colorIndex =
+        Get.isRegistered<SettingController>()
+            ? SettingController.to.colorIndex
+            : 0;
+    Color color = AppColors.secondColors[colorIndex];
 
-    if (Get.isDarkMode) {
-      switch (selectedColorIndex) {
-        case 0:
-          return secDarkPinkClr;
-        case 1:
-          return secDarkYellowClr;
-        case 2:
-          return secDarkGreenClr;
-        case 3:
-          return secDarkBluishClr;
-        case 4:
-          return secDarkPubbleClr;
-      }
-    } else {
-      switch (selectedColorIndex) {
-        case 0:
-          return secPinkClr;
-        case 1:
-          return secYellowClr;
-        case 2:
-          return secGreenClr;
-        case 3:
-          return secBluishClr;
-
-        case 4:
-          return secPubbleClr;
-      }
-    }
-
-    return priPubbleClr;
+    return color;
   }
 
-  static const Color priPinkClr = Color(0xFFff4667);
-  static const Color priYellowClr = Color(0xFFFFB746);
-  static const Color priGreenClr = Color(0xFF00C853);
-  static const Color priBluishClr = Color(0xFF4e5ae8);
-  static const Color priPubbleClr = Color(0xFF6200EA);
+  static List<Color> get gradientColors {
+    int colorIndex =
+        Get.isRegistered<SettingController>()
+            ? SettingController.to.colorIndex
+            : 0;
+    List<Color> gradientColors = AppColors._gradients[colorIndex];
 
-  static const Color secPinkClr = Color(0xFF6A1B9A);
-  static const Color secYellowClr = Color(0xFF00BFA5);
-  static const Color secGreenClr = Color(0xFFD50000);
-  static const Color secBluishClr = Color(0xFF2962FF);
-  static const Color secPubbleClr = Color(0xFFC51162);
-
-  static const Color priDarkPinkClr = Color(0xFFb32d4c);
-  static const Color priDarkYellowClr = Color(0xFFb27934);
-  static const Color priDarkGreenClr = Color(0xFF007a38);
-  static const Color priDarkBluishClr = Color(0xFF3a44b7);
-  static const Color priDarkPubbleClr = Color(0xFF3e009e);
-
-  static const Color secDarkPinkClr = Color(0xFF4A148C);
-  static const Color secDarkYellowClr = Color(0xFF009688);
-  static const Color secDarkGreenClr = Color(0xFFB71C1C);
-  static const Color secDarkBluishClr = Color(0xFF1A237E);
-  static const Color secDarkPubbleClr = Color(0xFF880E4F);
-
-  //
-  // static const Color secondaryColor = Color(0xFFFC2E20);
-  static const Color greenDark = Color(0xFF00A884);
-  static const Color greenLight = Color(0xFF008069);
+    return gradientColors;
+  }
 
   static const Color greyDark = Color(0xFF8696A0);
   static const Color greyLight = Color(0xFF667781);
 
-  static const Color darkBackground = Color(0xFF202C33);
-  static const Color darkTextColor = Color(0xFFE0E0E0);
+  static List<Color> get primaryColors {
+    if (Get.isRegistered<SettingController>()) {
+      return SettingController.to.isDarkMode
+          ? darkPrimaryColors
+          : lightPrimaryColors;
+    }
+    return lightPrimaryColors;
+  }
+
+  static List<Color> get secondColors {
+    if (Get.isRegistered<SettingController>()) {
+      return SettingController.to.isDarkMode
+          ? darkSecondaryColors
+          : lightSecondaryColors;
+    }
+    return lightSecondaryColors;
+  }
+
+  static List<List<Color>> get _gradients {
+    if (Get.isRegistered<SettingController>()) {
+      return SettingController.to.isDarkMode
+          ? _darkThemeGradientColors
+          : _lightThemeGradientColors;
+    }
+    return _lightThemeGradientColors;
+  }
+
+  static List<Color> lightPrimaryColors = [
+    Colors.cyan.shade400, // Color(0xFF4e5ae8),
+    Color(0xFFff4667),
+    Color(0xFFFFB746),
+    Color(0xFF00C853),
+    Color(0xFF6200EA),
+  ];
+  static List<Color> darkPrimaryColors = [
+    Colors.cyan.shade700, //Color(0xFF3a44b7)
+    Color(0xFFb32d4c),
+    Color(0xFFb27934),
+    Color(0xFF007a38),
+    Color(0xFF3e009e),
+  ];
+
+  static List<Color> lightSecondaryColors = [
+    Colors.cyan.shade800,
+    Color(0xFFb0003a),
+    Color(0xFFb25e00),
+    Color(0xFF009624),
+    Color(0xFF3700B3),
+  ];
+  static List<Color> darkSecondaryColors = [
+    Colors.cyan.shade900,
+    Color(0xFF7a0030),
+    Color(0xFF6e3f1b),
+    Color(0xFF005e20),
+    Color(0xFF25006b),
+  ];
+
+  // static final List<List<Color>> _lightThemeGradientColors = [
+  //   [Colors.cyan.shade400, Colors.cyan.shade800],
+  //   [Color(0xFFff4667), Color(0xFFb0003a)],
+  //   [Color(0xFFFFB746), Color(0xFFb25e00)],
+  //   [Color(0xFF00C853), Color(0xFF009624)],
+  //   [Color(0xFF6200EA), Color(0xFF3700B3)],
+  // ];
+
+  // static final List<List<Color>> _darkThemeGradientColors = [
+  //   [Colors.cyan.shade700, Colors.cyan.shade900],
+  //   [Color(0xFFb32d4c), Color(0xFF7a0030)],
+  //   [Color(0xFFb27934), Color(0xFF6e3f1b)],
+  //   [Color(0xFF007a38), Color(0xFF005e20)],
+  //   [Color(0xFF3e009e), Color(0xFF25006b)],
+  // ];
+  static final List<List<Color>> _lightThemeGradientColors = [
+    [Colors.cyan.shade200, Colors.cyan.shade400],
+    [Color(0xFFFF8A9B), Color(0xFFE57373)],
+    [Color(0xFFFFD180), Color(0xFFFFB74D)],
+    [Color(0xFF66FFA6), Color(0xFF26D07C)],
+    [Color(0xFFA974FF), Color(0xFF9575CD)],
+  ];
+
+  static final List<List<Color>> _darkThemeGradientColors = [
+    [Colors.cyan.shade500, Colors.cyan.shade700],
+    [Color(0xFFD96D83), Color(0xFFAD3956)],
+    [Color(0xFFE9A86F), Color(0xFF9E6A33)],
+    [Color(0xFF26D07C), Color(0xFF007B4B)],
+    [Color(0xFF7F55DD), Color(0xFF5231A9)],
+  ];
 }
