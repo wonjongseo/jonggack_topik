@@ -15,6 +15,8 @@ import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/core/repositories/hive_repository.dart';
 import 'package:jonggack_topik/core/repositories/setting_repository.dart';
 import 'package:jonggack_topik/core/utils/app_constant.dart';
+import 'package:jonggack_topik/core/utils/app_function.dart';
+import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/core/utils/snackbar_helper.dart';
 import 'package:jonggack_topik/features/subject/controller/subject_controller.dart';
 import 'package:jonggack_topik/features/subject/screen/subject_screen.dart';
@@ -45,7 +47,16 @@ class CategoryController extends GetxController {
 
   final carouselController = CarouselSliderController();
 
-  void onTapCategory(int index) {
+  void _updateLastAccessDate() {
+    _allCategories[_selectedCategoryIdx] = _allCategories[_selectedCategoryIdx]
+        .copyWith(lastAccessDate: DateTime.now());
+    categoryRepo.put(
+      _allCategories[_selectedCategoryIdx].title,
+      _allCategories[_selectedCategoryIdx],
+    );
+  }
+
+  void onTapCategory(int index) async {
     _selectedCategoryIdx = index;
 
     SettingRepository.setInt(
@@ -53,13 +64,17 @@ class CategoryController extends GetxController {
       _selectedCategoryIdx,
     );
 
-    // categoryRepo.put(key, value)
-
-    Get.to(
+    AppFunction.scrollGoToTop(scrollController);
+    await Get.to(
       () => SubjectScreen(),
       binding: BindingsBuilder.put(() => SubjectController(category)),
     );
+
+    _updateLastAccessDate();
+    _sortSubject();
   }
+
+  ScrollController scrollController = ScrollController();
 
   final totalAndScoress = <List<TotalAndScore>>[].obs;
 
@@ -122,12 +137,34 @@ class CategoryController extends GetxController {
   final categoryHiveRepo = Get.find<HiveRepository<CategoryHive>>(
     tag: CategoryHive.boxKey,
   );
+
+  void _sortSubject() {
+    _allCategories.sort((a, b) {
+      final aDate = a.lastAccessDate;
+      final bDate = b.lastAccessDate;
+
+      if (aDate != null && bDate != null) {
+        // 둘 다 lastAccessDate가 있으면, 최신순
+        return bDate.compareTo(aDate);
+      }
+      if (aDate != null) {
+        // a에만 있으면 a가 앞으로
+        return -1;
+      }
+      if (bDate != null) {
+        // b에만 있으면 b가 앞으로
+        return 1;
+      }
+      // 둘 다 없으면 createdAt 빠른 순
+      return a.createdAt.compareTo(b.createdAt);
+    });
+  }
+
   Future<void> fatchAllSubject() async {
     try {
       isLoadign(true);
       List<CategoryHive> savedList = categoryHiveRepo.getAll();
 
-      savedList.sort((a, b) => a.createdAt.compareTo(b.createdAt));
       if (_selectedCategoryIdx != 0 &&
           _selectedCategoryIdx >= 0 &&
           _selectedCategoryIdx < savedList.length) {
@@ -139,6 +176,7 @@ class CategoryController extends GetxController {
       }
 
       _allCategories.assignAll(savedList);
+      _sortSubject();
       setTotalAndScores();
       setTotalAndScoreListOfCategory();
     } catch (e) {
@@ -147,6 +185,12 @@ class CategoryController extends GetxController {
     } finally {
       isLoadign(false);
     }
+  }
+
+  @override
+  void onClose() {
+    scrollController.dispose();
+    super.onClose();
   }
 }
 

@@ -23,6 +23,9 @@ class SubjectController extends GetxController {
   int get selectedSubjectIndex => _selectedSubjectIndex.value;
 
   SubjectHive get selectedSubject => subjects[_selectedSubjectIndex.value];
+  set selectedSubject(SubjectHive subject) {
+    selectedSubject = subject;
+  }
 
   final carouselController = CarouselSliderController();
 
@@ -92,6 +95,21 @@ class SubjectController extends GetxController {
 
   void changeSubject(int index) {
     _selectedSubjectIndex.value = index;
+    String key =
+        '${_category.title}-${selectedSubject.title}-${AppConstant.selectedCategoryIdx}';
+
+    int tempIndex = SettingRepository.getInt(key) ?? 0;
+
+    carouselController.animateToPage(tempIndex);
+
+    SettingRepository.setInt(
+      '${_category.title}-${AppConstant.selectedCategoryIdx}',
+      _selectedSubjectIndex.value,
+    );
+  }
+
+  void changeSubject2(SubjectHive subject) {
+    selectedSubject = subject;
     String key =
         '${_category.title}-${selectedSubject.title}-${AppConstant.selectedCategoryIdx}';
 

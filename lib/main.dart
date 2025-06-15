@@ -1,3 +1,4 @@
+import 'package:jonggack_topik/core/widgets/moving_dots.dart';
 import 'package:jonggack_topik/features/history/controller/history_controller.dart';
 import 'package:jonggack_topik/features/home/controller/home_controller.dart';
 import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
@@ -97,12 +98,7 @@ class _AppState extends State<App> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                'Loading Data...',
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontFamily: AppFonts.zenMaruGothic,
-                ),
-              ),
+              MovingDots(),
               const SizedBox(height: 12),
               TweenAnimationBuilder(
                 curve: Curves.easeInOut,

@@ -77,20 +77,20 @@ class OnboardingController extends GetxController {
   // Onboarding4
   // TextEditingController teCtl = TextEditingController(text: '30');
 
-  // void changeCountOfStudy(bool isIncrease) {
-  //   String sCount = teCtl.text.trim();
-  //   int count = int.tryParse(sCount) ?? 1;
+  void changeCountOfStudy(bool isIncrease) {
+    String sCount = teCtl.text.trim();
+    int count = int.tryParse(sCount) ?? 1;
 
-  //   if (isIncrease) {
-  //     count++;
-  //   } else {
-  //     count--;
-  //   }
-  //   if (count < 1) {
-  //     return;
-  //   }
-  //   teCtl.text = '$count';
-  // }
+    if (isIncrease) {
+      count++;
+    } else {
+      count--;
+    }
+    if (count < 1) {
+      return;
+    }
+    teCtl.text = '$count';
+  }
 
   double _scrollAccumulator = 0;
   int value = 29;

@@ -5,6 +5,9 @@ class AppTranslations extends Translations {
   // TODO: implement keys
   Map<String, Map<String, String>> get keys => {
     'ja_JP': {
+      AppString.studying: AppString.studyingJp,
+      AppString.lastStudyDate: AppString.lastStudyDateJp,
+      AppString.beforeStudy: AppString.beforeStudyJp,
       AppString.search: AppString.searchJp,
       AppString.category: AppString.categoryJp,
       AppString.attendance: AppString.attendanceJp,
@@ -48,7 +51,7 @@ class AppTranslations extends Translations {
       AppString.selectGoalLevel: AppString.selectGoalLevelJp,
       AppString.selectCountOfStudy: AppString.selectCountOfStudyJp,
       AppString.plzSelectCountOfStudy: AppString.plzSelectCountOfStudyJp,
-      AppString.countOfStudy: AppString.plzSelectCountOfStudyJp,
+      AppString.countOfStudy: AppString.countOfStudyJp,
       AppString.doYouWantToAlert: AppString.doYouWantToAlertJp,
       AppString.doYouWantToAlert2: AppString.doYouWantToAlert2Jp,
       AppString.cancelBtnText: AppString.cancelBtnTextJp,
@@ -114,6 +117,9 @@ class AppTranslations extends Translations {
       AppString.almostPass: AppString.almostPassJp,
     },
     'ko_KR': {
+      AppString.studying: AppString.studyingKr,
+      AppString.lastStudyDate: AppString.lastStudyDateKr,
+      AppString.beforeStudy: AppString.beforeStudyKr,
       AppString.search: AppString.searchKr,
       AppString.category: AppString.categoryKr,
       AppString.attendance: AppString.attendanceKr,
@@ -843,4 +849,19 @@ We’ll review your report and work on improvements as soon as possible.
   static String categoryKr = '카테고리';
   static String categoryJp = 'カテゴリ';
   static String categoryEn = "";
+
+  static String studying = "studyingTr";
+  static String studyingKr = '학습 중';
+  static String studyingJp = '学習中';
+  static String studyingEn = "";
+
+  static String lastStudyDate = "lastStudyDateTr";
+  static String lastStudyDateKr = '마지막 학습일';
+  static String lastStudyDateJp = '最後の学習日';
+  static String lastStudyDateEn = "";
+
+  static String beforeStudy = "beforeStudyTr";
+  static String beforeStudyKr = '학습 전';
+  static String beforeStudyJp = '学習前';
+  static String beforeStudyEn = "";
 }

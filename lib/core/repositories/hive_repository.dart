@@ -219,7 +219,6 @@ class HiveRepository<T extends HiveObject> {
   static DataRepositry dataRepositry = DataRepositry();
 
   static Future<void> _saveAllWords() async {
-    print('Start _saveAllWords');
     final wordBox = Hive.box<Word>(Word.boxKey);
     // if (wordBox.keys.isEmpty) {
     List<Word> allwords = await dataRepositry.getAllWords("global_words");

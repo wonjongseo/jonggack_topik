@@ -1,8 +1,7 @@
 import 'dart:convert';
 import 'package:hive/hive.dart';
-import 'subject_hive.dart';
 import 'package:jonggack_topik/core/constant/hive_keys.dart';
-
+import 'subject_hive.dart';
 part 'category_hive.g.dart';
 
 @HiveType(typeId: HK.categoryHiveTypeID)
@@ -50,4 +49,21 @@ class CategoryHive extends HiveObject {
 
   factory CategoryHive.fromJson(String source) =>
       CategoryHive.fromMap(json.decode(source));
+
+  CategoryHive copyWith({
+    String? title,
+    List<SubjectHive>? subjects,
+    DateTime? lastAccessDate,
+  }) {
+    return CategoryHive(
+      title: title ?? this.title,
+      subjects: subjects ?? this.subjects,
+      lastAccessDate: lastAccessDate ?? this.lastAccessDate,
+    );
+  }
+
+  @override
+  String toString() {
+    return 'CategoryHive(title: $title, subjects: $subjects, createdAt: $createdAt, lastAccessDate: $lastAccessDate)';
+  }
 }

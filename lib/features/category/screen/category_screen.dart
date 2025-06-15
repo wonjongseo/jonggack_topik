@@ -35,6 +35,7 @@ class CategoryScreen extends GetView<CategoryController> {
               SizedBox(height: 16),
               Expanded(
                 child: SingleChildScrollView(
+                  controller: controller.scrollController,
                   child: Obx(
                     () => Column(
                       children: List.generate(controller.allCategories.length, (
