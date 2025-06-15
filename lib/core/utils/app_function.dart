@@ -4,9 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/utils.dart';
-import 'package:jonggack_topik/core/logger/logger_service.dart';
-import 'package:jonggack_topik/core/models/attendance_date.dart';
-import 'package:jonggack_topik/core/repositories/hive_repository.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/core/utils/snackbar_helper.dart';
 import 'package:jonggack_topik/features/category/controller/category_controller.dart';
@@ -15,6 +12,7 @@ import 'package:jonggack_topik/features/step/controller/step_controller.dart';
 import 'package:jonggack_topik/features/subject/controller/subject_controller.dart';
 
 bool get isKo => Get.locale.toString().contains('ko');
+bool get isEn => Get.locale.toString().contains('en');
 
 class AppFunction {
   static void copyWord(String text) {

@@ -12,6 +12,7 @@ class Onboarding2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('Onboarding2');
     return Column(
       children: [
         Text(
@@ -61,14 +62,8 @@ class LevelSelector extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 16, horizontal: 48),
         margin: EdgeInsets.only(bottom: 16),
         decoration: BoxDecoration(
-          border: Border.all(
-            color:
-                isSelected ? dfButtonColor.withValues(alpha: 2) : Colors.grey,
-          ),
-          boxShadow:
-              isSelected
-                  ? dfBoxShadow //[BoxShadow(color: Colors.lightBlue, blurRadius: .2)]
-                  : null,
+          border: isSelected ? null : Border.all(color: Colors.grey),
+          boxShadow: isSelected ? dfBoxShadow : null,
           color: isSelected ? dfButtonColor : null,
           borderRadius: BorderRadius.circular(15),
         ),

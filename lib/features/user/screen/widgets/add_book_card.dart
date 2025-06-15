@@ -50,7 +50,7 @@ class AddBookCard extends StatelessWidget {
             Align(
               alignment: Alignment.bottomRight,
               child: TextButton(
-                onPressed: () {},
+                onPressed: onTap,
                 child: Text(
                   AppString.createtion.tr,
                   style: TextStyle(
@@ -59,10 +59,6 @@ class AddBookCard extends StatelessWidget {
                   ),
                 ),
               ),
-              // child: IconButton(
-              //   onPressed: onTap,
-              //   icon: const Icon(Icons.add, size: 28),
-              // ),
             ),
           ],
         ),

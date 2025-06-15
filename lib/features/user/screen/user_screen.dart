@@ -17,7 +17,6 @@ class UserScreen extends GetView<BookController> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: GestureDetector(

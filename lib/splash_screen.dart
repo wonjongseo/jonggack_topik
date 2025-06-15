@@ -45,10 +45,10 @@ class SplashController extends GetxController {
     final hasUser = userRepo.getAll();
 
     AttendanceDateRepository.addDate(DateTime.now());
-    // if (kDebugMode) {
-    //   Get.offAllNamed(OnboardingScreen.name);
-    //   return;
-    // }
+    if (kDebugMode) {
+      Get.offAllNamed(OnboardingScreen.name);
+      return;
+    }
     if (hasUser.isEmpty) {
       Get.offAllNamed(OnboardingScreen.name);
     } else {

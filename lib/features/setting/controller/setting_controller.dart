@@ -55,7 +55,7 @@ class SettingController extends GetxController {
     getNotificationTime();
   }
 
-  final _colorIndex = SettingRepository.getInt(AppConstant.appColorIndex)!.obs;
+  final _colorIndex = 0.obs;
   int get colorIndex => _colorIndex.value;
 
   void getAppColor() {

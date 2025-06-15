@@ -14,30 +14,34 @@ class AppFonts {
 
 class AppThemings {
   static final ThemeData darkTheme = ThemeData.dark().copyWith(
-    // 기본 텍스트 테마에 동일한 폰트 패밀리를 적용
+    // 공통 텍스트 폰트
     textTheme: ThemeData.dark().textTheme.apply(
       fontFamily: AppFonts.zenMaruGothic,
     ),
 
-    // 전체 배경색을 어두운 색으로 지정
-    scaffoldBackgroundColor: AppColors.scaffoldBackground,
+    // 배경색: 진한 회색 계열
+    scaffoldBackgroundColor: Colors.grey.shade900,
 
-    // AppBar 테마 (투명 배경 + 텍스트 흰색)
+    // AppBar 설정
     appBarTheme: const AppBarTheme(
-      toolbarHeight: 40,
+      toolbarHeight: 50,
       color: Colors.transparent,
       scrolledUnderElevation: 0.0,
       titleTextStyle: TextStyle(
-        color: Colors.white, // 다크 모드에서는 흰색 텍스트
+        color: Colors.white,
         fontWeight: FontWeight.bold,
         fontFamily: AppFonts.zenMaruGothic,
-        fontSize: 20,
+        fontSize: 18,
       ),
-      iconTheme: IconThemeData(color: Colors.white),
+      iconTheme: IconThemeData(color: Colors.white70),
     ),
-    // cardTheme: CardTheme(color: AppColors.black),
 
-    // IconButton 최소 크기 축소 유지
+    // TextButton: 보조 색상은 동일하게
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(foregroundColor: AppColors.secondaryColor),
+    ),
+
+    // IconButton: 크기/터치 영역 유지
     iconButtonTheme: IconButtonThemeData(
       style: IconButton.styleFrom(
         minimumSize: const Size(0, 0),
@@ -45,7 +49,7 @@ class AppThemings {
       ),
     ),
 
-    // ListTile 테마: 다크 모드 기본 텍스트 컬러 유지하면서 폰트만 지정
+    // ListTile: 다크 모드 텍스트 색상으로 변경
     listTileTheme: ListTileThemeData(
       leadingAndTrailingTextStyle: ThemeData.dark().textTheme.bodyLarge
           ?.copyWith(
@@ -104,7 +108,6 @@ class AppThemings {
       ),
     ),
   );
-  //
 }
 
 ButtonStyle get cTrailingStyle => IconButton.styleFrom(

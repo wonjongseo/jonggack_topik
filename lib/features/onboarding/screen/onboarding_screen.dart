@@ -6,6 +6,7 @@ import 'package:jonggack_topik/core/utils/app_color.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/core/widgets/custom_button.dart';
 import 'package:jonggack_topik/features/onboarding/controller/onboarding_controller.dart';
+import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
 import 'package:jonggack_topik/theme.dart';
 
 class OnboardingScreen extends GetView<OnboardingController> {
@@ -16,27 +17,29 @@ class OnboardingScreen extends GetView<OnboardingController> {
     return AppBar(
       title: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (controller.pageIndex != 0)
-              TextButton(
-                onPressed: controller.backToPage,
-                child: Text(AppString.back.tr),
+        child: Obx(
+          () => Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (controller.pageIndex != 0)
+                TextButton(
+                  onPressed: controller.backToPage,
+                  child: Text(AppString.back.tr),
+                ),
+              Expanded(
+                child: LinearProgressIndicator(
+                  minHeight: 10,
+                  borderRadius: BorderRadius.circular(20),
+                  value:
+                      ((10 / controller.onboardingCnt) *
+                              (controller.pageIndex + 1) /
+                              10)
+                          .toDouble(),
+                  color: dfButtonColor,
+                ),
               ),
-            Expanded(
-              child: LinearProgressIndicator(
-                minHeight: 10,
-                borderRadius: BorderRadius.circular(20),
-                value:
-                    ((10 / controller.onboardingCnt) *
-                            (controller.pageIndex + 1) /
-                            10)
-                        .toDouble(),
-                color: dfButtonColor,
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -51,7 +54,6 @@ class OnboardingScreen extends GetView<OnboardingController> {
           body: SafeArea(
             child: GestureDetector(
               onTap: () {
-                print('adasasd');
                 FocusManager.instance.primaryFocus!.unfocus();
               },
               child: Padding(
@@ -95,12 +97,13 @@ class OnboardingScreen extends GetView<OnboardingController> {
                   )
                   : null,
           bottomNavigationBar: SafeArea(
-            child: BottomBtn(
-              label: "NEXT",
-              onTap: () {
-                controller.forwardPage();
-              },
-            ),
+            child: Obx(() {
+              SettingController.to.colorIndex;
+              return BottomBtn(
+                label: "NEXT",
+                onTap: () => controller.forwardPage(),
+              );
+            }),
           ),
         );
       },

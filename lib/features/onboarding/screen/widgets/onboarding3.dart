@@ -11,6 +11,7 @@ class Onboarding3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('Onboarding3');
     return Column(
       children: [
         Text(
