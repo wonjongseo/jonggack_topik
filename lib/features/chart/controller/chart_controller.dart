@@ -6,7 +6,8 @@ import 'package:jonggack_topik/core/models/quiz_history.dart';
 import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/core/utils/snackbar_helper.dart';
 import 'package:jonggack_topik/features/book/controller/book_controller.dart';
-import 'package:jonggack_topik/features/missed_word/controller/missed_word_controller.dart';
+import 'package:jonggack_topik/features/history/controller/history_controller.dart';
+
 import 'package:jonggack_topik/features/user/repository/quiz_history_repository.dart';
 
 class ChartController extends GetxController {
@@ -14,36 +15,36 @@ class ChartController extends GetxController {
 
   bool isGraphWidget = true;
 
-  final _allHistory = <QuizHistory>[].obs;
-  List<QuizHistory> get allHistory => _allHistory.value;
-  final isLoading = false.obs;
+  // final _allHistory = <QuizHistory>[].obs;
+  // List<QuizHistory> get allHistory => _allHistory.value;
+  // final isLoading = false.obs;
 
   void deteleWord(Word word) {}
   @override
   void onInit() {
     super.onInit();
-    getAllData();
+    // getAllData();
   }
 
-  getAllData() {
-    getHistories();
-    MissedWordController.to.getMissedWords();
-  }
+  // getAllData() {
+  // getHistories();
+  // MissedWordController.to.getMissedWords();
+  // }
 
-  void getHistories() {
-    try {
-      isLoading(true);
-      final all = QuizHistoryRepository.fetchAll();
+  // void getHistories() {
+  //   try {
+  //     isLoading(true);
+  //     final all = QuizHistoryRepository.fetchAll();
 
-      _allHistory.assignAll(all);
-      generateGraph();
-    } catch (e) {
-      LogManager.error('$e');
-      SnackBarHelper.showErrorSnackBar('$e');
-    } finally {
-      isLoading(false);
-    }
-  }
+  //     _allHistory.assignAll(all);
+  //     generateGraph();
+  //   } catch (e) {
+  //     LogManager.error('$e');
+  //     SnackBarHelper.showErrorSnackBar('$e');
+  //   } finally {
+  //     isLoading(false);
+  //   }
+  // }
 
   Future<void> toggleMyWord(Word word) async {
     BookController.to.toggleMyWord(word);
@@ -153,7 +154,7 @@ class ChartController extends GetxController {
       sumIncorrect[key] = 0;
     }
 
-    for (var history in allHistory) {
+    for (var history in HistoryController.to.allHistory) {
       final key = DateFormat(showGraphType.dateFormat).format(history.date);
       final correct = history.correctWordIds.length;
       final incorrect = history.incorrectWordIds.length;

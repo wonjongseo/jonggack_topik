@@ -5,6 +5,8 @@ class AppTranslations extends Translations {
   // TODO: implement keys
   Map<String, Map<String, String>> get keys => {
     'ja_JP': {
+      AppString.search: AppString.searchJp,
+      AppString.category: AppString.categoryJp,
       AppString.attendance: AppString.attendanceJp,
       AppString.goalLevel: AppString.goalLevelJp,
       AppString.todayStudy: AppString.todayStudyJp,
@@ -17,7 +19,8 @@ class AppTranslations extends Translations {
       AppString.saveAllWords: AppString.saveAllWordsJp,
       AppString.noTurningBack: AppString.noTurningBackJp,
       AppString.sureDelete: AppString.sureDeleteJp,
-      AppString.dicationary: AppString.dicationaryJp,
+      AppString.createDicationary: AppString.dicationaryJp,
+      AppString.createtion: AppString.createtionJp,
       AppString.deleteAll: AppString.deleteAllJp,
       AppString.appName: AppString.appNameJp,
       AppString.youHavePreQuizData: AppString.youHavePreQuizDataJp,
@@ -44,6 +47,8 @@ class AppTranslations extends Translations {
       AppString.back: AppString.backJp,
       AppString.selectGoalLevel: AppString.selectGoalLevelJp,
       AppString.selectCountOfStudy: AppString.selectCountOfStudyJp,
+      AppString.plzSelectCountOfStudy: AppString.plzSelectCountOfStudyJp,
+      AppString.countOfStudy: AppString.plzSelectCountOfStudyJp,
       AppString.doYouWantToAlert: AppString.doYouWantToAlertJp,
       AppString.doYouWantToAlert2: AppString.doYouWantToAlert2Jp,
       AppString.cancelBtnText: AppString.cancelBtnTextJp,
@@ -109,6 +114,8 @@ class AppTranslations extends Translations {
       AppString.almostPass: AppString.almostPassJp,
     },
     'ko_KR': {
+      AppString.search: AppString.searchKr,
+      AppString.category: AppString.categoryKr,
       AppString.attendance: AppString.attendanceKr,
       AppString.goalLevel: AppString.goalLevelKr,
       AppString.todayStudy: AppString.todayStudyKr,
@@ -121,7 +128,8 @@ class AppTranslations extends Translations {
       AppString.saveAllWords: AppString.saveAllWordsKr,
       AppString.noTurningBack: AppString.noTurningBackKr,
       AppString.sureDelete: AppString.sureDeleteKr,
-      AppString.dicationary: AppString.dicationaryKr,
+      AppString.createDicationary: AppString.dicationaryKr,
+      AppString.createtion: AppString.createtionKr,
       AppString.deleteAll: AppString.deleteAllKr,
       AppString.appName: AppString.appNameKr,
       AppString.youHavePreQuizData: AppString.youHavePreQuizDataKr,
@@ -148,6 +156,8 @@ class AppTranslations extends Translations {
       AppString.back: AppString.backKr,
       AppString.selectGoalLevel: AppString.selectGoalLevelKr,
       AppString.selectCountOfStudy: AppString.selectCountOfStudyKr,
+      AppString.plzSelectCountOfStudy: AppString.plzSelectCountOfStudyKr,
+      AppString.countOfStudy: AppString.countOfStudyKr,
       AppString.doYouWantToAlert: AppString.doYouWantToAlertKr,
       AppString.doYouWantToAlert2: AppString.doYouWantToAlert2Kr,
       AppString.cancelBtnText: AppString.cancelBtnTextKr,
@@ -339,8 +349,16 @@ class AppString {
   static String selectGoalLevelJp = 'どのレベル目指していますか？';
 
   static String selectCountOfStudy = "selectCountOfStudyTr";
-  static String selectCountOfStudyKr = "하루에 몇개 외우는 것을 목표로 하고 계신가요?";
+  static String selectCountOfStudyKr = "하루에 몇개의 단어를 외우려고 하고 계신가요?";
   static String selectCountOfStudyJp = '1日に何個覚えるのを目指していますか？';
+
+  static String plzSelectCountOfStudy = "plzSelectCountOfStudyTr";
+  static String plzSelectCountOfStudyKr = "스크롤로 단어수를 선택해주세요";
+  static String plzSelectCountOfStudyJp = 'スクロールで単語数を選んでください';
+
+  static String countOfStudy = "countOfStudyTr";
+  static String countOfStudyKr = "단어수";
+  static String countOfStudyJp = '単語数';
 
   static String doYouWantToAlert = "doYouWantToAlertTr";
   static String doYouWantToAlertKr = "학습 알림을 받으시겠습니까?";
@@ -746,9 +764,14 @@ We’ll review your report and work on improvements as soon as possible.
   static String deleteAllJp = '全部削除';
   static String deleteAllEn = "";
 
-  static String dicationary = "dicationaryTr";
-  static String dicationaryKr = '단어장';
-  static String dicationaryJp = '単語帳';
+  static String createtion = "createtionTr";
+  static String createtionKr = '생성';
+  static String createtionJp = '作成';
+  static String createtionEn = "";
+
+  static String createDicationary = "dicationaryTr";
+  static String dicationaryKr = '단어장 작성';
+  static String dicationaryJp = '単語帳作成';
   static String dicationaryEn = "";
 
   static String noTurningBack = "noTurningBackTr";
@@ -810,4 +833,14 @@ We’ll review your report and work on improvements as soon as possible.
   static String attendanceKr = '출석';
   static String attendanceJp = '出席';
   static String attendanceEn = "";
+
+  static String search = "searchTr";
+  static String searchKr = '검색';
+  static String searchJp = '検索';
+  static String searchEn = "";
+
+  static String category = "categoryTr";
+  static String categoryKr = '카테고리';
+  static String categoryJp = 'カテゴリ';
+  static String categoryEn = "";
 }

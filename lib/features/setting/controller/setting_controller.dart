@@ -36,7 +36,6 @@ class SettingController extends GetxController {
 
   SettingController(bool isDarkMode) {
     _isDarkMode.value = isDarkMode;
-    SettingRepository.setBool(AppConstant.isDarkModeKey, _isDarkMode.value);
   }
 
   @override

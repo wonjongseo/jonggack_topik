@@ -1,3 +1,4 @@
+import 'package:jonggack_topik/features/history/controller/history_controller.dart';
 import 'package:jonggack_topik/features/home/controller/home_controller.dart';
 import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
 import 'package:flutter/material.dart';
@@ -13,10 +14,9 @@ import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/features/book/controller/book_controller.dart';
 import 'package:jonggack_topik/features/category/controller/category_controller.dart';
 import 'package:jonggack_topik/features/auth/controllers/user_controller.dart';
-import 'package:jonggack_topik/features/category/controller/search_get_controller.dart';
+import 'package:jonggack_topik/features/search/controller/search_get_controller.dart';
 import 'package:jonggack_topik/features/chart/controller/chart_controller.dart';
 import 'package:jonggack_topik/features/main/controller/main_controller.dart';
-import 'package:jonggack_topik/features/missed_word/controller/missed_word_controller.dart';
 import 'package:jonggack_topik/features/onboarding/controller/onboarding_controller.dart';
 import 'package:jonggack_topik/routes.dart';
 import 'package:jonggack_topik/splash_screen.dart';
@@ -149,8 +149,9 @@ class InitBinding extends Bindings {
     Get.put(BookController());
     Get.lazyPut(() => DataRepositry());
     Get.lazyPut(() => CategoryController(Get.find()));
+    Get.lazyPut(() => HistoryController());
     Get.lazyPut(() => ChartController(), fenix: true);
-    Get.lazyPut(() => MissedWordController(), fenix: true);
+    // Get.lazyPut(() => MissedWordController(), fenix: true);
   }
 }
 

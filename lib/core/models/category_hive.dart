@@ -19,19 +19,27 @@ class CategoryHive extends HiveObject {
   @HiveField(2)
   final int createdAt;
 
-  CategoryHive({required this.title, required this.subjects})
-    : createdAt = DateTime.now().microsecondsSinceEpoch;
+  @HiveField(3)
+  DateTime? lastAccessDate;
+
+  CategoryHive({
+    required this.title,
+    required this.subjects,
+    this.lastAccessDate,
+  }) : createdAt = DateTime.now().microsecondsSinceEpoch;
 
   Map<String, dynamic> toMap() {
     return {
       'title': title,
       'subjects': subjects.map((s) => s.toMap()).toList(),
+      'lastAccessDate': lastAccessDate,
     };
   }
 
   factory CategoryHive.fromMap(Map<String, dynamic> map) {
     return CategoryHive(
       title: map['title'] ?? '',
+      lastAccessDate: map['lastAccessDate'] ?? '',
       subjects: List<SubjectHive>.from(
         (map['subjects'] ?? []).map((x) => SubjectHive.fromMap(x)),
       ),

@@ -7,7 +7,8 @@ import 'package:jonggack_topik/core/repositories/setting_repository.dart';
 import 'package:jonggack_topik/core/utils/app_color.dart';
 import 'package:jonggack_topik/core/utils/app_constant.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
-import 'package:jonggack_topik/features/missed_word/controller/missed_word_controller.dart';
+import 'package:jonggack_topik/features/history/controller/history_controller.dart';
+
 import 'package:table_calendar/table_calendar.dart';
 
 class AttenanceScreen extends StatefulWidget {
@@ -25,9 +26,8 @@ class _AttenanceScreenState extends State<AttenanceScreen> {
   late DateTime startDay;
 
   late final ValueNotifier<List<DateTime>> _selectedDays;
-  late final Map<DateTime, List<MissedWord>> _events;
-  CalendarFormat _calendarFormat = CalendarFormat.month;
-  DateTime _focusedDay = DateTime.now();
+  late final Map<DateTime, List<TriedWord>> _events;
+
   @override
   void initState() {
     focusedDay = now;
@@ -44,10 +44,10 @@ class _AttenanceScreenState extends State<AttenanceScreen> {
   }
 
   void _buildEvents() {
-    final Map<DateTime, List<MissedWord>> map = {};
+    final Map<DateTime, List<TriedWord>> map = {};
 
-    for (var w in MissedWordController.to.missedWords) {
-      for (var s in w.missedDays) {
+    for (var w in HistoryController.to.missedWords) {
+      for (var s in w.triedDays) {
         final dt = DateTime.parse(s);
         final key = DateTime(dt.year, dt.month, dt.day);
         map.putIfAbsent(key, () => []).add(w);
@@ -57,7 +57,7 @@ class _AttenanceScreenState extends State<AttenanceScreen> {
     setState(() => _events = map);
   }
 
-  List<MissedWord> _getEvents(DateTime day) {
+  List<TriedWord> _getEvents(DateTime day) {
     return _events[DateTime(day.year, day.month, day.day)] ?? [];
   }
 
@@ -71,7 +71,7 @@ class _AttenanceScreenState extends State<AttenanceScreen> {
     return a.year == b.year && a.month == b.month && a.day == b.day;
   }
 
-  Widget _buildEventList(DateTime day, List<MissedWord> events) {
+  Widget _buildEventList(DateTime day, List<TriedWord> events) {
     final df = DateFormat('yyyy-MM-dd');
     return Padding(
       padding: EdgeInsets.all(16),
@@ -107,7 +107,7 @@ class _AttenanceScreenState extends State<AttenanceScreen> {
         child: Column(
           children: [
             Expanded(
-              child: TableCalendar<MissedWord>(
+              child: TableCalendar<TriedWord>(
                 locale: Get.locale.toString(),
                 focusedDay: DateTime.now(),
                 headerStyle: HeaderStyle(
@@ -132,7 +132,7 @@ class _AttenanceScreenState extends State<AttenanceScreen> {
                   return widget.attendances.any((d) => _isSameDate(d, day));
                 },
                 onDaySelected: (selected, focused) {
-                  setState(() => _focusedDay = focused);
+                  setState(() => focusedDay = focused);
                   final events = _getEvents(selected);
                   if (events.isEmpty) return;
                   showModalBottomSheet(
@@ -146,7 +146,7 @@ class _AttenanceScreenState extends State<AttenanceScreen> {
                   );
                 },
                 onPageChanged: (focusedDay) {
-                  _focusedDay = focusedDay;
+                  this.focusedDay = focusedDay;
                 },
 
                 calendarBuilders: CalendarBuilders(

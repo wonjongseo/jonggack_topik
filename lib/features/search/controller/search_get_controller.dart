@@ -11,7 +11,7 @@ import 'package:jonggack_topik/features/word/controller/word_controller.dart';
 class SearchGetController extends GetxController {
   final _words = <Word>[].obs;
   List<Word> get words => _words.value;
-  final TextEditingController controller = TextEditingController();
+  final TextEditingController teCtl = TextEditingController();
   late final FB.Debouncer debouncer;
 
   final isTyping = false.obs;
@@ -24,7 +24,7 @@ class SearchGetController extends GetxController {
 
   @override
   void onClose() {
-    controller.dispose();
+    teCtl.dispose();
     _clearTimer?.cancel();
     debouncer.cancel();
     super.onClose();
@@ -52,7 +52,7 @@ class SearchGetController extends GetxController {
   void _resetClearTimer() {
     _clearTimer?.cancel();
     _clearTimer = Timer(Duration(seconds: 10), () {
-      controller.clear();
+      teCtl.clear();
       _words.clear();
     });
   }

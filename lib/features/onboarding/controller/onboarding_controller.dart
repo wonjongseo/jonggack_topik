@@ -1,4 +1,5 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -18,7 +19,6 @@ import 'package:jonggack_topik/features/onboarding/screen/widgets/onboarding1.da
 import 'package:jonggack_topik/features/onboarding/screen/widgets/onboarding2.dart';
 import 'package:jonggack_topik/features/onboarding/screen/widgets/onboarding3.dart';
 import 'package:jonggack_topik/features/onboarding/screen/widgets/onboarding4.dart';
-import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
 import 'package:jonggack_topik/features/setting/enum/enums.dart';
 import 'package:timezone/timezone.dart' as tz;
 
@@ -26,7 +26,7 @@ class OnboardingController extends GetxController {
   @override
   void onInit() {
     pageController = PageController(initialPage: _pageIndex);
-
+    teCtl = TextEditingController(text: '${value + 1}');
     super.onInit();
   }
 
@@ -75,28 +75,68 @@ class OnboardingController extends GetxController {
   }
 
   // Onboarding4
-  TextEditingController teCtl = TextEditingController(text: '30');
-  void changeCountOfStudy(bool isIncrease) {
-    String sCount = teCtl.text.trim();
-    int count = int.tryParse(sCount) ?? 1;
+  // TextEditingController teCtl = TextEditingController(text: '30');
 
-    if (isIncrease) {
-      count++;
-    } else {
-      count--;
+  // void changeCountOfStudy(bool isIncrease) {
+  //   String sCount = teCtl.text.trim();
+  //   int count = int.tryParse(sCount) ?? 1;
+
+  //   if (isIncrease) {
+  //     count++;
+  //   } else {
+  //     count--;
+  //   }
+  //   if (count < 1) {
+  //     return;
+  //   }
+  //   teCtl.text = '$count';
+  // }
+
+  double _scrollAccumulator = 0;
+  int value = 29;
+  static const double _threshold = 24.0;
+
+  void onScroll(PointerSignalEvent event) {
+    if (event is PointerScrollEvent) {
+      // 마우스 휠 ↑ 은 scrollDelta.dy < 0 이므로, 부호를 뒤집어 +로 축적
+      _scrollAccumulator += -event.scrollDelta.dy;
+
+      // 누적량이 임계치 이상이면 +1
+      if (_scrollAccumulator >= _threshold) {
+        value = (value + 1).clamp(0, 1000);
+        _scrollAccumulator -= _threshold; // 사용한 만큼 빼줌
+      }
+      // 누적량이 –임계치 이하이면 –1
+      else if (_scrollAccumulator <= -_threshold) {
+        value = (value - 1).clamp(0, 1000);
+        _scrollAccumulator += _threshold;
+      }
     }
-    if (count < 1) {
-      return;
+    teCtl.text = value.toString();
+    update();
+  }
+
+  late TextEditingController teCtl;
+
+  // 모바일 드래그용도 동일하게 임계치 적용
+  void onDrag(DragUpdateDetails details) {
+    _scrollAccumulator += -details.delta.dy;
+    if (_scrollAccumulator >= _threshold) {
+      value = (value + 1).clamp(0, 1000);
+      _scrollAccumulator -= _threshold;
+    } else if (_scrollAccumulator <= -_threshold) {
+      value = (value - 1).clamp(0, 1000);
+      _scrollAccumulator += _threshold;
     }
-    teCtl.text = '$count';
+    teCtl.text = value.toString();
+    update();
   }
 
   Future<void> _saveCountOfGoalStudy() async {
-    String sCount = teCtl.text.trim();
-    int count = int.tryParse(sCount) ?? 1;
     try {
-      SettingRepository.setInt(AppConstant.countOfGoal, count);
-      LogManager.info('키 : ${AppConstant.countOfGoal}, 값: $count');
+      value = value + 1;
+      SettingRepository.setInt(AppConstant.countOfGoal, value);
+      LogManager.info('키 : ${AppConstant.countOfGoal}, 값: $value');
     } catch (e) {
       LogManager.error('$e');
     }

@@ -2,17 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/utils/app_color.dart';
 import 'package:jonggack_topik/core/widgets/animate_progressIndicator.dart';
+import 'package:jonggack_topik/features/category/controller/category_controller.dart';
 import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
 
 class CateogryProgress extends StatelessWidget {
   final String caregory;
-  final int curCnt;
-  final int totalCnt;
+  final TotalAndScore totalAndScore;
+  // final int curCnt;
+  // final int totalCnt;
   const CateogryProgress({
     super.key,
     required this.caregory,
-    required this.curCnt,
-    required this.totalCnt,
+    required this.totalAndScore,
+    // required this.curCnt,
+    // required this.totalCnt,
   });
 
   @override
@@ -28,7 +31,7 @@ class CateogryProgress extends StatelessWidget {
               Text(caregory, style: TextStyle(fontWeight: FontWeight.w700)),
 
               TweenAnimationBuilder(
-                tween: Tween<double>(begin: 0, end: curCnt / 100),
+                tween: Tween<double>(begin: 0, end: totalAndScore.score / 100),
                 duration: const Duration(milliseconds: 1500),
                 builder: (context, value, child) {
                   return RichText(
@@ -47,7 +50,7 @@ class CateogryProgress extends StatelessWidget {
                           style: TextStyle(color: AppColors.mainBordColor),
                         ),
                         const TextSpan(text: '/'),
-                        TextSpan(text: '$totalCnt'),
+                        TextSpan(text: '${totalAndScore.total}'),
                       ],
                     ),
                   );
@@ -57,8 +60,8 @@ class CateogryProgress extends StatelessWidget {
           ),
           SizedBox(height: 16),
           AnimatedLeanerProgressIndicator(
-            currentProgressCount: curCnt,
-            totalProgressCount: totalCnt,
+            currentProgressCount: totalAndScore.score,
+            totalProgressCount: totalAndScore.total,
           ),
         ],
       ),

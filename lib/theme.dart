@@ -118,6 +118,15 @@ Color get dfBackground =>
         ? AppColors.scaffoldBackground
         : AppColors.white;
 
-List<BoxShadow> get homeBoxShadow => [
-  BoxShadow(color: Colors.grey[400]!, blurRadius: 10),
-];
+Color get dfCardColor =>
+    SettingController.to.isDarkMode ? AppColors.black : AppColors.white;
+
+Color get dfButtonColor =>
+    SettingController.to.isDarkMode
+        ? AppColors.mainBordColor
+        : AppColors.primaryColor;
+
+List<BoxShadow> get homeBoxShadow =>
+    SettingController.to.isDarkMode
+        ? [BoxShadow(color: Colors.black54, blurRadius: 10)]
+        : [BoxShadow(color: Colors.grey[400]!, blurRadius: 10)];

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:jonggack_topik/features/attendance/screen/attenance_screen.dart';
 import 'package:jonggack_topik/features/home/controller/home_controller.dart';
 import 'package:jonggack_topik/features/home/screen/widgets/attendance_weekend.dart';
+import 'package:jonggack_topik/theme.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class Attenance extends StatelessWidget {
@@ -12,9 +13,9 @@ class Attenance extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: dfBackground,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [BoxShadow(color: Colors.grey[300]!, blurRadius: 2)],
+        boxShadow: homeBoxShadow,
       ),
       padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
       child: Obx(

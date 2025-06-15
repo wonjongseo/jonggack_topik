@@ -6,26 +6,26 @@ part of 'missed_word.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class MissedWordAdapter extends TypeAdapter<MissedWord> {
+class TriedWordAdapter extends TypeAdapter<TriedWord> {
   @override
   final int typeId = 15;
 
   @override
-  MissedWord read(BinaryReader reader) {
+  TriedWord read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return MissedWord(
+    return TriedWord(
       wordId: fields[0] as String,
       category: fields[1] as String,
       missCount: fields[2] as int,
-      missedDays: (fields[3] as List?)?.cast<String>(),
+      triedDays: (fields[3] as List?)?.cast<String>(),
     );
   }
 
   @override
-  void write(BinaryWriter writer, MissedWord obj) {
+  void write(BinaryWriter writer, TriedWord obj) {
     writer
       ..writeByte(4)
       ..writeByte(0)
@@ -35,7 +35,7 @@ class MissedWordAdapter extends TypeAdapter<MissedWord> {
       ..writeByte(2)
       ..write(obj.missCount)
       ..writeByte(3)
-      ..write(obj.missedDays);
+      ..write(obj.triedDays);
   }
 
   @override
@@ -44,7 +44,7 @@ class MissedWordAdapter extends TypeAdapter<MissedWord> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is MissedWordAdapter &&
+      other is TriedWordAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

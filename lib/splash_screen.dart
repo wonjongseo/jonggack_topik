@@ -1,9 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jonggack_topik/core/models/attendance_date.dart';
 import 'package:jonggack_topik/core/repositories/hive_repository.dart';
-import 'package:jonggack_topik/core/utils/app_function.dart';
 import 'package:jonggack_topik/features/attendance/controller/attendance_controller.dart';
 import 'package:jonggack_topik/features/auth/models/user.dart';
 import 'package:jonggack_topik/features/main/screens/main_screen.dart';
@@ -48,7 +46,7 @@ class SplashController extends GetxController {
 
     AttendanceDateRepository.addDate(DateTime.now());
     if (hasUser.isEmpty) {
-      //|| kDebugMode
+      // || kDebugMode
       Get.offAllNamed(OnboardingScreen.name);
     } else {
       Get.offAllNamed(MainScreen.name);

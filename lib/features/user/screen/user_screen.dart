@@ -8,6 +8,7 @@ import 'package:jonggack_topik/features/book/controller/book_study_controller.da
 import 'package:jonggack_topik/features/book/screen/book_study_screen.dart';
 import 'package:jonggack_topik/features/category/screen/widgets/search_form.dart';
 import 'package:jonggack_topik/features/main/screens/widgets/welcome_widget.dart';
+import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
 import 'package:jonggack_topik/features/user/screen/widgets/add_book_card.dart';
 import 'package:jonggack_topik/features/user/screen/widgets/book_card.dart';
 
@@ -21,56 +22,75 @@ class UserScreen extends GetView<BookController> {
       resizeToAvoidBottomInset: false,
       body: GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-        child: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(height: 100, child: const WelcomeWidget()),
-              SizedBox(height: size.height * .15, child: SeacrhForm()),
-              Expanded(
-                child: Obx(() {
-                  if (controller.isLoading.value) {
-                    return CircularProgressIndicator();
-                  }
-                  return CarouselSlider(
-                    carouselController: controller.carouselSliderController,
-                    items: [
-                      ...List.generate(controller.books.length, (index) {
-                        return InkWell(
-                          onTap: () {
-                            Get.to(
-                              () => BookStudyScreen(),
-                              binding: BindingsBuilder.put(
-                                () => BookStudyController(
-                                  controller.books[index],
-                                ),
-                              ),
-                            );
-                          },
-                          child: BookCard(
-                            book: controller.books[index],
-                            deleteBook: (book) => controller.deleteBook(book),
-                            teCtl: index == 0 ? controller.bookNameCtl : null,
-                          ),
-                        );
-                      }),
-                      AddBookCard(
-                        tECtl: controller.bookNameCtl,
-                        tECtl2: controller.bookDescriptionCtl,
-                        onTap: () => controller.createBook(),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          child: SafeArea(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 16),
+                Padding(
+                  padding: EdgeInsets.only(top: 16, left: 16),
+                  child: Column(
+                    children: [
+                      Text(
+                        '커스텀 단어장',
+                        style: TextStyle(
+                          fontSize: SettingController.to.baseFS + 4,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ],
-                    options: CarouselOptions(
-                      disableCenter: true,
-                      viewportFraction: 0.65,
-                      enableInfiniteScroll: false,
-                      enlargeCenterPage: true,
-                    ),
-                  );
-                }),
-              ),
-              SizedBox(height: 16),
-            ],
+                  ),
+                ),
+                Spacer(flex: 2),
+                Expanded(
+                  flex: 15,
+                  child: Obx(() {
+                    if (controller.isLoading.value) {
+                      return CircularProgressIndicator();
+                    }
+                    return CarouselSlider(
+                      carouselController: controller.carouselSliderController,
+                      items: [
+                        ...List.generate(controller.books.length, (index) {
+                          return InkWell(
+                            onTap: () {
+                              Get.to(
+                                () => BookStudyScreen(),
+                                binding: BindingsBuilder.put(
+                                  () => BookStudyController(
+                                    controller.books[index],
+                                  ),
+                                ),
+                              );
+                            },
+                            child: BookCard(
+                              book: controller.books[index],
+                              deleteBook: (book) => controller.deleteBook(book),
+                              teCtl: index == 0 ? controller.bookNameCtl : null,
+                            ),
+                          );
+                        }),
+                        AddBookCard(
+                          tECtl: controller.bookNameCtl,
+                          tECtl2: controller.bookDescriptionCtl,
+                          onTap: () => controller.createBook(),
+                        ),
+                      ],
+                      options: CarouselOptions(
+                        disableCenter: true,
+                        viewportFraction: 0.8,
+                        enableInfiniteScroll: false,
+                        enlargeCenterPage: true,
+                      ),
+                    );
+                  }),
+                ),
+                SizedBox(height: 16),
+                // Spacer(),
+              ],
+            ),
           ),
         ),
       ),

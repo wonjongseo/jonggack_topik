@@ -14,8 +14,9 @@ import 'package:jonggack_topik/core/utils/app_function.dart';
 import 'package:jonggack_topik/features/category/controller/category_controller.dart';
 import 'package:jonggack_topik/features/chapter/controller/chapter_controller.dart';
 import 'package:jonggack_topik/features/chart/controller/chart_controller.dart';
+import 'package:jonggack_topik/features/history/controller/history_controller.dart';
 import 'package:jonggack_topik/features/home/controller/home_controller.dart';
-import 'package:jonggack_topik/features/missed_word/controller/missed_word_controller.dart';
+
 import 'package:jonggack_topik/features/quiz/screen/very_good_screen.dart';
 import 'package:jonggack_topik/features/score/screen/score_screen.dart';
 import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
@@ -185,41 +186,6 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
   //     MissedWordController.to.getMissedWords();
   //   }
   // }
-  Future<void> registerMiss(List<Word> words) async {
-    final Box<MissedWord> box = Hive.box<MissedWord>(MissedWord.boxKey);
-
-    // 오늘 날짜만 비교할 수 있도록 날짜 단위 문자열 생성 (예: "2025-06-13")
-    final now = DateTime.now();
-    final todayKey = DateTime(now.year, now.month, now.day).toIso8601String();
-
-    for (var word in words) {
-      final existing = box.values.toList().firstWhereOrNull(
-        (e) => e.wordId == word.id,
-      );
-
-      if (existing != null) {
-        // missCount 는 항상++
-        existing.missCount++;
-
-        // 오늘 날짜가 아직 없으면 리스트에 추가
-        if (!existing.missedDays.contains(todayKey)) {
-          existing.missedDays.add(todayKey);
-        }
-
-        await existing.save();
-      } else {
-        // 새로 만들 때는 missCount=1, MissedDays 에 오늘만 넣기
-        box.add(
-          MissedWord(
-            wordId: word.id,
-            category: '',
-            missCount: 1,
-            missedDays: [todayKey],
-          ),
-        );
-      }
-    }
-  }
 
   void nextQuestion() async {
     isDisTouchable = false;
@@ -263,10 +229,8 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
         newIncorrectIds: wrongQuestions.map((word) => word.id).toSet().toList(),
       );
 
-      await registerMiss(wrongQuestions);
-
       if (Get.isRegistered<ChartController>()) {
-        ChartController.to.getAllData();
+        HistoryController.to.getAllHistories();
       }
       if (Get.isRegistered<HomeController>()) {
         HomeController.to.getAllDatas();

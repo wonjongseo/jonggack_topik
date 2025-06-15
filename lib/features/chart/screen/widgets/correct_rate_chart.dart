@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:jonggack_topik/core/utils/app_color.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/features/chart/controller/chart_controller.dart';
+import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
 import 'package:jonggack_topik/theme.dart';
 
 class CorrectRateChart extends StatelessWidget {
@@ -42,7 +43,6 @@ class CorrectRateChart extends StatelessWidget {
                               controller.incorrectCounts[groupIndex];
                           return BarTooltipItem(
                             '$correct/${correct + incorrect}\n${AppString.correctRate.tr}: $percent%',
-                            // '${AppString.correct.tr}: $correct${AppString.unit.tr}\n${AppString.wrong.tr}: $incorrect${AppString.unit.tr}\n${AppString.correctRate.tr}: $percent%',
                             TextStyle(),
                           );
                         },
@@ -134,7 +134,10 @@ class CorrectRateChart extends StatelessWidget {
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: [AppColors.primaryColor, Colors.white],
+              colors:
+                  SettingController.to.isDarkMode
+                      ? [AppColors.mainBordColor, Colors.white]
+                      : [AppColors.primaryColor, Colors.white],
             ),
           ),
         ],

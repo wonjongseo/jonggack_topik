@@ -18,8 +18,8 @@ class QuizHistoryAdapter extends TypeAdapter<QuizHistory> {
     };
     return QuizHistory(
       date: fields[0] as DateTime,
-      correctWordIds: (fields[1] as List).cast<String>(),
-      incorrectWordIds: (fields[2] as List).cast<String>(),
+      correctWordIds: (fields[1] as List).cast<TriedWord>(),
+      incorrectWordIds: (fields[2] as List).cast<TriedWord>(),
     );
   }
 

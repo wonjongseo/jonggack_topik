@@ -35,7 +35,7 @@ class MainScreen extends GetView<MainController> {
             textStyle: TextStyle(color: Colors.white),
           ),
           PersistentBottomNavBarItem(
-            icon: Icon(FontAwesomeIcons.book),
+            icon: Icon(FontAwesomeIcons.list),
             // iconSize: 20,
             // title: "Random Quiz",
             activeColorPrimary: AppColors.primaryColor,
@@ -43,7 +43,15 @@ class MainScreen extends GetView<MainController> {
             inactiveColorPrimary: Colors.grey,
           ),
           PersistentBottomNavBarItem(
-            icon: Icon(FontAwesomeIcons.user),
+            icon: Icon(FontAwesomeIcons.magnifyingGlass),
+            iconSize: 20,
+            // title: "Me",
+            activeColorPrimary: AppColors.primaryColor,
+            activeColorSecondary: AppColors.primaryColor,
+            inactiveColorPrimary: Colors.grey,
+          ),
+          PersistentBottomNavBarItem(
+            icon: Icon(FontAwesomeIcons.book),
             iconSize: 20,
             // title: "Me",
             activeColorPrimary: AppColors.primaryColor,

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
-import 'package:jonggack_topik/features/missed_word/controller/missed_word_controller.dart';
+import 'package:jonggack_topik/features/history/controller/history_controller.dart';
+
 import 'package:jonggack_topik/features/missed_word/screen/missed_words_screen.dart';
 import 'package:jonggack_topik/theme.dart';
 
@@ -10,18 +11,16 @@ class MissedWordButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<MissedWordController>(
+    return GetBuilder<HistoryController>(
       builder: (controller) {
-        print('controller.missedWords : ${controller.missedWords}');
-
         return GestureDetector(
           onTap: () => Get.to(() => MissedWordsScreen()),
           child: Container(
             height: 60,
             padding: EdgeInsets.symmetric(horizontal: 20),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: Colors.white,
+              borderRadius: BorderRadius.circular(16),
+              color: dfBackground,
               boxShadow: homeBoxShadow,
             ),
             child: Center(

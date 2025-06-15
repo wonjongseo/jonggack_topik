@@ -6,7 +6,7 @@ import 'package:jonggack_topik/core/models/word.dart';
 part 'missed_word.g.dart';
 
 @HiveType(typeId: HK.missedWordID)
-class MissedWord extends HiveObject {
+class TriedWord extends HiveObject {
   static const String boxKey = HK.missedWordBoxKey;
   @HiveField(0)
   String wordId;
@@ -15,17 +15,17 @@ class MissedWord extends HiveObject {
   @HiveField(2)
   int missCount;
   @HiveField(3)
-  List<String> missedDays;
+  List<String> triedDays;
 
-  MissedWord({
+  TriedWord({
     required this.wordId,
     required this.category,
     this.missCount = 1,
-    List<String>? missedDays,
-  }) : missedDays = missedDays ?? [];
+    List<String>? triedDays,
+  }) : triedDays = triedDays ?? [];
 
   @override
   String toString() {
-    return 'MissedWord(wordId: $wordId, missCount: $missCount, missedDays: $missedDays)';
+    return 'MissedWord(wordId: $wordId, missCount: $missCount, missedDays: $triedDays)';
   }
 }

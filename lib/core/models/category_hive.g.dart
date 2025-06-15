@@ -19,19 +19,22 @@ class CategoryHiveAdapter extends TypeAdapter<CategoryHive> {
     return CategoryHive(
       title: fields[0] as String,
       subjects: (fields[1] as List).cast<SubjectHive>(),
+      lastAccessDate: fields[3] as DateTime?,
     );
   }
 
   @override
   void write(BinaryWriter writer, CategoryHive obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.title)
       ..writeByte(1)
       ..write(obj.subjects)
       ..writeByte(2)
-      ..write(obj.createdAt);
+      ..write(obj.createdAt)
+      ..writeByte(3)
+      ..write(obj.lastAccessDate);
   }
 
   @override

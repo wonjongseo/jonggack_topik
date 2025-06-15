@@ -3,48 +3,63 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
+import 'package:jonggack_topik/core/logger/logger_service.dart';
 import 'package:jonggack_topik/core/models/missed_word.dart';
+import 'package:jonggack_topik/core/models/quiz_history.dart';
 import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/core/repositories/hive_repository.dart';
 import 'package:jonggack_topik/core/utils/app_function.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
+import 'package:jonggack_topik/core/utils/snackbar_helper.dart';
+import 'package:jonggack_topik/features/chart/controller/chart_controller.dart';
+import 'package:jonggack_topik/features/history/controller/history_controller.dart';
 import 'package:jonggack_topik/features/missed_word/screen/widgets/missed_word_quiz_option_bottomsheet.dart';
 import 'package:jonggack_topik/features/quiz/controller/quiz_controller.dart';
 import 'package:jonggack_topik/features/quiz/screen/quiz_screen.dart';
+import 'package:jonggack_topik/features/user/repository/quiz_history_repository.dart';
 import 'package:jonggack_topik/features/word/controller/word_controller.dart';
 import 'package:jonggack_topik/features/word/screen/word_screen.dart';
 
-class MissedWordController extends GetxController {
-  static MissedWordController get to => Get.find<MissedWordController>();
-  final _missedWords = <MissedWord>[].obs;
-  bool isWordLoading = false;
-  List<MissedWord> get missedWords => _missedWords.value;
+class HistoryController extends GetxController {
+  static HistoryController get to => Get.find<HistoryController>();
+
+  final isLoading = false.obs;
+
+  final _allHistory = <QuizHistory>[].obs;
+  List<QuizHistory> get allHistory => _allHistory.value;
+
+  List<TriedWord> get missedWords =>
+      allHistory.expand((h) => h.incorrectWordIds).toList();
+
   List<Word> get words {
     final wordRepo = Get.find<HiveRepository<Word>>(tag: Word.boxKey);
-    return missedWords.map((missed) => wordRepo.get(missed.wordId)!).toList();
+    return missedWords.map((t) => wordRepo.get(t.wordId)!).toList();
   }
 
-  final Box<MissedWord> _missedWordBox = Hive.box<MissedWord>(
-    MissedWord.boxKey,
-  );
   @override
-  void onInit() {
-    getMissedWords();
-    super.onInit();
+  void onReady() {
+    getAllHistories();
+    super.onReady();
   }
 
-  void getMissedWords() {
-    final missedWords = _missedWordBox.values.toList();
+  void getAllHistories() {
+    try {
+      isLoading(true);
+      final all = QuizHistoryRepository.fetchAll();
 
-    missedWords.sort((b, a) => a.missCount.compareTo(b.missCount));
-
-    _missedWords.assignAll(missedWords);
-    quizCountCtl.text = _missedWords.length.toString();
+      _allHistory.assignAll(all);
+      ChartController.to.generateGraph();
+    } catch (e) {
+      LogManager.error('$e');
+      SnackBarHelper.showErrorSnackBar('$e');
+    } finally {
+      isLoading(false);
+    }
   }
 
-  void deleteMissedWord(MissedWord missedWord) async {
-    await missedWord.delete();
-    getMissedWords();
+  void deleteMissedWord(TriedWord missedWord) async {
+    QuizHistoryRepository.removeTriedWord(missedWord);
+    HistoryController.to.getAllHistories();
   }
 
   void goToWordScreen(int index) {

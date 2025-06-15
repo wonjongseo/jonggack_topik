@@ -48,16 +48,25 @@ class OnboardingScreen extends GetView<OnboardingController> {
         return Scaffold(
           appBar: _appBar(context),
           body: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: PageView.builder(
-                physics: NeverScrollableScrollPhysics(),
-                controller: controller.pageController,
-                onPageChanged: controller.onPageChanged,
-                itemCount: controller.onboardingCnt,
-                itemBuilder: (context, index) {
-                  return controller.onboarding;
-                },
+            child: GestureDetector(
+              onTap: () {
+                print('adasasd');
+                FocusManager.instance.primaryFocus!.unfocus();
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 10,
+                ),
+                child: PageView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  controller: controller.pageController,
+                  onPageChanged: controller.onPageChanged,
+                  itemCount: controller.onboardingCnt,
+                  itemBuilder: (context, index) {
+                    return controller.onboarding;
+                  },
+                ),
               ),
             ),
           ),

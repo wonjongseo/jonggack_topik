@@ -39,6 +39,10 @@ class CategoryController extends GetxController {
   int get selectedCategoryIdx => _selectedCategoryIdx;
   CategoryHive get category => allCategories[_selectedCategoryIdx];
 
+  final categoryRepo = Get.find<HiveRepository<CategoryHive>>(
+    tag: CategoryHive.boxKey,
+  );
+
   final carouselController = CarouselSliderController();
 
   void onTapCategory(int index) {
@@ -48,6 +52,8 @@ class CategoryController extends GetxController {
       AppConstant.selectedCategoryIdx,
       _selectedCategoryIdx,
     );
+
+    // categoryRepo.put(key, value)
 
     Get.to(
       () => SubjectScreen(),
@@ -102,21 +108,15 @@ class CategoryController extends GetxController {
         TotalAndScore(total: total, score: score),
       );
     }
-    print('totalAndScoreListOfCategory : ${totalAndScoreListOfCategory}');
   }
 
   @override
   void onReady() async {
     super.onReady();
 
-    await fatchAllSubject();
     _selectedCategoryIdx =
         SettingRepository.getInt(AppConstant.selectedCategoryIdx) ?? 0;
-
-    carouselController.animateToPage(
-      _selectedCategoryIdx,
-      curve: Curves.easeInOut,
-    );
+    await fatchAllSubject();
   }
 
   final categoryHiveRepo = Get.find<HiveRepository<CategoryHive>>(
@@ -128,46 +128,15 @@ class CategoryController extends GetxController {
       List<CategoryHive> savedList = categoryHiveRepo.getAll();
 
       savedList.sort((a, b) => a.createdAt.compareTo(b.createdAt));
-      // _allCategories.assignAll(savedList);
-      _allCategories.assignAll(savedList);
-      setTotalAndScores();
-      setTotalAndScoreListOfCategory();
-    } catch (e) {
-      LogManager.error('$e');
-      SnackBarHelper.showErrorSnackBar("$e");
-    } finally {
-      isLoadign(false);
-    }
-  }
+      if (_selectedCategoryIdx != 0 &&
+          _selectedCategoryIdx >= 0 &&
+          _selectedCategoryIdx < savedList.length) {
+        final selectedItem = savedList[_selectedCategoryIdx];
+        savedList.removeAt(_selectedCategoryIdx);
+        savedList.insert(0, selectedItem);
 
-  Future<void> fatchAllSubject2() async {
-    try {
-      isLoadign(true);
-
-      // 1) CategoryHive 전용 레포지토리 초기화
-      final categoryHiveRepo = HiveRepository<CategoryHive>(
-        CategoryHive.boxKey,
-      );
-      await categoryHiveRepo.initBox();
-
-      List<CategoryHive> savedList = categoryHiveRepo.getAll();
-
-      if (savedList.isEmpty) {
-        print("No CategoryHive, Start putting CategoryHive");
-
-        List<Category> categories = [];
-
-        for (String categoryName in categoryNames) {
-          categories.add(await dataRepositry.getJson("$categoryName.json"));
-        }
-        await HiveHelper.saveCategory(categories);
-
-        savedList = categoryHiveRepo.getAll();
-      } else {
-        print("Already Have CategoryHive");
+        _selectedCategoryIdx = 0;
       }
-
-      savedList.sort((a, b) => a.createdAt.compareTo(b.createdAt));
 
       _allCategories.assignAll(savedList);
       setTotalAndScores();

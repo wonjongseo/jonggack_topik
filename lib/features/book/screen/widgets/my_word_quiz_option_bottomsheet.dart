@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/core/widgets/custom_button.dart';
 import 'package:jonggack_topik/features/book/controller/book_study_controller.dart';
-import 'package:jonggack_topik/features/missed_word/controller/missed_word_controller.dart';
 
 class MyWordQuizOptionBottomsheet extends GetView<BookStudyController> {
   const MyWordQuizOptionBottomsheet({super.key});

@@ -1,6 +1,7 @@
 import 'package:hive/hive.dart';
 
 import 'package:jonggack_topik/core/constant/hive_keys.dart';
+import 'package:jonggack_topik/core/models/missed_word.dart';
 
 part 'quiz_history.g.dart';
 
@@ -12,10 +13,10 @@ class QuizHistory extends HiveObject {
   final DateTime date;
 
   @HiveField(1)
-  final List<String> correctWordIds;
+  final List<TriedWord> correctWordIds;
 
   @HiveField(2)
-  final List<String> incorrectWordIds;
+  final List<TriedWord> incorrectWordIds;
 
   QuizHistory({
     required this.date,

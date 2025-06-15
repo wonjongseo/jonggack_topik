@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
+import 'package:jonggack_topik/features/history/controller/history_controller.dart';
 import 'package:jonggack_topik/features/missed_word/screen/missed_words_screen.dart';
-import 'package:jonggack_topik/features/missed_word/controller/missed_word_controller.dart';
+
 import 'package:jonggack_topik/features/missed_word/screen/widgets/missed_word_listtile.dart';
 import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
 import 'package:jonggack_topik/theme.dart';
 
-class MissWordList extends GetView<MissedWordController> {
+class MissWordList extends GetView<HistoryController> {
   const MissWordList({super.key});
 
   @override

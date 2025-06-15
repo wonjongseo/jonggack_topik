@@ -137,8 +137,8 @@ class HiveRepository<T extends HiveObject> {
     if (!Hive.isAdapterRegistered(BookAdapter().typeId)) {
       Hive.registerAdapter(BookAdapter());
     }
-    if (!Hive.isAdapterRegistered(MissedWordAdapter().typeId)) {
-      Hive.registerAdapter(MissedWordAdapter());
+    if (!Hive.isAdapterRegistered(TriedWordAdapter().typeId)) {
+      Hive.registerAdapter(TriedWordAdapter());
     }
     if (!Hive.isAdapterRegistered(AttendanceDateAdapter().typeId)) {
       Hive.registerAdapter(AttendanceDateAdapter());
@@ -194,8 +194,8 @@ class HiveRepository<T extends HiveObject> {
     if (!Hive.isBoxOpen(Book.boxKey)) {
       await Hive.openBox<Book>(Book.boxKey);
     }
-    if (!Hive.isBoxOpen(MissedWord.boxKey)) {
-      await Hive.openBox<MissedWord>(MissedWord.boxKey);
+    if (!Hive.isBoxOpen(TriedWord.boxKey)) {
+      await Hive.openBox<TriedWord>(TriedWord.boxKey);
     }
     if (!Hive.isBoxOpen(AttendanceDate.boxKey)) {
       await Hive.openBox<AttendanceDate>(AttendanceDate.boxKey);

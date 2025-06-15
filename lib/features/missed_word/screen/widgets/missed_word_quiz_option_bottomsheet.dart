@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/core/widgets/custom_button.dart';
-import 'package:jonggack_topik/features/missed_word/controller/missed_word_controller.dart';
+import 'package:jonggack_topik/features/history/controller/history_controller.dart';
 
-class MissedWordQuizOptionBottomsheet extends GetView<MissedWordController> {
+class MissedWordQuizOptionBottomsheet extends GetView<HistoryController> {
   const MissedWordQuizOptionBottomsheet({super.key, this.isLastIndex = false});
   final bool isLastIndex;
   @override
@@ -17,6 +17,12 @@ class MissedWordQuizOptionBottomsheet extends GetView<MissedWordController> {
         mainAxisSize: MainAxisSize.min,
         children: [
           ListTile(
+            titleTextStyle: TextStyle(
+              color:
+                  controller.selectedQuizTyp.value == MissedWordQuizType.all
+                      ? Colors.black
+                      : Colors.grey,
+            ),
             title: Text(AppString.doQuizAllMissedWords.tr),
             trailing: Radio(
               value: MissedWordQuizType.all,
@@ -27,6 +33,12 @@ class MissedWordQuizOptionBottomsheet extends GetView<MissedWordController> {
             ),
           ),
           ListTile(
+            titleTextStyle: TextStyle(
+              color:
+                  controller.selectedQuizTyp.value == MissedWordQuizType.onlyTop
+                      ? Colors.black
+                      : Colors.grey,
+            ),
             title: Text(
               'よく間違えるTOP${totalMissedWordCount > 15 ? 15 : totalMissedWordCount}個',
             ),
@@ -45,6 +57,12 @@ class MissedWordQuizOptionBottomsheet extends GetView<MissedWordController> {
               style: TextStyle(color: Colors.red),
             ),
           ListTile(
+            titleTextStyle: TextStyle(
+              color:
+                  controller.selectedQuizTyp.value == MissedWordQuizType.random
+                      ? Colors.black
+                      : Colors.grey,
+            ),
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -59,6 +77,13 @@ class MissedWordQuizOptionBottomsheet extends GetView<MissedWordController> {
                       child: TextField(
                         maxLength: controller.words.length.toString().length,
                         controller: tECtl,
+                        style: TextStyle(
+                          color:
+                              controller.selectedQuizTyp.value ==
+                                      MissedWordQuizType.random
+                                  ? Colors.black
+                                  : Colors.grey,
+                        ),
                         readOnly:
                             controller.selectedQuizTyp.value !=
                             MissedWordQuizType.random,

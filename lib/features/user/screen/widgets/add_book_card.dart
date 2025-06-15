@@ -3,6 +3,7 @@ import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/core/widgets/custom_text_form_field.dart';
 import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
+import 'package:jonggack_topik/theme.dart';
 
 class AddBookCard extends StatelessWidget {
   const AddBookCard({
@@ -25,7 +26,7 @@ class AddBookCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              '単語帳作成',
+              AppString.createDicationary.tr,
               style: TextStyle(
                 fontSize: SettingController.to.baseFS + 6,
                 fontWeight: FontWeight.w600,
@@ -35,6 +36,7 @@ class AddBookCard extends StatelessWidget {
             CustomTextFormField(
               controller: tECtl,
               hintText: AppString.bookCtlHint.tr,
+              maxLines: 2,
             ),
 
             const SizedBox(height: 12),
@@ -42,15 +44,25 @@ class AddBookCard extends StatelessWidget {
             CustomTextFormField(
               controller: tECtl2,
               hintText: AppString.bookDescCtlHint.tr,
-              maxLines: 4,
+              maxLines: 8,
             ),
             Spacer(),
             Align(
               alignment: Alignment.bottomRight,
-              child: IconButton(
-                onPressed: onTap,
-                icon: const Icon(Icons.add, size: 28),
+              child: TextButton(
+                onPressed: () {},
+                child: Text(
+                  AppString.createtion.tr,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: dfButtonColor,
+                  ),
+                ),
               ),
+              // child: IconButton(
+              //   onPressed: onTap,
+              //   icon: const Icon(Icons.add, size: 28),
+              // ),
             ),
           ],
         ),

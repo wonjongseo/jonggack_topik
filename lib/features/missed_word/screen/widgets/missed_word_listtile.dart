@@ -18,7 +18,7 @@ class MissedWordListTIle extends StatelessWidget {
   final Function() onTap;
 
   final Function() onTrailingTap;
-  final MissedWord missedWord;
+  final TriedWord missedWord;
   final Word word;
 
   final bool isHidenMean;
