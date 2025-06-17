@@ -8,6 +8,7 @@ import 'package:jonggack_topik/core/models/day_period_type.dart';
 import 'package:jonggack_topik/core/models/week_day_type.dart';
 import 'package:jonggack_topik/core/repositories/hive_repository.dart';
 import 'package:jonggack_topik/core/repositories/setting_repository.dart';
+import 'package:jonggack_topik/core/services/inapp_service.dart';
 import 'package:jonggack_topik/core/services/notification_service.dart';
 import 'package:jonggack_topik/core/utils/app_constant.dart';
 import 'package:jonggack_topik/core/utils/app_function.dart';
@@ -44,6 +45,7 @@ class OnboardingController extends GetxController {
       await goToMainScreenAndSaveUserData();
       return;
     }
+
     _pageIndex++;
     pageController.jumpToPage(_pageIndex);
   }
@@ -52,6 +54,7 @@ class OnboardingController extends GetxController {
     if (_pageIndex - 1 < 0) {
       return;
     }
+
     _pageIndex--;
     pageController.jumpToPage(_pageIndex);
   }
@@ -290,28 +293,19 @@ class OnboardingController extends GetxController {
 
     if (isNotifiEnable) {
       _setNotification();
-      // SettingRepository.setList(AppConstant.notificationsIdsKey, notificationIds);
       SettingRepository.setString(AppConstant.notificationTimeKey, lunchTime);
     }
-
-    User user = User();
+    await InAppPurchaseService.instance.init();
     final userRepo = Get.find<HiveRepository<User>>();
 
-    userRepo.put(user.userId, user);
+    if (userRepo.getAll().isEmpty) {
+      User user = User();
+      userRepo.put(user.userId, user);
+    }
 
     Get.offAllNamed(MainScreen.name);
     SnackBarHelper.showSuccessSnackBar(AppString.completeSetting.tr);
   }
-
-  // onBoarding6
-  // // int selectedColorIndex = 0;
-
-  // void onChangeColorIndex(int index) {
-  //   if (index >= 0 && index <= 5) {
-  //     selectedColorIndex = index;
-  //     update();
-  //   }
-  // }
 
   @override
   void onClose() {

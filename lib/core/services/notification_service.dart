@@ -14,7 +14,9 @@ void notificationTapBackground(NotificationResponse response) async {
 
   Get.to(
     () => QuizScreen(),
-    binding: BindingsBuilder.put(() => Get.put(QuizController(randomWord))),
+    binding: BindingsBuilder.put(
+      () => Get.put(QuizController(words: randomWord)),
+    ),
   );
 }
 
@@ -48,7 +50,7 @@ class NotificationService {
         Get.to(
           () => QuizScreen(),
           binding: BindingsBuilder.put(
-            () => Get.put(QuizController(randomWord)),
+            () => Get.put(QuizController(words: randomWord)),
           ),
         );
       },

@@ -1,3 +1,4 @@
+import 'package:jonggack_topik/core/admob/banner_ad/global_banner_admob.dart';
 import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,7 +15,11 @@ class QuizScreen extends GetView<QuizController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: _appBar(), body: _body(context));
+    return Scaffold(
+      appBar: _appBar(),
+      body: _body(context),
+      bottomNavigationBar: GlobalBannerAdmob(),
+    );
   }
 
   Widget _body(BuildContext context) {

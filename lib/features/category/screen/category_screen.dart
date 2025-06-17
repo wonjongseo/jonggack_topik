@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jonggack_topik/core/admob/banner_ad/global_banner_admob.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/features/category/controller/category_controller.dart';
 import 'package:jonggack_topik/features/category/screen/widgets/category_selector.dart';
@@ -58,6 +59,8 @@ class CategoryScreen extends GetView<CategoryController> {
           ),
         ),
       ),
+
+      bottomNavigationBar: GlobalBannerAdmob(),
     );
   }
 }

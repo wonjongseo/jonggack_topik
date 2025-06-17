@@ -81,7 +81,7 @@ class GoToQuizWidget extends StatelessWidget {
             Get.to(
               () => QuizScreen(),
               binding: BindingsBuilder.put(
-                () => Get.put(QuizController(words)),
+                () => Get.put(QuizController(words: words)),
               ),
             );
           }

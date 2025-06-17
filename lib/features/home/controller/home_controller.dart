@@ -64,7 +64,7 @@ class HomeController extends GetxController {
     );
     Get.to(
       () => QuizScreen(),
-      binding: BindingsBuilder.put(() => Get.put(QuizController(words))),
+      binding: BindingsBuilder.put(() => Get.put(QuizController(words: words))),
     );
   }
 

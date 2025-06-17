@@ -118,14 +118,16 @@ class HiveRepository<T extends HiveObject> {
     if (!Hive.isAdapterRegistered(HK.stepTypeID)) {
       Hive.registerAdapter(StepModelAdapter());
     }
-    if (!Hive.isAdapterRegistered(HK.wordTypeID)) {
-      Hive.registerAdapter(WordAdapter());
-    }
+
     if (!Hive.isAdapterRegistered(ExampleAdapter().typeId)) {
       Hive.registerAdapter(ExampleAdapter());
     }
     if (!Hive.isAdapterRegistered(SynonymAdapter().typeId)) {
       Hive.registerAdapter(SynonymAdapter());
+    }
+
+    if (!Hive.isAdapterRegistered(HK.wordTypeID)) {
+      Hive.registerAdapter(WordAdapter());
     }
     if (!Hive.isAdapterRegistered(QuestionAdapter().typeId)) {
       Hive.registerAdapter(QuestionAdapter());
@@ -175,14 +177,16 @@ class HiveRepository<T extends HiveObject> {
     if (!Hive.isBoxOpen(StepModel.boxKey)) {
       await Hive.openBox<StepModel>(StepModel.boxKey);
     }
-    if (!Hive.isBoxOpen(Word.boxKey)) {
-      await Hive.openBox<Word>(Word.boxKey);
-    }
+
     if (!Hive.isBoxOpen(Example.boxKey)) {
       await Hive.openBox<Example>(Example.boxKey);
     }
     if (!Hive.isBoxOpen(Synonym.boxKey)) {
       await Hive.openBox<Synonym>(Synonym.boxKey);
+    }
+
+    if (!Hive.isBoxOpen(Word.boxKey)) {
+      await Hive.openBox<Word>(Word.boxKey);
     }
     if (!Hive.isBoxOpen(Question.boxKey)) {
       await Hive.openBox<Question>(Question.boxKey);
@@ -221,7 +225,7 @@ class HiveRepository<T extends HiveObject> {
   static Future<void> _saveAllWords() async {
     final wordBox = Hive.box<Word>(Word.boxKey);
     // if (wordBox.keys.isEmpty) {
-    List<Word> allwords = await dataRepositry.getAllWords("global_words");
+    List<Word> allwords = await dataRepositry.getAllWords();
 
     for (var word in allwords) {
       // if (!wordBox.containsKey(word.id)) {

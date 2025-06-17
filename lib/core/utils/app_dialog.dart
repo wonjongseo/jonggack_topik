@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jonggack_topik/core/utils/app_color.dart';
 import 'package:jonggack_topik/core/utils/app_dialog.dart';
 import 'package:jonggack_topik/core/utils/app_image_path.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
+import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
 
 class MyCustomDialog extends StatelessWidget {
   final String title;
@@ -110,7 +112,13 @@ class AppDialog {
           color: Colors.redAccent,
         ),
       ),
-      connent: Text(AppString.errorCreateEmail2.tr),
+      connent: Text(
+        AppString.errorCreateEmail2.tr,
+        style: TextStyle(
+          fontSize: SettingController.to.baseFS - 3,
+          height: 1.7,
+        ),
+      ),
     );
   }
 
@@ -121,37 +129,38 @@ class AppDialog {
       action: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Card(
-            shape: const CircleBorder(),
-            child: InkWell(
-              onTap: () => Get.back(result: true),
-              child: Padding(
-                padding: EdgeInsets.all(15),
+          GestureDetector(
+            onTap: () => Get.back(result: true),
+            child: Container(
+              width: 80,
+              height: 40,
+              decoration: BoxDecoration(
+                color: AppColors.primaryColor,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Center(
                 child: Text(
                   AppString.yesText.tr,
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.cyan.shade600,
-                  ),
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
                 ),
               ),
             ),
           ),
+
           SizedBox(width: 10),
-          Card(
-            shape: const CircleBorder(),
-            child: InkWell(
-              onTap: () => Get.back(result: false),
-              child: Padding(
-                padding: EdgeInsets.all(15),
+          GestureDetector(
+            onTap: () => Get.back(result: false),
+            child: Container(
+              width: 80,
+              height: 40,
+              decoration: BoxDecoration(
+                color: AppColors.primaryColor,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Center(
                 child: Text(
                   AppString.noText.tr,
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.cyan.shade600,
-                  ),
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
                 ),
               ),
             ),

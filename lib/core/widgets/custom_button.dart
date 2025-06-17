@@ -3,8 +3,14 @@ import 'package:jonggack_topik/core/utils/app_color.dart';
 import 'package:jonggack_topik/theme.dart';
 
 class BottomBtn extends StatelessWidget {
-  const BottomBtn({super.key, required this.label, required this.onTap});
+  const BottomBtn({
+    super.key,
 
+    this.width,
+    required this.label,
+    required this.onTap,
+  });
+  final double? width;
   final String label;
   final Function() onTap;
   @override
@@ -14,7 +20,7 @@ class BottomBtn extends StatelessWidget {
       onTap: onTap,
       child: Container(
         height: 50,
-        width: double.infinity,
+        width: width ?? double.infinity,
         margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         decoration: BoxDecoration(
           color: dfButtonColor,

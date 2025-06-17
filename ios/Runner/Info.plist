@@ -24,11 +24,8 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
-	<!-- Google Ad mob -->
 	<key>GADApplicationIdentifier</key>
 	<string>ca-app-pub-9712392194582442~4074023055</string>
- 
-	
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>

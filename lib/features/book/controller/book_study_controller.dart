@@ -66,7 +66,9 @@ class BookStudyController extends GetxController {
     Get.back();
     Get.to(
       () => QuizScreen(),
-      binding: BindingsBuilder.put(() => Get.put(QuizController(quizWords))),
+      binding: BindingsBuilder.put(
+        () => Get.put(QuizController(words: quizWords)),
+      ),
     );
   }
 

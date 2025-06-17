@@ -1,3 +1,4 @@
+import 'package:flutter/src/gestures/events.dart';
 import 'package:jonggack_topik/core/logger/logger_service.dart';
 import 'package:jonggack_topik/core/models/week_day_type.dart';
 import 'package:jonggack_topik/core/utils/snackbar_helper.dart';
@@ -40,6 +41,7 @@ class SettingController extends GetxController {
 
   @override
   void onInit() {
+    print('onInit');
     debouncer = FB.Debouncer();
     getDatas();
     super.onInit();
@@ -82,6 +84,7 @@ class SettingController extends GetxController {
   }
 
   late TextEditingController teCtl = TextEditingController();
+
   void changeCountOfStudy(bool isIncrease) {
     String sCount = teCtl.text.trim();
     int count = int.tryParse(sCount) ?? 1;
@@ -94,6 +97,11 @@ class SettingController extends GetxController {
     if (count < 1) {
       return;
     }
+    saveDailGoal(count);
+    update();
+  }
+
+  void saveDailGoal(int count) {
     teCtl.text = '$count';
     dailyGoal.value = count;
     debouncer.debounce(
@@ -134,12 +142,6 @@ class SettingController extends GetxController {
       Get.updateLocale(const Locale('ja'));
     }
     await Future.delayed(const Duration(milliseconds: 500));
-
-    bool result = await AppDialog.changeSystemLanguage();
-
-    if (result && kReleaseMode) {
-      exit(0);
-    }
   }
 
   // Font Size
@@ -345,5 +347,41 @@ class SettingController extends GetxController {
     debouncer.cancel();
     teCtl.dispose();
     super.onClose();
+  }
+
+  double _scrollAccumulator = 0;
+  int value = 29;
+  static const double _threshold = 24.0;
+  void onScroll(PointerSignalEvent event) {
+    if (event is PointerScrollEvent) {
+      // 마우스 휠 ↑ 은 scrollDelta.dy < 0 이므로, 부호를 뒤집어 +로 축적
+      _scrollAccumulator += -event.scrollDelta.dy;
+
+      // 누적량이 임계치 이상이면 +1
+      if (_scrollAccumulator >= _threshold) {
+        value = (value + 1).clamp(0, 1000);
+        _scrollAccumulator -= _threshold; // 사용한 만큼 빼줌
+      }
+      // 누적량이 –임계치 이하이면 –1
+      else if (_scrollAccumulator <= -_threshold) {
+        value = (value - 1).clamp(0, 1000);
+        _scrollAccumulator += _threshold;
+      }
+    }
+    teCtl.text = value.toString();
+    update();
+  }
+
+  void onDrag(DragUpdateDetails details) {
+    _scrollAccumulator += -details.delta.dy;
+    if (_scrollAccumulator >= _threshold) {
+      value = (value + 1).clamp(0, 1000);
+      _scrollAccumulator -= _threshold;
+    } else if (_scrollAccumulator <= -_threshold) {
+      value = (value - 1).clamp(0, 1000);
+      _scrollAccumulator += _threshold;
+    }
+    saveDailGoal(value);
+    update();
   }
 }

@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/services/notification_service.dart';
-import 'package:jonggack_topik/core/utils/app_color.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/core/widgets/custom_button.dart';
 import 'package:jonggack_topik/features/onboarding/controller/onboarding_controller.dart';

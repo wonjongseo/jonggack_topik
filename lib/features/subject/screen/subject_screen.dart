@@ -2,15 +2,17 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
+
 import 'package:jonggack_topik/core/admob/banner_ad/global_banner_admob.dart';
 import 'package:jonggack_topik/core/utils/app_color.dart';
+import 'package:jonggack_topik/core/utils/app_constant.dart';
 import 'package:jonggack_topik/features/auth/controllers/user_controller.dart';
+import 'package:jonggack_topik/features/category/controller/category_controller.dart';
 import 'package:jonggack_topik/features/category/screen/widgets/search_form.dart';
 import 'package:jonggack_topik/features/setting/enum/enums.dart';
 import 'package:jonggack_topik/features/subject/controller/subject_controller.dart';
 import 'package:jonggack_topik/features/subject/screen/widgets/chapter_selector.dart';
-import 'package:jonggack_topik/features/subject/screen/widgets/subject_selector.dart';
+
 import 'package:jonggack_topik/theme.dart';
 
 // 韓国語能力試験・人・など
@@ -34,7 +36,7 @@ class SubjectScreen extends GetView<SubjectController> {
                 SizedBox(height: 32),
 
                 SizedBox(width: size.width * 0.65, child: _dropdownbutton()),
-                SizedBox(height: 12),
+                SizedBox(height: 24),
                 Expanded(
                   child: Obx(
                     () => CarouselSlider(
@@ -43,10 +45,11 @@ class SubjectScreen extends GetView<SubjectController> {
                         controller.selectedSubject.chapters.length,
                         (index) {
                           bool isAccessable =
-                              index < 3 ||
+                              index < AppConstant.defaultAccessableIndex ||
                               UserController.to.user.isPremieum ||
                               controller.selectedSubject.title !=
                                   TopikLevel.fiveSix.label;
+
                           return ChapterSelector(
                             label: controller.selectedSubject.title,
                             chapter: controller.selectedSubject.chapters[index],
@@ -91,7 +94,7 @@ class SubjectScreen extends GetView<SubjectController> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
             border: Border.all(color: AppColors.primaryColor),
-            // color: dfBackground,
+            // color: AppColors.primaryColor,
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
@@ -103,11 +106,10 @@ class SubjectScreen extends GetView<SubjectController> {
         iconStyleData: IconStyleData(
           icon: const Icon(Icons.keyboard_arrow_down),
           iconSize: 24,
-          iconEnabledColor: AppColors.primaryColor,
+          iconEnabledColor: Colors.white,
         ),
         dropdownStyleData: DropdownStyleData(
           maxHeight: 350,
-          // padding: null,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
             color: dfCardColor,
@@ -130,26 +132,6 @@ class SubjectScreen extends GetView<SubjectController> {
             return DropdownMenuItem(value: index, child: Text(subject.title));
           }),
         ],
-      ),
-    );
-  }
-
-  Widget _subjecttSelectorRow() {
-    return Padding(
-      padding: EdgeInsets.only(left: 24),
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Obx(
-          () => Row(
-            children: List.generate(controller.subjects.length, (index) {
-              return SubjecttSelector(
-                label: controller.subjects[index].title,
-                isSelected: controller.selectedSubjectIndex == index,
-                onTap: () => controller.changeSubject(index),
-              );
-            }),
-          ),
-        ),
       ),
     );
   }

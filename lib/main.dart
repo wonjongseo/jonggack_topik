@@ -29,6 +29,7 @@ import 'package:timezone/timezone.dart' as tz;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   MobileAds.instance.initialize();
   initializeDateFormatting();
   await _initializeTimeZone();

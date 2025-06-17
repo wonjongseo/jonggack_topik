@@ -28,8 +28,11 @@ class HistoryController extends GetxController {
   final _allHistory = <QuizHistory>[].obs;
   List<QuizHistory> get allHistory => _allHistory.value;
 
-  List<TriedWord> get missedWords =>
-      allHistory.expand((h) => h.incorrectWordIds).toList();
+  List<TriedWord> get missedWords {
+    final result = allHistory.expand((h) => h.incorrectWordIds).toList();
+    result.sort((a, b) => b.missCount.compareTo(a.missCount));
+    return result;
+  }
 
   List<Word> get words {
     final wordRepo = Get.find<HiveRepository<Word>>(tag: Word.boxKey);
@@ -57,9 +60,19 @@ class HistoryController extends GetxController {
     }
   }
 
-  void deleteMissedWord(TriedWord missedWord) async {
-    QuizHistoryRepository.removeTriedWord(missedWord);
+  Future<void> deleteMissedWord(TriedWord missedWord) async {
+    await QuizHistoryRepository.removeTriedWord(missedWord);
     HistoryController.to.getAllHistories();
+  }
+
+  Future<void> deleteMissedWordByWords(List<Word> words) async {
+    for (var word in words) {
+      for (var missedWord in missedWords) {
+        if (word.id == missedWord.wordId) {
+          await deleteMissedWord(missedWord);
+        }
+      }
+    }
   }
 
   void goToWordScreen(int index) {
@@ -125,8 +138,17 @@ class HistoryController extends GetxController {
     }
     Get.to(
       () => QuizScreen(),
-      binding: BindingsBuilder.put(() => Get.put(QuizController(quizWords))),
+      binding: BindingsBuilder.put(
+        () => Get.put(
+          QuizController(words: quizWords, isAutoDelete: isAutoDelete.value),
+        ),
+      ),
     );
+  }
+
+  final isAutoDelete = false.obs;
+  void toggleAutoDelete(bool value) {
+    isAutoDelete(value);
   }
 
   @override

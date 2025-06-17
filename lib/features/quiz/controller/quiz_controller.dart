@@ -27,7 +27,8 @@ import 'package:jonggack_topik/features/user/repository/quiz_history_repository.
 // ignore: deprecated_member_use
 class QuizController extends GetxController with SingleGetTickerProviderMixin {
   final List<Word> words;
-  QuizController(this.words);
+  final bool isAutoDelete;
+  QuizController({required this.words, this.isAutoDelete = false});
 
   late AnimationController animationController; // 진행률 바
   late Animation animation; // 진행률 바 애니메이션
@@ -167,26 +168,6 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
     }
   }
 
-  // Future<void> registerMiss(List<Word> words) async {
-  //   final Box<MissedWord> box = Hive.box<MissedWord>(MissedWord.boxKey);
-
-  //   for (var word in words) {
-  //     final existing = box.values.toList().firstWhereOrNull(
-  //       (e) => e.wordId == word.id,
-  //     );
-  //     if (existing != null) {
-  //       existing.missCount++;
-  //       await existing.save();
-  //     } else {
-  //       box.add(MissedWord(wordId: word.id, category: ''));
-  //     }
-  //   }
-
-  //   if (Get.isRegistered<MissedWordController>()) {
-  //     MissedWordController.to.getMissedWords();
-  //   }
-  // }
-
   void nextQuestion() async {
     isDisTouchable = false;
     if (questionNumber.value != questions.length) {
@@ -210,27 +191,20 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
     // 테스트를 다 풀 었으면
     else {
       DateTime date = DateTime.now();
-      // if (kDebugMode) {
-      //   for (var i = 0; i < 7; i++) {
-      //     DateTime test = date.subtract(Duration(days: i + 1));
+      print('isMyWordTest : ${isMyWordTest}');
 
-      //     int randomeNu = random.nextInt(14) + 1;
-      //     int ranum2 = 15 - randomeNu;
-      //     QuizHistoryRepository.saveOrUpdate(
-      //       date: test,
-      //       newCorrectIds: List.generate(randomeNu, (_) => ""),
-      //       newIncorrectIds: List.generate(ranum2, (_) => ""),
-      //     );
-      //   }
-      // }
       QuizHistoryRepository.saveOrUpdate(
         date: date,
         newCorrectIds: correctQuestions.map((word) => word.id).toSet().toList(),
         newIncorrectIds: wrongQuestions.map((word) => word.id).toSet().toList(),
       );
 
-      if (Get.isRegistered<ChartController>()) {
+      if (Get.isRegistered<HistoryController>()) {
         HistoryController.to.getAllHistories();
+
+        if (isAutoDelete) {
+          await HistoryController.to.deleteMissedWordByWords(correctQuestions);
+        }
       }
       if (Get.isRegistered<HomeController>()) {
         HomeController.to.getAllDatas();

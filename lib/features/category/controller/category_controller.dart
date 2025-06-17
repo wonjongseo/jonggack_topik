@@ -71,7 +71,13 @@ class CategoryController extends GetxController {
     );
 
     _updateLastAccessDate();
+    _sort();
+  }
+
+  void _sort() {
     _sortSubject();
+    setTotalAndScores();
+    setTotalAndScoreListOfCategory();
   }
 
   ScrollController scrollController = ScrollController();
@@ -165,20 +171,26 @@ class CategoryController extends GetxController {
       isLoadign(true);
       List<CategoryHive> savedList = categoryHiveRepo.getAll();
 
-      if (_selectedCategoryIdx != 0 &&
-          _selectedCategoryIdx >= 0 &&
-          _selectedCategoryIdx < savedList.length) {
-        final selectedItem = savedList[_selectedCategoryIdx];
-        savedList.removeAt(_selectedCategoryIdx);
-        savedList.insert(0, selectedItem);
+      if (1 == 1) {
+        _allCategories.assign(
+          savedList.firstWhere(
+            (category) => category.title == AppConstant.defaultCategory,
+          ),
+        );
+      } else {
+        if (_selectedCategoryIdx != 0 &&
+            _selectedCategoryIdx >= 0 &&
+            _selectedCategoryIdx < savedList.length) {
+          final selectedItem = savedList[_selectedCategoryIdx];
+          savedList.removeAt(_selectedCategoryIdx);
+          savedList.insert(0, selectedItem);
 
-        _selectedCategoryIdx = 0;
+          _selectedCategoryIdx = 0;
+        }
+
+        _allCategories.assignAll(savedList);
       }
-
-      _allCategories.assignAll(savedList);
-      _sortSubject();
-      setTotalAndScores();
-      setTotalAndScoreListOfCategory();
+      _sort();
     } catch (e) {
       LogManager.error('$e');
       SnackBarHelper.showErrorSnackBar("$e");
@@ -195,9 +207,8 @@ class CategoryController extends GetxController {
 }
 
 class DataRepositry {
-  Future<List<Word>> getAllWords(String fileName) async {
+  Future<List<Word>> getAllWords() async {
     try {
-      // final jsonString = await rootBundle.loadString('assets/data/$fileName');
       final jsonString = await rootBundle.loadString(
         'assets/data/global_words.json',
       );

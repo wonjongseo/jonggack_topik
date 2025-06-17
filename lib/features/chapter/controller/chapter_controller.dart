@@ -148,9 +148,10 @@ class ChapterController extends GetxController {
       binding: BindingsBuilder.put(
         () => Get.put(
           QuizController(
-            isTryAgain
-                ? step.wrongWords.map((id) => wordRepo.get(id)!).toList()
-                : step.words.map((id) => wordRepo.get(id)!).toList(),
+            words:
+                isTryAgain
+                    ? step.wrongWords.map((id) => wordRepo.get(id)!).toList()
+                    : step.words.map((id) => wordRepo.get(id)!).toList(),
           ),
         ),
       ),

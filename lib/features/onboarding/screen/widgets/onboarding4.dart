@@ -1,7 +1,5 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jonggack_topik/core/utils/app_color.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/features/onboarding/controller/onboarding_controller.dart';
 import 'package:jonggack_topik/theme.dart';
@@ -45,15 +43,14 @@ class Onboarding4 extends StatelessWidget {
                         icon: Icon(Icons.keyboard_arrow_up),
                       ),
                       Listener(
-                        behavior:
-                            HitTestBehavior.translucent, // ★ 부모가 먼저 이벤트 처리
+                        behavior: HitTestBehavior.translucent,
                         onPointerSignal: controller.onScroll,
                         child: GestureDetector(
-                          behavior:
-                              HitTestBehavior.translucent, // ★ 부모가 먼저 이벤트 처리
+                          behavior: HitTestBehavior.translucent,
                           onVerticalDragUpdate: controller.onDrag,
                           child: Container(
                             width: 100,
+                            height: 120,
                             decoration: BoxDecoration(
                               border: Border(
                                 top: BorderSide(color: dfButtonColor, width: 2),
@@ -69,11 +66,8 @@ class Onboarding4 extends StatelessWidget {
                                 controller: controller.teCtl,
                                 showCursor: false,
                                 scrollPhysics: NeverScrollableScrollPhysics(),
-                                enableInteractiveSelection:
-                                    false, // ★ 선택/돋보기 비활성
-                                // ignore: deprecated_member_use
+                                enableInteractiveSelection: false,
                                 toolbarOptions: const ToolbarOptions(
-                                  // ★ 툴바 메뉴 비활성
                                   copy: false,
                                   cut: false,
                                   paste: false,

@@ -33,7 +33,7 @@ class AnimatedLeanerProgressIndicator extends StatelessWidget {
               children: [
                 LinearProgressIndicator(
                   value: value,
-                  color: dfButtonColor,
+                  color: AppColors.secondaryColor,
                   backgroundColor: Colors.grey.shade300,
                 ),
                 Center(

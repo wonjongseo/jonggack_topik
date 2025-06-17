@@ -50,4 +50,9 @@ class User extends HiveObject {
   String toJson() => json.encode(toMap());
 
   factory User.fromJson(String source) => User.fromMap(json.decode(source));
+
+  @override
+  String toString() {
+    return 'User(userId: $userId, isPremieum: $isPremieum, myBookIds: $myBookIds, createdAt: $createdAt, updatedAt: $updatedAt)';
+  }
 }

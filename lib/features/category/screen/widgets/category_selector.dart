@@ -29,13 +29,13 @@ class CategorySelector extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          color: dfCardColor,
+          color: AppColors.primaryColor,
+          // gradient: LinearGradient(
+          //   colors: AppColors.gradientColors,
+          //   begin: Alignment.topCenter,
+          //   end: Alignment.bottomCenter,
+          // ),
           borderRadius: BorderRadius.circular(10),
-          gradient: LinearGradient(
-            colors: AppColors.gradientColors,
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
           boxShadow: homeBoxShadow,
         ),
         padding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
@@ -57,7 +57,7 @@ class CategorySelector extends StatelessWidget {
                     : AppString.beforeStudy.tr,
                 style: TextStyle(
                   fontSize: SettingController.to.baseFS - 5,
-                  color: Colors.grey[300],
+                  // color: Colors.grey[300],
                 ),
               ),
             ),

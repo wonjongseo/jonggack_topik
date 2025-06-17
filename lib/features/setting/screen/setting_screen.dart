@@ -12,6 +12,7 @@ import 'package:jonggack_topik/features/setting/controller/setting_controller.da
 import 'package:jonggack_topik/features/setting/enum/enums.dart';
 import 'package:jonggack_topik/features/setting/screen/widgets/setting_listtile.dart';
 import 'package:jonggack_topik/features/setting/screen/widgets/sound_setting_slider.dart';
+import 'package:jonggack_topik/theme.dart';
 
 class SettingScreen extends GetView<SettingController> {
   const SettingScreen({super.key});
@@ -90,19 +91,22 @@ class SettingScreen extends GetView<SettingController> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(),
-      body: Obx(
-        () => SafeArea(
-          child: SingleChildScrollView(
-            padding: EdgeInsets.symmetric(horizontal: 8),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                _appSetting(size),
-                SizedBox(height: 10),
-                _systemSetting(),
-                SizedBox(height: 10),
-                _etcSetting(),
-              ],
+      body: SafeArea(
+        child: GestureDetector(
+          onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+          child: Obx(
+            () => SingleChildScrollView(
+              padding: EdgeInsets.symmetric(horizontal: 8),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  _appSetting(size),
+                  SizedBox(height: 10),
+                  _systemSetting(),
+                  SizedBox(height: 10),
+                  _etcSetting(),
+                ],
+              ),
             ),
           ),
         ),
@@ -334,43 +338,112 @@ class SettingScreen extends GetView<SettingController> {
       ),
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            IconButton(
-              onPressed: () => controller.changeCountOfStudy(true),
-              icon: Icon(FontAwesomeIcons.add),
-              style: IconButton.styleFrom(iconSize: controller.baseFS),
+            Text(
+              AppString.countOfStudy.tr,
+              style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
             ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 15),
-              padding: EdgeInsets.all(12),
-              width: 70,
-              height: 70,
-
-              child: Center(
-                child: TextField(
-                  showCursor: false,
-                  controller: controller.teCtl,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: controller.baseFS + 4),
-                  maxLength: 3,
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    counterText: "",
-                  ),
-                  keyboardType: TextInputType.numberWithOptions(),
+            Column(
+              children: [
+                IconButton(
+                  onPressed: () => controller.changeCountOfStudy(true),
+                  icon: Icon(Icons.keyboard_arrow_up),
                 ),
-              ),
-            ),
-
-            IconButton(
-              onPressed: () => controller.changeCountOfStudy(false),
-              icon: Icon(FontAwesomeIcons.minus),
-              style: IconButton.styleFrom(iconSize: controller.baseFS),
+                Listener(
+                  behavior: HitTestBehavior.translucent,
+                  onPointerSignal: controller.onScroll,
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.translucent,
+                    onVerticalDragUpdate: controller.onDrag,
+                    child: Container(
+                      width: 80,
+                      height: 65,
+                      decoration: BoxDecoration(
+                        border: Border(
+                          top: BorderSide(color: dfButtonColor, width: 2),
+                          bottom: BorderSide(color: dfButtonColor, width: 2),
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Center(
+                        child: TextField(
+                          controller: controller.teCtl,
+                          showCursor: false,
+                          scrollPhysics: NeverScrollableScrollPhysics(),
+                          enableInteractiveSelection: false,
+                          toolbarOptions: const ToolbarOptions(
+                            copy: false,
+                            cut: false,
+                            paste: false,
+                            selectAll: false,
+                          ),
+                          textAlign: TextAlign.center,
+                          onChanged: (value) {
+                            print('value : ${value}');
+                            if (value.isNotEmpty) {
+                              int count = value.isNum ? int.parse(value) : 1;
+                              controller.saveDailGoal(count);
+                            }
+                          },
+                          maxLength: 3,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            counterText: "",
+                          ),
+                          keyboardType: TextInputType.numberWithOptions(),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                IconButton(
+                  onPressed: () => controller.changeCountOfStudy(false),
+                  icon: Icon(Icons.keyboard_arrow_down),
+                ),
+              ],
             ),
           ],
         ),
+
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.center,
+        //   crossAxisAlignment: CrossAxisAlignment.center,
+        //   children: [
+        //     IconButton(
+        //       onPressed: () => controller.changeCountOfStudy(true),
+        //       icon: Icon(FontAwesomeIcons.add),
+        //       style: IconButton.styleFrom(iconSize: controller.baseFS),
+        //     ),
+        //     Container(
+        //       margin: EdgeInsets.symmetric(horizontal: 15),
+        //       padding: EdgeInsets.all(12),
+        //       width: 70,
+        //       height: 70,
+
+        //       child: Center(
+        //         child: TextField(
+        //           showCursor: false,
+        //           controller: controller.teCtl,
+        //           textAlign: TextAlign.center,
+        //           style: TextStyle(fontSize: controller.baseFS + 4),
+        //           maxLength: 3,
+        //           decoration: InputDecoration(
+        //             border: InputBorder.none,
+        //             counterText: "",
+        //           ),
+        //           keyboardType: TextInputType.numberWithOptions(),
+        //         ),
+        //       ),
+        //     ),
+
+        //     IconButton(
+        //       onPressed: () => controller.changeCountOfStudy(false),
+        //       icon: Icon(FontAwesomeIcons.minus),
+        //       style: IconButton.styleFrom(iconSize: controller.baseFS),
+        //     ),
+        //   ],
+        // ),
       ],
     );
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
+import 'package:jonggack_topik/core/admob/banner_ad/global_banner_admob.dart';
 import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/core/utils/app_color.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
@@ -122,6 +123,8 @@ class SearchScreen extends GetView<SearchGetController> {
           ),
         ),
       ),
+
+      bottomNavigationBar: GlobalBannerAdmob(),
     );
   }
 }

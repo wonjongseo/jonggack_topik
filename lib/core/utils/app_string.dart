@@ -5,6 +5,13 @@ class AppTranslations extends Translations {
   // TODO: implement keys
   Map<String, Map<String, String>> get keys => {
     'ja_JP': {
+      AppString.autuDelete: AppString.autuDeleteJp,
+      AppString.advantage1: AppString.advantage1Jp,
+      AppString.upgrade: AppString.upgradeJp,
+      AppString.appealUpgradeMsg1: AppString.appealUpgradeMsg1Jp,
+      AppString.appealUpgradeMsg2: AppString.appealUpgradeMsg2Jp,
+      AppString.appealUpgradeMsg3: AppString.appealUpgradeMsg3Jp,
+      AppString.appealUpgradeMsg4: AppString.appealUpgradeMsg4Jp,
       AppString.color: AppString.colorJp,
       AppString.plzInputAppColor: AppString.plzInputAppColorJp,
       AppString.studying: AppString.studyingJp,
@@ -119,6 +126,13 @@ class AppTranslations extends Translations {
       AppString.almostPass: AppString.almostPassJp,
     },
     'ko_KR': {
+      AppString.autuDelete: AppString.autuDeleteKr,
+      AppString.advantage1: AppString.advantage1Kr,
+      AppString.upgrade: AppString.upgradeKr,
+      AppString.appealUpgradeMsg1: AppString.appealUpgradeMsg1Kr,
+      AppString.appealUpgradeMsg2: AppString.appealUpgradeMsg2Kr,
+      AppString.appealUpgradeMsg3: AppString.appealUpgradeMsg3Kr,
+      AppString.appealUpgradeMsg4: AppString.appealUpgradeMsg4Kr,
       AppString.color: AppString.colorKr,
       AppString.plzInputAppColor: AppString.plzInputAppColorKr,
       AppString.studying: AppString.studyingKr,
@@ -539,7 +553,7 @@ class AppString {
       '죄송합니다만, 사용 중인 스마트폰에 이메일 주소가 등록되어 있지 않아 $appNameKr 에서 메일을 작성할 수 없습니다.\n번거로우시겠지만, 다른 메일 앱을 통해 아래 주소로 문의해 주시면 감사하겠습니다.\n\n메일 주소 「visionwill3322@gmail.com」을 복사하시겠습니까?';
 
   static String errorCreateEmail2Jp =
-      "誠に恐れ入りますが、お使いのスマートフォンにメールアドレスが登録されていないため、、 「$appNameJp」からメールを作成できません。\n大変お手数ですが、別のメールアプリより下記アドレスへお問い合わせいただけますと幸いです。\n\nメール　「visionwill3322@gmail.com」をコピーしますか。";
+      "誠に恐れ入りますが、お使いのスマートフォンにメールアドレスが登録されていないため、 「$appNameJp」からメールを作成できません。\n大変お手数ですが、別のメールアプリより下記アドレスへお問い合わせいただけますと幸いです。\n\nメール　「visionwill3322@gmail.com」をコピーしますか。";
   static String errorCreateEmail2En =
       "Sorry, but there is no email address registered on your device, so you cannot compose an email from “$appNameEn”.\nWe apologize for the inconvenience, but please use another email app to contact us at the address below.\n\nWould you like to copy the email address “visionwill3322@gmail.com”?";
 
@@ -878,4 +892,39 @@ We’ll review your report and work on improvements as soon as possible.
   static String colorKr = '앱 테마 색상';
   static String colorJp = 'アプリテーマカラー';
   static String colorEn = "App Theme Color";
+
+  static String appealUpgradeMsg1 = 'appealUpgradeMsg1Tr';
+  static String appealUpgradeMsg1Kr = 'Plus로 업그레이드 하면';
+  static String appealUpgradeMsg1Jp = 'Plusにアップグレードすると、';
+  static String appealUpgradeMsg1En = "App Theme Color";
+
+  static String appealUpgradeMsg2 = 'appealUpgradeMsg2Tr';
+  static String appealUpgradeMsg2Kr = '5・6습의 모든 단어를';
+  static String appealUpgradeMsg2Jp = '5・6級の全単語を';
+  static String appealUpgradeMsg2En = "App Theme Color";
+
+  static String appealUpgradeMsg3 = 'appealUpgradeMsg3Tr';
+  static String appealUpgradeMsg3Kr = '학습하실 수 있습니다.';
+  static String appealUpgradeMsg3Jp = 'ご学習いただけます。';
+  static String appealUpgradeMsg3En = "App Theme Color";
+
+  static String appealUpgradeMsg4 = 'appealUpgradeMsg4Tr';
+  static String appealUpgradeMsg4Kr = '부디 검토해주세요.';
+  static String appealUpgradeMsg4Jp = 'ぜひご検討くださいませ。';
+  static String appealUpgradeMsg4En = "App Theme Color";
+
+  static String upgrade = 'upgradeTr';
+  static String upgradeKr = '업그레이드';
+  static String upgradeJp = 'アップグレード';
+  static String upgradeEn = "App Theme Color";
+
+  static String advantage1 = 'advantage1Tr';
+  static String advantage1Kr = '광고 제거';
+  static String advantage1Jp = '広告除去';
+  static String advantage1En = "App Theme Color";
+
+  static String autuDelete = 'autuDeleteTr';
+  static String autuDeleteKr = '当てた単語の自動削除';
+  static String autuDeleteJp = '문제 맞출 시 자동 삭제';
+  static String autuDeleteEn = "App Theme Color";
 }

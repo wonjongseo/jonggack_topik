@@ -51,7 +51,7 @@ class CustomToggleButton extends StatelessWidget {
           style: TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.w600,
-            color: dfCardColor,
+            color: AppColors.primaryColor,
           ),
         ),
         Text(
@@ -59,7 +59,7 @@ class CustomToggleButton extends StatelessWidget {
           style: TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.w600,
-            color: dfCardColor,
+            color: AppColors.primaryColor,
           ),
         ),
       ],

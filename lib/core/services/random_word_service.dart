@@ -55,17 +55,18 @@ class RandomWordService {
     );
 
     final category = categoryRepo.get(categoryName);
-
-    final subject =
-        category!.subjects[subjectIndex ?? _getSubjectIndexFromLastSelected()];
+    subjectIndex = subjectIndex ?? _getSubjectIndexFromLastSelected();
+    final subject = category!.subjects[subjectIndex];
 
     List<Word> randomWord = [];
     for (int i = 0; i < quizNumber; i++) {
       int randomChapterIdx = 0;
       // 무료 버전 제한
-      if (subjectIndex == 2 && !UserController.to.user.isPremieum) {
+      if (subjectIndex >= 2 && !UserController.to.user.isPremieum) {
         randomChapterIdx = random.nextInt(
-          subject.chapters.length > 3 ? 3 : subject.chapters.length,
+          subject.chapters.length > AppConstant.defaultAccessableIndex
+              ? AppConstant.defaultAccessableIndex
+              : subject.chapters.length,
         );
       } else {
         randomChapterIdx = random.nextInt(subject.chapters.length);
