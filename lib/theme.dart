@@ -5,8 +5,8 @@ import 'package:jonggack_topik/core/utils/app_color.dart';
 import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
 
 class AppFonts {
-  static const japaneseFont = 'NotoSerifJP';
-  static const descriptionFont = japaneseFont;
+  // static const japaneseFont = 'NotoSerifJP';
+  // static const descriptionFont = japaneseFont;
   static const gMaretFont = 'GMarket';
   static const zenMaruGothic = 'ZenMaruGothic';
   static const cookieRun = 'CookieRunFont';

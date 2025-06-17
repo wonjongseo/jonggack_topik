@@ -42,8 +42,7 @@ class QuizScreen extends GetView<QuizController> {
                           Text.rich(
                             TextSpan(
                               text: "問題 ",
-                              style: Theme.of(context).textTheme.headlineSmall!
-                                  .copyWith(fontFamily: AppFonts.japaneseFont),
+                              style: Theme.of(context).textTheme.headlineSmall!,
                               children: [
                                 TextSpan(
                                   text:
@@ -51,18 +50,16 @@ class QuizScreen extends GetView<QuizController> {
                                   style: Theme.of(
                                     context,
                                   ).textTheme.headlineMedium!.copyWith(
-                                    fontFamily: AppFonts.japaneseFont,
                                     color: AppColors.secondaryColor,
                                   ),
                                 ),
                                 TextSpan(
                                   text:
                                       "/${questionController.questions.length}",
-                                  style: Theme.of(
-                                    context,
-                                  ).textTheme.headlineSmall!.copyWith(
-                                    fontFamily: AppFonts.japaneseFont,
-                                  ),
+                                  style:
+                                      Theme.of(
+                                        context,
+                                      ).textTheme.headlineSmall!,
                                 ),
                               ],
                             ),
@@ -235,7 +232,6 @@ class JlptTestOption extends StatelessWidget {
               style: TextStyle(
                 color: getTheRightColor(),
                 fontSize: SettingController.to.baseFS - 2,
-                fontFamily: AppFonts.japaneseFont,
               ),
             ),
           ),
