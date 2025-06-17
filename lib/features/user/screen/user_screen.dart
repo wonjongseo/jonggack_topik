@@ -2,12 +2,11 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/admob/banner_ad/global_banner_admob.dart';
+import 'package:jonggack_topik/core/utils/app_string.dart';
 
 import 'package:jonggack_topik/features/book/controller/book_controller.dart';
 import 'package:jonggack_topik/features/book/controller/book_study_controller.dart';
 import 'package:jonggack_topik/features/book/screen/book_study_screen.dart';
-import 'package:jonggack_topik/features/category/screen/widgets/search_form.dart';
-import 'package:jonggack_topik/features/main/screens/widgets/welcome_widget.dart';
 import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
 import 'package:jonggack_topik/features/user/screen/widgets/add_book_card.dart';
 import 'package:jonggack_topik/features/user/screen/widgets/book_card.dart';
@@ -33,7 +32,7 @@ class UserScreen extends GetView<BookController> {
                   child: Column(
                     children: [
                       Text(
-                        '커스텀 단어장',
+                        AppString.customVoca.tr,
                         style: TextStyle(
                           fontSize: SettingController.to.baseFS + 4,
                           fontWeight: FontWeight.bold,
@@ -95,23 +94,6 @@ class UserScreen extends GetView<BookController> {
       ),
 
       bottomNavigationBar: GlobalBannerAdmob(),
-    );
-  }
-}
-
-class CCard extends StatelessWidget {
-  const CCard({super.key, required this.child});
-  final Widget child;
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(18),
-        color: Theme.of(context).cardColor.withValues(alpha: .95),
-        boxShadow: [BoxShadow(color: Colors.grey.shade300, blurRadius: .05)],
-      ),
-      child: child,
     );
   }
 }

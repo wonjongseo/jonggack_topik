@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 import 'package:jonggack_topik/core/utils/app_color.dart';
+import 'package:jonggack_topik/core/utils/app_function.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/features/home/controller/home_controller.dart';
 import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
@@ -25,7 +26,7 @@ class TodayProgessAndQuizButton extends GetView<HomeController> {
           final done = HomeController.to.todayCount;
 
           return AspectRatio(
-            aspectRatio: 1.6,
+            aspectRatio: SettingController.to.isTablet.value ? 3.0 : 1.6,
             child: Container(
               padding: EdgeInsets.only(bottom: 20),
               margin: EdgeInsets.only(bottom: 20),

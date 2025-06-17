@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/state_manager.dart';
 import 'package:intl/intl.dart';
+import 'package:jonggack_topik/core/admob/banner_ad/global_banner_admob.dart';
 import 'package:jonggack_topik/core/models/missed_word.dart';
 import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/core/repositories/hive_repository.dart';
@@ -9,9 +9,7 @@ import 'package:jonggack_topik/core/repositories/setting_repository.dart';
 import 'package:jonggack_topik/core/utils/app_color.dart';
 import 'package:jonggack_topik/core/utils/app_constant.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
-import 'package:jonggack_topik/features/chapter/screen/widgets/word_listtile.dart';
 import 'package:jonggack_topik/features/history/controller/history_controller.dart';
-import 'package:jonggack_topik/features/word/screen/widgets/word_cart.dart';
 
 import 'package:table_calendar/table_calendar.dart';
 
@@ -112,7 +110,9 @@ class _AttenanceScreenState extends State<AttenanceScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(AppString.attendance.tr)),
+      appBar: AppBar(
+        // title: Text(AppString.attendance.tr)
+      ),
       body: SafeArea(
         child: Column(
           children: [
@@ -200,6 +200,8 @@ class _AttenanceScreenState extends State<AttenanceScreen> {
           ],
         ),
       ),
+
+      bottomNavigationBar: GlobalBannerAdmob(),
     );
   }
 }

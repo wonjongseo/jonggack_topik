@@ -5,6 +5,9 @@ class AppTranslations extends Translations {
   // TODO: implement keys
   Map<String, Map<String, String>> get keys => {
     'ja_JP': {
+      AppString.doBeforeTest1: AppString.doBeforeTest1Jp,
+      AppString.doBeforeTest2: AppString.doBeforeTest2Jp,
+      AppString.customVoca: AppString.customVocaJp,
       AppString.autuDelete: AppString.autuDeleteJp,
       AppString.advantage1: AppString.advantage1Jp,
       AppString.upgrade: AppString.upgradeJp,
@@ -126,6 +129,10 @@ class AppTranslations extends Translations {
       AppString.almostPass: AppString.almostPassJp,
     },
     'ko_KR': {
+      AppString.doBeforeTest1: AppString.doBeforeTest1Kr,
+      AppString.doBeforeTest2: AppString.doBeforeTest2Kr,
+
+      AppString.customVoca: AppString.customVocaKr,
       AppString.autuDelete: AppString.autuDeleteKr,
       AppString.advantage1: AppString.advantage1Kr,
       AppString.upgrade: AppString.upgradeKr,
@@ -390,7 +397,7 @@ class AppString {
 
   static String doYouWantToAlert2 = "doYouWantToAlert2Tr";
   static String doYouWantToAlert2Kr = "목표의 레벨의 기출 단어를 랜덤으로 학습 할 수 있습니다.";
-  static String doYouWantToAlert2Jp = '目標のレベルの単語をランダムで学習することができます。';
+  static String doYouWantToAlert2Jp = '目標レベルの単語をランダムで学習することができます。';
 
   // pickTime
   static String cancelBtnText = "cancelBtnTextTr";
@@ -814,8 +821,8 @@ We’ll review your report and work on improvements as soon as possible.
   static String hideMeanEn = "";
 
   static String saveAllWords = "saveAllWordsTr";
-  static String saveAllWordsKr = '의미 가리기';
-  static String saveAllWordsJp = '意味隠す';
+  static String saveAllWordsKr = '모두 저장';
+  static String saveAllWordsJp = '全てを保存';
   static String saveAllWordsEn = "";
 
   static String addWord = "addWordTr";
@@ -924,7 +931,22 @@ We’ll review your report and work on improvements as soon as possible.
   static String advantage1En = "App Theme Color";
 
   static String autuDelete = 'autuDeleteTr';
-  static String autuDeleteKr = '当てた単語の自動削除';
-  static String autuDeleteJp = '문제 맞출 시 자동 삭제';
+  static String autuDeleteKr = '문제 맞출 시 자동 삭제';
+  static String autuDeleteJp = '当てた単語の自動削除';
   static String autuDeleteEn = "App Theme Color";
+
+  static String customVoca = 'customVocaTr';
+  static String customVocaKr = '커스텀 단어장';
+  static String customVocaJp = 'カスタム単語帳';
+  static String customVocaEn = "App Theme Color";
+
+  static String doBeforeTest1 = 'doBeforeTest1Tr';
+  static String doBeforeTest1Kr = '과거에 틀린 ';
+  static String doBeforeTest1Jp = '前に間違えた';
+  static String doBeforeTest1En = "App Theme Color";
+
+  static String doBeforeTest2 = 'doBeforeTest2Tr';
+  static String doBeforeTest2Kr = '개의 문제만으로 퀴즈를 보시겠습니까? ';
+  static String doBeforeTest2Jp = '個の問題だけでQuizを受けますか？';
+  static String doBeforeTest2En = "App Theme Color";
 }

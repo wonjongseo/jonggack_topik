@@ -13,18 +13,20 @@ class AdUnitId {
   Map<String, String> rewardedInterstitial = {};
   Map<String, String> nativeAdvanced = {};
   Map<String, String> nativeAdvancedVideo = {};
-
   AdUnitId() {
     if (kReleaseMode) {
       log('kReleaseMode == true');
+
+      banner = {
+        'ios': 'ca-app-pub-9712392194582442/2138140766',
+        'android': 'ca-app-pub-9712392194582442/3629156148',
+      };
+
       appOpen = {
         'ios': 'ca-app-pub-9712392194582442/9190689539',
         'android': 'ca-app-pub-9712392194582442/3372538020',
       };
-      banner = {
-        'ios': 'ca-app-pub-9712392194582442/3839140563',
-        'android': 'ca-app-pub-9712392194582442/3629156148',
-      };
+
       jlptInterstitial = {
         'ios': 'ca-app-pub-9712392194582442/9082878326',
         'android': 'ca-app-pub-9712392194582442/1593160337',

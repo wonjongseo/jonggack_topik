@@ -21,6 +21,7 @@ import 'package:jonggack_topik/features/onboarding/screen/widgets/onboarding2.da
 import 'package:jonggack_topik/features/onboarding/screen/widgets/onboarding3.dart';
 import 'package:jonggack_topik/features/onboarding/screen/widgets/onboarding4.dart';
 import 'package:jonggack_topik/features/onboarding/screen/widgets/onboarding5.dart';
+import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
 import 'package:jonggack_topik/features/setting/enum/enums.dart';
 import 'package:timezone/timezone.dart' as tz;
 
@@ -139,9 +140,18 @@ class OnboardingController extends GetxController {
 
   Future<void> _saveCountOfGoalStudy() async {
     try {
-      value = value + 1;
-      SettingRepository.setInt(AppConstant.countOfGoal, value);
-      LogManager.info('키 : ${AppConstant.countOfGoal}, 값: $value');
+      String sScore = teCtl.text;
+      int score = 1;
+      if (sScore.isNotEmpty) {
+        score = int.tryParse(sScore) ?? 1;
+      }
+      score = score <= 0 ? 1 : score;
+
+      SettingRepository.setInt(AppConstant.countOfGoal, score);
+      LogManager.info('키 : ${AppConstant.countOfGoal}, 값: $score');
+      if (Get.isRegistered<SettingController>()) {
+        SettingController.to.dailyGoal.value = score;
+      }
     } catch (e) {
       LogManager.error('$e');
     }
@@ -295,7 +305,7 @@ class OnboardingController extends GetxController {
       _setNotification();
       SettingRepository.setString(AppConstant.notificationTimeKey, lunchTime);
     }
-    await InAppPurchaseService.instance.init();
+    // await InAppPurchaseService.instance.init();
     final userRepo = Get.find<HiveRepository<User>>();
 
     if (userRepo.getAll().isEmpty) {

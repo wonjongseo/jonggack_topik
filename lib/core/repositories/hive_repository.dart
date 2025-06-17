@@ -275,7 +275,7 @@ class HiveRepository<T extends HiveObject> {
         String title = '${AppString.appNameJp}単語帳';
         Book book = Book(
           title: title,
-          description: 'いちばんTopikが提供する単語帳',
+          description: 'おたすけTopikが提供する単語帳',
           bookNum: 0,
         );
 

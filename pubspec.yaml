@@ -103,7 +103,7 @@ dependencies:
   percent_indicator: ^4.2.5
   google_mobile_ads: ^6.0.0
   package_info_plus: ^8.3.0
-  in_app_purchase: ^3.2.3
+  # in_app_purchase: ^3.2.3
   # flutter_native_timezone: ^2.0.0
 dev_dependencies:
   flutter_test:

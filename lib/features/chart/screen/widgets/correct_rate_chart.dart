@@ -24,7 +24,7 @@ class CorrectRateChart extends StatelessWidget {
               ),
               padding: EdgeInsets.symmetric(vertical: 20, horizontal: 4),
               child: AspectRatio(
-                aspectRatio: 2.7,
+                aspectRatio: SettingController.to.isTablet.value ? 1.75 : 2.7,
                 child: BarChart(
                   BarChartData(
                     minY: 0,
@@ -109,7 +109,7 @@ class CorrectRateChart extends StatelessWidget {
             Align(
               alignment: Alignment.topRight,
               child: Padding(
-                padding: const EdgeInsets.all(6.0),
+                padding: const EdgeInsets.only(top: 2, right: 5),
                 child: Text(
                   AppString.correctRate.tr,
                   style: TextStyle(fontSize: 12),

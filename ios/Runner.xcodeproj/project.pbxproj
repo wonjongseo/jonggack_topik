@@ -11,7 +11,6 @@
 		331C808B294A63AB00263BE5 /* RunnerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331C807B294A618700263BE5 /* RunnerTests.swift */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
 		4A2777E22DFBEF12004A1690 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 4A2777E12DFBEF12004A1690 /* InfoPlist.xcstrings */; };
-		4AB2E4812DFF95CF00C3CBE9 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AB2E4802DFF95CF00C3CBE9 /* StoreKit.framework */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
@@ -56,7 +55,6 @@
 		4A2777DF2DFBEE08004A1690 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Main.strings; sourceTree = "<group>"; };
 		4A2777E02DFBEE08004A1690 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		4A2777E12DFBEF12004A1690 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
-		4AB2E4802DFF95CF00C3CBE9 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		57440A663C78268C99E667DA /* Pods_RunnerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RunnerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		59D2FA7BAC20F01E13B5B14C /* Pods-RunnerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.release.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.release.xcconfig"; sourceTree = "<group>"; };
 		74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Runner-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -88,7 +86,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4AB2E4812DFF95CF00C3CBE9 /* StoreKit.framework in Frameworks */,
 				FBB1BB893D00C2F6BF677B38 /* Pods_Runner.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -168,7 +165,6 @@
 		9ECEEB9C68CFA1FDCC9BF8A2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				4AB2E4802DFF95CF00C3CBE9 /* StoreKit.framework */,
 				A4DA19F6667E5F09A26154D2 /* Pods_Runner.framework */,
 				57440A663C78268C99E667DA /* Pods_RunnerTests.framework */,
 			);
@@ -511,7 +507,7 @@
 				DEVELOPMENT_TEAM = 6B7JBM5DS9;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "いちばんTopik";
+				INFOPLIST_KEY_CFBundleDisplayName = "おたすけTopik";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -700,7 +696,7 @@
 				DEVELOPMENT_TEAM = 6B7JBM5DS9;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "いちばんTopik";
+				INFOPLIST_KEY_CFBundleDisplayName = "おたすけTopik";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -725,7 +721,7 @@
 				DEVELOPMENT_TEAM = 6B7JBM5DS9;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "いちばんTopik";
+				INFOPLIST_KEY_CFBundleDisplayName = "おたすけTopik";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

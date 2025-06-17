@@ -25,7 +25,7 @@ class SplashScreen extends StatelessWidget {
                 height: 200,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('assets/images/app_icon.png'),
+                    image: AssetImage('assets/images/topik_jonggack2.png'),
                   ),
                 ),
               ),
@@ -53,7 +53,7 @@ class SplashController extends GetxController {
     if (hasUser.isEmpty) {
       Get.offAllNamed(OnboardingScreen.name);
     } else {
-      await InAppPurchaseService.instance.init();
+      // await InAppPurchaseService.instance.init();
       Get.offAllNamed(MainScreen.name);
     }
   }

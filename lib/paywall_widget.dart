@@ -47,7 +47,7 @@ class PaywallWidget extends StatelessWidget {
           GestureDetector(
             onTap: () {
               Get.back();
-              UserController.to.changeToPremieum();
+              // UserController.to.changeToPremieum();
             },
             child: Container(
               height: 50,

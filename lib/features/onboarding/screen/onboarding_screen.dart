@@ -72,29 +72,29 @@ class OnboardingScreen extends GetView<OnboardingController> {
               ),
             ),
           ),
-          floatingActionButton:
-              kDebugMode
-                  ? FloatingActionButton(
-                    onPressed: () {
-                      DateTime dateTime = DateTime.now();
+          // floatingActionButton:
+          //     kDebugMode
+          //         ? FloatingActionButton(
+          //           onPressed: () {
+          //             DateTime dateTime = DateTime.now();
 
-                      String title =
-                          '${dateTime.hour}-${dateTime.minute}-${dateTime.second}';
-                      NotificationService().scheduleSpecificDateNotification(
-                        id: 0,
-                        title: title,
-                        message: 'message',
-                        channelDescription: 'channelDescription',
-                        year: dateTime.year,
-                        month: dateTime.month,
-                        day: dateTime.day,
-                        hour: dateTime.hour,
-                        minute: dateTime.minute,
-                        second: dateTime.second + 10,
-                      );
-                    },
-                  )
-                  : null,
+          //             String title =
+          //                 '${dateTime.hour}-${dateTime.minute}-${dateTime.second}';
+          //             NotificationService().scheduleSpecificDateNotification(
+          //               id: 0,
+          //               title: title,
+          //               message: 'message',
+          //               channelDescription: 'channelDescription',
+          //               year: dateTime.year,
+          //               month: dateTime.month,
+          //               day: dateTime.day,
+          //               hour: dateTime.hour,
+          //               minute: dateTime.minute,
+          //               second: dateTime.second + 10,
+          //             );
+          //           },
+          //         )
+          //         : null,
           bottomNavigationBar: SafeArea(
             child: Obx(() {
               SettingController.to.colorIndex;

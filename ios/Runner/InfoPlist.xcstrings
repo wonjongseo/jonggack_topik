@@ -14,13 +14,13 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "おまかせTopik"
+            "value" : "おたすけTopik"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "종각 Topik"
+            "value" : "おたすけTopik"
           }
         }
       }
@@ -38,13 +38,13 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "おまかせTopik"
+            "value" : "おたすけTopik"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "종각 Topik"
+            "value" : "おたすけTopik"
           }
         }
       }

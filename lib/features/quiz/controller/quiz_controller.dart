@@ -3,9 +3,7 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
 import 'package:jonggack_topik/core/models/Question.dart';
-import 'package:jonggack_topik/core/models/missed_word.dart';
 import 'package:jonggack_topik/core/models/step_model.dart';
 import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/core/repositories/hive_repository.dart';
@@ -13,7 +11,6 @@ import 'package:jonggack_topik/core/services/app_review_service.dart';
 import 'package:jonggack_topik/core/utils/app_function.dart';
 import 'package:jonggack_topik/features/category/controller/category_controller.dart';
 import 'package:jonggack_topik/features/chapter/controller/chapter_controller.dart';
-import 'package:jonggack_topik/features/chart/controller/chart_controller.dart';
 import 'package:jonggack_topik/features/history/controller/history_controller.dart';
 import 'package:jonggack_topik/features/home/controller/home_controller.dart';
 
@@ -191,7 +188,19 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
     // 테스트를 다 풀 었으면
     else {
       DateTime date = DateTime.now();
-      print('isMyWordTest : ${isMyWordTest}');
+      if (kDebugMode) {
+        for (var i = 0; i < 7; i++) {
+          DateTime test = date.subtract(Duration(days: i + 1));
+
+          int randomeNu = random.nextInt(5) + 10;
+          int ranum2 = 15 - randomeNu;
+          QuizHistoryRepository.saveOrUpdate(
+            date: test,
+            newCorrectIds: List.generate(randomeNu, (_) => "/w/34828"),
+            newIncorrectIds: List.generate(ranum2, (_) => "/w/34828"),
+          );
+        }
+      }
 
       QuizHistoryRepository.saveOrUpdate(
         date: date,

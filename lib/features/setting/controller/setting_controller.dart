@@ -1,3 +1,4 @@
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/src/gestures/events.dart';
 import 'package:jonggack_topik/core/logger/logger_service.dart';
 import 'package:jonggack_topik/core/models/week_day_type.dart';
@@ -45,6 +46,28 @@ class SettingController extends GetxController {
     debouncer = FB.Debouncer();
     getDatas();
     super.onInit();
+  }
+
+  @override
+  void onReady() async {
+    super.onReady();
+    isTablet.value = await checkIsTablet();
+  }
+
+  final isTablet = false.obs;
+  Future<bool> checkIsTablet() async {
+    if (Platform.isIOS) {
+      final ios = await DeviceInfoPlugin().iosInfo;
+      // iPad 모델명에는 대개 "iPad"가 포함
+      if ((ios.model).toLowerCase().contains('ipad')) {
+        return true;
+      }
+      // iPhone도 큰 모델일 수 있으니 크기 체크 추가
+    }
+    // Android 또는 iOS 모두 화면 크기 기준 재검사
+    if (Get.context == null) return false;
+    final shortestSide = MediaQuery.of(Get.context!).size.shortestSide;
+    return shortestSide >= 600;
   }
 
   void getDatas() {

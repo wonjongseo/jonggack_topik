@@ -53,7 +53,7 @@ class SearchGetController extends GetxController {
   void _resetClearTimer() {
     if (kDebugMode) return;
     _clearTimer?.cancel();
-    _clearTimer = Timer(Duration(seconds: 10), () {
+    _clearTimer = Timer(Duration(minutes: 10), () {
       teCtl.clear();
       _words.clear();
     });

@@ -48,7 +48,6 @@ class ChapterController extends GetxController {
   }
 
   bool _computeAllSaved() {
-    print('_computeAllSaved');
     if (!Get.isRegistered<StepController>()) return false;
     for (String wordId in step.words) {
       if (!stepController.isSavedWord(wordId)) {
@@ -135,7 +134,8 @@ class ChapterController extends GetxController {
     if (step.wrongWords.isNotEmpty) {
       isTryAgain = await AppDialog.showMyDialog(
         title: AppString.youHavePreQuizData.tr,
-        bodyText: '틀린 ${step.wrongWords.length} 문제를 다시 보시겠습니까?',
+        bodyText:
+            '${AppString.doBeforeTest1.tr}${step.wrongWords.length}${AppString.doBeforeTest2.tr}',
         onConfirm: () {},
         onCancel: () {},
       );

@@ -27,14 +27,15 @@ class Attenance extends StatelessWidget {
                 Expanded(
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
+
                     padding: const EdgeInsets.symmetric(horizontal: 4),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children:
                           HomeController.to.getWeekDatesFromToday().entries.map(
                             (entry) {
                               bool isAttenance = HomeController.to.attendances
                                   .any((a) => isSameDay(a, entry.value));
-
                               return AttendanceWeekend(
                                 isAttenance: isAttenance,
                                 label: entry.key,
