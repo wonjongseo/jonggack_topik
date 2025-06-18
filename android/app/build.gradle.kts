@@ -27,10 +27,24 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11.toString()
     }
+    android {
+        signingConfigs {
+            create("release") {
+                storeFile = file("../keystore/key.jks")
+                val passwordFile = file("../keystore/keystore.password")
+                val password = passwordFile.readText().trim()
+                storePassword = password
+                keyAlias = "key"
+                keyPassword = password
+            }
+        }
 
-    buildTypes {
-        release {
-            signingConfig = signingConfigs.getByName("debug")
+        buildTypes {
+            getByName("release") {
+                isMinifyEnabled = false
+                isShrinkResources = false 
+                signingConfig = signingConfigs.getByName("release")
+            }
         }
     }
 }

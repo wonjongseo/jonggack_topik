@@ -50,14 +50,11 @@ class _AppState extends State<App> {
 
   void getUsresSetting() {
     systemLanguage =
-        SettingRepository.getString(AppConstant.settingLanguageKey) ??
-        Get.deviceLocale.toString();
+        SettingRepository.getString(AppConstant.settingLanguageKey) ?? "ja-JP";
 
     isDarkMode =
         SettingRepository.getBool(AppConstant.isDarkModeKey) ??
         ThemeMode.system == ThemeMode.dark;
-
-    themeMode = isDarkMode ? ThemeMode.dark : ThemeMode.light;
   }
 
   Future<bool> loadDatas() async {
@@ -79,7 +76,7 @@ class _AppState extends State<App> {
             getPages: AppRoutes.getPages,
             fallbackLocale: const Locale('ja', 'JP'),
             locale: Locale(systemLanguage),
-            themeMode: themeMode,
+            themeMode: isDarkMode ? ThemeMode.dark : ThemeMode.light,
             theme: AppThemings.lightTheme,
             darkTheme: AppThemings.darkTheme,
             initialBinding: InitBinding(),

@@ -226,13 +226,10 @@ class HiveRepository<T extends HiveObject> {
     final wordBox = Hive.box<Word>(Word.boxKey);
     // if (wordBox.keys.isEmpty) {
     List<Word> allwords = await dataRepositry.getAllWords();
-
+    LogManager.info('모든 단어 : ${allwords.length}');
     for (var word in allwords) {
-      // if (!wordBox.containsKey(word.id)) {
       await wordBox.put(word.id, word);
-      // }
     }
-    // }
   }
 
   static Future<void> _initDatas() async {

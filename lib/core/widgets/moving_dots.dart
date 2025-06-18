@@ -17,7 +17,7 @@ class _MovingDotsState extends State<MovingDots> {
     super.initState();
     _timer = Timer.periodic(Duration(milliseconds: 500), (timer) {
       setState(() {
-        _dots = '.' * ((_dots.length + 1) % 4); // . → .. → ... → (빈 문자열) 반복
+        _dots = '.' * ((_dots.length + 1) % 4);
       });
     });
   }
@@ -30,11 +30,6 @@ class _MovingDotsState extends State<MovingDots> {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      'Loading Data $_dots',
-      // style: Theme.of(
-      //   context,
-      // ).textTheme.titleMedium?.copyWith(fontFamily: AppFonts.zenMaruGothic),
-    );
+    return Text('データを読み込んでいます $_dots');
   }
 }

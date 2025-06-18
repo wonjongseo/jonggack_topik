@@ -6,7 +6,7 @@
     
 
     <application
-        android:label="jonggack_topik"
+        android:label="おたすけTopik"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
@@ -26,6 +26,10 @@
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/NormalTheme"
               />
+       
+            <!-- <meta-data
+                android:name="flutter.renderer"
+                android:value="legacy" /> -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -33,9 +37,11 @@
         </activity>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
-                <meta-data
+        <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+
+          
 
         <!-- Google Mobile Ads 앱 아이디 -->
         <meta-data

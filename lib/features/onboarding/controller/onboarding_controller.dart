@@ -247,6 +247,9 @@ class OnboardingController extends GetxController {
     LogManager.info('목표 레벨 Key: $selectedSubject');
 
     box.put(AppConstant.goalLevel, selectedSubject);
+    if (Get.isRegistered<SettingController>()) {
+      SettingController.to.goalLevel.value = selectedLevel;
+    }
   }
 
   Future<void> _setNotification() async {
@@ -299,7 +302,6 @@ class OnboardingController extends GetxController {
     //
     await _saveTopikLevel();
     await _saveCountOfGoalStudy();
-    // _saveAppColor();
 
     if (isNotifiEnable) {
       _setNotification();

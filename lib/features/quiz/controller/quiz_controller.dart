@@ -188,19 +188,19 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
     // 테스트를 다 풀 었으면
     else {
       DateTime date = DateTime.now();
-      if (kDebugMode) {
-        for (var i = 0; i < 7; i++) {
-          DateTime test = date.subtract(Duration(days: i + 1));
+      // if (kDebugMode) {
+      //   for (var i = 0; i < 7; i++) {
+      //     DateTime test = date.subtract(Duration(days: i + 1));
 
-          int randomeNu = random.nextInt(5) + 10;
-          int ranum2 = 15 - randomeNu;
-          QuizHistoryRepository.saveOrUpdate(
-            date: test,
-            newCorrectIds: List.generate(randomeNu, (_) => "/w/34828"),
-            newIncorrectIds: List.generate(ranum2, (_) => "/w/34828"),
-          );
-        }
-      }
+      //     int randomeNu = random.nextInt(5) + 10;
+      //     int ranum2 = 15 - randomeNu;
+      //     QuizHistoryRepository.saveOrUpdate(
+      //       date: test,
+      //       newCorrectIds: List.generate(randomeNu, (_) => "/w/34828"),
+      //       newIncorrectIds: List.generate(ranum2, (_) => "/w/34828"),
+      //     );
+      //   }
+      // }
 
       QuizHistoryRepository.saveOrUpdate(
         date: date,

@@ -19,10 +19,7 @@ class Onboarding1 extends StatelessWidget {
           textAlign: TextAlign.center,
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           TextSpan(
-            text:
-                isEn
-                    ? '${AppString.beforeStart.tr} ${AppString.appName.tr}\n'
-                    : '${AppString.appName.tr}${AppString.welcome.tr}',
+            text: '${AppString.appName.tr}${AppString.welcome.tr}',
             children: [
               TextSpan(
                 text:

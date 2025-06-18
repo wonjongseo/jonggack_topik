@@ -43,8 +43,6 @@ class RandomWordService {
     int? subjectIndex,
     int quizNumber = 15,
   }) {
-    print('quizNumber : ${quizNumber}');
-
     final stepRepo = Get.find<HiveRepository<StepModel>>(tag: StepModel.boxKey);
     final wordRepo = Get.find<HiveRepository<Word>>(tag: Word.boxKey);
 
@@ -59,7 +57,7 @@ class RandomWordService {
     final subject = category!.subjects[subjectIndex];
 
     List<Word> randomWord = [];
-    for (int i = 0; i < quizNumber; i++) {
+    for (int i = 0; randomWord.length != quizNumber; i++) {
       int randomChapterIdx = 0;
       // 무료 버전 제한
       if (subjectIndex >= 2 && !UserController.to.user.isPremieum) {
@@ -79,6 +77,8 @@ class RandomWordService {
       StepModel stepModel = stepRepo.get(stepKey)!;
 
       String wordId = stepModel.words[random.nextInt(stepModel.words.length)];
+      Word? word = wordRepo.get(wordId);
+      if (word == null) continue;
       randomWord.add(wordRepo.get(wordId)!);
     }
 

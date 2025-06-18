@@ -18,11 +18,6 @@ class HomeScreen extends GetView<HomeController> {
   Widget build(BuildContext context) {
     // SettingController.to.getDatas();
     return Scaffold(
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () async {
-      //     UserController.to.changeToPremieum();
-      //   },
-      // ),
       body: SafeArea(
         child: GestureDetector(
           onTap: () {
