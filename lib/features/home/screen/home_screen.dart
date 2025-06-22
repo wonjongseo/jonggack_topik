@@ -16,7 +16,6 @@ class HomeScreen extends GetView<HomeController> {
   // Password : Dnjswhdtj123!
   @override
   Widget build(BuildContext context) {
-    // SettingController.to.getDatas();
     return Scaffold(
       body: SafeArea(
         child: GestureDetector(

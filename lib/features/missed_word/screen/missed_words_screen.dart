@@ -20,38 +20,7 @@ class MissedWordsScreen extends GetView<HistoryController> {
       appBar: AppBar(
         title: Text(AppString.missedWord.tr),
         actions: [
-          IconButton(
-            onPressed: () {
-              Get.bottomSheet(
-                Container(
-                  color: dfBackground,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(top: 5),
-                        height: 5,
-                        width: 120,
-                        decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
-                      Obx(
-                        () => CustomToggleListTile(
-                          label: AppString.autuDelete.tr,
-                          toggle: (v) => controller.toggleAutoDelete(v),
-                          value: controller.isAutoDelete.value,
-                        ),
-                      ),
-                      const SizedBox(height: 40),
-                    ],
-                  ),
-                ),
-              );
-            },
-            icon: Icon(Icons.menu),
-          ),
+          // _action(),
         ],
       ),
       body: _body(),
@@ -67,6 +36,41 @@ class MissedWordsScreen extends GetView<HistoryController> {
     );
   }
 
+  IconButton _action() {
+    return IconButton(
+      onPressed: () {
+        Get.bottomSheet(
+          Container(
+            color: dfBackground,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(top: 5),
+                  height: 5,
+                  width: 120,
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                ),
+                Obx(
+                  () => CustomToggleListTile(
+                    label: AppString.autuDelete.tr,
+                    toggle: (v) => controller.toggleAutoDelete(v),
+                    value: controller.isAutoDelete.value,
+                  ),
+                ),
+                const SizedBox(height: 40),
+              ],
+            ),
+          ),
+        );
+      },
+      icon: Icon(Icons.menu),
+    );
+  }
+
   Widget _body() {
     return SafeArea(
       child: Container(
@@ -76,7 +80,7 @@ class MissedWordsScreen extends GetView<HistoryController> {
           () => Center(
             child:
                 controller.words.isEmpty
-                    ? Text(AppString.noRecordedData.tr)
+                    ? Text(AppString.noWrongData.tr)
                     : ListView.separated(
                       itemBuilder: (context, index) {
                         return MissedWordListTIle(
@@ -84,10 +88,6 @@ class MissedWordsScreen extends GetView<HistoryController> {
                           missedWord: controller.missedWords[index],
                           onTap: () => controller.goToWordScreen(index),
                           isHidenMean: false,
-                          onTrailingTap:
-                              () => controller.deleteMissedWord(
-                                controller.missedWords[index],
-                              ),
                         );
                       },
                       separatorBuilder: (context, index) => Divider(),

@@ -12,12 +12,10 @@ class MissedWordListTIle extends StatelessWidget {
     required this.missedWord,
     required this.word,
     required this.isHidenMean,
-    required this.onTrailingTap,
   });
   final Function()? onTapMean;
   final Function() onTap;
 
-  final Function() onTrailingTap;
   final TriedWord missedWord;
   final Word word;
 
@@ -60,29 +58,36 @@ class MissedWordListTIle extends StatelessWidget {
       ),
       // subtitle: ,
       onTap: onTap,
-      trailing: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          IconButton(
-            style: IconButton.styleFrom(
-              minimumSize: const Size(0, 0),
-              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            ),
-            onPressed: onTrailingTap,
-            icon: Icon(FontAwesomeIcons.trash),
-            iconSize: 16,
-            color: Colors.redAccent,
-          ),
-          Text(
-            '${missedWord.missCount}回',
-            style: TextStyle(
-              color: Colors.grey.shade600,
-              fontSize: SettingController.to.baseFS - 5,
-            ),
-          ),
-        ],
+      trailing: Text(
+        '${missedWord.missCount}回',
+        style: TextStyle(
+          color: Colors.grey.shade600,
+          fontSize: SettingController.to.baseFS - 5,
+        ),
       ),
+      // trailing: Column(
+      //   crossAxisAlignment: CrossAxisAlignment.end,
+      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //   children: [
+      //     IconButton(
+      //       style: IconButton.styleFrom(
+      //         minimumSize: const Size(0, 0),
+      //         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      //       ),
+      //       onPressed: onTrailingTap,
+      //       icon: Icon(FontAwesomeIcons.trash),
+      //       iconSize: 16,
+      //       color: Colors.redAccent,
+      //     ),
+      //     Text(
+      //       '${missedWord.missCount}回',
+      //       style: TextStyle(
+      //         color: Colors.grey.shade600,
+      //         fontSize: SettingController.to.baseFS - 5,
+      //       ),
+      //     ),
+      //   ],
+      // ),
       // isThreeLine: true,
     );
   }

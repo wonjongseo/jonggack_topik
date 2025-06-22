@@ -12,13 +12,13 @@ import 'package:jonggack_topik/core/utils/app_function.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/core/utils/snackbar_helper.dart';
 import 'package:jonggack_topik/features/chart/controller/chart_controller.dart';
-import 'package:jonggack_topik/features/history/controller/history_controller.dart';
 import 'package:jonggack_topik/features/missed_word/screen/widgets/missed_word_quiz_option_bottomsheet.dart';
 import 'package:jonggack_topik/features/quiz/controller/quiz_controller.dart';
 import 'package:jonggack_topik/features/quiz/screen/quiz_screen.dart';
 import 'package:jonggack_topik/features/user/repository/quiz_history_repository.dart';
 import 'package:jonggack_topik/features/word/controller/word_controller.dart';
 import 'package:jonggack_topik/features/word/screen/word_screen.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class HistoryController extends GetxController {
   static HistoryController get to => Get.find<HistoryController>();
@@ -26,7 +26,16 @@ class HistoryController extends GetxController {
   final isLoading = false.obs;
 
   final _allHistory = <QuizHistory>[].obs;
+
   List<QuizHistory> get allHistory => _allHistory.value;
+
+  List<TriedWord> get todayMissedWords {
+    final result = allHistory.firstWhereOrNull(
+      (history) => isSameDay(history.date, DateTime.now()),
+    );
+
+    return result == null ? [] : result.incorrectWordIds;
+  }
 
   List<TriedWord> get missedWords {
     final result = allHistory.expand((h) => h.incorrectWordIds).toList();
@@ -36,7 +45,7 @@ class HistoryController extends GetxController {
 
   List<Word> get words {
     final wordRepo = Get.find<HiveRepository<Word>>(tag: Word.boxKey);
-    return missedWords.map((t) => wordRepo.get(t.wordId)!).toList();
+    return todayMissedWords.map((t) => wordRepo.get(t.wordId)!).toList();
   }
 
   @override
@@ -140,7 +149,11 @@ class HistoryController extends GetxController {
       () => QuizScreen(),
       binding: BindingsBuilder.put(
         () => Get.put(
-          QuizController(words: quizWords, isAutoDelete: isAutoDelete.value),
+          QuizController(
+            words: quizWords,
+            isAutoDelete: isAutoDelete.value,
+            isRetry: true,
+          ),
         ),
       ),
     );
@@ -150,6 +163,9 @@ class HistoryController extends GetxController {
   void toggleAutoDelete(bool value) {
     isAutoDelete(value);
   }
+  //
+
+  //
 
   @override
   void onClose() {

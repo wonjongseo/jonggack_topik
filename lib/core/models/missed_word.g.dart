@@ -33,9 +33,7 @@ class TriedWordAdapter extends TypeAdapter<TriedWord> {
       ..writeByte(1)
       ..write(obj.category)
       ..writeByte(2)
-      ..write(obj.missCount)
-      ..writeByte(3)
-      ..write(obj.triedDays);
+      ..write(obj.missCount);
   }
 
   @override

@@ -12,6 +12,12 @@ class QuizHistoryRepository {
     return date.toIso8601String().split('T').first; // "2025-06-14"
   }
 
+  static Future<void> update(DateTime date) async {
+    final key = _dateKey(date);
+    final todayKey = _todayKey();
+    final existing = _box.get(key);
+  }
+
   /// 퀴즈 결과 저장 or 업데이트
   /// - newCorrect: 오늘 맞힌 단어 리스트
   /// - newIncorrect: 오늘 틀린 단어 리스트
@@ -95,18 +101,66 @@ class QuizHistoryRepository {
   }
 
   // 기존 기록을 업데이트해 줄 새로운 QuizHistory 생성
+  // static QuizHistory _updateExisting({
+  //   required QuizHistory existing,
+  //   List<String>? newCorrectIds,
+  //   List<String>? newIncorrectIds,
+  //   required String todayKey,
+  // }) {
+  //   final correctMap = _mergeCorrect(existing.correctWordIds, newCorrectIds);
+  //   final incorrectMap = _mergeIncorrect(
+  //     existing.incorrectWordIds,
+  //     newIncorrectIds,
+  //     todayKey,
+  //   );
+
+  //   return QuizHistory(
+  //     date: existing.date,
+  //     correctWordIds: correctMap.values.toList(),
+  //     incorrectWordIds: incorrectMap.values.toList(),
+  //   );
+  // }
   static QuizHistory _updateExisting({
     required QuizHistory existing,
     List<String>? newCorrectIds,
     List<String>? newIncorrectIds,
     required String todayKey,
   }) {
-    final correctMap = _mergeCorrect(existing.correctWordIds, newCorrectIds);
-    final incorrectMap = _mergeIncorrect(
-      existing.incorrectWordIds,
-      newIncorrectIds,
-      todayKey,
-    );
+    final correctMap = {for (var w in existing.correctWordIds) w.wordId: w};
+    final incorrectMap = {for (var w in existing.incorrectWordIds) w.wordId: w};
+
+    // ✅ 틀렸다가 맞은 단어 처리
+    if (newCorrectIds != null) {
+      for (var id in newCorrectIds) {
+        // 기존에 incorrect에 있었으면 제거
+        if (incorrectMap.containsKey(id)) {
+          incorrectMap.remove(id);
+        }
+
+        // correctMap에 없으면 새로 추가
+        correctMap.putIfAbsent(
+          id,
+          () =>
+              TriedWord(wordId: id, category: '', missCount: 0, triedDays: []),
+        );
+      }
+    }
+
+    // ❌ 새로 틀린 단어 처리 (missCount 누적)
+    if (newIncorrectIds != null) {
+      for (var id in newIncorrectIds) {
+        if (incorrectMap.containsKey(id)) {
+          final old = incorrectMap[id]!;
+          incorrectMap[id] = TriedWord(
+            wordId: old.wordId,
+            category: old.category,
+            missCount: old.missCount + 1,
+          );
+        } else {
+          incorrectMap[id] = TriedWord(wordId: id, category: '', missCount: 1);
+        }
+      }
+    }
 
     return QuizHistory(
       date: existing.date,
@@ -124,22 +178,12 @@ class QuizHistoryRepository {
   }) {
     final correctList =
         (newCorrectIds ?? []).map((id) {
-          return TriedWord(
-            wordId: id,
-            category: '',
-            missCount: 0,
-            triedDays: [],
-          );
+          return TriedWord(wordId: id, category: '', missCount: 0);
         }).toList();
 
     final incorrectList =
         (newIncorrectIds ?? []).map((id) {
-          return TriedWord(
-            wordId: id,
-            category: '',
-            missCount: 1,
-            triedDays: [todayKey],
-          );
+          return TriedWord(wordId: id, category: '', missCount: 1);
         }).toList();
 
     return QuizHistory(
@@ -179,20 +223,13 @@ class QuizHistoryRepository {
       for (var id in newIds) {
         if (map.containsKey(id)) {
           final old = map[id]!;
-          final mergedDays = {...old.triedDays, todayKey}.toList();
           map[id] = TriedWord(
             wordId: old.wordId,
             category: old.category,
             missCount: old.missCount + 1,
-            triedDays: mergedDays,
           );
         } else {
-          map[id] = TriedWord(
-            wordId: id,
-            category: '',
-            missCount: 1,
-            triedDays: [todayKey],
-          );
+          map[id] = TriedWord(wordId: id, category: '', missCount: 1);
         }
       }
     }

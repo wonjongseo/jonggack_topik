@@ -138,14 +138,11 @@ class InitBinding extends Bindings {
     Get.lazyPut(() => MainController(), fenix: true);
     Get.lazyPut(() => HomeController(), fenix: true);
     Get.lazyPut(() => SearchGetController(), fenix: true);
-    // Get.lazyPut(() => CategoryController());
-    // Get.lazyPut(() => BookController());
     Get.put(BookController());
     Get.lazyPut(() => DataRepositry());
     Get.lazyPut(() => CategoryController(Get.find()));
     Get.lazyPut(() => HistoryController());
     Get.lazyPut(() => ChartController(), fenix: true);
-    // Get.lazyPut(() => MissedWordController(), fenix: true);
   }
 }
 

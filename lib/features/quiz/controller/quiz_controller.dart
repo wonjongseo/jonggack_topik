@@ -25,7 +25,12 @@ import 'package:jonggack_topik/features/user/repository/quiz_history_repository.
 class QuizController extends GetxController with SingleGetTickerProviderMixin {
   final List<Word> words;
   final bool isAutoDelete;
-  QuizController({required this.words, this.isAutoDelete = false});
+  final bool isRetry;
+  QuizController({
+    required this.words,
+    this.isAutoDelete = false,
+    this.isRetry = false,
+  });
 
   late AnimationController animationController; // 진행률 바
   late Animation animation; // 진행률 바 애니메이션
@@ -201,12 +206,14 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
       //     );
       //   }
       // }
-
+      // if (isRetry) {
+      // } else {
       QuizHistoryRepository.saveOrUpdate(
         date: date,
         newCorrectIds: correctQuestions.map((word) => word.id).toSet().toList(),
         newIncorrectIds: wrongQuestions.map((word) => word.id).toSet().toList(),
       );
+      // }
 
       if (Get.isRegistered<HistoryController>()) {
         HistoryController.to.getAllHistories();

@@ -157,17 +157,6 @@ class OnboardingController extends GetxController {
     }
   }
 
-  // _saveAppColor() {
-  //   try {
-  //     SettingRepository.setInt(AppConstant.appColorIndex, selectedColorIndex);
-  //     LogManager.info(
-  //       '키 : ${AppConstant.appColorIndex}, 값: $selectedColorIndex',
-  //     );
-  //   } catch (e) {
-  //     LogManager.error('$e');
-  //   }
-  // }
-
   // Onboarding3
   List<DayPeriodType> notificationPeriod = [DayPeriodType.afternoon];
   // DayPeriodType.values.toList(); // 0:아침, 1:점심, 2: 저녁

@@ -9,7 +9,6 @@ import 'package:jonggack_topik/core/repositories/setting_repository.dart';
 import 'package:jonggack_topik/core/utils/app_color.dart';
 import 'package:jonggack_topik/core/utils/app_constant.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
-import 'package:jonggack_topik/features/history/controller/history_controller.dart';
 
 import 'package:table_calendar/table_calendar.dart';
 
@@ -47,14 +46,6 @@ class _AttenanceScreenState extends State<AttenanceScreen> {
 
   void _buildEvents() {
     final Map<DateTime, List<TriedWord>> map = {};
-
-    for (var w in HistoryController.to.missedWords) {
-      for (var s in w.triedDays) {
-        final dt = DateTime.parse(s);
-        final key = DateTime(dt.year, dt.month, dt.day);
-        map.putIfAbsent(key, () => []).add(w);
-      }
-    }
 
     setState(() => _events = map);
   }

@@ -29,7 +29,7 @@ class MissedWordButton extends StatelessWidget {
                 children: [
                   Obx(
                     () => Text(
-                      '${AppString.missedWord.tr} ${controller.missedWords.length}${AppString.unit.tr}',
+                      '${AppString.missedWord.tr} ${controller.todayMissedWords.length}${AppString.unit.tr}',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18,

@@ -49,7 +49,7 @@ class AppTranslations extends Translations {
       AppString.mean: AppString.meanJp,
       AppString.yomikata: AppString.yomikataJp,
       AppString.noSavedWord: AppString.noSavedWordJp,
-      AppString.noRecordedData: AppString.noRecordedDataJp,
+      AppString.noWrongData: AppString.noRecordedDataJp,
       AppString.doQuizAllMissedWords: AppString.doQuizAllMissedWordsJp,
       AppString.plzInput: AppString.plzInputJp,
       AppString.plzInputMore: AppString.plzInputMoreJp,
@@ -174,7 +174,7 @@ class AppTranslations extends Translations {
       AppString.mean: AppString.meanKr,
       AppString.yomikata: AppString.yomikataKr,
       AppString.noSavedWord: AppString.noSavedWordKr,
-      AppString.noRecordedData: AppString.noRecordedDataKr,
+      AppString.noWrongData: AppString.noRecordedDataKr,
       AppString.doQuizAllMissedWords: AppString.doQuizAllMissedWordsKr,
       AppString.plzInput: AppString.plzInputKr,
       AppString.plzInputMore: AppString.plzInputMoreKr,
@@ -320,9 +320,9 @@ class AppString {
   static String noSavedWordJp = "に保存された単語がありません。";
   static String noSavedWordEn = "";
 
-  static String noRecordedData = "noRecordedDataTr";
-  static String noRecordedDataKr = '기록된 데이터가 없습니다.';
-  static String noRecordedDataJp = "記録データがありません";
+  static String noWrongData = "noRecordedDataTr";
+  static String noRecordedDataKr = '오늘의 틀린 단어가 없습니다.';
+  static String noRecordedDataJp = "今日の誤答の単語がありません";
   static String noRecordedDataEn = "";
 
   static String doQuizAllMissedWords = "doQuizAllMissedWordsTr";

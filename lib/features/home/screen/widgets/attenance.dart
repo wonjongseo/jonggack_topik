@@ -20,14 +20,13 @@ class Attenance extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
       child: Obx(
         () => Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Expanded(
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
-
                     padding: const EdgeInsets.symmetric(horizontal: 4),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -45,19 +44,19 @@ class Attenance extends StatelessWidget {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 4),
-                  child: GestureDetector(
-                    onTap: () {
-                      Get.to(
-                        () => AttenanceScreen(
-                          attendances: HomeController.to.attendances,
-                        ),
-                      );
-                    },
-                    child: Icon(Icons.calendar_month),
-                  ),
-                ),
+                // Padding(
+                //   padding: EdgeInsets.symmetric(horizontal: 4),
+                //   child: GestureDetector(
+                //     onTap: () {
+                //       // Get.to(
+                //       //   () => AttenanceScreen(
+                //       //     attendances: HomeController.to.attendances,
+                //       //   ),
+                //       // );
+                //     },
+                //     child: Icon(Icons.calendar_month),
+                //   ),
+                // ),
               ],
             ),
           ],
