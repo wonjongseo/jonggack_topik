@@ -13,7 +13,6 @@ import 'package:jonggack_topik/core/models/chapter.dart';
 import 'package:jonggack_topik/core/models/chapter_hive.dart';
 import 'package:jonggack_topik/core/models/example.dart';
 import 'package:jonggack_topik/core/models/missed_word.dart';
-import 'package:jonggack_topik/core/models/notification_model.dart';
 import 'package:jonggack_topik/core/models/quiz_history.dart';
 import 'package:jonggack_topik/core/models/step_model.dart';
 import 'package:jonggack_topik/core/models/subject.dart';
@@ -93,57 +92,61 @@ class HiveRepository<T extends HiveObject> {
   }
 
   static void _initAdapters() {
-    if (!Hive.isAdapterRegistered(HK.userTypeID)) {
-      Hive.registerAdapter(UserAdapter());
-    }
-    if (!Hive.isAdapterRegistered(HK.categoryHiveTypeID)) {
-      Hive.registerAdapter(CategoryHiveAdapter());
-    }
-    if (!Hive.isAdapterRegistered(HK.chapterHiveTypeID)) {
-      Hive.registerAdapter(ChapterHiveAdapter());
-    }
-    if (!Hive.isAdapterRegistered(HK.subjectHiveTypeID)) {
-      Hive.registerAdapter(SubjectHiveAdapter());
-    }
+    try {
+      if (!Hive.isAdapterRegistered(HK.userTypeID)) {
+        Hive.registerAdapter(UserAdapter());
+      }
+      if (!Hive.isAdapterRegistered(HK.categoryHiveTypeID)) {
+        Hive.registerAdapter(CategoryHiveAdapter());
+      }
+      if (!Hive.isAdapterRegistered(HK.chapterHiveTypeID)) {
+        Hive.registerAdapter(ChapterHiveAdapter());
+      }
+      if (!Hive.isAdapterRegistered(HK.subjectHiveTypeID)) {
+        Hive.registerAdapter(SubjectHiveAdapter());
+      }
 
-    if (!Hive.isAdapterRegistered(HK.categoryTypeID)) {
-      Hive.registerAdapter(CategoryAdapter());
-    }
-    if (!Hive.isAdapterRegistered(HK.subjectTypeID)) {
-      Hive.registerAdapter(SubjectAdapter());
-    }
-    if (!Hive.isAdapterRegistered(HK.chapterTypeID)) {
-      Hive.registerAdapter(ChapterAdapter());
-    }
-    if (!Hive.isAdapterRegistered(HK.stepTypeID)) {
-      Hive.registerAdapter(StepModelAdapter());
-    }
+      if (!Hive.isAdapterRegistered(HK.categoryTypeID)) {
+        Hive.registerAdapter(CategoryAdapter());
+      }
+      if (!Hive.isAdapterRegistered(HK.subjectTypeID)) {
+        Hive.registerAdapter(SubjectAdapter());
+      }
+      if (!Hive.isAdapterRegistered(HK.chapterTypeID)) {
+        Hive.registerAdapter(ChapterAdapter());
+      }
+      if (!Hive.isAdapterRegistered(HK.stepTypeID)) {
+        Hive.registerAdapter(StepModelAdapter());
+      }
 
-    if (!Hive.isAdapterRegistered(ExampleAdapter().typeId)) {
-      Hive.registerAdapter(ExampleAdapter());
-    }
-    if (!Hive.isAdapterRegistered(SynonymAdapter().typeId)) {
-      Hive.registerAdapter(SynonymAdapter());
-    }
+      if (!Hive.isAdapterRegistered(ExampleAdapter().typeId)) {
+        Hive.registerAdapter(ExampleAdapter());
+      }
+      if (!Hive.isAdapterRegistered(SynonymAdapter().typeId)) {
+        Hive.registerAdapter(SynonymAdapter());
+      }
 
-    if (!Hive.isAdapterRegistered(HK.wordTypeID)) {
-      Hive.registerAdapter(WordAdapter());
-    }
-    if (!Hive.isAdapterRegistered(QuestionAdapter().typeId)) {
-      Hive.registerAdapter(QuestionAdapter());
-    }
+      if (!Hive.isAdapterRegistered(HK.wordTypeID)) {
+        Hive.registerAdapter(WordAdapter());
+      }
+      if (!Hive.isAdapterRegistered(QuestionAdapter().typeId)) {
+        Hive.registerAdapter(QuestionAdapter());
+      }
 
-    if (!Hive.isAdapterRegistered(QuizHistoryAdapter().typeId)) {
-      Hive.registerAdapter(QuizHistoryAdapter());
-    }
-    if (!Hive.isAdapterRegistered(BookAdapter().typeId)) {
-      Hive.registerAdapter(BookAdapter());
-    }
-    if (!Hive.isAdapterRegistered(TriedWordAdapter().typeId)) {
-      Hive.registerAdapter(TriedWordAdapter());
-    }
-    if (!Hive.isAdapterRegistered(AttendanceDateAdapter().typeId)) {
-      Hive.registerAdapter(AttendanceDateAdapter());
+      if (!Hive.isAdapterRegistered(QuizHistoryAdapter().typeId)) {
+        Hive.registerAdapter(QuizHistoryAdapter());
+      }
+      if (!Hive.isAdapterRegistered(BookAdapter().typeId)) {
+        Hive.registerAdapter(BookAdapter());
+      }
+      if (!Hive.isAdapterRegistered(TriedWordAdapter().typeId)) {
+        Hive.registerAdapter(TriedWordAdapter());
+      }
+      if (!Hive.isAdapterRegistered(AttendanceDateAdapter().typeId)) {
+        Hive.registerAdapter(AttendanceDateAdapter());
+      }
+    } catch (e) {
+      LogManager.error("$e");
     }
   }
 

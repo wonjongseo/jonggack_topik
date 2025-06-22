@@ -322,7 +322,7 @@ class AppString {
 
   static String noWrongData = "noRecordedDataTr";
   static String noRecordedDataKr = '오늘의 틀린 단어가 없습니다.';
-  static String noRecordedDataJp = "今日の誤答の単語がありません";
+  static String noRecordedDataJp = "今日の間違えた単語がありません。";
   static String noRecordedDataEn = "";
 
   static String doQuizAllMissedWords = "doQuizAllMissedWordsTr";

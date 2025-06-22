@@ -12,7 +12,6 @@ class MyWordQuizOptionBottomsheet extends GetView<BookStudyController> {
     int totalCount = controller.words.length;
     TextEditingController tECtl = TextEditingController(text: '$totalCount');
     return Obx(() {
-      int totalMissedWordCount = controller.words.length;
       return Column(
         mainAxisSize: MainAxisSize.min,
         children: [

@@ -12,12 +12,6 @@ class QuizHistoryRepository {
     return date.toIso8601String().split('T').first; // "2025-06-14"
   }
 
-  static Future<void> update(DateTime date) async {
-    final key = _dateKey(date);
-    final todayKey = _todayKey();
-    final existing = _box.get(key);
-  }
-
   /// 퀴즈 결과 저장 or 업데이트
   /// - newCorrect: 오늘 맞힌 단어 리스트
   /// - newIncorrect: 오늘 틀린 단어 리스트

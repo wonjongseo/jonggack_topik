@@ -89,7 +89,6 @@ class BookStudyController extends GetxController {
       title: AppString.noTurningBack.tr,
       bodyText: '${_allWords.length}${AppString.sureDelete.tr}',
       onConfirm: () {
-        int count = _allWords.length;
         for (var word in _allWords) {
           BookController.to.toggleMyWord(word);
         }

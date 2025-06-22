@@ -58,13 +58,16 @@ class MissedWordListTIle extends StatelessWidget {
       ),
       // subtitle: ,
       onTap: onTap,
-      trailing: Text(
-        '${missedWord.missCount}回',
-        style: TextStyle(
-          color: Colors.grey.shade600,
-          fontSize: SettingController.to.baseFS - 5,
-        ),
-      ),
+      trailing:
+          missedWord.missCount == 0
+              ? null
+              : Text(
+                '${missedWord.missCount}回',
+                style: TextStyle(
+                  color: Colors.grey.shade600,
+                  fontSize: SettingController.to.baseFS - 5,
+                ),
+              ),
       // trailing: Column(
       //   crossAxisAlignment: CrossAxisAlignment.end,
       //   mainAxisAlignment: MainAxisAlignment.spaceBetween,

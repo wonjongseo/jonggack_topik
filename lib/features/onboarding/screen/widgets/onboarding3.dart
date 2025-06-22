@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jonggack_topik/core/models/day_period_type.dart';
 import 'package:jonggack_topik/core/utils/app_color.dart';
 import 'package:jonggack_topik/core/utils/app_function.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
@@ -38,26 +37,19 @@ class Onboarding3 extends StatelessWidget {
                 ),
                 SizedBox(height: 32),
                 Column(
-                  children: List.generate(conroller.notificationPeriod.length, (
-                    index,
-                  ) {
-                    return GestureDetector(
+                  children: [
+                    GestureDetector(
                       onTap:
                           !conroller.isNotifiEnable
                               ? null
-                              : () => conroller.changeNotifcationTime(
-                                conroller.notificationPeriod[index],
-                                context,
-                              ),
+                              : () => conroller.changeNotifcationTime(context),
                       child: AppointPillTime(
-                        title: conroller.notificationPeriod[index].label,
-                        time: conroller.getAlramTimeDayPeriod(
-                          conroller.notificationPeriod[index],
-                        ),
+                        title: AppString.lunch.tr,
+                        time: conroller.lunchTime,
                         isAlermEnable: conroller.isNotifiEnable,
                       ),
-                    );
-                  }),
+                    ),
+                  ],
                 ),
               ],
             );

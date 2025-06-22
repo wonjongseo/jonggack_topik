@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:jonggack_topik/core/logger/logger_service.dart';
-import 'package:jonggack_topik/core/models/day_period_type.dart';
 import 'package:jonggack_topik/core/models/week_day_type.dart';
 import 'package:jonggack_topik/core/repositories/hive_repository.dart';
 import 'package:jonggack_topik/core/repositories/setting_repository.dart';
@@ -158,14 +157,11 @@ class OnboardingController extends GetxController {
   }
 
   // Onboarding3
-  List<DayPeriodType> notificationPeriod = [DayPeriodType.afternoon];
   // DayPeriodType.values.toList(); // 0:아침, 1:점심, 2: 저녁
   List<WeekDayType> selectedWeekDays = WeekDayType.values.toList(); // 0:월, 1: 화
 
   bool isNotifiEnable = false;
-  String morningTime = '08:30';
   String lunchTime = '12:30';
-  String eveningTime = '18:30';
 
   NotificationService? notificationService;
 
@@ -181,22 +177,8 @@ class OnboardingController extends GetxController {
     update();
   }
 
-  String getAlramTimeDayPeriod(DayPeriodType dayPeriodType) {
-    switch (dayPeriodType) {
-      case DayPeriodType.morning:
-        return morningTime;
-      case DayPeriodType.afternoon:
-        return lunchTime;
-      case DayPeriodType.evening:
-        return eveningTime;
-    }
-  }
-
-  void changeNotifcationTime(
-    DayPeriodType dayPeriodType,
-    BuildContext context,
-  ) async {
-    String pillTime = getAlramTimeDayPeriod(dayPeriodType);
+  void changeNotifcationTime(BuildContext context) async {
+    String pillTime = lunchTime;
     int hour = int.tryParse(pillTime.split(':')[0]) ?? 0;
     int minute = int.tryParse(pillTime.split(':')[1]) ?? 0;
 
@@ -208,17 +190,7 @@ class OnboardingController extends GetxController {
     if (timeOfDay == null) {
       return;
     }
-    switch (dayPeriodType) {
-      case DayPeriodType.morning:
-        morningTime = '${timeOfDay.hour}:${timeOfDay.minute}';
-        break;
-      case DayPeriodType.afternoon:
-        lunchTime = '${timeOfDay.hour}:${timeOfDay.minute}';
-        break;
-      case DayPeriodType.evening:
-        eveningTime = '${timeOfDay.hour}:${timeOfDay.minute}';
-        break;
-    }
+    lunchTime = '${timeOfDay.hour}:${timeOfDay.minute}';
 
     update();
   }
@@ -251,39 +223,37 @@ class OnboardingController extends GetxController {
     );
 
     for (int day in days) {
-      for (DayPeriodType pillTime in notificationPeriod) {
-        int hour = int.parse(getAlramTimeDayPeriod(pillTime).split(':')[0]);
-        int minute = int.parse(getAlramTimeDayPeriod(pillTime).split(':')[1]);
-        int id = AppFunction.createIdByDay(day, hour, minute);
+      int hour = int.parse(lunchTime.split(':')[0]);
+      int minute = int.parse(lunchTime.split(':')[1]);
+      int id = AppFunction.createIdByDay(day, hour, minute);
 
-        DateTime now = tz.TZDateTime.now(tz.local);
-        DateTime? taskTime = tz.TZDateTime(
-          tz.local,
-          now.year,
-          now.month,
-          day,
-          hour,
-          minute,
+      DateTime now = tz.TZDateTime.now(tz.local);
+      DateTime? taskTime = tz.TZDateTime(
+        tz.local,
+        now.year,
+        now.month,
+        day,
+        hour,
+        minute,
+      );
+
+      if (isNotifiEnable && notificationService != null) {
+        String message = AppString.goToRandomQuiz.tr;
+
+        taskTime = await notificationService!.scheduleWeeklyNotification(
+          title: '📖  ${AppString.studyAlram.tr}',
+          message: message,
+          id: id,
+          weekday: day,
+          hour: hour,
+          minute: minute,
         );
-
-        if (isNotifiEnable && notificationService != null) {
-          String message = AppString.goToRandomQuiz.tr;
-
-          taskTime = await notificationService!.scheduleWeeklyNotification(
-            title: '📖  ${AppString.studyAlram.tr}',
-            message: message,
-            id: id,
-            weekday: day,
-            hour: hour,
-            minute: minute,
-          );
-        }
-
-        if (taskTime == null) {
-          break;
-        }
-        notificationIds.add(id);
       }
+
+      if (taskTime == null) {
+        break;
+      }
+      notificationIds.add(id);
     }
   }
 

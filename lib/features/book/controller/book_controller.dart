@@ -16,7 +16,6 @@ class BookController extends GetxController {
   static BookController get to => Get.find<BookController>();
   final isLoading = false.obs;
   final _bookBox = Get.find<HiveRepository<Book>>(tag: Book.boxKey);
-  final _myWordBox = Get.find<HiveRepository<Word>>(tag: HK.myWordBoxKey);
 
   final _allBooks = <Book>[].obs;
   List<Book> get books => _allBooks.value;

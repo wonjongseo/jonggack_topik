@@ -27,36 +27,6 @@ class _ScoreScreenState extends State<ScoreScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      Random randDom = Random();
-
-      int randomNumber = randDom.nextInt(20) + 20; // is >=20 and40
-
-      // if (jlptController.userController.clickUnKnownButtonCount >
-      //     randomNumber) {
-      //   int savedDataCount =
-      //       jlptController.userController.user.yokumatigaeruMyWords;
-
-      //   bool result = await CommonDialog.askGoToMyVocaPageDialog(
-      //     savedDataCount,
-      //   );
-
-      //   if (result) {
-      //     jlptController.userController.clickUnKnownButtonCount = 0;
-      //     jlptController.isMyWordTest ? getBacks(2) : getBacks(3);
-      //     Get.toNamed(
-      //       MY_VOCA_PATH,
-      //       arguments: {MY_VOCA_TYPE: MyVocaEnum.YOKUMATIGAERU_WORD},
-      //     );
-      //   } else {
-      //     randomNumber = randDom.nextInt(2) + 2;
-      //     jlptController.userController.clickUnKnownButtonCount =
-      //         (jlptController.userController.clickUnKnownButtonCount /
-      //                 randomNumber)
-      //             .floor();
-      //   }
-      // }
-    });
   }
 
   @override

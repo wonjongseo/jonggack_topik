@@ -8,6 +8,8 @@ import 'package:jonggack_topik/core/models/missed_word.dart';
 import 'package:jonggack_topik/core/models/quiz_history.dart';
 import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/core/repositories/hive_repository.dart';
+import 'package:jonggack_topik/core/repositories/setting_repository.dart';
+import 'package:jonggack_topik/core/utils/app_constant.dart';
 import 'package:jonggack_topik/core/utils/app_function.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/core/utils/snackbar_helper.dart';
@@ -58,6 +60,9 @@ class HistoryController extends GetxController {
     try {
       isLoading(true);
       final all = QuizHistoryRepository.fetchAll();
+      for (var a in all) {
+        print('a : ${a}');
+      }
 
       _allHistory.assignAll(all);
       ChartController.to.generateGraph();
@@ -163,9 +168,6 @@ class HistoryController extends GetxController {
   void toggleAutoDelete(bool value) {
     isAutoDelete(value);
   }
-  //
-
-  //
 
   @override
   void onClose() {

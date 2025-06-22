@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/utils.dart';
-import 'package:jonggack_topik/core/services/inapp_service.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
-import 'package:jonggack_topik/features/auth/controllers/user_controller.dart';
 import 'package:jonggack_topik/theme.dart';
 
 class PaywallWidget extends StatelessWidget {

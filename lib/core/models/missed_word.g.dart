@@ -20,14 +20,13 @@ class TriedWordAdapter extends TypeAdapter<TriedWord> {
       wordId: fields[0] as String,
       category: fields[1] as String,
       missCount: fields[2] as int,
-      triedDays: (fields[3] as List?)?.cast<String>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, TriedWord obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.wordId)
       ..writeByte(1)

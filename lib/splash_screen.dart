@@ -1,8 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/repositories/hive_repository.dart';
-import 'package:jonggack_topik/core/services/inapp_service.dart';
 import 'package:jonggack_topik/features/attendance/controller/attendance_controller.dart';
 import 'package:jonggack_topik/features/auth/models/user.dart';
 import 'package:jonggack_topik/features/main/screens/main_screen.dart';
