@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
+import 'package:jonggack_topik/features/auth/controllers/user_controller.dart';
 import 'package:jonggack_topik/theme.dart';
 
 class PaywallWidget extends StatelessWidget {
@@ -44,7 +45,7 @@ class PaywallWidget extends StatelessWidget {
           GestureDetector(
             onTap: () {
               Get.back();
-              // UserController.to.changeToPremieum();
+              UserController.to.changeToPremieum();
             },
             child: Container(
               height: 50,

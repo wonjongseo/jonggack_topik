@@ -16,7 +16,9 @@ class AttendanceDateAdapter extends TypeAdapter<AttendanceDate> {
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return AttendanceDate(fields[0] as DateTime);
+    return AttendanceDate(
+      fields[0] as DateTime,
+    );
   }
 
   @override

@@ -25,6 +25,9 @@ class User extends HiveObject {
   @HiveField(4)
   String updatedAt;
 
+  @HiveField(5, defaultValue: false)
+  bool isFake = false;
+
   User({this.isPremieum = false, List<String>? myBookIds})
     : userId = '${DateTime.now().microsecondsSinceEpoch}',
       myBookIds = myBookIds ?? [],

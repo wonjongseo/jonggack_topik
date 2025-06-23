@@ -12,6 +12,7 @@ import 'package:jonggack_topik/features/category/screen/widgets/search_form.dart
 import 'package:jonggack_topik/features/setting/enum/enums.dart';
 import 'package:jonggack_topik/features/subject/controller/subject_controller.dart';
 import 'package:jonggack_topik/features/subject/screen/widgets/chapter_selector.dart';
+import 'package:jonggack_topik/paywall_widget.dart';
 
 import 'package:jonggack_topik/theme.dart';
 
@@ -25,53 +26,86 @@ class SubjectScreen extends GetView<SubjectController> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(title: Text(controller.categoryTitle)),
-      body: GestureDetector(
-        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-        child: SafeArea(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SeacrhForm(),
-                SizedBox(height: 32),
+      body: Obx(
+        () => Stack(
+          children: [
+            GestureDetector(
+              onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+              child: SafeArea(
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SeacrhForm(),
+                      SizedBox(height: 32),
 
-                SizedBox(width: size.width * 0.65, child: _dropdownbutton()),
-                SizedBox(height: 24),
-                Expanded(
-                  child: Obx(
-                    () => CarouselSlider(
-                      carouselController: controller.carouselController,
-                      items: List.generate(
-                        controller.selectedSubject.chapters.length,
-                        (index) {
-                          bool isAccessable =
-                              index < AppConstant.defaultAccessableIndex ||
-                              UserController.to.user.isPremieum ||
-                              controller.selectedSubject.title !=
-                                  TopikLevel.fiveSix.label;
+                      SizedBox(
+                        width: size.width * 0.65,
+                        child: _dropdownbutton(),
+                      ),
+                      SizedBox(height: 24),
+                      Expanded(
+                        child: GetBuilder<UserController>(
+                          builder: (context) {
+                            return Obx(
+                              () => CarouselSlider(
+                                carouselController:
+                                    controller.carouselController,
+                                items: List.generate(
+                                  controller.selectedSubject.chapters.length,
+                                  (index) {
+                                    bool isAccessable =
+                                        index <
+                                            AppConstant
+                                                .defaultAccessableIndex ||
+                                        UserController.to.user.isPremieum ||
+                                        UserController.to.user.isFake ||
+                                        controller.selectedSubject.title !=
+                                            TopikLevel.fiveSix.label;
 
-                          return ChapterSelector(
-                            label: controller.selectedSubject.title,
-                            chapter: controller.selectedSubject.chapters[index],
-                            onTap: () => controller.onTapChapter(index),
-                            totalAndScore: controller.totalAndScores[index],
-                            isAccessable: isAccessable,
-                          );
-                        },
+                                    return ChapterSelector(
+                                      label: controller.selectedSubject.title,
+                                      chapter:
+                                          controller
+                                              .selectedSubject
+                                              .chapters[index],
+                                      onTap:
+                                          () =>
+                                              isAccessable
+                                                  ? controller.onTapChapter(
+                                                    index,
+                                                  )
+                                                  : Get.dialog(PaywallWidget()),
+
+                                      totalAndScore:
+                                          controller.totalAndScores[index],
+                                      isAccessable: isAccessable,
+                                    );
+                                  },
+                                ),
+                                options: CarouselOptions(
+                                  disableCenter: true,
+                                  viewportFraction: 0.65,
+                                  enableInfiniteScroll: false,
+                                  enlargeCenterPage: true,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
                       ),
-                      options: CarouselOptions(
-                        disableCenter: true,
-                        viewportFraction: 0.65,
-                        enableInfiniteScroll: false,
-                        enlargeCenterPage: true,
-                      ),
-                    ),
+                      SizedBox(height: 32),
+                    ],
                   ),
                 ),
-                SizedBox(height: 32),
-              ],
+              ),
             ),
-          ),
+
+            if (UserController.to.isBuying.value) ...[
+              Container(color: Colors.grey.withValues(alpha: .5)),
+              Center(child: CircularProgressIndicator.adaptive()),
+            ],
+          ],
         ),
       ),
 

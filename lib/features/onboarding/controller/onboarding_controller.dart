@@ -266,12 +266,11 @@ class OnboardingController extends GetxController {
       _setNotification();
       SettingRepository.setString(AppConstant.notificationTimeKey, lunchTime);
     }
-    // await InAppPurchaseService.instance.init();
     final userRepo = Get.find<HiveRepository<User>>();
 
     if (userRepo.getAll().isEmpty) {
       User user = User();
-      userRepo.put(user.userId, user);
+      await userRepo.put(user.userId, user);
     }
 
     Get.offAllNamed(MainScreen.name);

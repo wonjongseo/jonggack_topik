@@ -86,7 +86,6 @@ class MissedWordsScreen extends GetView<HistoryController> {
                       itemBuilder: (context, index) {
                         return MissedWordListTIle(
                           word: controller.words[index],
-                          missedWord: controller.missedWords[index],
                           onTap: () => controller.goToWordScreen(index),
                           isHidenMean: false,
                         );

@@ -13,10 +13,10 @@ class QuizHistory extends HiveObject {
   final DateTime date;
 
   @HiveField(1)
-  final List<TriedWord> correctWordIds;
+  final List<String> correctWordIds;
 
   @HiveField(2)
-  final List<TriedWord> incorrectWordIds;
+  final List<String> incorrectWordIds;
 
   QuizHistory({
     required this.date,

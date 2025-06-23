@@ -27,8 +27,8 @@ class AppConstant {
   static const String notificationTimeKey = 'notificationTimeKey';
 
   static const defaultCategory = "韓国語能力試験";
-  // static const defaultAccessableIndex = 3;
-  static const defaultAccessableIndex = 1000;
+  static const defaultAccessableIndex = 3;
+  // static const defaultAccessableIndex = 1000;
 
   static const int diaryModelHiveId = 0;
   static const int healthModelHiveId = 1;

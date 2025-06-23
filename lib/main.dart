@@ -48,21 +48,6 @@ class _AppState extends State<App> {
   late bool isDarkMode;
   late String systemLanguage;
 
-  void getUsresSetting() {
-    systemLanguage =
-        SettingRepository.getString(AppConstant.settingLanguageKey) ?? "ja-JP";
-
-    isDarkMode =
-        SettingRepository.getBool(AppConstant.isDarkModeKey) ??
-        ThemeMode.system == ThemeMode.dark;
-  }
-
-  Future<bool> loadDatas() async {
-    await HiveRepository.init();
-    getUsresSetting();
-    return true;
-  }
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -86,6 +71,21 @@ class _AppState extends State<App> {
         return loadingMaterialApp(context);
       },
     );
+  }
+
+  void getUsresSetting() {
+    systemLanguage =
+        SettingRepository.getString(AppConstant.settingLanguageKey) ?? "ja-JP";
+
+    isDarkMode =
+        SettingRepository.getBool(AppConstant.isDarkModeKey) ??
+        ThemeMode.system == ThemeMode.dark;
+  }
+
+  Future<bool> loadDatas() async {
+    await HiveRepository.init();
+    getUsresSetting();
+    return true;
   }
 
   MaterialApp loadingMaterialApp(BuildContext context) {

@@ -31,7 +31,7 @@ class HistoryController extends GetxController {
 
   List<QuizHistory> get allHistory => _allHistory.value;
 
-  List<TriedWord> get todayMissedWords {
+  List<String> get todayMissedWords {
     final result = allHistory.firstWhereOrNull(
       (history) => isSameDay(history.date, DateTime.now()),
     );
@@ -39,15 +39,14 @@ class HistoryController extends GetxController {
     return result == null ? [] : result.incorrectWordIds;
   }
 
-  List<TriedWord> get missedWords {
+  List<String> get missedWords {
     final result = allHistory.expand((h) => h.incorrectWordIds).toList();
-    result.sort((a, b) => b.missCount.compareTo(a.missCount));
     return result;
   }
 
   List<Word> get words {
     final wordRepo = Get.find<HiveRepository<Word>>(tag: Word.boxKey);
-    return todayMissedWords.map((t) => wordRepo.get(t.wordId)!).toList();
+    return todayMissedWords.map((t) => wordRepo.get(t)!).toList();
   }
 
   @override
@@ -71,21 +70,6 @@ class HistoryController extends GetxController {
       SnackBarHelper.showErrorSnackBar('$e');
     } finally {
       isLoading(false);
-    }
-  }
-
-  Future<void> deleteMissedWord(TriedWord missedWord) async {
-    await QuizHistoryRepository.removeTriedWord(missedWord);
-    HistoryController.to.getAllHistories();
-  }
-
-  Future<void> deleteMissedWordByWords(List<Word> words) async {
-    for (var word in words) {
-      for (var missedWord in missedWords) {
-        if (word.id == missedWord.wordId) {
-          await deleteMissedWord(missedWord);
-        }
-      }
     }
   }
 
@@ -153,13 +137,7 @@ class HistoryController extends GetxController {
     Get.to(
       () => QuizScreen(),
       binding: BindingsBuilder.put(
-        () => Get.put(
-          QuizController(
-            words: quizWords,
-            isAutoDelete: isAutoDelete.value,
-            isRetry: true,
-          ),
-        ),
+        () => Get.put(QuizController(words: quizWords, isRetry: true)),
       ),
     );
   }

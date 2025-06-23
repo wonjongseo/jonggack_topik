@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jonggack_topik/core/services/inapp_service.dart';
 import 'package:jonggack_topik/features/book/controller/book_controller.dart';
 import 'package:jonggack_topik/features/category/screen/category_screen.dart';
 import 'package:jonggack_topik/features/home/screen/home_screen.dart';
@@ -14,9 +15,10 @@ class MainController extends GetxController {
   late PersistentTabController tabController;
 
   @override
-  void onInit() {
+  void onInit() async {
     initialIndex = 0;
     tabController = PersistentTabController(initialIndex: initialIndex);
+    await InAppPurchaseService.instance.init();
 
     super.onInit();
   }

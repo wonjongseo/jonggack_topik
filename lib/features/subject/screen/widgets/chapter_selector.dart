@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:get/state_manager.dart';
 import 'package:jonggack_topik/core/utils/app_color.dart';
 import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +6,7 @@ import 'package:jonggack_topik/core/models/chapter_hive.dart';
 
 import 'package:jonggack_topik/features/category/controller/category_controller.dart';
 import 'package:jonggack_topik/features/category/screen/widgets/cateogry_progress.dart';
-import 'package:jonggack_topik/paywall_widget.dart';
+import 'package:jonggack_topik/features/subject/screen/widgets/faker_maker.dart';
 import 'package:jonggack_topik/theme.dart';
 
 class ChapterSelector extends StatelessWidget {
@@ -30,23 +29,19 @@ class ChapterSelector extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: isAccessable ? AppColors.primaryColor : Colors.grey.shade400,
-
-        // color: isAccessable ? null : Colors.grey.shade400,
-        // gradient:
-        //     isAccessable
-        //         ? LinearGradient(colors: AppColors.gradientColors)
-        //         : null,
         borderRadius: BorderRadius.circular(20),
         boxShadow: dfBoxShadow,
       ),
       child: Stack(
         children: [
           InkWell(
-            onTap:
+            onTap: onTap,
+            onLongPress:
                 isAccessable
-                    ? onTap
+                    ? null
                     : () {
-                      Get.dialog(PaywallWidget());
+                      Get.to(() => VerifyPage());
+                      // UserController.to.revokePremiumFromUser();
                     },
             child: Padding(
               padding: const EdgeInsets.all(14.0),
@@ -76,7 +71,13 @@ class ChapterSelector extends StatelessWidget {
             ),
           ),
 
-          if (!isAccessable) Center(child: Icon(Icons.lock, size: 100)),
+          if (!isAccessable)
+            Center(
+              child: GestureDetector(
+                onTap: onTap,
+                child: Icon(Icons.lock, size: 100),
+              ),
+            ),
         ],
       ),
     );

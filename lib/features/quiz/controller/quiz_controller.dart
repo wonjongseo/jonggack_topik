@@ -24,13 +24,8 @@ import 'package:jonggack_topik/features/user/repository/quiz_history_repository.
 // ignore: deprecated_member_use
 class QuizController extends GetxController with SingleGetTickerProviderMixin {
   final List<Word> words;
-  final bool isAutoDelete;
   final bool isRetry;
-  QuizController({
-    required this.words,
-    this.isAutoDelete = false,
-    this.isRetry = false,
-  });
+  QuizController({required this.words, this.isRetry = false});
 
   late AnimationController animationController; // 진행률 바
   late Animation animation; // 진행률 바 애니메이션
@@ -217,10 +212,6 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
 
       if (Get.isRegistered<HistoryController>()) {
         HistoryController.to.getAllHistories();
-
-        if (isAutoDelete) {
-          await HistoryController.to.deleteMissedWordByWords(correctQuestions);
-        }
       }
       if (Get.isRegistered<HomeController>()) {
         HomeController.to.getAllDatas();

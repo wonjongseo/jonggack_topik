@@ -9,14 +9,12 @@ class MissedWordListTIle extends StatelessWidget {
     super.key,
     this.onTapMean,
     required this.onTap,
-    required this.missedWord,
     required this.word,
     required this.isHidenMean,
   });
   final Function()? onTapMean;
   final Function() onTap;
 
-  final TriedWord missedWord;
   final Word word;
 
   final bool isHidenMean;
@@ -58,16 +56,7 @@ class MissedWordListTIle extends StatelessWidget {
       ),
       // subtitle: ,
       onTap: onTap,
-      trailing:
-          missedWord.missCount == 0
-              ? null
-              : Text(
-                '${missedWord.missCount}回',
-                style: TextStyle(
-                  color: Colors.grey.shade600,
-                  fontSize: SettingController.to.baseFS - 5,
-                ),
-              ),
+
       // trailing: Column(
       //   crossAxisAlignment: CrossAxisAlignment.end,
       //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
