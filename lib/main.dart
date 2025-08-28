@@ -1,3 +1,4 @@
+import 'package:jonggack_topik/core/admob/interstitial_manager.dart';
 import 'package:jonggack_topik/core/widgets/moving_dots.dart';
 import 'package:jonggack_topik/features/history/controller/history_controller.dart';
 import 'package:jonggack_topik/features/home/controller/home_controller.dart';
@@ -31,6 +32,15 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   MobileAds.instance.initialize();
+
+  InterstitialManager.instance.configure(
+    maxPerDay: 1000,
+    showChance: 0.6,
+    cooldownMinutes: 15,
+  );
+
+  InterstitialManager.instance.preload();
+
   initializeDateFormatting();
   await _initializeTimeZone();
   runApp(const App());
@@ -61,11 +71,11 @@ class _AppState extends State<App> {
             getPages: AppRoutes.getPages,
             fallbackLocale: const Locale('ja', 'JP'),
             locale: Locale(systemLanguage),
+            translations: AppTranslations(),
             themeMode: isDarkMode ? ThemeMode.dark : ThemeMode.light,
             theme: AppThemings.lightTheme,
             darkTheme: AppThemings.darkTheme,
             initialBinding: InitBinding(),
-            translations: AppTranslations(),
           );
         }
         return loadingMaterialApp(context);
@@ -149,6 +159,7 @@ class InitBinding extends Bindings {
 // flutter pub run change_app_package_name:main com.wonjongseo.numberone_topik
 
 // flutter pub run build_runner build --delete-conflicting-outputs
+// flutter build appbundle
 Future<void> _initializeTimeZone() async {
   tz.initializeTimeZones();
   final String currentTimeZone = await FlutterTimezone.getLocalTimezone();

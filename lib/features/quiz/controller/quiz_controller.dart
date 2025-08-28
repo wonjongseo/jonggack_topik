@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jonggack_topik/core/admob/interstitial_manager.dart';
 import 'package:jonggack_topik/core/models/Question.dart';
 import 'package:jonggack_topik/core/models/step_model.dart';
 import 'package:jonggack_topik/core/models/word.dart';
@@ -187,6 +188,7 @@ class QuizController extends GetxController with SingleGetTickerProviderMixin {
     }
     // 테스트를 다 풀 었으면
     else {
+      InterstitialManager.instance.maybeShow();
       DateTime date = DateTime.now();
       // if (kDebugMode) {
       //   for (var i = 0; i < 7; i++) {

@@ -510,7 +510,8 @@
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = 6B7JBM5DS9;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 1.0.1;
+				FLUTTER_BUILD_NAME = 1.0.3;
+				FLUTTER_BUILD_NUMBER = 3;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "おたすけTopik";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
@@ -700,7 +701,8 @@
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = 6B7JBM5DS9;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 1.0.1;
+				FLUTTER_BUILD_NAME = 1.0.3;
+				FLUTTER_BUILD_NUMBER = 3;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "おたすけTopik";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
@@ -726,7 +728,8 @@
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = 6B7JBM5DS9;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 1.0.1;
+				FLUTTER_BUILD_NAME = 1.0.3;
+				FLUTTER_BUILD_NUMBER = 3;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "おたすけTopik";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";

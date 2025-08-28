@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 class AdUnitId {
   Map<String, String> appOpen = {};
   Map<String, String> banner = {};
-  Map<String, String> jlptInterstitial = {};
+  Map<String, String> interstitial = {};
   Map<String, String> grammarInterstitial = {};
   Map<String, String> kangiInterstitial = {};
   Map<String, String> interstitialVideo = {};
@@ -27,9 +27,9 @@ class AdUnitId {
         'android': 'ca-app-pub-9712392194582442/3372538020',
       };
 
-      jlptInterstitial = {
-        'ios': 'ca-app-pub-9712392194582442/9082878326',
-        'android': 'ca-app-pub-9712392194582442/1593160337',
+      interstitial = {
+        'ios': 'ca-app-pub-9712392194582442/4291619639',
+        'android': 'ca-app-pub-9712392194582442/6615133284',
       };
       grammarInterstitial = {
         'ios': 'ca-app-pub-9712392194582442/3215216153',
@@ -72,7 +72,7 @@ class AdUnitId {
         'ios': 'ca-app-pub-3940256099942544/2934735716',
         'android': 'ca-app-pub-3940256099942544/6300978111',
       };
-      jlptInterstitial = {
+      interstitial = {
         'ios': 'ca-app-pub-3940256099942544/4411468910',
         'android': 'ca-app-pub-3940256099942544/1033173712',
       };

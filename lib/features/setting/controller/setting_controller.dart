@@ -14,7 +14,6 @@ import 'package:get/get.dart';
 import 'package:jonggack_topik/core/repositories/setting_repository.dart';
 import 'package:jonggack_topik/core/services/notification_service.dart';
 import 'package:jonggack_topik/core/utils/app_constant.dart';
-import 'package:jonggack_topik/core/utils/app_dialog.dart';
 import 'package:jonggack_topik/core/utils/app_function.dart';
 import 'package:jonggack_topik/core/utils/app_string.dart';
 import 'package:jonggack_topik/features/setting/enum/enums.dart';

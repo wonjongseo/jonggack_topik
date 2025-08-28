@@ -22,13 +22,14 @@ class UserAdapter extends TypeAdapter<User> {
     )
       ..userId = fields[0] as String
       ..createdAt = fields[3] as String
-      ..updatedAt = fields[4] as String;
+      ..updatedAt = fields[4] as String
+      ..isFake = fields[5] == null ? false : fields[5] as bool;
   }
 
   @override
   void write(BinaryWriter writer, User obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.userId)
       ..writeByte(1)
@@ -38,7 +39,9 @@ class UserAdapter extends TypeAdapter<User> {
       ..writeByte(3)
       ..write(obj.createdAt)
       ..writeByte(4)
-      ..write(obj.updatedAt);
+      ..write(obj.updatedAt)
+      ..writeByte(5)
+      ..write(obj.isFake);
   }
 
   @override

@@ -266,7 +266,7 @@ class AppString {
 
   static String youHavePreQuizData = "youHavePreQuizDataTr";
   static String youHavePreQuizDataKr = '과거 퀴즈를 본 적이 있습니다.';
-  static String youHavePreQuizDataJp = '前にQUIZを見たことがあります。';
+  static String youHavePreQuizDataJp = '前にQUIZを受けたことがあります。';
   static String youHavePreQuizDataEn = "";
 
   // Book

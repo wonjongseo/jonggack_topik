@@ -44,7 +44,7 @@ class AdController extends GetxController {
     switch (kindOfAd) {
       case KIND_OF_AD.JLPT:
         stringAdUnitId =
-            adUnitId.jlptInterstitial[GetPlatform.isIOS ? 'ios' : 'android']!;
+            adUnitId.interstitial[GetPlatform.isIOS ? 'ios' : 'android']!;
         break;
       case KIND_OF_AD.GRAMMAR:
         stringAdUnitId =
@@ -54,7 +54,7 @@ class AdController extends GetxController {
         break;
       case KIND_OF_AD.KANGI:
         stringAdUnitId =
-            adUnitId.jlptInterstitial[GetPlatform.isIOS ? 'ios' : 'android']!;
+            adUnitId.interstitial[GetPlatform.isIOS ? 'ios' : 'android']!;
         break;
     }
 
