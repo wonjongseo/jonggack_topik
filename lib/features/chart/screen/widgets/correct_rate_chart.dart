@@ -24,7 +24,7 @@ class CorrectRateChart extends StatelessWidget {
               ),
               padding: EdgeInsets.symmetric(vertical: 20, horizontal: 4),
               child: AspectRatio(
-                aspectRatio: SettingController.to.isTablet.value ? 1.75 : 2.7,
+                aspectRatio: SettingController.to.isTablet.value ? 1.75 : 2.5,
                 child: BarChart(
                   BarChartData(
                     minY: 0,
@@ -76,7 +76,7 @@ class CorrectRateChart extends StatelessWidget {
                         sideTitles: SideTitles(
                           showTitles: true,
                           interval: 1,
-                          reservedSize: 15,
+                          reservedSize: 20,
                           getTitlesWidget: (double value, TitleMeta meta) {
                             final idx = value.toInt();
                             if (idx < 0 || idx >= controller.xLabels.length) {

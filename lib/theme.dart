@@ -6,7 +6,6 @@ import 'package:jonggack_topik/features/setting/controller/setting_controller.da
 class AppFonts {
   static const gMaretFont = 'GMarket';
   static const zenMaruGothic = 'ZenMaruGothic';
-  static const cookieRun = 'CookieRunFont';
 }
 
 class AppThemings {

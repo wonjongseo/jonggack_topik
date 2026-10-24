@@ -171,7 +171,7 @@ class CategoryController extends GetxController {
       isLoadign(true);
       List<CategoryHive> savedList = categoryHiveRepo.getAll();
 
-      if (1 == 1) {
+      if (1 == 2) {
         _allCategories.assign(
           savedList.firstWhere(
             (category) => category.title == AppConstant.defaultCategory,

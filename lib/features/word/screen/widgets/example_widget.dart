@@ -17,48 +17,49 @@ class ExampleWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 24.0),
-      child: Column(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Text(
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
                   '${index + 1}. ${example.word}',
                   style: TextStyle(fontSize: SettingController.to.baseFS + 1),
                 ),
-              ),
-
-              Obx(() {
-                final isPlayingThisWord =
-                    TtsController.to.isPlaying.value &&
-                    TtsController.to.currentWord.value == example.word;
-
-                return IconButton(
-                  onPressed: () => TtsController.to.speak(example.word),
-                  icon: FaIcon(
-                    isPlayingThisWord
-                        ? FontAwesomeIcons.volumeLow
-                        : FontAwesomeIcons.volumeOff,
-                    color: AppColors.secondaryColor,
-                    size: 22,
+                HtmlWidget(
+                  example.yomikata.isNotEmpty ? example.yomikata : example.mean,
+                  textStyle: TextStyle(
+                    fontSize: SettingController.to.baseFS - 2,
                   ),
-                );
-              }),
-            ],
+                  customStylesBuilder: (element) {
+                    if (element.toString().contains('rt')) {
+                      return {'font-size': 'x-small', 'font-weight': 'bold'};
+                    }
+                  },
+                ),
+              ],
+            ),
           ),
-          HtmlWidget(
-            example.yomikata,
-            textStyle: TextStyle(fontSize: SettingController.to.baseFS - 2),
-            customStylesBuilder: (element) {
-              if (element.toString().contains('rt')) {
-                return {'font-size': 'x-small', 'font-weight': 'bold'};
-              }
-            },
-          ),
+          Obx(() {
+            final isPlayingThisWord =
+                TtsController.to.isPlaying.value &&
+                TtsController.to.currentWord.value == example.word;
+
+            return IconButton(
+              onPressed: () => TtsController.to.speak(example.word),
+              icon: FaIcon(
+                isPlayingThisWord
+                    ? FontAwesomeIcons.volumeLow
+                    : FontAwesomeIcons.volumeOff,
+                color: AppColors.secondaryColor,
+                size: 22,
+              ),
+            );
+          }),
         ],
       ),
     );

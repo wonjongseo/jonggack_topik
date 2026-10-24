@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:jonggack_topik/core/models/word.dart';
 import 'package:jonggack_topik/features/setting/controller/setting_controller.dart';
@@ -20,9 +21,10 @@ class WordListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       minLeadingWidth: 80,
-      leading: Text(
+      leading: AutoSizeText(
         word.word,
         style: TextStyle(fontSize: SettingController.to.baseFS),
+        maxLines: 1,
       ),
       title: InkWell(
         onTap: onTapMean,

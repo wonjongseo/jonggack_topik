@@ -243,10 +243,20 @@ class HiveRepository<T extends HiveObject> {
         );
       }
 
-      // 모든 단어 저장
       if (RunMonthlyTaskService.checkAndRunMonthlyTask()) {
-        _saveAllWords();
+        await _saveAllWords();
+      } else {
+        // 버전 1.1.0 업데이트 이후 첫번째 기동 시 호출
+        final isVersion110 = SettingRepository.getBool(
+          AppConstant.isVersion110,
+        );
+        if (isVersion110 == null) {
+          await _saveAllWords();
+          await SettingRepository.setBool(AppConstant.isVersion110, true);
+        }
       }
+
+      // 모든 단어 저장
 
       List<Category> categories = [];
       final categoryHiveRepo = Get.find<HiveRepository<CategoryHive>>(

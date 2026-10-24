@@ -25,6 +25,7 @@ class AppConstant {
   // Notification
   // static const String notificationsIdsKey = 'notificationsIdsKey';
   static const String notificationTimeKey = 'notificationTimeKey';
+  static const String isVersion110 = 'isVersion1.1.0';
 
   static const defaultCategory = "韓国語能力試験";
   static const defaultAccessableIndex = 3;
