@@ -16,7 +16,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.3+3
+version: 1.1.1+5
 
 environment:
   sdk: ^3.7.2
@@ -96,74 +96,6 @@ flutter:
     - assets/sounds/speech_to_text_stop.m4r
 
   fonts:
-    - family: NanumGothic
-      fonts:
-        - asset: assets/fonts/NanumGothic-Regular.ttf
-          weight: 100
-        - asset: assets/fonts/NanumGothic-Regular.ttf
-          weight: 200
-        - asset: assets/fonts/NanumGothic-Regular.ttf
-          weight: 300
-        - asset: assets/fonts/NanumGothic-Regular.ttf
-          weight: 400
-        - asset: assets/fonts/NanumGothic-Bold.ttf
-          weight: 500
-        - asset: assets/fonts/NanumGothic-Bold.ttf
-          weight: 600
-        - asset: assets/fonts/NanumGothic-Bold.ttf
-          weight: 700
-        - asset: assets/fonts/NanumGothic-ExtraBold.ttf
-          weight: 800
-        - asset: assets/fonts/NanumGothic-ExtraBold.ttf
-          weight: 900
-
-    # - family: NotoSerifJP
-    #   fonts:
-    #     - asset: assets/fonts/NotoSerifJP-ExtraLight.otf
-    #       weight: 200
-    #     - asset: assets/fonts/NotoSerifJP-Light.otf
-    #       weight: 300
-    #     - asset: assets/fonts/NotoSerifJP-Regular.otf
-    #       weight: 400
-    #     - asset: assets/fonts/NotoSerifJP-Medium.otf
-    #       weight: 500
-    #     - asset: assets/fonts/NotoSerifJP-SemiBold.otf
-    #       weight: 700
-    #     - asset: assets/fonts/NotoSerifJP-Bold.otf
-    #       weight: 800
-    #     - asset: assets/fonts/NotoSerifJP-Black.otf
-    #       weight: 900
-
-    # - family: ScoreStd
-    #   fonts:
-    #     - asset: assets/fonts/Montserrat-Thin.ttf
-    #       weight: 100
-    #     - asset: assets/fonts/Montserrat-ExtraLight.ttf
-    #       weight: 200
-    #     - asset: assets/fonts/Montserrat-Light.ttf
-    #       weight: 300
-    #     - asset: assets/fonts/Caveat-Regular.ttf
-    #       weight: 400
-    #     - asset: assets/fonts/Caveat-Medium.ttf
-    #       weight: 500
-    #     - asset: assets/fonts/Caveat-SemiBold.ttf
-    #       weight: 600
-    #     - asset: assets/fonts/Caveat-Bold.ttf
-    #       weight: 700
-    #     - asset: assets/fonts/Montserrat-ExtraBold.ttf
-    #       weight: 800
-    #     - asset: assets/fonts/Montserrat-Black.ttf
-    #       weight: 900
-    - family: Gilroy
-      fonts:
-        - asset: assets/fonts/Gilroy-Regular.ttf
-        - asset: assets/fonts/Gilroy-Light.ttf
-          weight: 300
-        - asset: assets/fonts/Gilroy-Medium.ttf
-          weight: 500
-        - asset: assets/fonts/Gilroy-Bold.ttf
-          weight: 700
-
     - family: GMarket
       fonts:
         - asset: assets/fonts/GmarketSansTTFMedium.ttf
@@ -197,23 +129,3 @@ flutter:
         - asset: assets/fonts/M_PLUS_Rounded_1c/MPLUSRounded1c-Black.ttf
           weight: 900
 
-    - family: CookieRunFont
-      fonts:
-        - asset: assets/fonts/CookieRunFont_TTF/CookieRun-Regular.ttf
-          weight: 100
-        - asset: assets/fonts/CookieRunFont_TTF/CookieRun-Regular.ttf
-          weight: 200
-        - asset: assets/fonts/CookieRunFont_TTF/CookieRun-Regular.ttf
-          weight: 300
-        - asset: assets/fonts/CookieRunFont_TTF/CookieRun-Regular.ttf
-          weight: 400
-        - asset: assets/fonts/CookieRunFont_TTF/CookieRun-Bold.ttf
-          weight: 500
-        - asset: assets/fonts/CookieRunFont_TTF/CookieRun-Bold.ttf
-          weight: 600
-        - asset: assets/fonts/CookieRunFont_TTF/CookieRun-Bold.ttf
-          weight: 700
-        - asset: assets/fonts/CookieRunFont_TTF/CookieRun-Black.ttf
-          weight: 800
-        - asset: assets/fonts/CookieRunFont_TTF/CookieRun-Black.ttf
-          weight: 900
