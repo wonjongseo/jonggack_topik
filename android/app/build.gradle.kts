@@ -6,13 +6,13 @@ plugins {
 
 android {
   namespace = "com.wonjongseo.numberone_topik"
-  compileSdk = 35
+  compileSdk = 36
   ndkVersion = "27.0.12077973"
 
   defaultConfig {
     applicationId = "com.wonjongseo.numberone_topik"
-    minSdk = 23
-    targetSdk = 35
+    minSdk = flutter.minSdkVersion
+    targetSdk = 36
     versionCode = flutter.versionCode
     versionName = flutter.versionName
   }

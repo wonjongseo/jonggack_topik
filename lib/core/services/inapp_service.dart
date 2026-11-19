@@ -12,7 +12,9 @@ class InAppPurchaseService with WidgetsBindingObserver {
   static final InAppPurchaseService instance = InAppPurchaseService._internal();
 
   final InAppPurchase _iap = InAppPurchase.instance;
-  late final StreamSubscription<List<PurchaseDetails>> _subscription;
+  StreamSubscription<List<PurchaseDetails>>? _subscription;
+  bool _initialized = false;
+  bool _initializing = false;
 
   /// The productId for premium upgrade
   static const String premiumProductId = 'premium_upgrade';
@@ -25,42 +27,71 @@ class InAppPurchaseService with WidgetsBindingObserver {
 
   /// Initialize: listen to purchase updates, app lifecycle, and restore purchases
   Future<void> init() async {
+    if (_initialized || _initializing) return;
+    _initializing = true;
     LogManager.info('InAppPurchaseService Init');
-    WidgetsBinding.instance.addObserver(this);
-    _subscription = _iap.purchaseStream.listen(
-      _onPurchaseUpdated,
-      onDone: () => _subscription.cancel(),
-      onError: (e) => debugPrint('IAP Stream error: $e'),
-    );
-    // await restorePurchases();
-
-    await restorePurchases();
+    try {
+      WidgetsBinding.instance.addObserver(this);
+      _subscription = _iap.purchaseStream.listen(
+        _onPurchaseUpdated,
+        onDone: () => _subscription?.cancel(),
+        onError: (Object e, StackTrace stack) {
+          LogManager.error('IAP stream error: $e');
+        },
+      );
+      _initialized = true;
+      await restorePurchases();
+    } finally {
+      _initializing = false;
+    }
   }
 
   /// Dispose: remove observer and cancel subscription
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-    _subscription.cancel();
+    _subscription?.cancel();
+    _subscription = null;
+    _initialized = false;
   }
 
   /// Fetch product details
   Future<void> fetchProducts() async {
-    final response = await _iap.queryProductDetails({premiumProductId});
-    if (response.error != null)
-      debugPrint('Product query error: ${response.error}');
-    products = response.productDetails;
+    if (!await _iap.isAvailable()) {
+      LogManager.error('IAP store is unavailable');
+      products = [];
+      return;
+    }
+
+    try {
+      final response = await _iap.queryProductDetails({premiumProductId});
+      if (response.error != null) {
+        LogManager.error('Product query error: ${response.error}');
+      }
+      if (response.notFoundIDs.contains(premiumProductId)) {
+        LogManager.error('IAP product not found: $premiumProductId');
+      }
+      products = response.productDetails;
+    } catch (e) {
+      LogManager.error('Product query failed: $e');
+      products = [];
+    }
   }
 
   /// Buy non-consumable premium product
   Future<bool> buyPremium() async {
     if (products.isEmpty) await fetchProducts();
-    final product = products.firstWhere((p) => p.id == premiumProductId);
+    final matchingProducts = products.where((p) => p.id == premiumProductId);
+    if (matchingProducts.isEmpty) {
+      LogManager.error('Premium product is unavailable');
+      return false;
+    }
+    final product = matchingProducts.first;
     try {
       return await _iap.buyNonConsumable(
         purchaseParam: PurchaseParam(productDetails: product),
       );
     } on PlatformException catch (e) {
-      if (e.code == 'userCancelled') {
+      if (_isPurchaseCancelled(e.code)) {
         LogManager.info('User cancelled purchase');
         return false;
       }
@@ -69,17 +100,30 @@ class InAppPurchaseService with WidgetsBindingObserver {
     }
   }
 
+  bool _isPurchaseCancelled(String code) {
+    return code == 'userCancelled' ||
+        code == 'storekit2_purchase_cancelled' ||
+        code == 'storekit_purchase_cancelled' ||
+        code == 'SKErrorPaymentCancelled';
+  }
+
   /// Restore purchases
   Future<void> restorePurchases() async {
-    await _iap.restorePurchases();
+    try {
+      if (await _iap.isAvailable()) {
+        await _iap.restorePurchases();
+      }
+    } catch (e) {
+      LogManager.error('Restore purchases failed: $e');
+    }
   }
 
   /// Handle app lifecycle changes
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      // On resume, refresh purchases to detect logout and revokes
-      restorePurchases();
+      // On resume, refresh the store state.
+      unawaited(restorePurchases());
     }
     super.didChangeAppLifecycleState(state);
   }
@@ -99,15 +143,16 @@ class InAppPurchaseService with WidgetsBindingObserver {
     if (hasPremiumPurchase) {
       UserController.to.grantPremiumToUser();
       debugPrint('Premium granted');
-    } else {
-      UserController.to.revokePremiumFromUser();
-      debugPrint('Premium revoked');
     }
 
     // complete all pending purchases
     for (final purchase in detailsList) {
       if (purchase.pendingCompletePurchase) {
-        await _iap.completePurchase(purchase);
+        try {
+          await _iap.completePurchase(purchase);
+        } catch (e) {
+          LogManager.error('Complete purchase failed: $e');
+        }
       }
     }
   }

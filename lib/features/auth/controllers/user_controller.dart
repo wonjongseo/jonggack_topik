@@ -56,6 +56,7 @@ class UserController extends GetxController {
 
   final isBuying = false.obs;
   void changeToPremieum() async {
+    if (isBuying.value) return;
     isBuying(true);
     try {
       bool launched = await InAppPurchaseService.instance.buyPremium();
@@ -63,7 +64,10 @@ class UserController extends GetxController {
         LogManager.info('결제가 취소되었거나 실패했습니다.');
       }
     } on PlatformException catch (e) {
-      if (e.code == 'userCancelled') {
+      if (e.code == 'userCancelled' ||
+          e.code == 'storekit2_purchase_cancelled' ||
+          e.code == 'storekit_purchase_cancelled' ||
+          e.code == 'SKErrorPaymentCancelled') {
         // 사용자가 취소했을 경우: 아무 동작 없이 리턴하거나
         LogManager.info('사용자가 결제를 취소했습니다.');
       } else {
